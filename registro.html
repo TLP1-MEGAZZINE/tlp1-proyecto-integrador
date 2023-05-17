@@ -5,33 +5,68 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"> 
-    <title>Document</title>
+    <title>registro</title>
 </head>
 <body> 
-      <div class="card">
-        <h5 class="card-header">registro</h5>
-        <div class="card-body">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>seleccione su rol</option>
-                <option value="1">empleado</option>
-                <option value="2">empleador</option>
-               
-              </select>
-              <br>
-          <section>
-            <input type="text" name="nombres" placeholder="ingrese su nombre">
-            <input type="text" name="apellido" placeholder="ingrese su nombre">
-            <input type="email" name="correo" placeholder="alguien@correo.com">
-            <input type="password" name="contraseña" placeholder="ingrese una contraseña">
-            <input type="date" name="fecha de nacimiento" placeholder="ingrese su fecha de naciemiento">
-            <input type="number" name="dni" placeholder="DNI">
-            <input type="number" name="cuil" placeholder="CUIL">
-
-          </section>
-       
-          <a href="#" class="btn btn-primary">registrarse</a>
-          <a href="#">¿ya tiene una cuenta?</a>
-        </div>
+  <form class="row g-3">
+    <select for="validationDefault01" class="form-select" aria-label="Default select example" required>
+      <option selected>eliga su rol</option>
+      <option value="1">postulante</option>
+      <option value="2">empleador comercial</option>
+      <option value="3">empleador no cormecial</option>
+    </select>
+    <div class="col-md-4">
+      <label for="validationDefault01" class="form-label">nombre de usuario</label>
+      <input type="text" class="form-control" id="validationDefault01" placeholder="nombre de usuario"  required>
+    </div>
+    <div class="col-md-9">
+      <span id="usarnameHelpInline" class="form-text">
+       el nombre de usuario no debe contener caracteres especiales ni palabras inapropiadas 
+      </span>
+    </div>
+    <div class="col-md-4">
+      <label for="exampleFormControlInput1" class="form-label">ingrese su email</label>
+      <div class="input-group">
+        <input type="email" class="form-control" id="validationDefaultemail" aria-describedby="inputGroupPrepend2"  placeholder="name@example.com" required>
       </div>
+    </div>
+    <div class="col-md-9">
+      <span id="emailHelpInline" class="form-text">
+      puede ser alfanumerico y contener caracteres especiales.
+      </span>
+    </div>
+    <div class="col-md-4">
+      <label for="exampleFormControlInput1" class="form-label">repetir email</label>
+      <div class="input-group">
+        <input type="email" class="form-control" id="validationDefaultemail" aria-describedby="inputGroupPrepend2"  placeholder="name@example.com" required>
+      </div>
+    <div class="col-md-9">
+      <div class="col-md-6">
+        <label for="exampleFormControlPassword6" class="form-label">contraseña</label>
+      </div>
+      <div class="col-md-6">
+        <input type="password" id="validationpassword6" class="form-control" aria-labelledby="passwordHelpInline" placeholder="#########" required>
+      </div>
+      <div class="col-md-12">
+        <span id="passwordHelpInline" class="form-text">
+          la contraseña debe tener mínimo 9 caracteres, letras, al menos una mayúscula, una minúscula y un carácter numérico.
+        </span>
+      </div>
+    </div> 
+    <div class="col-md-9">
+      <div class="col-md-6">
+        <label for="exampleFormControlPassword6" class="form-label">repetir contraseña</label>
+      </div>
+      <div class="col-md-6">
+        <input type="password" id="validationpassword6" class="form-control" aria-labelledby="passwordHelpInline" placeholder="#########" required>
+      </div>
+    </div> 
+    <div class="col-12">
+      <a href=""><button class="btn btn-primary" type="submit">siguiente1</button></a>
+      <a href=""><button class="btn btn-primary" type="submit">siguiente2</button></a>
+      <button class="btn btn-primary" type="submit">borrar</button>
+    </div>
+  </form>
+
 </body>
 </html>
