@@ -39,3 +39,9 @@
   .spacer {
     margin-top: 20px;
   }
+  .footer {
+    background-color: grey;
+    color: white;
+    padding-bottom: 10px;
+    padding-top: 30px;
+}
