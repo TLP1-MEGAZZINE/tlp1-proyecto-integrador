@@ -1,9 +1,4 @@
-*{
-  padding: 0px;
-  margin:0px;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-body{
+.body{
   background-color: aliceblue;
 }
 .home{
@@ -26,7 +21,15 @@ padding:25px;
 background-color: white;
 margin: 20px;
 }
+.image-container {
+  width: 150px;
+  height: 100px;
+}
 
+.resize {
+  width: 50%; 
+  height: auto; 
+}
 .container {
     max-width: 400px;
     margin: 0 auto;
@@ -51,4 +54,6 @@ margin: 20px;
     text-align: center;
     margin-top: 20px;
   }
-  
+  .spacer {
+    margin-top: 40px;
+  }
