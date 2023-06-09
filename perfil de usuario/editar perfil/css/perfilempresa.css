@@ -1,10 +1,14 @@
 
-.navbar {
+.container-fluid {
   background-color: blue;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 70px;
+  text-align: left;
+}
+.container-fluid .navbar-brand {
+  text-align: left;
 }
 .text{
   text-align: left;
