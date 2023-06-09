@@ -1,0 +1,36 @@
+
+#boton{
+    color: white;
+  }
+ 
+.color{
+    background-color:#0b2e59;
+}
+
+.text{
+  color: white;
+}
+#filtro{
+  padding-right: 10px;
+}
+.contenedor{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.texto{
+  padding-top: 100px;
+  padding-right:300px;
+  padding-left: 40px;
+  
+}
+.texto{
+  font-style: italic;
+  font-size: large;
+
+}
+
+hr{
+  color: rgb(0, 0, 0);
+  margin: 10px;
+}
