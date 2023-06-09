@@ -1,12 +1,21 @@
+
 .navbar {
-    background-color: blue;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 70px;
-  }
-  .text{
-    text-align: left;
-    font-size: 20px;
-  }
- 
+  background-color: blue;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+.text{
+  text-align: left;
+  font-size: 20px;
+}
+.footer {
+  background-color: blue;
+  color: white;
+  padding-bottom: 10px;
+  padding-top: 30px;
+}
+.spacer{
+  margin-top: 20px;
+}
