@@ -3,8 +3,8 @@
 
 <head>
   <title>Perfil de Usuario</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
-  <link rel="stylesheet" href="css/perfilusuario.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 </div>
@@ -17,6 +17,7 @@
         <div class="in-flex">
 
           <header>
+          <!-- BARRA DE NAVEGACION-->
             <div class="container-fluid">
               <nav class="navbar navbar-expand-lg">
                 <img src="img/logo.png" alt="logo" width="30" height="30" class="p-1">
@@ -28,14 +29,15 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                
                     </header>
-
+                    <div class="spacer"></div>
+                    <!-- PERFIL-->
                       <div class="container">
                         <div class="row">
                           <div class="col-md-4 col-sm-12">
                             <div class="card">
                               <img src="img/logo 1.png" class="card-img-top img-fluid" alt="Perfil de usuario">
+                              <div class="spacer"></div>
                               <div class="card-body">
                                 <h5 class="card-title">Nombre y Apellido</h5>
                                 <p class="card-text"></p>
@@ -43,6 +45,7 @@
                                 <div class="spacer"></div>
                                 <a href="perfilempresa.html" class="btn btn-primary">Editar perfil de la empresa</a>
                                 <div class="spacer"></div>
+                                 <!-- CALIFICACION CON ESTRELLAS -->
                                 <h6>Calificación con estrellas:</h6>
                                 <div class="rating">
                                   <input type="radio" id="star5" name="rating" value="5">
@@ -58,9 +61,12 @@
                                 </div>
                                 <p id="selectedRating"></p>
                               </div>
+                           
                             </div>
                           </div>
                         </div>
+                        <div class="spacer"></div>
+                         <!-- FORMULARIOS-->
                         <div class="col-md-8 col-sm-12">
                           <div class="card">
                             <div class="card-body">
@@ -73,30 +79,32 @@
                                 </ul>
                               </div>
                             </div>
+                          
                             <div class="card-body">
                               <h5 class="card-title">Experiencia Laboral</h5>
                               <div class="table-responsive">
                                 <ul class="list-group table">
-                                  <li class="list-group-item">
-                                    <h6></h6>
-                                    <p></p>
-                                    <p></p>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <h6></h6>
-                                    <p></p>
-                                    <p></p>
-                                  </li>
+                                  <li class="list-group-item">Nombre y apellido</li>
+                                  <li class="list-group-item">Tipo de Usuario</li>
+                                  <li class="list-group-item"></li>
                                 </ul>
+                                 
+                                </ul>
+                                
                               </div>
-                            </div>
+                            </di>
                           </div>
                         </div>
+                        <div class="text-end mt-3">
+                          <a href="perfilempresa.html" class="btn btn-primary">Eliminar cuenta</a>
+                        </div>
                       </div>
-                </div>
+                   
+                    </div>
               </div>
+    
         </div>
-       
+        <div class="spacer"></div>
         <footer class="footer mt-auto text-black-50 text-center">
           <p>©Copyright by: <a href="#" class="text-black">@JobUniteContact</a>.</p>
       </footer>
