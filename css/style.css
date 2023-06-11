@@ -1,0 +1,52 @@
+/* ESTILO GENERALES */
+.colorPrincipal {
+  background-color: #0b2e59
+}
+
+footer {
+  padding-bottom: 10px;
+  padding-top: 30px;
+  background-color: #0b2e59
+}
+/* ESTILO DE LA LANDING PAGE */
+
+.landing {
+  background-image: url(../img/landing.png);
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: right;
+  background-attachment: fixed;
+}
+
+/* PERFIL USUARIO */
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  text-align: center;
+}
+
+.rating>input {
+  display: none;
+}
+
+.rating>label {
+  display: inline-block;
+  font-size: 30px;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: gray;
+}
+
+.rating>label:before {
+  content: "\2605";
+}
+
+.rating>input:checked~label:before {
+  content: "\2605";
+  color: gold;
+}
+
+.spacer {
+  margin-top: 20px;
+}
