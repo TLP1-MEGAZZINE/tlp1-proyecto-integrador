@@ -16,20 +16,28 @@
 .contenedor{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-between; 
+}
+.contenedor{
+  padding-top: 52px;
+  padding-bottom: 11px;
 }
 .texto{
   padding-top: 100px;
-  padding-right:300px;
+  padding-right:100px;
   padding-left: 40px;
-  
 }
+
 .texto{
   font-style: italic;
   font-size: large;
-
 }
-
+.company{
+  color: white;
+}
+.company{
+  padding-left: 550px;
+}
 hr{
   color: rgb(0, 0, 0);
   margin: 10px;
