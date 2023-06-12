@@ -1,5 +1,13 @@
+main{
+  background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(19,153,216,0.7550478809687937) 55%, rgba(2,0,36,1) 100%);
+}
 .color{
     background-color:#0b2e59;
+}
+.registro{
+  padding-left:300px ;
+  padding-right:150px ;
 }
 .textBody{
     color: white;
@@ -13,3 +21,20 @@
 .contenedor{
     padding-left: 12px ;
 }
+
+.container{
+  padding-right:150px ;
+  padding-left:250px ;
+}
+
+.texto{
+    font-style: italic;
+    font-size: large;
+  }
+.company{
+    color: white;
+  }
+.company{
+    padding-left: 550px;
+  }
+  

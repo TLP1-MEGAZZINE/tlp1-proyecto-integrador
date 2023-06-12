@@ -26,7 +26,7 @@ let opcionRegitro=document.getElementById("opccionRol")
     </div>`
  }else if(valorSelect==2){  
     let Rubro=document.getElementById("rubro");
-    estadoLaboral.innerHTML=" "
+    estadoLaboral.innerHTML=" ";
     Rubro.innerHTML+=`<div class="col-md-10">
     <label for="validationDefault01" class="form-label">rubro</label>
     <input
@@ -39,7 +39,8 @@ let opcionRegitro=document.getElementById("opccionRol")
     />
   </div>`
  }else{
-  estadoLaboral.innerHTML=" "
+  estadoLaboral.innerHTML=" ";
+  rubro.innerHTML=" ";
  }
 });
 //opcion elegir la provinvia/pais en la que habita
@@ -77,13 +78,9 @@ let opcionProvincia=document.getElementById("provincia");
     opcionProvincia.insertAdjacentHTML("beforeend",argentina); 
  }
  else{
-
+   
  }
 })
-//focus que muestre las necesidades 
-/* <span id="usarnameHelpInline" class="form-text">
-No debe contener caracteres especiales,ni palabras inapropiadas 
-</span> */
 
 
 
