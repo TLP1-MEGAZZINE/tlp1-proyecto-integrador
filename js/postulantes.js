@@ -1,13 +1,13 @@
 // SELECTOR DE ROL, ESTADO LABORAL, EDUCACION
 //opcion registro postulante/empleador comercial y no comercial
 let opcionRegitro = document.getElementById("opccionRol")
- opcionRegitro.addEventListener('change',()=>{
- let valorSelect=document.getElementById("opccionRol").value
- if(valorSelect==1){
-    let Educacion=document.getElementById("educacion");
-    let contenedor=document.getElementById("estadoLaboral");
-    rubro.innerHTML=" "
-    contenedor.innerHTML+=`
+opcionRegitro.addEventListener('change', () => {
+   let valorSelect = document.getElementById("opccionRol").value
+   if (valorSelect == 1) {
+      let Educacion = document.getElementById("educacion");
+      let contenedor = document.getElementById("estadoLaboral");
+      rubro.innerHTML = " "
+      contenedor.innerHTML += `
    
     <div class="col-md-10 p-1">
     <select for="validationDefault01" class="form-select" aria-label="Default select example" required>
@@ -25,10 +25,10 @@ let opcionRegitro = document.getElementById("opccionRol")
     <option value="3">Terciario incompleto</option>
     </select>
     </div>`
- }else if(valorSelect==2){  
-    let Rubro=document.getElementById("rubro");
-    estadoLaboral.innerHTML=" "
-    Rubro.innerHTML+=`<div class="col-md-10">
+   } else if (valorSelect == 2) {
+      let Rubro = document.getElementById("rubro");
+      estadoLaboral.innerHTML = " "
+      Rubro.innerHTML += `<div class="col-md-10">
     <label for="validationDefault01" class="form-label">rubro</label>
     <input
       type="text"
@@ -39,18 +39,20 @@ let opcionRegitro = document.getElementById("opccionRol")
       required
     />
   </div>`
- }else{
-  estadoLaboral.innerHTML=" "
- }
+   } else {
+      estadoLaboral.innerHTML = " ";
+      rubro.innerHTML = " ";
+
+   }
 });
 
 // SELECTOR DE PROVINCIAS
 //opcion elegir la provinvia/pais en la que habita
-let opcionPais=document.getElementById("pais");
-let opcionProvincia=document.getElementById("provincia");
- opcionPais.addEventListener('change',()=>{
- let valorSelector=document.getElementById("pais").value
- let argentina= `
+let opcionPais = document.getElementById("pais");
+let opcionProvincia = document.getElementById("provincia");
+opcionPais.addEventListener('change', () => {
+   let valorSelector = document.getElementById("pais").value
+   let argentina = `
  <option selected disabled>Provincia</option>
  <option value="1">Buenos Aires</option>
  <option value="2">Catamarca</option>
@@ -75,16 +77,15 @@ let opcionProvincia=document.getElementById("provincia");
  <option value="21">Santiago del Estero</option>
  <option value="22">Tierra del Fuego</option>
  <option value="22>Tucuman</option>`
- if(valorSelector == 1){
-    opcionProvincia.innerHTML = "";
-    opcionProvincia.insertAdjacentHTML("beforeend",argentina); 
- }
- else{
+   if (valorSelector == 1) {
+      opcionProvincia.innerHTML = "";
+      opcionProvincia.insertAdjacentHTML("beforeend", argentina);
+   }
+   else {
 
- }
+   }
 })
-//focus que muestre las necesidades 
+//focus que muestre las necesidades
 /* <span id="usarnameHelpInline" class="form-text">
 No debe contener caracteres especiales,ni palabras inapropiadas 
 </span> */
-

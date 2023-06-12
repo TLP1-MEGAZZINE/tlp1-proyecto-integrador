@@ -8,6 +8,12 @@ footer {
   padding-top: 30px;
   background-color: #0b2e59
 }
+
+.colorFondo {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(19, 153, 216, 0.7550478809687937) 55%, rgba(2, 0, 36, 1) 100%);
+}
+
 /* ESTILO DE LA LANDING PAGE */
 
 .landing {
@@ -50,17 +56,11 @@ footer {
 .spacer {
   margin-top: 20px;
 }
-.content-wrapper {
-  overflow: hidden;
-}
-.container-fluid {
-  
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 70px;
-  text-align: left;
-}
-.bg-white {
 
-}
+/* .container-fluid { */
+/* display: flex; */
+/* align-items: center; */
+/* justify-content: space-between; */
+/* height: 70px; */
+/* text-align: left; */
+/* } */
