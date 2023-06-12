@@ -1,3 +1,28 @@
-.custom-bg-container {
-    background-color: transparent;
+.content-wrapper {
+    overflow: hidden;
+ 
+  /* Ajusta el valor del margen superior */
+
 }
+.container-fluid {
+    background-color: blue;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    text-align: left;
+}
+.bg-white {
+background-color: blue;
+}
+.spacer {
+margin-top: 20pz;
+}
+.footer {
+    background-color: blue;
+    color: white;
+    padding-bottom: 10px;
+    padding-top: 30px;
+    
+  }
+  
