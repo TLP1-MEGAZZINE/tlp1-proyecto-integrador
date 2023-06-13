@@ -1,13 +1,14 @@
 //input1
 const input = document.getElementById('miInput');
-  const mensaje = document.getElementById('mensaje');
+const mensaje = document.getElementById('mensaje');
 
-  input.addEventListener('focus', function() {
-    mensaje.style.display = 'inline';
-  });
+ 
 
   input.addEventListener('blur', function() {
     mensaje.style.display = 'none';
+  });
+   input.addEventListener('focus', function() {
+    mensaje.style.display = 'inline';
   });
   //input2
   const input2 = document.getElementById('input2');

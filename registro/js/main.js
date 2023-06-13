@@ -37,7 +37,23 @@ let opcionRegitro=document.getElementById("opccionRol")
       value="carniceria"
       required
     />
-  </div>`
+  </div> <div class="col-md-10">
+    <label for="validationDefault01" class="form-label">Ubicacion de la empresa</label>
+    <input
+      type="text"
+      class="form-control"
+      id="validationDefault01"
+      placeholder="mz33 cs44 barrio xxx"
+      value="mz33 cs44 barrio xxx"
+      required
+    />
+    </div></div>
+    <div class="col-md-10">
+      <label for="validationDefaultUsername" class="form-label">numero de telefono Empresarial</label>
+      <div class="input-group">
+        <span class="input-group-text" id="inputGroupPrepend2">+54-3704</span>
+        <input type="number" class="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2" value="244519" required>
+      </div>`
  }else{
   estadoLaboral.innerHTML=" ";
   rubro.innerHTML=" ";
