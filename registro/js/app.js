@@ -1,36 +1,45 @@
-//input1
-const input = document.getElementById('miInput');
-const mensaje = document.getElementById('mensaje');
 
+
+const input = document.getElementById('input');
+input.addEventListener('focus',function mostrarMensaje(){
+ const mensaje = document.getElementById('mensaje');
+ mensaje.style.display='inline';
+})
+input.addEventListener('blur',function ocultarMensaje(){
+  const mensaje = document.getElementById('mensaje');
+  mensaje.style.display='none';
+ })
+
+
+
+
+
+  //input2
  
 
-  input.addEventListener('blur', function() {
-    mensaje.style.display = 'none';
-  });
-   input.addEventListener('focus', function() {
-    mensaje.style.display = 'inline';
-  });
-  //input2
-  const input2 = document.getElementById('input2');
-  const mensaje2 = document.getElementById('mensaje2');
-
-  input2.addEventListener('focus', function() {
+ const input2 = document.getElementById('input2');
+  input2.addEventListener('focus',  function mostrarMensaje2() {
+    const mensaje2 = document.getElementById('mensaje2');
     mensaje2.style.display = 'inline';
-  });
-
-  input2.addEventListener('blur', function() {
+  })
+  input2.addEventListener('blur',function ocultarMensaje2() {
+    const mensaje2 = document.getElementById('mensaje2');
     mensaje2.style.display = 'none';
-  });
-  //input3
+  })
+ 
+
+
   const input3 = document.getElementById('input3');
-  const mensaje3 = document.getElementById('mensaje3');
+  input3.addEventListener('focus', function mostrarMensaje3(){
+    const mensaje3 = document.getElementById('mensaje3');
+    mensaje3.style.display='inline';
+  })
+  input3.addEventListener('blur', function mostrarMensaje3(){
+    const mensaje3 = document.getElementById('mensaje3');
+    mensaje3.style.display='none';
+  })
 
-  input3.addEventListener('focus', function() {
-    mensaje3.style.display = 'inline';
-  });
 
-  input3.addEventListener('blur', function() {
-    mensaje3.style.display = 'none';
-  });
+
 
 

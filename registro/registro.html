@@ -69,47 +69,43 @@
 </header>
 <!--registro-->
 <main class="d-flex justify-content-center align-items-center">
-  <div  class="p-3 bg-white rounded-2" style="width:29rem">  
+  <div  class="p-3 bg-white rounded-2 contenedor" style="width:20rem">  
     <form action="./Registro (2).html" class="row g-7">
     <div class="col-md-12" >
       <label  for="validationDefault01" class="form-label">nombre de usuario</label>
-      <input id="miInput" type="text" class="form-control" id="validationDefault01" placeholder="nombre de usuario"    required>
-      <span id="mensaje" class="form-text">el nombre de usuario no debe contener caracteres especiales ni palabras inapropiadas</span>
-     </div>
-    <div class="col-md-6">
+      <input id="input" type="text" class="form-control" id="validationDefault01" placeholder="nombre de usuario"    required>
+    </div>
+      <span id="mensaje" class="form-text message1" >El nombre de usuario no puede tener caracteres especiales ni palabras inapropiadas</span>
+
+  <div class="col-md-12">
       <label for="exampleFormControlInput1" class="form-label">ingrese su email</label>
       <div class="input-group">
-        <input id="input2" type="email" class="form-control" id="validationDefaultemail" aria-describedby="inputGroupPrepend2"   value="name@example.com"  placeholder="name@example.com" required>
+        <input id="input2" type="email" class="form-control" id="validationDefaultemail" aria-describedby="inputGroupPrepend2"  placeholder="name@example.com" required>
       </div>
-      <span id="mensaje2" class="form-text">puede contener caracteres especiales ,letras de la A a Z y numeros
+      <span id="mensaje2" class="form-text  message2">puede contener caracteres especiales ,letras de la A a Z y numeros
       </span>
-    </div>
-    <div class="col-md-6">
+    <div class="col-md-12">
       <label for="exampleFormControlInput1" class="form-label text">repetir email</label>
       <div class="input-group">
-        <input type="email" class="form-control" id="validationDefaultemail" aria-describedby="inputGroupPrepend2" value="name@example.com"placeholder="name@example.com" required>
+        <input type="email" class="form-control" id="validationDefaultemail" aria-describedby="inputGroupPrepend2" placeholder="name@example.com" required>
       </div>
-      <br>
-    
-     </div>
- 
-  <div class="col-md-5">
+  </div>
+   </div>
+  <div class="col-md-12">
       <div class="col-md-5">
         <label for="exampleFormControlPassword6" class="form-label">contraseña</label>
       </div>
-      <div class="col-md-">
+      
         <input  id="input3" type="password" id="validationpassword6" class="form-control" aria-labelledby="passwordHelpInline" value="##########"   placeholder="#########" required>
-        <span id="mensaje3" class="form-text">minimo de 9 caracteres (caracteres especiales letras de la A a Z y numeros)
+        <span id="mensaje3" class="form-text  message3">minimo de 9 caracteres (caracteres especiales letras de la A a Z y numeros)
         </span>
-      </div>
-  </div>    
-    <div class="col-md-7">
-      <div class="col-md-8">
-        <label for="exampleFormControlPassword6" class="form-label">repetir contraseña</label>
-      </div>
-      <div class="col-md-7">
+      
+   </div>    
+    <div class="col-md-12">
+      <div class="col-md-12">
+        <label for="exampleFormControlPassword6" class="form-label">repetir contraseña</label> 
         <input type="password" id="validationpassword6" class="form-control" aria-labelledby="passwordHelpInline" value="##########"  placeholder="#########" required>
-      </div>
+     
     </div>       
     <div class="botons text-center">
           <button id="boton" class="btn btn-primary">registrarse</button>

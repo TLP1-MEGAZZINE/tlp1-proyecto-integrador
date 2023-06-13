@@ -1,6 +1,20 @@
 main{
   background: rgb(2,0,36);
 background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(19,153,216,0.7550478809687937) 55%, rgba(2,0,36,1) 100%);
+padding-bottom: 11px;
+padding-top: 12px;
+}
+
+
+  
+.message1 {
+  display: none;
+}
+.message2 {
+  display: none;
+}
+.message3 {
+  display: none;
 }
 .color{
     background-color:#0b2e59;
