@@ -1,13 +1,30 @@
 const express = require('express');
-const path = require('path');
+const cors = require('cors');
 const morgan = require('morgan');
-const server = express();
+const helmet = require('helmet');
+const path = require('path')
 
-server.get('/', (req, res) => { 
-res.sendFile(path.join(__dirname,'../index.html'));
-});
+const port = 5000;
+
+// INICIALIZACION DE EXPRESS
+const app = express();
+
+//MIDDLEWARES
+app.use(cors());
+app.use(helmet({
+    contentSecurityPolicy: false
+}));
+app.use(morgan('dev'));
+app.use(express.json());
+
+// RUTAS
+app.use(require('./routes/index.routes'));
+
+//ARCHIVOS ESTATICOS
+app.use(express.static(path.join(__dirname, '../public')));
 
 
-server.listen(5000, () => {
-    console.log('SERVIDOR EJECUTANDOSE EN EL PUERTO 5000')
+//LEVANTAR EL SERVIDOR
+app.listen(port, () => {
+    console.log(`SERVIDOR EJECUTANDOSE EN EL PUERTO: ${port}`);
 });

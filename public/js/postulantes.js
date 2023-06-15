@@ -89,3 +89,7 @@ opcionPais.addEventListener('change', () => {
 /* <span id="usarnameHelpInline" class="form-text">
 No debe contener caracteres especiales,ni palabras inapropiadas 
 </span> */
+
+//VALIDACION
+
+const guardarDatos = require("./js/registro.js");
