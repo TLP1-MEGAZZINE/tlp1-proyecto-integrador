@@ -1,4 +1,3 @@
-// SELECTOR DE ROL, ESTADO LABORAL, EDUCACION
 //opcion registro postulante/empleador comercial y no comercial
 let opcionRegitro = document.getElementById("opccionRol")
 opcionRegitro.addEventListener('change', () => {
@@ -12,8 +11,8 @@ opcionRegitro.addEventListener('change', () => {
     <div class="col-md-10 p-1">
     <select for="validationDefault01" class="form-select" aria-label="Default select example" required>
     <option selected>estado laboral</option>
-    <option value="1">desempleado</option>
-    <option value="2">actualmente trabajando</option>
+    <option value="1">Desempleado</option>
+    <option value="2">Actualmente trabajando</option>
     </select>
     </div>
     <div class="col-md-10 p-2">
@@ -27,27 +26,38 @@ opcionRegitro.addEventListener('change', () => {
     </div>`
    } else if (valorSelect == 2) {
       let Rubro = document.getElementById("rubro");
-      estadoLaboral.innerHTML = " "
+      estadoLaboral.innerHTML = " ";
       Rubro.innerHTML += `<div class="col-md-10">
     <label for="validationDefault01" class="form-label">rubro</label>
     <input
       type="text"
       class="form-control"
       id="validationDefault01"
-      placeholder="carniceria"
-      value="carniceria"
+      placeholder="Rubro"
       required
     />
-  </div>`
+  </div> <div class="col-md-10">
+    <label for="validationDefault01" class="form-label">Locación de la empresa</label>
+    <input
+      type="text"
+      class="form-control"
+      id="validationDefault01"
+      placeholder="mz33 cs44 barrio xxx"
+      required
+    />
+    </div></div>
+    <div class="col-md-10">
+      <label for="validationDefaultUsername" class="form-label">Numero de telefono Empresarial</label>
+      <div class="input-group">
+        <span class="input-group-text" id="inputGroupPrepend2">+54-3704</span>
+        <input type="number" class="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2" required>
+      </div>`
    } else {
       estadoLaboral.innerHTML = " ";
       rubro.innerHTML = " ";
-
    }
 });
-
-// SELECTOR DE PROVINCIAS
-//opcion elegir la provinvia/pais en la que habita
+//opcion elegir la provincia/pais
 let opcionPais = document.getElementById("pais");
 let opcionProvincia = document.getElementById("provincia");
 opcionPais.addEventListener('change', () => {
@@ -85,11 +95,3 @@ opcionPais.addEventListener('change', () => {
 
    }
 })
-//focus que muestre las necesidades
-/* <span id="usarnameHelpInline" class="form-text">
-No debe contener caracteres especiales,ni palabras inapropiadas 
-</span> */
-
-//VALIDACION
-
-const guardarDatos = require("./js/registro.js");

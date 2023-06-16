@@ -1,57 +1,85 @@
 // MENSAJES
-//input1
-const userName = document.getElementById('userName');
-const mensajeNombre = document.getElementById('mensajeNombre');
+// NOMBRE USUARIO
+const name = document.getElementById('name');
+name.addEventListener('focus', function mostrarMensaje() {
+  const mensajeNAME = document.getElementById('mensajeNAME');
+  mensajeNAME.style.display = 'inline';
+})
+name.addEventListener('blur', function ocultarMensaje() {
+  mensajeNAME = document.getElementById('mensajeNAME');
+  mensajeNAME.style.display = 'none';
+})
 
-userName.addEventListener('focus', function () {
-  mensajeNombre.style.display = 'inline';
-});
+//EMAIL
+const email = document.getElementById('email');
+email.addEventListener('focus', function mostrarMensaje2() {
+  const mensajeEmail = document.getElementById('mensajeEmail');
+  mensajeEmail.style.display = 'inline';
+})
+email.addEventListener('blur', function ocultarMensaje2() {
+  mensajeEmail = document.getElementById('mensajeEmail');
+  mensajeEmail.style.display = 'none';
+})
 
-userName.addEventListener('blur', function () {
-  mensajeNombre.style.display = 'none';
-});
-
-//mail
-const mail = document.getElementById('mail');
-const mensajeMail = document.getElementById('mensajeMail');
-
-mail.addEventListener('focus', function () {
-  mensajeMail.style.display = 'inline';
-});
-
-
-mail.addEventListener('blur', function () {
-  mensajeMail.style.display = 'none';
-});
-
-//password
 const password = document.getElementById('password');
-const mensajePass = document.getElementById('mensajePass');
-
-password.addEventListener('focus', function () {
+password.addEventListener('focus', function mostrarMensaje3() {
+  const mensajePass = document.getElementById('mensajePass');
   mensajePass.style.display = 'inline';
-});
-
-password.addEventListener('blur', function () {
+})
+password.addEventListener('blur', function mostrarMensaje3() {
+  mensajePass = document.getElementById('mensajePass');
   mensajePass.style.display = 'none';
+})
+
+// CONDICIONES DEL NOMBRE, EMAIL Y LA CONTRASEÑA
+const formRegistro = document.getElementById('formRegistro');
+const validarPass = document.getElementById('validarPass');
+const validarEmail = document.getElementById('validarEmail');
+
+formRegistro.addEventListener("submit", e => {
+  e.preventDefault();
+  let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+  if (name.value.length < 6) {
+    alert("Nombre muy corto!")
+  }
+
+  if (!regexEmail.test(email.value)) {
+    alert("Incerte un email valido!")
+  }
+
+  if (password.value.length < 9) {
+    alert("Contraseña muy corta!")
+  }
+
+  if (password.value !== validarPass.value) {
+    alert("Contraseña no coincide!")
+  }
+
+  if (email.value !== validarEmail.value) {
+    alert("Email no coincide!")
+  }
+
 });
 
-// VALIDAR REGISTRO PRUEBA
-function guardarDatos(event) {
-  event.preventDefault(); //evita que el formulario se envie y la pagina se cargue
 
-  const userName = document.getElementById("userName").value
-  const userMail = document.getElementById("userMail").value
-  const password = document.getElementById("password").value
+// CONDICION PARA QUE NO DEJE REGISTRARSE SI FALTA RELLENAR UN CAMPO
+if (name.value !== '' & email.value !== '' & password.value !== '') {
+  const registro = document.getElementById("registro");
+  registro.addEventListener("click", e => {
+    e.preventDefault();
+    window.location.href = "login.html";
+  })
+}
 
-  const datos = {
-    nombre: userName,
-    mail: userMail,
-    pass: password
-  };
-
-  window.location.href = "postulantes.html";
-  console.log(datos);
+// ALMACENAR VALORES EN OBJETO
+const datos = {
+  name: '',
+  email: '',
+  password: ''
 };
 
-module.exports = guardarDatos;
+datos.name = name.value;
+datos.email = email.value;
+datos.password = password.value;
+
+export default datos;

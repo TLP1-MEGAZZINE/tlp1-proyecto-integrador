@@ -56,3 +56,9 @@ footer {
 .spacer {
   margin-top: 20px;
 }
+.text-center{
+  text-align: left;
+}
+.text-light{
+  text-justify: left;
+}
