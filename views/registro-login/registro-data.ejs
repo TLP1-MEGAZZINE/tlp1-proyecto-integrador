@@ -1,0 +1,115 @@
+<%- include ('../partials/header', {tituloWeb: 'Registro de Persona' }) -%>
+
+
+    <body class="colorFondo">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light colorPrincipal">
+                <div class="container-fluid">
+                    <img src="../../img/jun.png" alt="logo" width="30" height="30" class="p-1">
+                    <a class="navbar-brand text text-white" href="../../html/index.html">Job Unite</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="p-4 d-flex justify-content-center align-items-center">
+            <!--registro pag-2-->
+            <div class="p-3 bg-white rounded-2" style="width:29rem">
+                <form action="#" class="row g-3">
+
+                    <!-- ingrese su nombre y apellido-->
+                    <div class="col-md-5">
+                        <label for="validationCustom01" class="form-label">Ingrese su nombre</label>
+                        <input type="text" class="form-control" id="validationCustom01" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="validationCustom02" class="form-label">Ingrese su apellido</label>
+                        <input type="text" class="form-control" id="validationCustom02" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <!--dni-->
+                    <div class="col-md-5">
+                        <label for="validationDefaultUsername" class="form-label">Ingrese su DNI</label>
+                        <input type="number" class="form-control" id="validationDNI" placeholder="00 000 000"
+                            aria-describedby="inputGroupPrepend2" required />
+                    </div>
+                    <!--cuil-->
+                    <div class="col-md-5">
+                        <label for="validationDefaultUsername" class="form-label">Ingrese su CUIL</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="validationDNI" placeholder="00-00-000-000 0"
+                                aria-describedby="inputGroupPrepend2" required />
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="validationDefault01" class="form-label">Fecha de nacimiento</label>
+                        <input type="date" class="form-control" id="validationDefault01" placeholder="10/10/10"
+                            required />
+                    </div>
+                    <div class="col-md-5">
+                        <label for="validationDefault01" class="form-label">Domicilio</label>
+                        <input type="text" class="form-control" id="validationDefault01"
+                            placeholder="mz24 cs45 barrio xxxx" required />
+                    </div>
+                    <div class="col-md-5">
+                        <select for="validationDefault01" id="pais" class="form-select"
+                            aria-label="Default select example" required>
+                            <option selected>Nacionalidad</option>
+                            <option value="1">Argentina</option>
+                            <option value="2">Bolivia</option>
+                            <option value="3">Brasil</option>
+                            <option value="4">Chile</option>
+                            <option value="5">Colombia</option>
+                            <option value="6">Ecuador</option>
+                            <option value="7">Paraguay</option>
+                            <option value="8">Peru</option>
+                            <option value="9">Uruguay</option>
+                            v <option value="10">Venezuela</option>
+
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <select id="provincia" for="validationDefault01" class="form-select"
+                            aria-label="Default select example" required>
+                            <option selected>Provincia</option>
+                        </select>
+                    </div>
+                    <div class="col-md-10">
+                        <label for="validationDefaultUsername" class="form-label">Numero de telefono</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="inputGroupPrepend2">+54-3704</span>
+                            <input type="number" class="form-control" id="validationDefaultUsername"
+                                aria-describedby="inputGroupPrepend2" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-10">
+                        <select id="opccionRol" for="validationDefault01" class="form-select"
+                            aria-label="Default select example" required>
+                            <option id="select" selected>Eliga su rol</option>
+                            <option value="1">Postulante</option>
+                            <option value="2">Empleador</option>
+                            <option value="3">Particular</option>
+                        </select>
+                    </div>
+                    <div id="rubro"></div>
+                    <div id="estadoLaboral"></div>
+                    <div id="educacion"></div>
+
+                    <div>
+                        <button class="btn btn-secondary" type="submit">Anterior</button>
+                        <button class="btn btn-primary" type="submit">Registrarse</button>
+                    </div>
+            </div>
+            </div>
+            </form>
+            </div>
+        </main>
+
+        <script src="../../public/js/postulantes.js"></script>
+
+        <%- include ('../partials/footer') -%>

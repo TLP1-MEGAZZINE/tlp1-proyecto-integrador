@@ -1,0 +1,73 @@
+<%- include ('../partials/header', {tituloWeb: 'Login' }) -%>
+
+
+<body class="colorFondo">
+
+    <!-- BARRA DE NAVEGACION-->
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light colorPrincipal">
+        <div class="container-fluid">
+          <img src="../../img/jun.png" alt="logo" width="30" height="30" class="p-1">
+          <a class="navbar-brand text-light" href="index">Job Unite</a>
+      </nav>
+    </header>
+  
+    <main class="py-5">
+  
+      <div class="d-flex justify-content-center align-items-center">
+        <div class="bg-light p-3 rounded-5" style="border: 1px solid #000;">
+          <!-- Contenido del contenedor -->
+          <div class="d-flex justify-content-center">
+            <img src="../../img/userIcon1.png" alt="login-icon" style="height: 5rem" />
+          </div>
+          <div class="text-center fs-3 fw-bold">Login</div>
+  
+          <div class="input-group mt-3">
+            <div class="input-group-text bg-primary">
+              <img src="../../img/user-solid.svg" alt="username-icon" style="height: 1rem" />
+            </div>
+            <input class="form-control" type="text" placeholder="Nombre de usuario o correo" />
+          </div>
+  
+          <div class="input-group mt-1">
+            <div class="input-group-text bg-primary">
+              <img src="../../img/lock-solid.svg" alt="password-icon" style="height: 1rem" />
+            </div>
+            <input class="form-control" type="password" placeholder="Contraseña" />
+          </div>
+  
+          <div class="d-flex justify-content-around mt-2">
+            <div class="d-flex align-items-center gap-1">
+              <input class="form-check-input" type="checkbox" />
+              <div class="pt-1" style="font-size: 0.8rem">Recordar</div>
+            </div>
+            <a href="#" class="text-decoration-none text-dark" style="font-size: 0.8rem ">Olvidó su contraseña?</a>
+          </div>
+  
+          <a href="../inicio" class="btn btn-primary text-white w-100 mt-3 fw-semibold shadow-sm">
+            Iniciar sesión
+          </a>
+  
+          <div class="mt-3 text-center">
+            <div>No tienes una cuenta?</div>
+            <a href="registro-user">Registrarse</a>
+          </div>
+  
+          <div class="p-3">
+            <div class="border-bottom text-center" style="height: 0.9rem">
+              <span class="bg-light px-3">o</span>
+            </div>
+          </div>
+  
+          <div class="btn d-flex gap-2 justify-content-center border mt-3">
+            <img src="../../img/logoGoogle.jpg" alt="google-icon" style="height: 1.6rem" />
+            <div class="fw-semibold text-secondary shadow-sm">Continuar con Google</div>
+          </div>
+  
+        </div>
+      </div>
+    </main>
+
+    <script src="../../public/js/login.js"></script>
+
+    <%- include ('../partials/footer') -%>

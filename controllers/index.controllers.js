@@ -4,7 +4,7 @@ const controller = {}
 
 // RUTAS INICIALES
 controller.index = (req, res) => {
-    res.sendFile(path.join(__dirname, '../../public/html/index.html'))
+    // res.sendFile(path.join(__dirname, '../../public/html/index.html'))
 };
 
 controller.inicio = (req, res) => {
@@ -22,7 +22,7 @@ controller.registro = (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/html/registro-login/registro.html'))
 }
 
-controller.registro = (req, res) => {
+controller.postulantes = (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/html/registro-login/postulantes.html'))
 }
 

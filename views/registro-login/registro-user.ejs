@@ -1,0 +1,81 @@
+<%- include ('../partials/header', {tituloWeb: 'Registro de Usuario' }) -%>
+
+    <body>
+
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light colorPrincipal">
+                <div class="container-fluid">
+                    <img src="../../img/jun.png" alt="logo" width="30" height="30" class="p-1">
+                    <a class="navbar-brand text-light" href="../index">Job Unite</a>
+                </div>
+            </nav>
+        </header>
+
+        <!--registro-->
+        <main class="p-4 d-flex justify-content-center align-items-center colorFondo">
+            <div class="p-3 bg-white rounded-2 contenedor" style="width:20rem">
+                <form action="login" class="row g-7" id="formRegistro">
+                    <div class="col-md-12">
+                        <label class="form-label">Nombre de usuario</label>
+                        <input id="name" type="text" class="form-control" id="validationDefault01"
+                            placeholder="nombre de usuario" required>
+                    </div>
+                    <span id="mensajeNAME" class="form-text message1">El nombre de usuario no puede tener caracteres
+                        especiales ni
+                        palabras inapropiadas</span>
+
+                    <div class="col-md-12">
+                        <label class="form-label">Ingrese su email</label>
+                        <div class="input-group">
+                            <input id="email" type="email" class="form-control" id="validationDefaultemail"
+                                aria-describedby="inputGroupPrepend2" placeholder="name@example.com" required>
+                        </div>
+                        <span id="mensajeEmail" class="form-text  message2">Puede contener caracteres especiales ,letras
+                            de la A a Z y
+                            numeros
+                        </span>
+
+
+                        <div class="col-md-12">
+                            <label class="form-label text">Repetir email</label>
+                            <div class="input-group">
+                                <input type="email" class="form-control" id="validarEmail"
+                                    aria-describedby="inputGroupPrepend2" placeholder="name@example.com" required>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <div class="col-md-5">
+                            <label for="exampleFormControlPassword6" class="form-label">Contraseña</label>
+                        </div>
+
+                        <input id="password" type="password" id="validationpassword6" class="form-control"
+                            aria-labelledby="passwordHelpInline" placeholder="#########" required>
+                        <span id="mensajePass" class="form-text  message3">Minimo de 9 caracteres (caracteres especiales
+                            letras de la
+                            A a
+                            Z y numeros)
+                        </span>
+
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <label class="form-label">Repetir contraseña</label>
+                            <input type="password" id="validarPass" class="form-control"
+                                aria-labelledby="passwordHelpInline" placeholder="#########" required>
+
+                        </div>
+                        <div class="text-center py-5">
+                            <button id="registro" class="btn btn-primary">Registrarse</button>
+                            <button id="cancelar" class="btn btn-secondary">Cancelar</button>
+                        </div>
+                </form>
+            </div>
+
+        </main>
+
+        <script src="../../public/js/registro.js"></script>
+
+        <%- include ('../partials/footer') -%>
