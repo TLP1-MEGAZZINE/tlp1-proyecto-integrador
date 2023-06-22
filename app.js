@@ -10,13 +10,11 @@ require('dotenv').config();
 // Se importa la instancia de conexión a la base de datos - (debe ser después de leer las variables de entorno)
 const { sequelize } = require('./db');
 
-
 // Se ejecuta una instancia de conexión a la base de datos
 sequelize.authenticate()
     .then(() => console.log('Conexión a base de datos exitosa'))
     .catch((error) => console.log('Error al conectar a base de datos', error));
 require('ejs');
-
 
 //DECLARACION DEL PUERTO
 const port = 5000;
@@ -32,9 +30,7 @@ app.use(helmet({
 app.use(morgan('dev'));
 app.use(express.json());
 
-
 //INICIAR SEQUELIZE
-
 
 //ARCHIVOS ESTATICOS
 app.use(express.static(path.join(__dirname, 'public')));
@@ -47,17 +43,16 @@ app.set('views', (__dirname + '/views'));
 // RUTAS
 app.use(require('./routes/index.routes'));
 app.use(require('./routes/registro.routes'));
-app.use(require('./routes/perfiles.router'))
+app.use(require('./routes/perfiles.routes'))
 app.use(require('./routes/principal.routes'))
 
 //EJS 404 - not found
 app.use((req, res, next) => {
     res.status(404).render("404", {
         titulo: "404",
-        descripcion: "PAGINA NO ENCONTRADA"
+        descripcion: "PAGINA NO ENCONTRADA, REDIRIGIENDO A LA PAGINA DE INICIO..."
     })
 });
-
 
 //LEVANTAR EL SERVIDOR
 app.listen(port, () => {

@@ -6,7 +6,7 @@ router.get('/novedades', (req, res) => {
     res.render('principal/novedades')
 })
 
-router.get('/perfil/editar-perfil-usuario', (req, res) => {
+router.get('/solicitudes', (req, res) => {
     res.render('principal/solicitudes')
 })
 

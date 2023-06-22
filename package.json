@@ -17,7 +17,8 @@
     "helmet": "^7.0.0",
     "morgan": "^1.10.0",
     "mysql2": "^3.3.5",
-    "sequelize": "^6.32.1"
+    "sequelize": "^6.32.1",
+    "sweetalert2": "^11.7.12"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

@@ -8,14 +8,14 @@ opcionRegitro.addEventListener('change', () => {
       rubro.innerHTML = " "
       contenedor.innerHTML += `
    
-    <div class="col-md-10 p-1">
+    <div class="col-md-10 py-2">
     <select for="validationDefault01" class="form-select" aria-label="Default select example" required>
-    <option selected>estado laboral</option>
+    <option selected>Estado laboral</option>
     <option value="1">Desempleado</option>
     <option value="2">Actualmente trabajando</option>
     </select>
     </div>
-    <div class="col-md-10 p-2">
+    <div class="col-md-10">
     <select for="validationDefault01" class="form-select" aria-label="Default select example" required>
     <option selected>Educacion</option>
     <option value="1">Secundario completo</option>
@@ -28,7 +28,17 @@ opcionRegitro.addEventListener('change', () => {
       let Rubro = document.getElementById("rubro");
       estadoLaboral.innerHTML = " ";
       Rubro.innerHTML += `<div class="col-md-10">
-    <label for="validationDefault01" class="form-label">rubro</label>
+
+      <label for="validationDefault01" class="form-label">Nombre de la empresa</label>
+      <input
+      type="text"
+      class="form-control"
+      id="validationDefault01"
+      placeholder="Nombre de la empresa"
+      required
+    />
+
+    <label for="validationDefault01" class="form-label">Rubro</label>
     <input
       type="text"
       class="form-control"
