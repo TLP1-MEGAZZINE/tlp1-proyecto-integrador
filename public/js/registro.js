@@ -89,13 +89,4 @@ formRegistro.addEventListener("submit", e => {
     });
   }
 });
-
-// CONDICION PARA QUE NO DEJE REGISTRARSE SI FALTA RELLENAR UN CAMPO
-// if (name.value !== '' && email.value !== '' && password.value !== '') {
-//   const registro = document.getElementById("registro");
-//   registro.addEventListener("click", e => {
-//     e.preventDefault();
-//     window.location.href = "login";
-//   });
-// }
 });

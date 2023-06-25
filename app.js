@@ -8,12 +8,8 @@ const path = require('path')
 require('dotenv').config();
 
 // Se importa la instancia de conexión a la base de datos - (debe ser después de leer las variables de entorno)
-const { sequelize } = require('./db');
+// const { sequelize } = require('./db');
 
-// Se ejecuta una instancia de conexión a la base de datos
-sequelize.authenticate()
-    .then(() => console.log('Conexión a base de datos exitosa'))
-    .catch((error) => console.log('Error al conectar a base de datos', error));
 require('ejs');
 
 //DECLARACION DEL PUERTO
@@ -30,15 +26,12 @@ app.use(helmet({
 app.use(morgan('dev'));
 app.use(express.json());
 
-//INICIAR SEQUELIZE
-
 //ARCHIVOS ESTATICOS
 app.use(express.static(path.join(__dirname, 'public')));
 
 //MOTOR DE PLANTILLAS
 app.set('view engine', 'ejs');
 app.set('views', (__dirname + '/views'));
-
 
 // RUTAS
 app.use(require('./routes/index.routes'));
