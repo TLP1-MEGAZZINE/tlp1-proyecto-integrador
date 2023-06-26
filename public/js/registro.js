@@ -1,5 +1,8 @@
+
 // MENSAJES
 // NOMBRE USUARIO
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
   const mensajeNAME = document.getElementById('mensajeNAME');
@@ -89,4 +92,9 @@ formRegistro.addEventListener("submit", e => {
     });
   }
 });
+});
+const metodoPost = require('../../controllers/registro-user.controller')
+
+.addEventListener('click', ()=>{
+metodoPost.crearUsuario();
 });
