@@ -34,9 +34,3 @@ submitButton.addEventListener('click', function() {
     event.preventDefault();
   }
 });
-
-import datos from "./registro";
-
-console.log(datos.name);
-console.log(datos.name);
-console.log(datos.name);

@@ -1,9 +1,4 @@
-
-// MENSAJES
-// NOMBRE USUARIO
-
-
-
+// CARGAR SPAN CON LAS VALIDACIONES
 document.addEventListener('DOMContentLoaded', function() {
   const mensajeNAME = document.getElementById('mensajeNAME');
   const mensajeEmail = document.getElementById('mensajeEmail');
@@ -14,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
   mensajePass.style.display = 'none';
 
   // NOMBRE USUARIO
-  const name = document.getElementById('name');
+  const name = document.getElementById('user_name');
   name.addEventListener('click', function mostrarMensaje() {
     mensajeNAME.style.display = 'inline';
   });
@@ -24,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // EMAIL
-  const email = document.getElementById('email');
+  const email = document.getElementById('user_email');
   email.addEventListener('click', function mostrarMensaje2() {
     mensajeEmail.style.display = 'inline';
   });
@@ -34,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // PASSWORD
-  const password = document.getElementById('password');
+  const password = document.getElementById('user_password');
   password.addEventListener('click', function mostrarMensaje3() {
     mensajePass.style.display = 'inline';
   });
@@ -44,12 +39,12 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 
-// CONDICIONES DEL NOMBRE, EMAIL Y LA CONTRASEÑA
-const formRegistro = document.getElementById('formRegistro');
-const validarPass = document.getElementById('validarPass');
-const validarEmail = document.getElementById('validarEmail');
+ // CONDICIONES DEL NOMBRE, EMAIL Y LA CONTRASEÑA
+ const formRegistro = document.getElementById('formRegistro');
+ const validarPass = document.getElementById('validarPass');
+ const validarEmail = document.getElementById('validarEmail');
 
-formRegistro.addEventListener("submit", e => {
+ formRegistro.addEventListener("submit", async (e) => {
   e.preventDefault();
   let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
   if (name.value.length < 6) {
@@ -76,13 +71,6 @@ formRegistro.addEventListener("submit", e => {
     });
   }
 
-  if (password.value !== validarPass.value) {
-    Swal.fire({
-      icon: 'ERROR',
-      title: 'Oops...',
-      text: '¡Las contraseñas no coinciden!',
-    });
-  };
 
   if (email.value !== validarEmail.value) {
     Swal.fire({
@@ -91,10 +79,60 @@ formRegistro.addEventListener("submit", e => {
       text: '¡El email no coincide!',
     });
   }
-});
-});
-const metodoPost = require('../../controllers/registro-user.controller')
 
-.addEventListener('click', ()=>{
-metodoPost.crearUsuario();
+  if (password.value !== validarPass.value) {
+    Swal.fire({
+      icon: 'ERROR',
+      title: 'Oops...',
+      text: '¡Las contraseñas no coinciden!',
+    });
+  };
+
+ });
 });
+
+
+ // SE CREA EL EVENTO PARA CREAR UN NUEVO USUARIO
+ formRegistro.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  //consigo los valores de los inputs
+
+  const user_name = document.getElementById('user_name').value;
+  const user_email = document.getElementById('user_email').value;
+  const user_password = document.getElementById('user_password').value;
+  console.log(user_name, user_email, user_password)
+
+  //SE USA LA PETICION POST
+  try{
+    console.log(user_name, user_email, user_password)
+    const res = await fetch('http://localhost:5000/registro-user', {
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({user_name, user_email, user_password})
+    });
+
+    const data = await res.json();
+    console.log({ data });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Usuario registrado',
+      text: 'El usuario se ha creado correctamente'
+  })
+
+  // setTimeout(()=> {
+  //   window.location.href = '/login';
+  // }, 2000);
+ }catch (error) {
+
+    console.log(error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: error.message
+  })
+  }
+ });

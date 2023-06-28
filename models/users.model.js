@@ -1,13 +1,13 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const sequelize = require('../db');
 
 
 //CREAR MODELO DE USERS
 const Users = sequelize.define('Users',  {
     id_user:{
-        type: DataTypes.UUID, 
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true
+        type: DataTypes.INTEGER, 
+        primaryKey: true,
+        autoIncrement: true
     },
     user_name:{
         type: DataTypes.STRING,
@@ -31,4 +31,6 @@ const Users = sequelize.define('Users',  {
         tableName: "Users"
     });
     
+    Users.sync();
+
     module.exports = Users;

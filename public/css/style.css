@@ -6,12 +6,17 @@
 footer {
   padding-bottom: 10px;
   padding-top: 30px;
-  background-color: #0b2e59
+  background-color: #0b2e59;
 }
 
 .colorFondo {
   background: rgb(2, 0, 36);
   background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(19, 153, 216, 0.7550478809687937) 55%, rgba(2, 0, 36, 1) 100%);
+}
+
+
+.unite{
+  color: aqua;
 }
 
 /* ESTILO DE LA LANDING PAGE */
@@ -23,6 +28,15 @@ footer {
   background-position: right;
   background-attachment: fixed;
 }
+
+.underline{
+  text-decoration: underline;
+}
+
+.custom-bg{
+  background-color: rgba(19, 153, 216, 0.3);
+}
+
 
 /* PERFIL USUARIO */
 .rating {

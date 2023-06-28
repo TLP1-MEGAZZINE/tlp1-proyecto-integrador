@@ -4,7 +4,7 @@ const router = express.Router();
 //IMPORTAR CONTROLADORES
 const metodoPost = require('../controllers/registro-user.controller')
 
-// RUTAS GET REGISTRO DE USUARIO
+// RUTAS GET/RENDERIZAR VIEWS
 
 router.get('/registro-user', (req, res) => {
     res.render('registro-login/registro-user')
@@ -19,12 +19,12 @@ router.get('/login', (req, res) => {
 })
 
 
-//RUTAS POST
+//RUTAS POST/ CRUD
 router.post('/registro-user', metodoPost.crearUsuario);
 
-router.post('/registro-data', metodoPost.cargarInfoUsuario);
+// router.post('/registro-data', metodoPost.cargarInfoUsuario);
 
-router.post('/registro-data', metodoPost.cargarCel)
+// router.post('/registro-data', metodoPost.cargarCel)
 
 
 
