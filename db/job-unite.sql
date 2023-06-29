@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-06-2023 a las 23:42:33
+-- Tiempo de generación: 29-06-2023 a las 01:16:40
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -185,12 +185,21 @@ INSERT INTO `rubro` (`id_rubro`, `rol_description`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id_user` int(3) NOT NULL,
-  `id_type` int(2) NOT NULL,
+  `id_user` int(11) NOT NULL,
   `user_name` varchar(50) NOT NULL,
   `user_email` varchar(50) NOT NULL,
   `user_password` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id_user`, `user_name`, `user_email`, `user_password`) VALUES
+(1, 'AgustinM12', 'wagu520@live.com', '123456789'),
+(2, 'agustin12', 'agustinmazza12345@gmail.com', '123456789'),
+(3, 'agustin123', 'agustinmsazza12345@gmail.com', '123456789'),
+(4, 'AgustinM123', 'wagu520@live.com', '123456789');
 
 -- --------------------------------------------------------
 
@@ -200,7 +209,6 @@ CREATE TABLE `users` (
 
 CREATE TABLE `users_info` (
   `id_info` int(100) NOT NULL,
-  `id_user` int(3) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `apellido` varchar(50) NOT NULL,
   `dni` varchar(8) NOT NULL,
@@ -279,15 +287,13 @@ ALTER TABLE `rubro`
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id_user`),
-  ADD KEY `id_type` (`id_type`);
+  ADD PRIMARY KEY (`id_user`);
 
 --
 -- Indices de la tabla `users_info`
 --
 ALTER TABLE `users_info`
-  ADD PRIMARY KEY (`id_info`),
-  ADD KEY `id_user` (`id_user`);
+  ADD PRIMARY KEY (`id_info`);
 
 --
 -- Indices de la tabla `users_type`
@@ -296,20 +302,14 @@ ALTER TABLE `users_type`
   ADD PRIMARY KEY (`id_type`);
 
 --
--- Restricciones para tablas volcadas
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- Filtros para la tabla `users`
+-- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`id_type`) REFERENCES `users_type` (`id_type`);
-
---
--- Filtros para la tabla `users_info`
---
-ALTER TABLE `users_info`
-  ADD CONSTRAINT `users_info_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

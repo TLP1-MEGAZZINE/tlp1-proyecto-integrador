@@ -1,36 +1,42 @@
-// Validación de nombre de usuario
-const usernameInput = document.getElementById('usernameInput');
+// VALIDACION DE NOMBRE DE USUARIO Y CONTRASEÑA
 
-function validateUsername() {
-  const username = usernameInput.value.trim();
+const nombreEmail = document.getElementById('nombreEmail').value
+const contraseña = document.getElementById('contraseña').value
 
-  if (username === '') {
-    alert('Por favor, ingrese un nombre de usuario o correo válido.');
-    return false;
-  }
 
-  return true;
-}
 
-// Validación de contraseña
-const passwordInput = document.getElementById('passwordInput');
+formLogin.addEventListener('submit', async (e) => {
+  e.preventDefault();
+//SE USA LA PETICION POST PARA CREAR UN USUARIO
+    try {
+      const res = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ nombreEmail, contraseña })
+      });
 
-function validatePassword() {
-  const password = passwordInput.value;
+      const data = await res.json();
+      console.log({ data });
 
-  if (password.length < 8) {
-    alert('La contraseña debe tener al menos 8 caracteres.');
-    return false;
-  }
+      Swal.fire({
+        icon: 'success',
+        title: 'Credenciales correctas',
+        text: '¡Iniciando sesión!...'
+      });
 
-  return true;
-}
+      // setTimeout(() => {
+      //   window.location.href = '/inicio';
+      // }, 2000);
+    } catch (error) {
 
-// Validación al hacer clic en el botón de enviar
-const submitButton = document.getElementById('submitButton');
+      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al iniciar sesión',
+        text: '¡Las credenciales no coinciden!',
+      });
 
-submitButton.addEventListener('click', function() {
-  if (!validateUsername() || !validatePassword()) {
-    event.preventDefault();
-  }
-});
+    }
+  });

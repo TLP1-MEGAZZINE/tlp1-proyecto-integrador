@@ -22,10 +22,6 @@ router.get('/login', (req, res) => {
 //RUTAS POST/ CRUD
 router.post('/registro-user', metodoPost.crearUsuario);
 
-// router.post('/registro-data', metodoPost.cargarInfoUsuario);
-
-// router.post('/registro-data', metodoPost.cargarCel)
-
-
+router.post('/login', metodoPost.loginUsuario)
 
 module.exports = router;

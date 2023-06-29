@@ -1,4 +1,5 @@
 // CARGAR SPAN CON LAS VALIDACIONES
+
 document.addEventListener('DOMContentLoaded', function() {
   const mensajeNAME = document.getElementById('mensajeNAME');
   const mensajeEmail = document.getElementById('mensajeEmail');
@@ -38,101 +39,94 @@ document.addEventListener('DOMContentLoaded', function() {
     mensajePass.style.display = 'none';
   });
 
+  // CONDICIONES PARA ACEPTAR EL NOMBRE, EMAIL Y LA CONTRASEÑA
+  const formRegistro = document.getElementById('formRegistro');
+  const validarPass = document.getElementById('validarPass');
+  const validarEmail = document.getElementById('validarEmail');
 
- // CONDICIONES DEL NOMBRE, EMAIL Y LA CONTRASEÑA
- const formRegistro = document.getElementById('formRegistro');
- const validarPass = document.getElementById('validarPass');
- const validarEmail = document.getElementById('validarEmail');
+  formRegistro.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    if (name.value.length < 6) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡Nombre muy corto!',
+      });
+      return;
+    }
 
- formRegistro.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-  if (name.value.length < 6) {
-    Swal.fire({
-      icon: 'ERROR',
-      title: 'Oops...',
-      text: '¡Nombre muy corto!',
-    });
-  }
+    if (!regexEmail.test(email.value)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡Inserte un email válido!',
+      });
+      return;
+    }
 
-  if (!regexEmail.test(email.value)) {
-    Swal.fire({
-      icon: 'ERROR',
-      title: 'Oops...',
-      text: '¡Inserte un email válido!',
-    });
-  }
+    if (password.value.length < 9) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡Contraseña muy corta!',
+      });
+      return;
+    }
 
-  if (password.value.length < 9) {
-    Swal.fire({
-      icon: 'ERROR',
-      title: 'Oops...',
-      text: '¡Contraseña muy corta!',
-    });
-  }
+    if (email.value !== validarEmail.value) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡El email no coincide!',
+      });
+      return;
+    }
 
+    if (password.value !== validarPass.value) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡Las contraseñas no coinciden!',
+      });
+      return;
+    }
 
-  if (email.value !== validarEmail.value) {
-    Swal.fire({
-      icon: 'ERROR',
-      title: 'Oops...',
-      text: '¡El email no coincide!',
-    });
-  }
+    // SE CREA EL EVENTO PARA CREAR UN NUEVO USUARIO
+    const user_name = document.getElementById('user_name').value;
+    const user_email = document.getElementById('user_email').value;
+    const user_password = document.getElementById('user_password').value;
+    console.log(user_name, user_email, user_password);
 
-  if (password.value !== validarPass.value) {
-    Swal.fire({
-      icon: 'ERROR',
-      title: 'Oops...',
-      text: '¡Las contraseñas no coinciden!',
-    });
-  };
+    //SE USA LA PETICION POST PARA CREAR UN USUARIO
+    try {
+      const res = await fetch('http://localhost:5000/registro-user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_name, user_email, user_password })
+      });
 
- });
+      const data = await res.json();
+      console.log({ data });
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Usuario registrado',
+        text: 'El usuario se ha creado correctamente'
+      });
+
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error...',
+        text: 'No se pudo crear el usuario'
+      });
+    }
+  });
 });
-
-
- // SE CREA EL EVENTO PARA CREAR UN NUEVO USUARIO
- formRegistro.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  //consigo los valores de los inputs
-
-  const user_name = document.getElementById('user_name').value;
-  const user_email = document.getElementById('user_email').value;
-  const user_password = document.getElementById('user_password').value;
-  console.log(user_name, user_email, user_password)
-
-  //SE USA LA PETICION POST
-  try{
-    console.log(user_name, user_email, user_password)
-    const res = await fetch('http://localhost:5000/registro-user', {
-      method: 'POST',
-      headers:{
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({user_name, user_email, user_password})
-    });
-
-    const data = await res.json();
-    console.log({ data });
-
-    Swal.fire({
-      icon: 'success',
-      title: 'Usuario registrado',
-      text: 'El usuario se ha creado correctamente'
-  })
-
-  // setTimeout(()=> {
-  //   window.location.href = '/login';
-  // }, 2000);
- }catch (error) {
-
-    console.log(error);
-    Swal.fire({
-      icon: 'error',
-      title: 'Error',
-      text: error.message
-  })
-  }
- });
