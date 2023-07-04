@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 //IMPORTAR CONTROLADORES
-const metodoPost = require('../controllers/registro-user.controller')
+const {
+crearUsuario,
+loginUsuario
+} = require('../controllers/registro-user.controller')
 
 // RUTAS GET/RENDERIZAR VIEWS
 
@@ -20,8 +23,8 @@ router.get('/login', (req, res) => {
 
 
 //RUTAS POST/ CRUD
-router.post('/registro-user', metodoPost.crearUsuario);
+router.post('/registro-user', crearUsuario);
 
-router.post('/login', metodoPost.loginUsuario)
+router.post('/login', loginUsuario)
 
 module.exports = router;

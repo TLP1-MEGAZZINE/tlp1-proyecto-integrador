@@ -1,65 +1,93 @@
 //IMPORTAR LOS MODELOS DE LAS TABLAS DE LA BASE DE DATOS
-const Users = require('../models/users.model');
 const sequelize = require('../db');
-
 const User = require('../models/users.model');
-// const UserInfo = require('../models/userData.model');
-// const Nro_cel = require('../models/celTel.model');
+const bcrypt = require('bcrypt');
 
 //CREAR EL OBJETO QUE CONTENDRA LOS METODOS POST
 const metodoPost = {}
 
-// METODO PARA CREAR UN USUARIO
+// METODO PARA CREAR UN USUARIO Y ENCRIPTAR SU PASSWORD
 metodoPost.crearUsuario = async (req, res) => {
-    const { user_name, user_email, user_password } = req.body;
-console.log(req.body)
+    try {
+        const { user_name, user_email, user_password } = req.body;
+        // Se verifica si el usuario ya existe
+        const emailExistente = await User.findOne({
+            where: {
+                user_email
+            }
+        });
 
-try {
-    const user = await User.create({
-        user_name,
-        user_email,
-        user_password
-    });
-if (!user) {
-    throw ({
-        status: 400,
-        message: 'No se pudo crear un usuario'
-    })
-}
+        if (emailExistente) {
+            throw ({ // throw siempre debe ejecutarse dentro de un try catch
+                status: 400,
+                message: 'El usuario o email ya existen',
+            })
+        };
 
-return res.json(user);
-} catch (error) {
-    console.log(error);
-    return res.status(error.status || 500).json(error.message || 'Error del sevidor');  
-}
+        const user = new User({
+            user_name,
+            user_email,
+            user_password
+        });
+
+        //ENCRIPTAR LA PASSWORD
+        const salt = await bcrypt.genSalt(10)
+        user.user_password = await bcrypt.hash(user_password, salt);
+
+        // GUARDAR USUARIO EN LA DB
+        const usuarioCreado = await user.save();
+
+
+
+        if (!usuarioCreado) {
+            throw ({
+                status: 400,
+                message: 'No se pudo crear un usuario'
+            })
+        }
+
+        return res.json(user);
+    } catch (error) {
+        console.log(error);
+        return res.status(error.status || 500).json(error.message || 'Error del sevidor');
+    }
 };
 
 
 // METODO PARA EL LOGIN
-metodoPost.loginUsuario = async (req,res) => {
-    const { nombre, contraseña } = req.body;
 
+metodoPost.loginUsuario = async (req, res) => {
+    try {
+        const { user_name, user_email, user_password } = req.body
 
-const usuario = await User.findOne({
-    where: {
-        [user_name] : [
-            {user_name: user_name},
-            {user_email: user_email},
-        ],
-    },
-});
+        const user = await User.findOne({ user_name, user_email })
 
-if (!usuario) {
-    return res.status(401).json({  error: 'Credenciales invalidas'  });
-}
+        if (!user) {
+            res.status(404)
+            res.send({ error: "El usuario no existe" })
+        }
 
-const validarPass = await user.compararPass(contraseña);
-if (!validarPass) {
-    return res.status(401).json({ error: 'Credenciales invalidas'})
-}
+        const checkPass = await comparar(user_password, user.user_password)
+        const tokenSesion = await tokenFirmado(user)
 
-res.json({message: 'Inicio de sesion exitoso'});
+        if (checkPass) { // COMPARA LOS DATOS DEL USUARIO
+            res.send({
+                data: user,
+                token: tokenSesion
+            })
+            return
+        }
 
+        if (!checkPass) {
+            res.status(409)
+            res.send({
+                error: "Contraseña Inválida"
+            })
+            return
+        }
+    } catch (error) {
+        console.error(error)
+        res.status(500).send({ error: "Error interno del servidor" })
+    }
 };
-
 module.exports = metodoPost;

@@ -1,42 +1,32 @@
-// VALIDACION DE NOMBRE DE USUARIO Y CONTRASEÑA
-
-const nombreEmail = document.getElementById('nombreEmail').value
-const contraseña = document.getElementById('contraseña').value
-
-
+const formLogin = document.getElementById('formLogin');
 
 formLogin.addEventListener('submit', async (e) => {
   e.preventDefault();
-//SE USA LA PETICION POST PARA CREAR UN USUARIO
-    try {
-      const res = await fetch('http://localhost:5000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ nombreEmail, contraseña })
-      });
+  const user_name = document.getElementById('nombreEmail').value;
+  const user_password = document.getElementById('contraseña').value;
 
-      const data = await res.json();
-      console.log({ data });
+    const respuesta = await fetch('http://localhost:5000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user_name, user_password })
+    });
 
-      Swal.fire({
-        icon: 'success',
-        title: 'Credenciales correctas',
-        text: '¡Iniciando sesión!...'
-      });
+if(!respuesta.ok) {
+  const { message } = await respuesta.json();
+  return Swal.fire('Error', message, 'error');
+}
 
-      // setTimeout(() => {
-      //   window.location.href = '/inicio';
-      // }, 2000);
-    } catch (error) {
 
-      console.log(error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al iniciar sesión',
-        text: '¡Las credenciales no coinciden!',
-      });
+const { message, token } = await respuesta.json();
+Swal.fire('Correcto', message, 'success');
 
-    }
-  });
+// Se almacena el token en el local storage
+localStorage.setItem('token', token);
+
+// Redireccionar a la vista de tareas
+setTimeout(() => {
+    window.location.href = '/inicio';
+}, 2000);
+});
