@@ -5,7 +5,7 @@ formLogin.addEventListener('submit', async (e) => {
   const user_name = document.getElementById('nombreEmail').value;
   const user_password = document.getElementById('contraseña').value;
 
-    const respuesta = await fetch('http://localhost:5000/login', {
+    const respuesta = await fetch('/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

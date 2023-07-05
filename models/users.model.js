@@ -29,12 +29,19 @@ const Users = sequelize.define('Users', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    estado: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+    }
 }, {
     timestamps: false,
     paranoid: false,
     tableName: "Users"
 });
 
-Users.sync();
+Users.sync({force: false}).then(()=>{
+    console.log('Tabla de usuarios creada')
+})
 
 module.exports = Users;

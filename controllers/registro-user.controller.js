@@ -1,7 +1,8 @@
 //IMPORTAR LOS MODELOS DE LAS TABLAS DE LA BASE DE DATOS
-const sequelize = require('../db');
+// const sequelize = require('../db');
 const User = require('../models/users.model');
 const bcrypt = require('bcrypt');
+const {generarJWT} = require('../helpers/generarToken')
 
 //CREAR EL OBJETO QUE CONTENDRA LOS METODOS POST
 const metodoPost = {}
@@ -57,37 +58,80 @@ metodoPost.crearUsuario = async (req, res) => {
 // METODO PARA EL LOGIN
 
 metodoPost.loginUsuario = async (req, res) => {
+    
+    const { user_name, user_email, user_password } = req.body
     try {
-        const { user_name, user_email, user_password } = req.body
-
-        const user = await User.findOne({ user_name, user_email })
-
-        if (!user) {
-            res.status(404)
-            res.send({ error: "El usuario no existe" })
-        }
-
-        const checkPass = await comparar(user_password, user.user_password)
-        const tokenSesion = await tokenFirmado(user)
-
-        if (checkPass) { // COMPARA LOS DATOS DEL USUARIO
-            res.send({
-                data: user,
-                token: tokenSesion
-            })
-            return
-        }
-
-        if (!checkPass) {
-            res.status(409)
-            res.send({
-                error: "Contraseña Inválida"
-            })
-            return
-        }
-    } catch (error) {
-        console.error(error)
-        res.status(500).send({ error: "Error interno del servidor" })
+    //VERIFICAR SI EXISTE EL USUARIO
+    const existeUsuario = await User.findOne({ user_name });
+        
+    if(!existeUsuario) {
+        return res.status(400).json({
+            message: 'El usuario no existe',
+        });
     }
-};
+
+    // Verificar si el usuario está activo
+    if(!existeUsuario.estado) {
+        return res.status(400).json({
+            message: 'El usuario no está activo',
+        });
+    }
+
+    // Verificar la contraseña
+    const passwordValido = bcrypt.compareSync(user_password, existeUsuario.user_password);
+
+    if(!passwordValido) {
+        return res.status(400).json({
+            message: 'La contraseña no es válida',
+        });
+    }
+
+    // Generar el JWT
+    const token = await generarJWT(existeUsuario.id_user)
+
+    res.json({
+        message: 'Login correcto',
+        token,
+    })
+
+} catch (error) {
+    console.log(error);
+    res.status(500).json({
+        message: 'Error al iniciar sesión',
+    });
+
+}};
+
+    // try {
+
+    //     const user = await User.findOne({ user_name, user_email })
+
+    //     if (!user) {
+    //         res.status(404)
+    //         res.send({ error: "El usuario no existe" })
+    //     }
+
+    //     const checkPass = await comparar(user_password, user.user_password)
+    //     const tokenSesion = await tokenFirmado(user)
+
+    //     if (checkPass) { // COMPARA LOS DATOS DEL USUARIO
+    //         res.send({
+    //             data: user,
+    //             token: tokenSesion
+    //         })
+    //         return
+    //     }
+
+    //     if (!checkPass) {
+    //         res.status(409)
+    //         res.send({
+    //             error: "Contraseña Inválida"
+    //         })
+    //         return
+    //     }
+    // } catch (error) {
+    //     console.error(error)
+    //     res.status(500).send({ error: "Error interno del servidor" })
+    // }
+
 module.exports = metodoPost;
