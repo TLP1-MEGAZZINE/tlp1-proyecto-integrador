@@ -1,0 +1,275 @@
+<%- include ('../partials/header', {tituloWeb: 'Registro de Usuario' }) -%>
+
+    <body>
+
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light colorPrincipal">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center">
+                        <img src="../../img/jun.png" alt="logo" width="30" height="30">
+                        <a class="navbar-brand text-light" href="../index">Job <span class="unite">Unite</span></a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+
+        <main class="p-4 d-flex justify-content-center align-items-center colorFondo">
+            <form action="#" id="formRegistro">
+                <div id="carouselExampleDark" class="carousel carousel-dark slide ">
+
+                    <div class="carousel-inner rounded-5 py-3">
+
+
+
+                        <div class="carousel-item active" id="pagina1">
+
+
+                            <div class="bg-light rounded p-3 row g-4 d-flex align-items-center text-center"
+                                style="width:40rem; border:1px solid #000;">
+
+                                <!--PAGINA 1-->
+
+                                <h3 class="text-center fw-bold">Datos de Usuario</h3>
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Nombre de usuario</label>
+                                    <input type="text" class="form-control" placeholder="nombre de usuario"
+                                        id="user_name" name="user_name" value="Agustinm12" required>
+                                    <span class="text-danger fw-bold" id="errorUserName"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Ingrese su email</label>
+                                    <input type="email" class="form-control" placeholder="name@example.com"
+                                        id="user_email" name="user_email" value="wagu520@live.com" required>
+                                    <span class="text-danger fw-bold py-3" id="errorEmail"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label text">Repetir email</label>
+                                    <div class="input-group">
+                                        <input type="email" class="form-control" id="validarEmail" name="validarEmail"
+                                            placeholder="name@example.com" value="wagu520@live.com" required>
+                                    </div>
+                                    <span class="text-danger fw-bold" id="errorEmail2"></span>
+                                </div>
+
+                                <div class="d-flex">
+                                    <div class="col-md-6 px-1">
+                                        <div class="col-md-5">
+                                            <label for="exampleFormControlPassword6"
+                                                class="form-label text-center">Contraseña</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="password" class="form-control" id="user_password"
+                                                name="user_password" placeholder="**********" value="123456789aA"
+                                                required>
+
+                                            <button type="button" class="btn btn-outline-primary"
+                                                onclick="ocultarContraseña('user_password', this)"><i
+                                                    class="bi bi-eye"></i></button>
+                                        </div>
+                                        <span class="text-danger fw-bold" id="errorPass"></span>
+                                    </div>
+
+                                    <div class="col-md-6 px-1">
+                                        <label class="form-label">Repetir contraseña</label>
+
+                                        <div class="input-group">
+                                            <input type="password" class="form-control" id="validarPass"
+                                                name="validarPass" value="123456789aA" placeholder="**********" required>
+
+                                            <button type="button" class="btn btn-outline-primary"
+                                                onclick="ocultarContraseña('validarPass', this)"><i
+                                                    class="bi bi-eye"></i></button>
+                                        </div>
+                                        <span class="text-danger fw-bold" id="errorPass2"></span>
+                                    </div>
+                                </div>
+
+                                <div class="text-center py-5">
+
+                                    <a href="index" class="btn btn-danger"><i class="fas fa-times"></i> Cancelar</a>
+
+                                    <button class="btn btn-primary botonAdelante" data-bs-target="#carouselExampleDark"
+                                        data-bs-slide="next">
+                                        Siguiente <i class="fas fa-chevron-right"></i>
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- PAGINA 2 INFO PERSONAL-->
+
+                        <div class="carousel-item" id="pagina2">
+
+                            <div class="bg-white rounded p-3 row g-4 d-flex align-items-center text-center"
+                                style="width:40rem; border:1px solid #000;">
+
+                                <h3 class="text-center fw-bold">DATOS PERSONALES</h3>
+
+                                <!-- ingrese su nombre-->
+                                <div class="d-flex">
+                                    <div class="col-md-6 px-1">
+                                        <label class="form-label">Ingrese su nombre</label>
+                                        <input id="nombre" type="text" class="form-control" placeholder="John"
+                                            value="John" required>
+                                        <span class="text-danger fw-bold" id="errorNombre"></span>
+                                    </div>
+                                    <!-- ingrese su apellido -->
+                                    <div class="col-md-6 px-1">
+                                        <label class="form-label">Ingrese su apellido</label>
+                                        <input id="apellido" type="text" class="form-control" placeholder="Doe"
+                                            value="Doe" required>
+                                        <span class="text-danger fw-bold" id="errorApellido"></span>
+                                    </div>
+                                </div>
+                                <!--dni-->
+                                <div class="d-flex">
+                                    <div class="col-md-6 px-1">
+                                        <label class="form-label">Ingrese su DNI</label>
+                                        <input type="text" class="form-control" id="dni" placeholder="00-000-000"
+                                            value="44876123" required />
+                                        <span class="text-danger fw-bold" id="errorDni"></span>
+                                    </div>
+                                    <!--cuil-->
+                                    <div class="col-md-6 px-1">
+                                        <label class="form-label">Ingrese su CUIL</label>
+                                        <input id="cuil" type="text" class="form-control" placeholder="00-00-000-000-0"
+                                            value="20448761232" required />
+                                        <span class="text-danger fw-bold" id="errorCuil"></span>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex">
+                                    <div class="col-md-6 px-1">
+                                        <label class="form-label">Fecha de nacimiento</label>
+                                        <input id="fechaNacimiento" value="2001-12-30" type="date" class="form-control"
+                                            required />
+                                    </div>
+
+                                    <div class="col-md-6 px-1">
+                                        <label class="form-label">Genero</label>
+                                        <select id="genero" type="text" class="form-control" class="form-select"
+                                            aria-label="Default select example" required>
+
+                                            <option value="" selected disabled>Sexo</option>
+                                            <option value="1">Masculino</option>
+                                            <option value="2">Femenino</option>
+                                            <option value="3">Sin especificar</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex">
+                                    <div class="col-md-6 px-1">
+                                        <label class="form-label">Nacionalidad</label>
+                                        <select id="pais" class="form-select" aria-label="Default select example"
+                                            required>
+                                            <option value="" selected disabled>Paises</option>
+                                            <option value="1">Argentina</option>
+                                            <option value="2">Bolivia</option>
+                                            <option value="3">Brasil</option>
+                                            <option value="4">Chile</option>
+                                            <option value="5">Colombia</option>
+                                            <option value="6">Ecuador</option>
+                                            <option value="7">Paraguay</option>
+                                            <option value="8">Peru</option>
+                                            <option value="9">Uruguay</option>
+                                            <option value="10">Venezuela</option>
+                                            <option value="11">Otro</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6 px-1" id="selectorProvincia"></div>
+                                </div>
+
+                                <div id="otroPais"></div>
+
+
+                                <div class="text-center">
+                                    <button class="btn btn-secondary botonAtras" data-bs-target="#carouselExampleDark"
+                                        data-bs-slide="prev"><i class="fas fa-chevron-left"></i> Anterior</button>
+
+                                    <button class="btn btn-primary botonAdelante" data-bs-target="#carouselExampleDark"
+                                        data-bs-slide="next">Siguiente <i class="fas fa-chevron-right"></i></button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- PAGINA 3 CONTACTO Y ROL -->
+
+                        <div class="carousel-item" id="pagina3">
+
+
+
+                            <div class="bg-white rounded row g-4 p-3 d-flex align-items-center text-center"
+                                style="width:40rem; border:1px solid #000;">
+
+                                <h3 class="text-center fw-bold">INFORMACIÓN DE CONTACTO Y ROL</h3>
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Domicilio</label>
+                                    <input id="domicilio" type="text" class="form-control"
+                                        placeholder="Mz24 Cs45, Barrio XYZ" value="barrio villa del carmen" required />
+                                    <span class="text-danger fw-bold" id="errorDomicilio"></span>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Numero de telefono</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="prefijoTel">+</span>
+                                        <input type="text" class="form-control" id="numTelefono" value="3704563459"
+                                            required>
+                                    </div>
+                                    <span class="text-danger fw-bold" id="errorTelefono"></span>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Seleccione su rol</label>
+                                    <select id="opcionRol" class="form-select" aria-label="Default select example"
+                                        required>
+                                        <option id="select" value="" selected disabled>Roles</option>
+                                        <option value="1">Postulante</option>
+                                        <option value="2">Empleador</option>
+                                        <option value="3">Particular</option>
+                                    </select>
+                                </div>
+
+                                <div id="postulante"></div>
+                                <div id="empleador"></div>
+
+                                <div class="text-center">
+                                    <button class="btn btn-secondary botonAtras" id="botonAtras"  data-bs-target="#carouselExampleDark"
+                                        data-bs-slide="prev"><i class="fas fa-chevron-left"></i> Anterior</button>
+                                    <button class="btn btn-primary" id="btnRegistrarse" type="submit">Registrarse <i
+                                            class="fas fa-file-alt"></i></button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+                </div>
+
+            </form>
+        </main>
+
+        <script src="../../js/registro.js"></script>
+        <script src="../../js/validaciones.js"></script>
+
+        <%- include ('../partials/footer') -%>
