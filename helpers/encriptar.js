@@ -3,8 +3,8 @@ const bcrypt = require('bcryptjs'); //LIBRERIOA PARA ENCRIPTAR
 
 //ENCRIPTA LA PASSWORD
 const encriptar = async (textPlain) => {
-    const hash = await bcrypt.hash(textPlain, 10)
-     return hash
+   return await bcrypt.hash(textPlain, 10) 
+    
 }
 
 //ENCRIPTA LA PASSWORD PLANA CON EL HASH

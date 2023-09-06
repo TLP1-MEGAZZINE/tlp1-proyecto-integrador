@@ -6,7 +6,9 @@ const Nacionalidad = require("./nacionalidades.model");
 const UserGender = require('./genero.model');
 const Provincia = require("./provincias.models")
 
-const UserInfo = sequelize.define('User_info', {
+const userInformation = 
+
+ userInformation.UserInfo = sequelize.define('User_info', {
     id_info: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -103,5 +105,9 @@ UserInfo.sync({ force: false }).then(() => {
 
 })
 
+userInformation.createInfoUser = async (body) => {
+    
+}
 
-module.exports = UserInfo;
+
+module.exports = userInformation;
