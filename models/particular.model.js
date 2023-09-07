@@ -1,5 +1,5 @@
 const { DataTypes, sequelize } = require('../db');
-const Users = require("./users.model")
+const {Users} = require("./users.model")
 
 // Definir el modelo para la tabla Particular
 const Particular = sequelize.define('Particular', {

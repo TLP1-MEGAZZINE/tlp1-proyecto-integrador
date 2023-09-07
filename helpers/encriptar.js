@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs'); //LIBRERIOA PARA ENCRIPTAR
+const bcrypt = require('bcrypt'); //LIBRERIOA PARA ENCRIPTAR
 
 
 //ENCRIPTA LA PASSWORD

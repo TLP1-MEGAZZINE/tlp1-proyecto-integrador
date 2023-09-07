@@ -6,7 +6,7 @@ const Nacionalidad = require("./nacionalidades.model");
 const UserGender = require('./genero.model');
 const Provincia = require("./provincias.models")
 
-const userInformation = 
+const userInformation = {}
 
  userInformation.UserInfo = sequelize.define('User_info', {
     id_info: {
@@ -88,20 +88,20 @@ const userInformation =
 });
 
 //SI NO FUNCIONA CAMBIAR EL FALSE A TRUE
-UserInfo.sync({ force: false }).then(() => {
+userInformation.UserInfo.sync({ force: false }).then(() => {
     console.log('Tabla de info usuario creada')
 
-    UserInfo.belongsTo(UserRol, { foreignKey: 'id_rol' });
-    UserRol.hasOne(UserInfo, { foreignKey: 'id_rol' });
+    userInformation.UserInfo.belongsTo(UserRol, { foreignKey: 'id_rol' });
+    UserRol.hasOne(userInformation.UserInfo, { foreignKey: 'id_rol' });
     
-    UserInfo.belongsTo(Nacionalidad, { foreignKey: 'id_pais' });
-    Nacionalidad.hasOne(UserInfo, { foreignKey: 'id_pais' });
+    userInformation.UserInfo.belongsTo(Nacionalidad, { foreignKey: 'id_pais' });
+    Nacionalidad.hasOne(userInformation.UserInfo, { foreignKey: 'id_pais' });
     
-    UserInfo.belongsTo(UserGender, { foreignKey: 'id_genero' });
-    UserGender.hasOne(UserInfo, { foreignKey: 'id_genero' });
+    userInformation.UserInfo.belongsTo(UserGender, { foreignKey: 'id_genero' });
+    UserGender.hasOne(userInformation.UserInfo, { foreignKey: 'id_genero' });
 
-    UserInfo.belongsTo(Provincia, { foreignKey: 'id_provincia' });
-    Provincia.hasOne(UserInfo, { foreignKey: 'id_provincia' });
+    userInformation.UserInfo.belongsTo(Provincia, { foreignKey: 'id_provincia' });
+    Provincia.hasOne(userInformation.UserInfo, { foreignKey: 'id_provincia' });
 
 })
 

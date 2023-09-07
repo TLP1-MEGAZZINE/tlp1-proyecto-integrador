@@ -41,7 +41,7 @@ userActions.Users = sequelize.define('Users', {
     tableName: "Users"
 });
 
-Users.sync({ force: false }).then(() => {
+userActions.Users.sync({ force: false }).then(() => {
     console.log('Tabla de usuarios creada')
 })
 
