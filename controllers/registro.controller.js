@@ -1,9 +1,9 @@
 //IMPORTAR LOS MODELOS DE LAS TABLAS DE LA BASE DE DATOS
 const { sequelize } = require('../db');
-const {Users, createUser} = require('../models/users.model');
+const { Users, createUser } = require('../models/users.model');
 const UserInfo = require("../models/userInfo.model")
 const Contacto = require('../models/contacto.model');
-const Postulante = require('../models/postulantesInfo.model');
+const Postulante = require('../models/postulantes.model');
 const Empleador = require('../models/empleador.model');
 const Particular = require("../models/particular.model")
 
@@ -12,13 +12,19 @@ const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
 const { generarJWT } = require('../helpers/generarToken')
 
+
+// const crearUsuario = () => {
+
+// }
+
+
 //CREAR EL OBJETO QUE CONTENDRA LOS METODOS POST
 const metodoPost = {}
 
 // METODO PARA CREAR UN USUARIO Y ENCRIPTAR SU PASSWORD
 metodoPost.crearUsuario = async (req, res) => {
 
-    await createUser(req.body) 
+    await createUser(req.body)
 
 }
 
@@ -82,4 +88,4 @@ metodoPost.loginUsuario = async (req, res) => {
     }
 };
 
-module.exports = metodoPost;
+module.exports = crearUsuario;

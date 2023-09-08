@@ -6,9 +6,9 @@ const Nacionalidad = require("./nacionalidades.model");
 const UserGender = require('./genero.model');
 const Provincia = require("./provincias.models")
 
-const userInformation = {}
+const userInfoActions = {}
 
- userInformation.UserInfo = sequelize.define('User_info', {
+userInfoActions.UserInfo = sequelize.define('User_info', {
     id_info: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -50,19 +50,19 @@ const userInformation = {}
         allowNull: false
     },
     id_genero: {
-        type: DataTypes.INTEGER, 
+        type: DataTypes.INTEGER,
         references: {
             model: "genero",
             key: "id_genero"
         }
     },
     id_rol: {
-        type: DataTypes.INTEGER, 
+        type: DataTypes.INTEGER,
         references: {
             model: "User_rol",
             key: "id_rol"
         },
-    },    
+    },
     id_pais: {
         type: DataTypes.INTEGER,
         references: {
@@ -88,26 +88,64 @@ const userInformation = {}
 });
 
 //SI NO FUNCIONA CAMBIAR EL FALSE A TRUE
-userInformation.UserInfo.sync({ force: false }).then(() => {
+userInfoActions.UserInfo.sync({ force: false }).then(() => {
     console.log('Tabla de info usuario creada')
 
-    userInformation.UserInfo.belongsTo(UserRol, { foreignKey: 'id_rol' });
-    UserRol.hasOne(userInformation.UserInfo, { foreignKey: 'id_rol' });
-    
-    userInformation.UserInfo.belongsTo(Nacionalidad, { foreignKey: 'id_pais' });
-    Nacionalidad.hasOne(userInformation.UserInfo, { foreignKey: 'id_pais' });
-    
-    userInformation.UserInfo.belongsTo(UserGender, { foreignKey: 'id_genero' });
-    UserGender.hasOne(userInformation.UserInfo, { foreignKey: 'id_genero' });
+    userInfoActions.UserInfo.belongsTo(UserRol, { foreignKey: 'id_rol' });
+    UserRol.hasOne(userInfoActions.UserInfo, { foreignKey: 'id_rol' });
 
-    userInformation.UserInfo.belongsTo(Provincia, { foreignKey: 'id_provincia' });
-    Provincia.hasOne(userInformation.UserInfo, { foreignKey: 'id_provincia' });
+    userInfoActions.UserInfo.belongsTo(Nacionalidad, { foreignKey: 'id_pais' });
+    Nacionalidad.hasOne(userInfoActions.UserInfo, { foreignKey: 'id_pais' });
+
+    userInfoActions.UserInfo.belongsTo(UserGender, { foreignKey: 'id_genero' });
+    UserGender.hasOne(userInfoActions.UserInfo, { foreignKey: 'id_genero' });
+
+    userInfoActions.UserInfo.belongsTo(Provincia, { foreignKey: 'id_provincia' });
+    Provincia.hasOne(userInfoActions.UserInfo, { foreignKey: 'id_provincia' });
 
 })
 
-userInformation.createInfoUser = async (body) => {
-    
+userInfoActions.createInfoUser = async (body) => {
+
+    return sequelize.transaction(async (transaction) => {
+
+        try {
+            const {
+                id_user,
+                nombre,
+                apellido,
+                dni,
+                cuil,
+                fecha_nacimiento,
+                id_genero,
+                
+                id_rol,
+                id_pais,
+                otro_pais,
+                id_provincia
+            } = body
+
+            const info = await userInfoActions.UserInfo.create({
+                id_user,
+                nombre,
+                apellido,
+                dni,
+                cuil,
+                fecha_nacimiento,
+                id_genero,
+                id_rol,
+                id_pais,
+                otro_pais,
+                id_provincia
+            },
+                { transaction }
+            );
+
+        } catch (error) {
+            console.log("Error al crear registro de user_info", error);
+            throw error
+        }
+    })
 }
 
-
-module.exports = userInformation;
+module.exports = userInfoActions;

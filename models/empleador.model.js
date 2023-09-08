@@ -2,9 +2,11 @@ const { DataTypes, sequelize } = require('../db');
 
 const Rubro = require("./rubro.model")
 
+const ctrlEmpleador = {}
+
 
 //CREAR MODELO DE USERS
-const Empleador = sequelize.define('empleador', {
+ctrlEmpleador.Empleador = sequelize.define('empleador', {
     id_empleador: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -46,13 +48,44 @@ const Empleador = sequelize.define('empleador', {
     tableName: "empleador"
 });
 
-Empleador.belongsTo(Rubro, { foreignKey: 'id_rubro' });
-Rubro.hasOne(Empleador, { foreignKey: 'id_rubro' });
+ctrlEmpleador.Empleador.belongsTo(Rubro, { foreignKey: 'id_rubro' });
+Rubro.hasOne(ctrlEmpleador.Empleador, { foreignKey: 'id_rubro' });
 
-Empleador.sync({ force: false }).then(() => {
+ctrlEmpleador.Empleador.sync({ force: false }).then(() => {
     console.log('Tabla de empleador creada')
 })
 
 
+ctrlEmpleador.createEmpleador = async (body) => {
 
-module.exports = Empleador;
+    return sequelize.transaction(async (transaction) => {
+
+        try {
+
+            const { num_telEmpresa,
+                domicilioEmpresa,
+                nombre_empresa,
+                id_rubro,
+                otro_rubro
+            } = body;
+
+            const empleador = await ctrlEmpleador.Empleador.create(
+                {
+                    id_user,
+                    num_telEmpresa,
+                    domicilioEmpresa,
+                    nombre_empresa,
+                    id_rubro,
+                    otro_rubro
+                },
+                { transaction }
+            );
+
+        } catch (error) {
+            console.log("Error al crear registro de empleador", error.json())
+            throw error
+        }
+    })
+}
+
+module.exports = ctrlEmpleador;

@@ -1,8 +1,10 @@
 const { DataTypes, sequelize } = require('../db');
-const {Users} = require("./users.model")
+const { Users } = require("./users.model")
+
+const ctrlParticular = {}
 
 // Definir el modelo para la tabla Particular
-const Particular = sequelize.define('Particular', {
+ctrlParticular.Particular = sequelize.define('Particular', {
     id_Particular: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -23,10 +25,30 @@ const Particular = sequelize.define('Particular', {
 
 
 // Sincronizar los modelos con la base de datos (esto creará las tablas si no existen)
-Particular.sync({ force: false }).then(() => {
+ctrlParticular.Particular.sync({ force: false }).then(() => {
     console.log('Tabla de particulares creada')
 })
 
-Particular.belongsTo(Users, { foreignKey: 'id_user', as: "Users" });
+ctrlParticular.Particular.belongsTo(Users, { foreignKey: 'id_user', as: "Users" });
 
-module.exports = Particular;
+
+
+ctrlParticular.createParticular = async (body) => {
+
+    return sequelize.transaction(async (transaction) => {
+
+        try {
+            const particular = await ctrlParticular.Particular.create(
+                {
+                    id_user
+                },
+                { transaction }
+            );
+        } catch (error) {
+            console.log = ("Error al crear el registro de particulares ", error.json())
+            throw error
+        }
+    })
+}
+
+module.exports = ctrlParticular;

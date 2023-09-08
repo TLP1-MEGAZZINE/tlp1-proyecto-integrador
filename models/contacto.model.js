@@ -1,8 +1,12 @@
 const { DataTypes, sequelize } = require('../db');
-const {Users} = require("./users.model")
+const { userActions, Users } = require("./users.model")
+
+const contactoActions = {}
+
+// const ModelContact = sequelize.define()
 
 // Definir el modelo para la tabla contacto
-const Contacto = sequelize.define('Contacto', {
+contactoActions.Contacto = sequelize.define('Contacto', {
     id_contacto: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -31,10 +35,35 @@ const Contacto = sequelize.define('Contacto', {
 
 
 // Sincronizar los modelos con la base de datos (esto creará las tablas si no existen)
-Contacto.sync({ force: false }).then(() => {
+contactoActions.Contacto.sync({ force: false }).then(() => {
     console.log('Tabla de contactos creada')
 })
 
-Contacto.belongsTo(Users, { foreignKey: 'id_user', as: "Users" });
+contactoActions.Contacto.belongsTo(Users, { foreignKey: 'id_user', as: "Users" });
 
-module.exports = Contacto;
+
+contactoActions.createContacto = async (body) => {
+
+    return sequelize.transaction(async (transaction) => {
+
+        try {
+
+            const { num_tel, domicilio } = body;
+
+            const contacto = await contactoActions.Contacto.create(
+                {
+                    id_user,
+                    num_tel,
+                    domicilio,
+                },
+                { transaction }
+            );
+
+        } catch (error) {
+            console.log("Error al crear registro de contacto", error)
+            throw error
+        }
+    })
+}
+
+module.exports = contactoActions;
