@@ -1,21 +1,17 @@
 //IMPORTAR LOS MODELOS DE LAS TABLAS DE LA BASE DE DATOS
 const { sequelize } = require('../db');
-const { Users, createUser } = require('../models/users.model');
-const UserInfo = require("../models/userInfo.model")
-const Contacto = require('../models/contacto.model');
-const Postulante = require('../models/postulantes.model');
-const Empleador = require('../models/empleador.model');
-const Particular = require("../models/particular.model")
+const { User, createUser } = require('../models/users.model');
+const { UserInfo, createInfoUser } = require("../models/userInfo.model")
+const { Contacto, createContacto } = require('../models/contacto.model');
+const { Postulante, createPostulante } = require('../models/postulantes.model');
+const { Empleador, createEmpleador } = require('../models/empleador.model');
+const { Particular, createParticular } = require("../models/particular.model")
+const crearRegistroCompleto = require("../models/registro.js")
 
 
 const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
 const { generarJWT } = require('../helpers/generarToken')
-
-
-// const crearUsuario = () => {
-
-// }
 
 
 //CREAR EL OBJETO QUE CONTENDRA LOS METODOS POST
@@ -24,8 +20,20 @@ const metodoPost = {}
 // METODO PARA CREAR UN USUARIO Y ENCRIPTAR SU PASSWORD
 metodoPost.crearUsuario = async (req, res) => {
 
-    await createUser(req.body)
+    const userData = req.body
 
+    try {
+
+        const registroCompleto = await crearRegistroCompleto(userData);
+
+if(!registroCompleto){
+    throw new Error("Error al crear el registro de usuario")
+}
+
+    } catch (error) {
+        console.log("Error del servidor", error)
+        throw error
+    }
 }
 
 
@@ -88,4 +96,4 @@ metodoPost.loginUsuario = async (req, res) => {
     }
 };
 
-module.exports = crearUsuario;
+module.exports = metodoPost;

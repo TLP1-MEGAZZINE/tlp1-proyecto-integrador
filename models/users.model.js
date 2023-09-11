@@ -1,21 +1,8 @@
 const { DataTypes, sequelize } = require('../db');
 const { encriptar } = require('../helpers/encriptar');
 
-//MODELO DE USERINFO Y METODO PARA CREAR EL REGISTRO EN DICHA TABLA
-const { createInfoUser, } = require("./userInfo.model")
-
-const { createContacto, } = require("./contacto.model")
-
-const { createParticular, } = require("./particular.model")
-
-const { createEmpleador, } = require("./empleador.model")
-
-const { createPostulante, } = require("./postulantes.model");
-
-const userActions = {}
-
-//CREAR MODELO DE USERS
-userActions.Users = sequelize.define('Users', {
+//CREAR MODELO DE USER
+const User = sequelize.define('User', {
     id_user: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -49,106 +36,52 @@ userActions.Users = sequelize.define('Users', {
 }, {
     timestamps: false,
     paranoid: false,
-    tableName: "Users"
+    tableName: "User",
+    modelName: "User"
 });
 
-userActions.Users.sync({ force: false }).then(() => {
+User.sync({ force: false }).then(() => {
     console.log('Tabla de usuarios creada')
 })
 
-userActions.createUser = async (body) => {
 
-    return sequelize.transaction(async (transaction) => {
-        try {
-
-            const { user_name,
-                user_email,
-                user_password } = body
-
-            // Se verifica si el usuario e email ya existen
-            const userNameExistente = await userActions.Users.findOne({ where: { user_name: user_name } });
-
-            const emailExistente = await userActions.Users.findOne({ where: { user_email: user_email } });
-
-            if (emailExistente) {
-                // return res.status(403).json({
-                //     message: '¡El email ya esta registrado!',
-                // });
-                throw new Error("El email ya esta registrado")
-
-            } else {
-                if (userNameExistente) {
-                    /*                 return res.status(403).json({
-                                        message: '¡El nombre de usuario ya esta registrado!',
-                                    });
-                                } */
-                    throw new Error("El username ya esta registrado")
-                };
-
-                //ENCRIPTAR LA PASSWORD
-                const hashedPass = await encriptar(user_password)
-
-                //CREA USUARIO EN LA DB
-                const userData = await userActions.Users.create({
-                    user_name,
-                    user_email,
-                    user_password: hashedPass
-                },
-                    { transaction }
-                );
-
-                const id_user = userData.id_user
-                let rol
-
-                // CREAR INFO DE USUARIO EN LA DB
-
-                let info = await createInfoUser({ id_user, });
-
-                // CREAR REGISTRO DE CONTACTO EN LA DB
-
-                let contacto = await createContacto({ id_user, });
-
-                // GUARDAR INFO POSTULANTE EN LA DB
-
-                rol = info.id_rol
-                if (rol == 1) {
-
-                    //CREAR REGISTRO POSTULANTE
-
-                    let postulante = await createPostulante({ id_user, })
-
-                    return res.json({ userData, info, contacto, postulante });
-
-                } else if (rol == 2) {
-                    //CREAR EMPLEADOR
-
-                    let empleador = await createEmpleador({ id_user, })
-
-                    return res.json({ userData, info, contacto, empleador });
-
-
-                } else if (rol == 3) {
-
-                    //CREAR PARTICULAR
-
-                    const particular = await createParticular({ id_user, })
-
-                    return res.json({ userData, info, contacto, particular });
-                }
+async function createUser(userData) {
+    try {
+        //COMPROBAR SI EXISTEN REGISTROS
+        const existeUsername = await User.findOne({
+            where: {
+                user_name: userData.user_name
             }
+        })
 
-        } catch (error) {
-            console.log("Error al crear registros", error);
-            throw error
+        const existeEmail = await User.findOne({
+            where: {
+                user_email: userData.user_email
+            }
+        })
+
+        if (existeEmail) {
+            throw new Error("El email ya esta registrado")
+        } else {
+            if (existeUsername) {
+                throw new Error("El username ya esta registrado")
+            }
         }
-    })
-        .then(() => {
-            console.log("transaccion completada con exito")
-        })
-        .catch((error) => {
-            console.error("error al completar la transaccion:", error);
-        })
+
+        //ENCRIPTAR LA PASSWORD
+        const hashedPass = await encriptar(user_password)
+
+        //CREA USUARIO EN LA DB
+        return await User.create({
+            user_name,
+            user_email,
+            user_password: hashedPass
+        });
+
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
 }
 
-
-module.exports = {userActions};
+module.exports =  {User, createUser }

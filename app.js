@@ -12,22 +12,23 @@ require('dotenv').config();
 // const { sequelize } = require('./db');
 
 require('ejs');
+const { User } = require("./models/users.model")
+const { UserInfo } = require("./models/userInfo.model")
+const { Contacto } = require("./models/contacto.model");
+const { Empleador } = require("./models/empleador.model")
+const { Particular } = require("./models/particular.model")
 
-// const UserInfo = require("./models/userInfo.model")
-// const Users = require("./models/users.model")
-// const Contacto = require("./models/contacto.model");
 // const UserRol = require("./models/userRol.model")
 // const UserGender = require("./models/genero.model")
 // const Nacionalidad = require("./models/nacionalidades.model")
-const Provincia = require("./models/provincias.models")
-const Empleador = require("./models/empleador.model")
-const Particular = require("./models/particular.model")
+// const Provincia = require("./models/provincias.models")
 // const Rubro = require("./models/rubro.model")
 // const EstadoLaboral = require("./models/estado_laboral.model")
 // const NivelEducacion = require("./models/nivelEduacion.model")
 
 
-const { conectarDB } = require('./db'); 
+
+const { conectarDB } = require('./db');
 conectarDB();
 
 //DECLARACION DEL PUERTO
@@ -42,7 +43,7 @@ app.use(helmet({
 }));
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(session({
     secret: process.env.SECRET_KEY,
     resave: false,
@@ -50,7 +51,7 @@ app.use(session({
     cookie: {
         maxAge: 600000, //10 minutos...  36000001hora
     }
-  }));
+}));
 
 //ARCHIVOS ESTATICOS
 app.use(express.static(path.join(__dirname, 'public')));

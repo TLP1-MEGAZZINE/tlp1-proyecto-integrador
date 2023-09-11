@@ -2,11 +2,8 @@ const { DataTypes, sequelize } = require('../db');
 
 const Rubro = require("./rubro.model")
 
-const ctrlEmpleador = {}
-
-
 //CREAR MODELO DE USERS
-ctrlEmpleador.Empleador = sequelize.define('empleador', {
+const Empleador = sequelize.define('empleador', {
     id_empleador: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -15,7 +12,7 @@ ctrlEmpleador.Empleador = sequelize.define('empleador', {
     id_user: {
         type: DataTypes.INTEGER,
         references: {
-            model: "Users",
+            model: "User",
             key: "id_user"
         },
     },
@@ -48,44 +45,33 @@ ctrlEmpleador.Empleador = sequelize.define('empleador', {
     tableName: "empleador"
 });
 
-ctrlEmpleador.Empleador.belongsTo(Rubro, { foreignKey: 'id_rubro' });
-Rubro.hasOne(ctrlEmpleador.Empleador, { foreignKey: 'id_rubro' });
+Empleador.belongsTo(Rubro, { foreignKey: 'id_rubro' });
+Rubro.hasOne(Empleador, { foreignKey: 'id_rubro' });
 
-ctrlEmpleador.Empleador.sync({ force: false }).then(() => {
+Empleador.sync({ force: false }).then(() => {
     console.log('Tabla de empleador creada')
 })
 
 
-ctrlEmpleador.createEmpleador = async (body) => {
+async function createEmpleador(userData) {
 
-    return sequelize.transaction(async (transaction) => {
-
-        try {
-
-            const { num_telEmpresa,
+    try {
+        return await Empleador.create(
+            {
+                id_user,
+                num_telEmpresa,
                 domicilioEmpresa,
                 nombre_empresa,
                 id_rubro,
                 otro_rubro
-            } = body;
+            },
+        );
 
-            const empleador = await ctrlEmpleador.Empleador.create(
-                {
-                    id_user,
-                    num_telEmpresa,
-                    domicilioEmpresa,
-                    nombre_empresa,
-                    id_rubro,
-                    otro_rubro
-                },
-                { transaction }
-            );
 
-        } catch (error) {
-            console.log("Error al crear registro de empleador", error.json())
-            throw error
-        }
-    })
-}
+    } catch (error) {
+        console.log("Error al crear registro de empleador", error)
+        throw error
+    }
+};
 
-module.exports = ctrlEmpleador;
+module.exports = { Empleador, createEmpleador }

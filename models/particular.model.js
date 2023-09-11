@@ -1,10 +1,8 @@
 const { DataTypes, sequelize } = require('../db');
-const { Users } = require("./users.model")
-
-const ctrlParticular = {}
+const { User } = require("./users.model")
 
 // Definir el modelo para la tabla Particular
-ctrlParticular.Particular = sequelize.define('Particular', {
+const Particular = sequelize.define('Particular', {
     id_Particular: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -13,7 +11,7 @@ ctrlParticular.Particular = sequelize.define('Particular', {
     id_user: {
         type: DataTypes.INTEGER,
         references: {
-            model: "Users",
+            model: "User",
             key: "id_user"
         },
     },
@@ -25,30 +23,26 @@ ctrlParticular.Particular = sequelize.define('Particular', {
 
 
 // Sincronizar los modelos con la base de datos (esto creará las tablas si no existen)
-ctrlParticular.Particular.sync({ force: false }).then(() => {
+Particular.sync({ force: false }).then(() => {
     console.log('Tabla de particulares creada')
 })
 
-ctrlParticular.Particular.belongsTo(Users, { foreignKey: 'id_user', as: "Users" });
+Particular.belongsTo(User, { foreignKey: 'id_user', as: "User" });
 
 
 
-ctrlParticular.createParticular = async (body) => {
+async function createParticular(userData) {
 
-    return sequelize.transaction(async (transaction) => {
-
-        try {
-            const particular = await ctrlParticular.Particular.create(
-                {
-                    id_user
-                },
-                { transaction }
-            );
-        } catch (error) {
-            console.log = ("Error al crear el registro de particulares ", error.json())
-            throw error
-        }
-    })
+    try {
+        return await Particular.create(
+            {
+                id_user
+            },
+        );
+    } catch (error) {
+        console.log("Error al crear el registro de particulares ", error)
+        throw error
+    }
 }
 
-module.exports = ctrlParticular;
+module.exports = { createParticular, Particular }

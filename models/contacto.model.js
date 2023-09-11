@@ -1,12 +1,7 @@
 const { DataTypes, sequelize } = require('../db');
-const { userActions, Users } = require("./users.model")
-
-const contactoActions = {}
-
-// const ModelContact = sequelize.define()
-
+const { User } = require("./users.model.js")
 // Definir el modelo para la tabla contacto
-contactoActions.Contacto = sequelize.define('Contacto', {
+const Contacto = sequelize.define('Contacto', {
     id_contacto: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -15,7 +10,7 @@ contactoActions.Contacto = sequelize.define('Contacto', {
     id_user: {
         type: DataTypes.INTEGER,
         references: {
-            model: "Users",
+            model: "User",
             key: "id_user"
         },
     },
@@ -35,35 +30,29 @@ contactoActions.Contacto = sequelize.define('Contacto', {
 
 
 // Sincronizar los modelos con la base de datos (esto creará las tablas si no existen)
-contactoActions.Contacto.sync({ force: false }).then(() => {
+Contacto.sync({ force: true }).then(() => {
     console.log('Tabla de contactos creada')
 })
 
-contactoActions.Contacto.belongsTo(Users, { foreignKey: 'id_user', as: "Users" });
+Contacto.belongsTo(User, { foreignKey: 'id_user', as: "User" });
 
+async function createContacto(userData) {
 
-contactoActions.createContacto = async (body) => {
+    try {
 
-    return sequelize.transaction(async (transaction) => {
+        return await Contacto.create(
+            {
+                id_user,
+                num_tel,
+                domicilio,
+            }
+        );
 
-        try {
-
-            const { num_tel, domicilio } = body;
-
-            const contacto = await contactoActions.Contacto.create(
-                {
-                    id_user,
-                    num_tel,
-                    domicilio,
-                },
-                { transaction }
-            );
-
-        } catch (error) {
-            console.log("Error al crear registro de contacto", error)
-            throw error
-        }
-    })
+    } catch (error) {
+        console.log("Error al crear registro de contacto", error)
+        throw error
+    }
 }
 
-module.exports = contactoActions;
+
+module.exports = { createContacto, Contacto }

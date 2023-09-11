@@ -4,11 +4,8 @@ const EstadoLaboral = require("./estado_laboral.model")
 const NivelEducacion = require("./nivelEduacion.model")
 const Rubro = require("./rubro.model")
 
-const postulanteActions = {}
-
-
 //CREAR MODELO DE USERS
-postulanteActions.Postulante = sequelize.define('postulante', {
+const Postulante = sequelize.define('postulante', {
     id_postulante: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -17,7 +14,7 @@ postulanteActions.Postulante = sequelize.define('postulante', {
     id_user: {
         type: DataTypes.INTEGER,
         references: {
-            model: "Users",
+            model: "User",
             key: "id_user"
         },
     },
@@ -52,46 +49,37 @@ postulanteActions.Postulante = sequelize.define('postulante', {
     tableName: "postulante"
 });
 
-postulanteActions.Postulante.sync({ force: false }).then(() => {
+Postulante.sync({ force: false }).then(() => {
     console.log('Tabla de postulantes creada')
 })
 
-postulanteActions.Postulante.belongsTo(EstadoLaboral, { foreignKey: 'id_EstadoLaboral' });
-EstadoLaboral.hasOne(postulanteActions.Postulante, { foreignKey: 'id_EstadoLaboral' });
+Postulante.belongsTo(EstadoLaboral, { foreignKey: 'id_EstadoLaboral' });
+EstadoLaboral.hasOne(Postulante, { foreignKey: 'id_EstadoLaboral' });
 
-postulanteActions.Postulante.belongsTo(NivelEducacion, { foreignKey: 'id_NivelEducacion' });
-NivelEducacion.hasOne(postulanteActions.Postulante, { foreignKey: 'id_NivelEducacion' });
+Postulante.belongsTo(NivelEducacion, { foreignKey: 'id_NivelEducacion' });
+NivelEducacion.hasOne(Postulante, { foreignKey: 'id_NivelEducacion' });
 
-postulanteActions.Postulante.belongsTo(Rubro, { foreignKey: 'id_rubro' });
-Rubro.hasOne(postulanteActions.Postulante, { foreignKey: 'id_rubro' });
+Postulante.belongsTo(Rubro, { foreignKey: 'id_rubro' });
+Rubro.hasOne(Postulante, { foreignKey: 'id_rubro' });
 
-postulanteActions.createPostulante = async (body) => {
+async function createPostulante(userData) {
 
-    return sequelize.transaction(async (transaction) => {
+    try {
 
-        try {
-
-            const { id_EstadoLaboral,
+        return await Postulante.create(
+            {
+                id_user,
+                id_EstadoLaboral,
                 id_NivelEducacion,
                 id_rubro,
-                otro_rubro } = body;
+                otro_rubro
+            },
+        );
 
-            const postulante = await postulanteActions.Postulante.create(
-                {
-                    id_user,
-                    id_EstadoLaboral,
-                    id_NivelEducacion,
-                    id_rubro,
-                    otro_rubro
-                },
-                { transaction }
-            );
-
-        } catch (error) {
-            console.log = ("Error al crear el registro de postulantes ", error.json())
-            throw error
-        }
-    })
+    } catch (error) {
+        console.log = ("Error al crear el registro de postulantes ", error)
+        throw error
+    }
 }
 
-module.exports = postulanteActions;
+module.exports = { Postulante, createPostulante }
