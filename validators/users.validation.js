@@ -63,7 +63,7 @@ check("id_pais")
 check("id_provincia")
 .optional()
 .notEmpty().withMessage("Debe seleccionar su provincia de procedencia")
-.isNumeric().withMessage("Debe seleccionar su provincia de procedencia"),
+.isNumeric().withMessage("."),
 
 check("otro_pais")
 .optional()

@@ -53,17 +53,17 @@ Empleador.sync({ force: false }).then(() => {
 })
 
 
-async function createEmpleador(userData) {
+async function createEmpleador(id_user, userData) {
 
     try {
         return await Empleador.create(
             {
-                id_user,
-                num_telEmpresa,
-                domicilioEmpresa,
-                nombre_empresa,
-                id_rubro,
-                otro_rubro
+                id_user: id_user,
+                num_telEmpresa: userData.num_telEmpresa,
+                domicilioEmpresa: userData.domicilioEmpresa,
+                nombre_empresa: userData.nombre_empresa,
+                id_rubro: userData.id_rubro,
+                otro_rubro: userData.otro_rubro
             },
         );
 

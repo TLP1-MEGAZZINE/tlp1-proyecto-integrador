@@ -1,12 +1,5 @@
-//IMPORTAR LOS MODELOS DE LAS TABLAS DE LA BASE DE DATOS
-const { sequelize } = require('../db');
-const { User, createUser } = require('../models/users.model');
-const { UserInfo, createInfoUser } = require("../models/userInfo.model")
-const { Contacto, createContacto } = require('../models/contacto.model');
-const { Postulante, createPostulante } = require('../models/postulantes.model');
-const { Empleador, createEmpleador } = require('../models/empleador.model');
-const { Particular, createParticular } = require("../models/particular.model")
-const crearRegistroCompleto = require("../models/registro.js")
+//IMPORTACIONES
+const crearRegistroCompleto = require("../models/registro.model.js")
 
 
 const { Op } = require('sequelize');
@@ -26,13 +19,13 @@ metodoPost.crearUsuario = async (req, res) => {
 
         const registroCompleto = await crearRegistroCompleto(userData);
 
-if(!registroCompleto){
-    throw new Error("Error al crear el registro de usuario")
-}
-
+        if (!registroCompleto) {
+            throw new Error("Error al crear el registro de usuario")
+        }else{
+            return res.json({registroCompleto})
+        }
     } catch (error) {
         console.log("Error del servidor", error)
-        throw error
     }
 }
 

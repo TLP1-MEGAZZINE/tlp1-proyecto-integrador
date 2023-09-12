@@ -103,21 +103,23 @@ UserGender.hasOne(UserInfo, { foreignKey: 'id_genero' });
 UserInfo.belongsTo(Provincia, { foreignKey: 'id_provincia' });
 Provincia.hasOne(UserInfo, { foreignKey: 'id_provincia' });
 
-async function createInfoUser(userData) {
+
+//FUNCION PARA CREAR REGISTRO EN USERINFO
+async function createInfoUser(id_user, userData) {
 
     try {
         return await UserInfo.create({
-            id_user,
-            nombre,
-            apellido,
-            dni,
-            cuil,
-            fecha_nacimiento,
-            id_genero,
-            id_rol,
-            id_pais,
-            otro_pais,
-            id_provincia
+            id_user: id_user,
+            nombre: userData.nombre,
+            apellido: userData.apellido,
+            dni: userData.dni,
+            cuil:userData.cuil,
+            fecha_nacimiento: userData.fecha_nacimiento,
+            id_genero: userData.id_genero,
+            id_rol: userData.id_rol,
+            id_pais: userData.id_pais,
+            otro_pais: userData.otro_pais,
+            id_provincia: userData.id_provincia
         },
         );
 

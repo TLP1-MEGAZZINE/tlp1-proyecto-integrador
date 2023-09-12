@@ -36,15 +36,15 @@ Contacto.sync({ force: true }).then(() => {
 
 Contacto.belongsTo(User, { foreignKey: 'id_user', as: "User" });
 
-async function createContacto(userData) {
+async function createContacto(id_user, userData) {
 
     try {
 
         return await Contacto.create(
             {
-                id_user,
-                num_tel,
-                domicilio,
+                id_user: id_user,
+                num_tel: userData.num_tel,
+                domicilio: userData.domicilio,
             }
         );
 

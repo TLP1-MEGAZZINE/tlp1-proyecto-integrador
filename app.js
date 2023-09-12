@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const path = require('path')
 const session = require('express-session');
+const fs = require("fs");
 
 // El método config de dotenv permite leer variables de entorno desde un archivo .env
 require('dotenv').config();
@@ -17,6 +18,7 @@ const { UserInfo } = require("./models/userInfo.model")
 const { Contacto } = require("./models/contacto.model");
 const { Empleador } = require("./models/empleador.model")
 const { Particular } = require("./models/particular.model")
+const { Postulante } = require("./models/postulantes.model")
 
 // const UserRol = require("./models/userRol.model")
 // const UserGender = require("./models/genero.model")
@@ -25,7 +27,6 @@ const { Particular } = require("./models/particular.model")
 // const Rubro = require("./models/rubro.model")
 // const EstadoLaboral = require("./models/estado_laboral.model")
 // const NivelEducacion = require("./models/nivelEduacion.model")
-
 
 
 const { conectarDB } = require('./db');

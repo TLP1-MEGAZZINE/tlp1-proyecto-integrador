@@ -62,17 +62,17 @@ NivelEducacion.hasOne(Postulante, { foreignKey: 'id_NivelEducacion' });
 Postulante.belongsTo(Rubro, { foreignKey: 'id_rubro' });
 Rubro.hasOne(Postulante, { foreignKey: 'id_rubro' });
 
-async function createPostulante(userData) {
+async function createPostulante(id_user, userData) {
 
     try {
 
         return await Postulante.create(
             {
-                id_user,
-                id_EstadoLaboral,
-                id_NivelEducacion,
-                id_rubro,
-                otro_rubro
+                id_user: id_user,
+                id_EstadoLaboral: userData.id_EstadoLaboral,
+                id_NivelEducacion: userData.id_NivelEducacion,
+                id_rubro: userData.id_rubro,
+                otro_rubro: userData.otro_rubro
             },
         );
 

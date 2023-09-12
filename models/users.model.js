@@ -69,17 +69,17 @@ async function createUser(userData) {
         }
 
         //ENCRIPTAR LA PASSWORD
-        const hashedPass = await encriptar(user_password)
+        const hashedPass = await encriptar(userData.user_password)
 
         //CREA USUARIO EN LA DB
         return await User.create({
-            user_name,
-            user_email,
+            user_name: userData.user_name,
+            user_email: userData.user_email,
             user_password: hashedPass
         });
 
     } catch (error) {
-        console.log(error)
+        console.error("error")
         throw error
     }
 }

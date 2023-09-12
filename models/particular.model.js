@@ -31,12 +31,12 @@ Particular.belongsTo(User, { foreignKey: 'id_user', as: "User" });
 
 
 
-async function createParticular(userData) {
+async function createParticular(id_user) {
 
     try {
         return await Particular.create(
             {
-                id_user
+                id_user: id_user
             },
         );
     } catch (error) {
