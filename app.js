@@ -13,12 +13,12 @@ require('dotenv').config();
 // const { sequelize } = require('./db');
 
 require('ejs');
-const { User } = require("./models/users.model")
-const { UserInfo } = require("./models/userInfo.model")
-const { Contacto } = require("./models/contacto.model");
-const { Empleador } = require("./models/empleador.model")
-const { Particular } = require("./models/particular.model")
-const { Postulante } = require("./models/postulantes.model")
+require("./models/users.model")
+require("./models/userInfo.model")
+require("./models/contacto.model");
+require("./models/empleador.model")
+require("./models/particular.model")
+require("./models/postulantes.model")
 
 // const UserRol = require("./models/userRol.model")
 // const UserGender = require("./models/genero.model")

@@ -91,9 +91,9 @@ formRegistro.addEventListener('submit', async (e) => {
 
       if (res.ok) {
         Swal.fire('Éxito', 'El usuario ha sido creado correctamente.', 'success');
-        setTimeout(() => {
-          window.location.href = '/login';
-        }, 2000);
+        // setTimeout(() => {
+        //   window.location.href = '/login';
+        // }, 2000);
       } else {
 
         let errorMessage = data.errors
@@ -101,7 +101,7 @@ formRegistro.addEventListener('submit', async (e) => {
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: errorMessage || error.message,
+          text: errorMessage || error.message.error.message,
           confirmButtonText: 'Aceptar'
         });
 

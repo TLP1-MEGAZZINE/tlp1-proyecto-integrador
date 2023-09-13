@@ -3,7 +3,8 @@ const router = express.Router();
 const controller = require('../controllers/vista.controllers')
 
 router.get('/perfil', (req, res) => {
-    res.render('perfiles/perfil')
+    return res.json(req.session);
+    res.render('perfiles/perfil', { rol: req.session.rol })
 })
 
 router.get('/perfil/editar-perfil-usuario', (req, res) => {

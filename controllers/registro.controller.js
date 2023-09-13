@@ -4,7 +4,9 @@ const crearRegistroCompleto = require("../models/registro.model.js")
 
 const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
-const { generarJWT } = require('../helpers/generarToken')
+const { generarJWT } = require('../helpers/generarToken');
+const { User } = require("../models/users.model");
+const { UserInfo } = require("../models/userInfo.model.js");
 
 
 //CREAR EL OBJETO QUE CONTENDRA LOS METODOS POST
@@ -21,8 +23,8 @@ metodoPost.crearUsuario = async (req, res) => {
 
         if (!registroCompleto) {
             throw new Error("Error al crear el registro de usuario")
-        }else{
-            return res.json({registroCompleto})
+        } else {
+            return res.status(200).json({ message: "Registro creado-controller" })
         }
     } catch (error) {
         console.log("Error del servidor", error)
@@ -39,13 +41,13 @@ metodoPost.loginUsuario = async (req, res) => {
 
         //VERIFICAR SI EXISTE EL USUARIO
 
-        const existeUsuario = await Users.findOne({
+        const existeUsuario = await User.findOne({
             where: {
                 [Op.or]: [
                     { user_name },
                     { user_email }
                 ]
-            }
+            }, include: UserInfo
         });
 
         if (!existeUsuario) {
@@ -73,7 +75,11 @@ metodoPost.loginUsuario = async (req, res) => {
         // Generar el JWT
         const token = await generarJWT(existeUsuario.id_user)
 
-        req.session.user = existeUsuario;
+        req.session.user = {
+            userId: existeUsuario.id_user,
+            rol: existeUsuario.User_info.id_rol
+
+        };
 
         res.json({
             message: 'Iniciando sesión',

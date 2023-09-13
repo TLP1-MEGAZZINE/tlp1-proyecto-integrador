@@ -36,7 +36,8 @@ vista.solicitudes = (req, res) => {
 // EDITAR PERFILES
 
 vista.perfil = (req, res) => {
-    res.render("./perfiles/perfil")
+    // return res.json(req.session)
+    res.render("./perfiles/perfil", { rol: req.session.user.rol })
 }
 
 vista.perfilpostulante = (req, res) => {

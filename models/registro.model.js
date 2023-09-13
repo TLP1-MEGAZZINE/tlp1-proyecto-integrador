@@ -15,39 +15,38 @@ const { createEmpleador } = require("./empleador.model");
 async function crearRegistroCompleto(userData) {
     try {
 
-        let user = await createUser(userData);
+        const user = await createUser(userData);
 
         if (!user) {
             throw new Error("No se pudo crear el registro de usuario")
         } else {
             const id_user = user.id_user
-            let rol
 
             // CREAR INFO DE USUARIO EN LA DB
 
-            let info = await createInfoUser(id_user, userData);
+            const info = await createInfoUser(id_user, userData);
 
             // CREAR REGISTRO DE CONTACTO EN LA DB
 
-            let contacto = await createContacto(id_user, userData);
+            const contacto = await createContacto(id_user, userData);
 
             // GUARDAR INFO POSTULANTE EN LA DB
 
-            rol = info.id_rol
+            const rol = info.id_rol
             if (rol == 1) {
 
                 //CREAR REGISTRO POSTULANTE
 
-                let postulante = await createPostulante(id_user, userData)
+                const postulante = await createPostulante(id_user, userData)
 
-                // return json(userData, info, contacto, postulante);
+                return {userData, info, contacto, postulante};
 
             } else if (rol == 2) {
                 //CREAR EMPLEADOR
 
-                let empleador = await createEmpleador(id_user, userData)
+                const empleador = await createEmpleador(id_user, userData)
 
-                // return res.json(userData, info, contacto, empleador);
+                return {userData, info, contacto, empleador};
 
 
             } else if (rol == 3) {
@@ -56,7 +55,7 @@ async function crearRegistroCompleto(userData) {
 
                 const particular = await createParticular(id_user)
 
-                // return { userData, info, contacto, particular };
+                return { userData, info, contacto, particular };
             }
         }
     } catch (error) {

@@ -1,4 +1,4 @@
-  <%- include ('../partials/header', {tituloWeb: 'Perfil' }) -%>
+<%- include ('../partials/header', {tituloWeb: 'Perfil' }) -%>
 
   <body>
     <main class="home colorFondo">
@@ -12,8 +12,8 @@
                     <img src="../../img/jun.png" alt="logo" width="30" height="30">
                     <a class="navbar-brand text-light" href="inicio">Job <span class="unite">Unite</span></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                      aria-label="Toggle navigation">
+                      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                      aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -63,28 +63,31 @@
                 <div class="row">
                   <div class="col-md-4 col-sm-12">
                     <div class="card">
-                      <img src="../../img/icon1.png" class="card-img-top img-fluid" width="50px" height="100px" alt="Perfil de usuario">
+                      <img src="../../img/icon1.png" class="card-img-top img-fluid" width="50px" height="100px"
+                        alt="Perfil de usuario">
                       <div class="card-body text-center">
                         <h5 class="card-title">Nombre y Apellido</h5>
-                        <a href="perfil/editar-perfil-usuario" class="btn btn-primary">Editar perfil del postulante</a>
-                        <div class="spacer"></div>
-                        <a href="perfil/editar-perfil-empresa" class="btn btn-primary">Editar perfil de la empresa</a>
-                        <div class="spacer"></div>
-                        <!-- CALIFICACION CON ESTRELLAS -->
-                        <h6>Calificación con estrellas:</h6>
-                        <div class="rating">
-                          <input type="radio" id="star5" name="rating" value="5">
-                          <label for="star5"></label>
-                          <input type="radio" id="star4" name="rating" value="4">
-                          <label for="star4"></label>
-                          <input type="radio" id="star3" name="rating" value="3">
-                          <label for="star3"></label>
-                          <input type="radio" id="star2" name="rating" value="2">
-                          <label for="star2"></label>
-                          <input type="radio" id="star1" name="rating" value="1">
-                          <label for="star1"></label>
-                        </div>
-                        <p id="selectedRating"></p>
+                        <%= rol %>
+                          <a href="perfil/editar-perfil-usuario" class="btn btn-primary">Editar perfil del
+                            postulante</a>
+                          <div class="spacer"></div>
+                          <a href="perfil/editar-perfil-empresa" class="btn btn-primary">Editar perfil de la empresa</a>
+                          <div class="spacer"></div>
+                          <!-- CALIFICACION CON ESTRELLAS -->
+                          <h6>Calificación con estrellas:</h6>
+                          <div class="rating">
+                            <input type="radio" id="star5" name="rating" value="5">
+                            <label for="star5"></label>
+                            <input type="radio" id="star4" name="rating" value="4">
+                            <label for="star4"></label>
+                            <input type="radio" id="star3" name="rating" value="3">
+                            <label for="star3"></label>
+                            <input type="radio" id="star2" name="rating" value="2">
+                            <label for="star2"></label>
+                            <input type="radio" id="star1" name="rating" value="1">
+                            <label for="star1"></label>
+                          </div>
+                          <p id="selectedRating"></p>
                       </div>
 
                     </div>
@@ -113,9 +116,9 @@
                           <li class="list-group-item"></li>
                         </ul>
                       </div>
-                      </div>
                     </div>
                   </div>
+                </div>
               </div>
             </div>
           </div>
@@ -124,4 +127,4 @@
           </div>
       </section>
     </main>
-  <%- include ('../partials/footer') -%>
+    <%- include ('../partials/footer') -%>
