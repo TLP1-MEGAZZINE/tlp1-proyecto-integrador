@@ -1,8 +1,7 @@
 // const { request } = require('express');
-const { DataTypes, sequelize } = require('../db');
+const { DataTypes, sequelize } = require('../config/db');
 
-const UserRol = require("./userRol.model")
-const Nacionalidad = require("./nacionalidades.model");
+const Nacionalidad = require("./paises.model");
 const UserGender = require('./genero.model');
 const Provincia = require("./provincias.models")
 
@@ -54,13 +53,6 @@ const UserInfo = sequelize.define('User_info', {
             key: "id_genero"
         }
     },
-    id_rol: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: "User_rol",
-            key: "id_rol"
-        },
-    },
     id_pais: {
         type: DataTypes.INTEGER,
         references: {
@@ -88,21 +80,7 @@ const UserInfo = sequelize.define('User_info', {
 //SI NO FUNCIONA CAMBIAR EL FALSE A TRUE
 UserInfo.sync({ force: false }).then(() => {
     console.log('Tabla de info usuario creada')
-
-    
 })
-UserInfo.belongsTo(UserRol, { foreignKey: 'id_rol' });
-UserRol.hasOne(UserInfo, { foreignKey: 'id_rol' });
-
-UserInfo.belongsTo(Nacionalidad, { foreignKey: 'id_pais' });
-Nacionalidad.hasOne(UserInfo, { foreignKey: 'id_pais' });
-
-UserInfo.belongsTo(UserGender, { foreignKey: 'id_genero' });
-UserGender.hasOne(UserInfo, { foreignKey: 'id_genero' });
-
-UserInfo.belongsTo(Provincia, { foreignKey: 'id_provincia' });
-Provincia.hasOne(UserInfo, { foreignKey: 'id_provincia' });
-
 
 //FUNCION PARA CREAR REGISTRO EN USERINFO
 async function createInfoUser(id_user, userData) {
@@ -113,10 +91,9 @@ async function createInfoUser(id_user, userData) {
             nombre: userData.nombre,
             apellido: userData.apellido,
             dni: userData.dni,
-            cuil:userData.cuil,
+            cuil: userData.cuil,
             fecha_nacimiento: userData.fecha_nacimiento,
             id_genero: userData.id_genero,
-            id_rol: userData.id_rol,
             id_pais: userData.id_pais,
             otro_pais: userData.otro_pais,
             id_provincia: userData.id_provincia

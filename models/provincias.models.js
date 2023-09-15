@@ -1,4 +1,4 @@
-const { DataTypes, sequelize } = require('../db');
+const { DataTypes, sequelize } = require('../config/db');
 
 const Provincia = sequelize.define('Provincia', {
     id_provincia: {

@@ -1,4 +1,4 @@
-const { DataTypes, sequelize } = require('../db');
+const { DataTypes, sequelize } = require('../config/db');
 const { User } = require("./users.model.js")
 // Definir el modelo para la tabla contacto
 const Contacto = sequelize.define('Contacto', {
@@ -33,8 +33,6 @@ const Contacto = sequelize.define('Contacto', {
 Contacto.sync({ force: true }).then(() => {
     console.log('Tabla de contactos creada')
 })
-
-Contacto.belongsTo(User, { foreignKey: 'id_user', as: "User" });
 
 async function createContacto(id_user, userData) {
 

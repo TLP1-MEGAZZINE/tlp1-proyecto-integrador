@@ -5,44 +5,32 @@ const router = express.Router();
 const jwt = require('jsonwebtoken')
 const { validatUser } = require("../validators/users.validation")
 
+//SE IMPORTAN LOS CONTROLADORES PARA REGISTRO Y LOGIN
 const {
 crearUsuario,
 loginUsuario
 } = require('../controllers/registro.controller')
 
-// RUTAS GET/RENDERIZAR VIEWS
-
-router.get('/registro', (req, res) => {
-    res.render('registro-login/registro')
-});
-
-router.get('/login', (req, res) => {
-    res.render('registro-login/login')
-})
-
-
-//RUTAS POST/ CRUD
+//RUTAS POST
 router.post('/registro', validatUser, crearUsuario);
-
 router.post('/login', loginUsuario)
 
+// ruta para validar el token NO SE USA DE MOMENTO
+// router.get('/api/validar-token', (req, res) => {
 
-// ruta para validar el token
-router.get('/api/validar-token', (req, res) => {
+//     const token = req.header('Authorization');
 
-    const token = req.header('Authorization');
+//     if (!token) {
+//         return res.redirect('/login');
+//     }
 
-    if (!token) {
-        return res.redirect('/login');
-    }
+//     const isValidToken = jwt.verify(token, process.env.SECRET_KEY);
 
-    const isValidToken = jwt.verify(token, process.env.SECRET_KEY);
+//     if (!isValidToken) {
+//         return res.redirect('/login');
+//     }
 
-    if (!isValidToken) {
-        return res.redirect('/login');
-    }
-
-    return res.json({ ok: true })
-})
+//     return res.json({ ok: true })
+// })
 
 module.exports = router;

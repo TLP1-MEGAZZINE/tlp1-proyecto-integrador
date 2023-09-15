@@ -1,4 +1,4 @@
-const { DataTypes, sequelize } = require('../db');
+const { DataTypes, sequelize } = require('../config/db');
 
 const Rubro = require("./rubro.model")
 
@@ -44,9 +44,6 @@ const Empleador = sequelize.define('empleador', {
     paranoid: false,
     tableName: "empleador"
 });
-
-Empleador.belongsTo(Rubro, { foreignKey: 'id_rubro' });
-Rubro.hasOne(Empleador, { foreignKey: 'id_rubro' });
 
 Empleador.sync({ force: false }).then(() => {
     console.log('Tabla de empleador creada')

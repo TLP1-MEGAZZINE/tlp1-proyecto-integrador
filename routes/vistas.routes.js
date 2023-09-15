@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { validarJWT } = require("../middlewares/autenticarToken")
 const { protegerRuta } = require("../middlewares/protegerRuta")
-
-
+//SE IMPORTAN LOS CONTROLADORES PARA RENDERIZAR LAS VISTAS
 const { index,
     inicio,
     masInfo,
@@ -14,7 +13,6 @@ const { index,
     perfil,
     perfilpostulante,
     perfilempresa
-
 } = require('../controllers/vista.controllers')
 
 // RUTAS INICIALES

@@ -1,4 +1,4 @@
-const { DataTypes, sequelize } = require('../db');
+const { DataTypes, sequelize } = require('../config/db');
 
 
 // Definir el modelo para la tabla users_rol

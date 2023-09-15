@@ -33,7 +33,8 @@ cerrarSesion.addEventListener("click", async () => {
             Swal.fire({
                 icon: 'Success',
                 title: 'Cerrando Sesión',
-                text: 'Espere un momento...'
+                text: 'Espere un momento...',
+                showConfirmButton: false
             });
 
             setTimeout(() => {

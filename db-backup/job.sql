@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-09-2023 a las 20:13:57
+-- Tiempo de generación: 15-09-2023 a las 15:47:21
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -33,21 +33,6 @@ CREATE TABLE `contacto` (
   `num_tel` varchar(255) NOT NULL,
   `domicilio` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `contacto`
---
-
-INSERT INTO `contacto` (`id_contacto`, `id_user`, `num_tel`, `domicilio`) VALUES
-(1, 1, '3704563459', 'barrio villa del carmen'),
-(2, 2, '3704563459', 'barrio villa del carmen'),
-(3, 3, '3704563459', 'barrio villa del carmen'),
-(4, 4, '3704563459', 'barrio villa del carmen'),
-(5, 5, '3704563459', 'barrio villa del carmen'),
-(6, 7, '3704563459', 'barrio villa del carmen'),
-(7, 8, '3704563459', 'barrio villa del carmen'),
-(8, 19, '3704563459', 'barrio villa del carmen'),
-(9, 20, '3704563459', 'barrio villa del carmen');
 
 -- --------------------------------------------------------
 
@@ -169,15 +154,7 @@ CREATE TABLE `particular` (
 --
 
 INSERT INTO `particular` (`id_Particular`, `id_user`) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 7),
-(7, 8),
-(8, 19),
-(9, 20);
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -193,6 +170,13 @@ CREATE TABLE `postulante` (
   `id_rubro` int(11) DEFAULT NULL,
   `otro_rubro` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `postulante`
+--
+
+INSERT INTO `postulante` (`id_postulante`, `id_user`, `id_EstadoLaboral`, `id_NivelEducacion`, `id_rubro`, `otro_rubro`) VALUES
+(1, 2, 1, 1, 8, NULL);
 
 -- --------------------------------------------------------
 
@@ -265,31 +249,25 @@ INSERT INTO `rubro` (`id_rubro`, `descripcion`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `users`
+-- Estructura de tabla para la tabla `user`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE `user` (
   `id_user` int(11) NOT NULL,
   `user_name` varchar(255) NOT NULL,
   `user_email` varchar(255) NOT NULL,
   `user_password` varchar(255) NOT NULL,
+  `id_rol` int(11) DEFAULT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `users`
+-- Volcado de datos para la tabla `user`
 --
 
-INSERT INTO `users` (`id_user`, `user_name`, `user_email`, `user_password`, `estado`) VALUES
-(1, 'Agustinm12', 'wagu520@live.com', '$2b$10$owjbvtIWMGIqyOdhSSjLieHnf653oBk6eoT6y2/pNmMyOObihbNDy', 1),
-(2, 'Agustinm12456456', 'wagu52564560@live.com', '$2b$10$fn8waH8IDw41ECkjQ/zhGuTblvXuezhwLnPq9or/ykHhXh86KdsLu', 1),
-(3, 'Agustinm', 'wagu52012@live.com', '$2b$10$QuAjyjH0GNphj7OMXwVHfe.IlI1am4aIED5UAwAFdiPHiTh5rSRJ.', 1),
-(4, 'Agustinm1200000', 'wagu52015@live.com', '$2b$10$/B2/V61Cxokmb1wDbOmcWeUEgJux.UAiqWyA1JcBCH6yt3mglGZ0m', 1),
-(5, 'Agustinm1212222', 'wagu52088@live.com', '$2b$10$/y9wxFhAjG7tqF5oK2yMneVER/PMppamdxB6toeLNTLFp1e1p9Ety', 1),
-(7, 'Agustinm64', 'wagu52064@live.com', '$2b$10$WVgbLeFPTOYwCe/3779I3O3Z82.ok.X7s5ANZCJitEmkxmmlbjwgu', 1),
-(8, 'Agustinm98', 'wagu52098@live.com', '$2b$10$NgHUrtMZU1V2yAbUIFO3e.CNc.ZERNVcXxIizey7355E7QfnYjanS', 1),
-(19, 'Agustinm987987', 'wagu000@live.com', '$2b$10$nXxVnNnVXbITsNQtj0v0yuG90JCjc2em4cvL2gVLmZfpl6teOaiVy', 1),
-(20, 'Agustinm98798768456', 'wagu777@live.com', '$2b$10$1p42LvQpyT2bNP./HdYlTOIkMOqgKTTKW33V4uTr5XxsIiY7X1XFG', 1);
+INSERT INTO `user` (`id_user`, `user_name`, `user_email`, `user_password`, `id_rol`, `estado`) VALUES
+(1, 'Agustinm12', 'wagu520@live.com', '$2b$10$jN8KLKJ.l8wJU56gUN.sC./yMrs1PndtcIMtgzL199AbvaQr2dvLi', 3, 1),
+(2, 'Agustinm123', 'wagu5201@live.com', '$2b$10$fmdqY/I2w6kzXU6Q3wD93OZgFQ7e6DPMhgwFtgVra7NELj4UFoXCi', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -306,7 +284,6 @@ CREATE TABLE `users_info` (
   `cuil` int(11) NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `id_genero` int(11) DEFAULT NULL,
-  `id_rol` int(11) DEFAULT NULL,
   `id_pais` int(11) DEFAULT NULL,
   `id_provincia` int(11) DEFAULT NULL,
   `otro_pais` varchar(255) DEFAULT NULL
@@ -316,16 +293,9 @@ CREATE TABLE `users_info` (
 -- Volcado de datos para la tabla `users_info`
 --
 
-INSERT INTO `users_info` (`id_info`, `id_user`, `nombre`, `apellido`, `dni`, `cuil`, `fecha_nacimiento`, `id_genero`, `id_rol`, `id_pais`, `id_provincia`, `otro_pais`) VALUES
-(1, 1, 'John', 'Doe', 44876123, 2147483647, '2001-12-30', 1, 3, 2, NULL, NULL),
-(2, 2, 'John', 'Doe', 44876123, 2147483647, '2001-12-30', 3, 3, 6, NULL, NULL),
-(3, 3, 'John', 'Doe', 44876123, 2147483647, '2001-12-30', 2, 3, 10, NULL, NULL),
-(4, 4, 'John', 'Doe', 44876123, 2147483647, '2001-12-30', 3, 3, 10, NULL, NULL),
-(5, 5, 'John', 'Doe', 44876123, 2147483647, '2001-12-30', 1, 3, 1, 11, NULL),
-(6, 7, 'John', 'Doe', 44876123, 2147483647, '2001-12-30', 1, 3, 9, NULL, NULL),
-(7, 8, 'John', 'Doe', 44876123, 2147483647, '2001-12-30', 1, 3, 6, NULL, NULL),
-(8, 19, 'John', 'Doe', 44876123, 2147483647, '2001-12-30', 1, 3, 8, NULL, NULL),
-(9, 20, 'John', 'Doe', 44876123, 2147483647, '2001-12-30', 2, 3, 4, NULL, NULL);
+INSERT INTO `users_info` (`id_info`, `id_user`, `nombre`, `apellido`, `dni`, `cuil`, `fecha_nacimiento`, `id_genero`, `id_pais`, `id_provincia`, `otro_pais`) VALUES
+(1, 1, 'John', 'Doe', 44876123, 2147483647, '2001-12-30', 1, 10, NULL, NULL),
+(2, 2, 'John', 'Doe', 44876123, 2147483647, '2001-12-30', 2, 4, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -420,12 +390,13 @@ ALTER TABLE `rubro`
   ADD PRIMARY KEY (`id_rubro`);
 
 --
--- Indices de la tabla `users`
+-- Indices de la tabla `user`
 --
-ALTER TABLE `users`
+ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`),
-  ADD UNIQUE KEY `Users_user_name_unique` (`user_name`),
-  ADD UNIQUE KEY `Users_user_email_unique` (`user_email`);
+  ADD UNIQUE KEY `User_user_name_unique` (`user_name`),
+  ADD UNIQUE KEY `User_user_email_unique` (`user_email`),
+  ADD KEY `id_rol` (`id_rol`);
 
 --
 -- Indices de la tabla `users_info`
@@ -434,7 +405,6 @@ ALTER TABLE `users_info`
   ADD PRIMARY KEY (`id_info`),
   ADD KEY `id_user` (`id_user`),
   ADD KEY `id_genero` (`id_genero`),
-  ADD KEY `id_rol` (`id_rol`),
   ADD KEY `id_pais` (`id_pais`),
   ADD KEY `id_provincia` (`id_provincia`);
 
@@ -452,7 +422,7 @@ ALTER TABLE `user_rol`
 -- AUTO_INCREMENT de la tabla `contacto`
 --
 ALTER TABLE `contacto`
-  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `empleador`
@@ -482,13 +452,13 @@ ALTER TABLE `nivel_educacion`
 -- AUTO_INCREMENT de la tabla `particular`
 --
 ALTER TABLE `particular`
-  MODIFY `id_Particular` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_Particular` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `postulante`
 --
 ALTER TABLE `postulante`
-  MODIFY `id_postulante` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_postulante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `provincia`
@@ -503,16 +473,16 @@ ALTER TABLE `rubro`
   MODIFY `id_rubro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT de la tabla `users`
+-- AUTO_INCREMENT de la tabla `user`
 --
-ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+ALTER TABLE `user`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `users_info`
 --
 ALTER TABLE `users_info`
-  MODIFY `id_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `user_rol`
@@ -528,39 +498,44 @@ ALTER TABLE `user_rol`
 -- Filtros para la tabla `contacto`
 --
 ALTER TABLE `contacto`
-  ADD CONSTRAINT `contacto_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE NO ACTION ON UPDATE CASCADE;
+  ADD CONSTRAINT `contacto_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `empleador`
 --
 ALTER TABLE `empleador`
-  ADD CONSTRAINT `empleador_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
+  ADD CONSTRAINT `empleador_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
   ADD CONSTRAINT `empleador_ibfk_2` FOREIGN KEY (`id_rubro`) REFERENCES `rubro` (`id_rubro`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `particular`
 --
 ALTER TABLE `particular`
-  ADD CONSTRAINT `particular_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE NO ACTION ON UPDATE CASCADE;
+  ADD CONSTRAINT `particular_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `postulante`
 --
 ALTER TABLE `postulante`
-  ADD CONSTRAINT `postulante_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
+  ADD CONSTRAINT `postulante_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
   ADD CONSTRAINT `postulante_ibfk_2` FOREIGN KEY (`id_EstadoLaboral`) REFERENCES `estado_laboral` (`id_EstadoLaboral`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `postulante_ibfk_3` FOREIGN KEY (`id_NivelEducacion`) REFERENCES `nivel_educacion` (`id_NivelEducacion`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `postulante_ibfk_4` FOREIGN KEY (`id_rubro`) REFERENCES `rubro` (`id_rubro`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `user_rol` (`id_rol`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `users_info`
 --
 ALTER TABLE `users_info`
-  ADD CONSTRAINT `users_info_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
-  ADD CONSTRAINT `users_info_ibfk_2` FOREIGN KEY (`id_genero`) REFERENCES `genero` (`id_genero`),
-  ADD CONSTRAINT `users_info_ibfk_3` FOREIGN KEY (`id_rol`) REFERENCES `user_rol` (`id_rol`),
-  ADD CONSTRAINT `users_info_ibfk_4` FOREIGN KEY (`id_pais`) REFERENCES `nacionalidad` (`id_pais`),
-  ADD CONSTRAINT `users_info_ibfk_5` FOREIGN KEY (`id_provincia`) REFERENCES `provincia` (`id_provincia`);
+  ADD CONSTRAINT `users_info_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
+  ADD CONSTRAINT `users_info_ibfk_2` FOREIGN KEY (`id_genero`) REFERENCES `genero` (`id_genero`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_info_ibfk_3` FOREIGN KEY (`id_pais`) REFERENCES `nacionalidad` (`id_pais`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_info_ibfk_4` FOREIGN KEY (`id_provincia`) REFERENCES `provincia` (`id_provincia`) ON DELETE NO ACTION ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,14 +1,16 @@
-// SE TRAE LA LIBRERIA SEQUELIZE OPCION 2 FACIL
+// SE TRAE LA LIBRERIA SEQUELIZE 
 const { Sequelize, DataTypes } = require('sequelize');
+const environments = require("./environment");
 // Se crea una instancia de la conexión a la base de datos
 
 const sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
+    environments.DB.DB_NAME,
+    environments.DB.DB_USER,
+    environments.DB.DB_PASSWORD,
     {
-        host: process.env.DB_HOST,
-        dialect: process.env.DB_DIALECT
+        host: environments.DB.DB_HOST,
+        dialect: environments.DB.DB_DIALECT,
+        port: environments.DB.DB_PORT
     });
 
 // SE PRUEBA LA CONEXION A LA DB
@@ -20,10 +22,6 @@ const conectarDB = async () => {
         console.log('ERROR AL CONECTAR A LA DB: ', error);
     }
 };
-
-
-// const UserInfo = require("./models/userData.model")
-// const UsersRol = require('./models/userRol.model');
 
 module.exports = {
     sequelize,

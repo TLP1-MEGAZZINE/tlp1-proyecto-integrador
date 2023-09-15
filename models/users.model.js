@@ -1,5 +1,6 @@
-const { DataTypes, sequelize } = require('../db');
+const { DataTypes, sequelize } = require('../config/db');
 const { encriptar } = require('../helpers/encriptar');
+const UserRol = require("./userRol.model")
 
 //CREAR MODELO DE USER
 const User = sequelize.define('User', {
@@ -28,6 +29,13 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    id_rol: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: "User_rol",
+            key: "id_rol"
+        },
+    },
     estado: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
@@ -43,7 +51,6 @@ const User = sequelize.define('User', {
 User.sync({ force: false }).then(() => {
     console.log('Tabla de usuarios creada')
 })
-
 
 async function createUser(userData) {
     try {
@@ -75,7 +82,8 @@ async function createUser(userData) {
         return await User.create({
             user_name: userData.user_name,
             user_email: userData.user_email,
-            user_password: hashedPass
+            user_password: hashedPass,
+            id_rol: userData.id_rol,
         });
 
     } catch (error) {
@@ -84,4 +92,4 @@ async function createUser(userData) {
     }
 }
 
-module.exports =  {User, createUser }
+module.exports = { User, createUser }

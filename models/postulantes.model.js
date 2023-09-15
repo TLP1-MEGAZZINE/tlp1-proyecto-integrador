@@ -1,4 +1,4 @@
-const { DataTypes, sequelize } = require('../db');
+const { DataTypes, sequelize } = require('../config/db');
 
 const EstadoLaboral = require("./estado_laboral.model")
 const NivelEducacion = require("./nivelEduacion.model")
@@ -52,15 +52,6 @@ const Postulante = sequelize.define('postulante', {
 Postulante.sync({ force: false }).then(() => {
     console.log('Tabla de postulantes creada')
 })
-
-Postulante.belongsTo(EstadoLaboral, { foreignKey: 'id_EstadoLaboral' });
-EstadoLaboral.hasOne(Postulante, { foreignKey: 'id_EstadoLaboral' });
-
-Postulante.belongsTo(NivelEducacion, { foreignKey: 'id_NivelEducacion' });
-NivelEducacion.hasOne(Postulante, { foreignKey: 'id_NivelEducacion' });
-
-Postulante.belongsTo(Rubro, { foreignKey: 'id_rubro' });
-Rubro.hasOne(Postulante, { foreignKey: 'id_rubro' });
 
 async function createPostulante(id_user, userData) {
 

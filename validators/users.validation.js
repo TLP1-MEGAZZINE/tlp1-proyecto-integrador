@@ -2,7 +2,6 @@ const { check } = require("express-validator")
 const { validateSchema } = require("../middlewares/validateHealper.js")
 const { User } = require("../models/users.model.js")
 
-
 const validatUser = [
     //OBLIGATORIOS
     check("user_name")
@@ -10,9 +9,17 @@ const validatUser = [
         .notEmpty().withMessage("El nombre de usuario no debe estar vacio")
         .isAlphanumeric().withMessage("El nombre de usuario no debe estar vacio")
         .isLength({ min: 6, max: 30 }).withMessage('El nombre de usuario debe tener entre 6 y 30 caracteres')
-        /* .custom(() => {
-            throw new Error("El nombre de usuario ya esta registrado")
-        }) */,
+        .custom(async (value,) => {
+            const existeUsername = await User.findOne({
+                where: {
+                    user_name: value
+                }
+            });
+            if (existeUsername) {
+                throw new Error('El nombre de usuario ya está registrado');
+            }
+            return true;
+        }), 
 
     check("user_password")
         .exists()
@@ -24,8 +31,7 @@ const validatUser = [
         .exists()
         .notEmpty().withMessage("El email no puede estar vacio")
         .isEmail().withMessage("Se debe proporcionar un email valido")
-        .custom(async (value, { req }) => {
-            // Aquí puedes realizar la comprobación de email registrado
+        .custom(async (value,) => {
             const existeEmail = await User.findOne({
                 where: {
                     user_email: value
@@ -128,9 +134,6 @@ const validatUser = [
         .optional()
         .notEmpty().withMessage("Debe colocar el nombre de su empresa")
         .isAlphanumeric().withMessage("Debe colocar el nombre de su empresa"),
-
-
-
 
     (req, res, next) => {
         validateSchema(req, res, next)

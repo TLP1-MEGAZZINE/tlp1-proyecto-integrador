@@ -1,19 +1,17 @@
 //IMPORTACIONES
-const crearRegistroCompleto = require("../models/registro.model.js")
-
+const crearRegistroCompleto = require("../helpers/registro.helper.js")
 
 const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
-const { generarJWT } = require('../helpers/generarToken');
+// const { generarJWT } = require('../helpers/generarToken');
 const { User } = require("../models/users.model");
-const { UserInfo } = require("../models/userInfo.model.js");
 
 
 //CREAR EL OBJETO QUE CONTENDRA LOS METODOS POST
-const metodoPost = {}
+const registerLogin = {}
 
 // METODO PARA CREAR UN USUARIO Y ENCRIPTAR SU PASSWORD
-metodoPost.crearUsuario = async (req, res) => {
+registerLogin.crearUsuario = async (req, res) => {
 
     const userData = req.body
 
@@ -34,7 +32,7 @@ metodoPost.crearUsuario = async (req, res) => {
 
 // METODO PARA EL LOGIN
 
-metodoPost.loginUsuario = async (req, res) => {
+registerLogin.loginUsuario = async (req, res) => {
 
     const { user_name, user_email, user_password } = req.body
     try {
@@ -47,7 +45,7 @@ metodoPost.loginUsuario = async (req, res) => {
                     { user_name },
                     { user_email }
                 ]
-            }, include: UserInfo
+            }
         });
 
         if (!existeUsuario) {
@@ -73,17 +71,16 @@ metodoPost.loginUsuario = async (req, res) => {
         }
 
         // Generar el JWT
-        const token = await generarJWT(existeUsuario.id_user)
+        // const token = await generarJWT(existeUsuario.id_user)
 
         req.session.user = {
             userId: existeUsuario.id_user,
-            rol: existeUsuario.User_info.id_rol
-
+            // rol: existeUsuario.id_rol
         };
 
         res.json({
             message: 'Iniciando sesión',
-            token, // No necesitas un token JWT en este enfoque
+            // token, // No necesitas un token JWT en este enfoque
         })
 
     } catch (error) {
@@ -91,8 +88,7 @@ metodoPost.loginUsuario = async (req, res) => {
         res.status(400).json({
             message: 'Error al iniciar sesión',
         });
-
     }
 };
 
-module.exports = metodoPost;
+module.exports = registerLogin;

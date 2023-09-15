@@ -2,38 +2,18 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
-const path = require('path')
 const session = require('express-session');
-const fs = require("fs");
+const { createLogs, path } = require("./helpers/createLogs")
+const environments = require("./config/environment")
 
-// El método config de dotenv permite leer variables de entorno desde un archivo .env
-require('dotenv').config();
-
-// Se importa la instancia de conexión a la base de datos - (debe ser después de leer las variables de entorno)
-// const { sequelize } = require('./db');
-
+//MODELO DE PLANTILLAS
 require('ejs');
-require("./models/users.model")
-require("./models/userInfo.model")
-require("./models/contacto.model");
-require("./models/empleador.model")
-require("./models/particular.model")
-require("./models/postulantes.model")
-
-// const UserRol = require("./models/userRol.model")
-// const UserGender = require("./models/genero.model")
-// const Nacionalidad = require("./models/nacionalidades.model")
-// const Provincia = require("./models/provincias.models")
-// const Rubro = require("./models/rubro.model")
-// const EstadoLaboral = require("./models/estado_laboral.model")
-// const NivelEducacion = require("./models/nivelEduacion.model")
-
-
-const { conectarDB } = require('./db');
+//MODELOS DE LA DB
+require("./models/relaciones.model")
+//CONECTAR A LA DB
+const { conectarDB } = require('./config/db');
 conectarDB();
 
-//DECLARACION DEL PUERTO
-const port = process.env.PORT || 5000
 // INICIALIZACION DE EXPRESS
 const app = express();
 
@@ -42,7 +22,13 @@ app.use(cors());
 app.use(helmet({
     contentSecurityPolicy: false
 }));
-app.use(morgan('dev'));
+app.use(morgan('combined', {
+    stream: {
+        write: (message) => {
+            createLogs(message, __dirname, "logs")
+        }
+    }
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(session({
@@ -76,6 +62,6 @@ app.use((req, res, next) => {
 });
 
 //LEVANTAR EL SERVIDOR
-app.listen(port, () => {
-    console.log(`SERVIDOR EJECUTANDOSE EN EL PUERTO: ${port}`);
+app.listen(environments.PORT, () => {
+    console.log(`SERVIDOR EJECUTANDOSE EN EL PUERTO: ${environments.PORT}`);
 });

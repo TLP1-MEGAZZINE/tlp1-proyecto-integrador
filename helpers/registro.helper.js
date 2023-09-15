@@ -1,15 +1,15 @@
 //FUNCIONES PARA CREAR REGISTROS
-const { createUser } = require("./users.model")
+const { createUser } = require("../models/users.model")
 
-const { createInfoUser } = require("./userInfo.model");
+const { createInfoUser } = require("../models/userInfo.model");
 
-const { createContacto } = require("./contacto.model");
+const { createContacto } = require("../models/contacto.model");
 
-const { createParticular } = require("./particular.model");
+const { createParticular } = require("../models/particular.model");
 
-const { createPostulante } = require("./postulantes.model");
+const { createPostulante } = require("../models/postulantes.model");
 
-const { createEmpleador } = require("./empleador.model");
+const { createEmpleador } = require("../models/empleador.model");
 
 //CREAR REGISTRO COMPLETO
 async function crearRegistroCompleto(userData) {
@@ -21,6 +21,7 @@ async function crearRegistroCompleto(userData) {
             throw new Error("No se pudo crear el registro de usuario")
         } else {
             const id_user = user.id_user
+            const rol = user.id_rol
 
             // CREAR INFO DE USUARIO EN LA DB
 
@@ -32,21 +33,20 @@ async function crearRegistroCompleto(userData) {
 
             // GUARDAR INFO POSTULANTE EN LA DB
 
-            const rol = info.id_rol
             if (rol == 1) {
 
                 //CREAR REGISTRO POSTULANTE
 
                 const postulante = await createPostulante(id_user, userData)
 
-                return {userData, info, contacto, postulante};
+                return { userData, info, contacto, postulante };
 
             } else if (rol == 2) {
                 //CREAR EMPLEADOR
 
                 const empleador = await createEmpleador(id_user, userData)
 
-                return {userData, info, contacto, empleador};
+                return { userData, info, contacto, empleador };
 
 
             } else if (rol == 3) {

@@ -1,4 +1,4 @@
-const { DataTypes, sequelize } = require('../db');
+const { DataTypes, sequelize } = require('../config/db');
 const { User } = require("./users.model")
 
 // Definir el modelo para la tabla Particular
@@ -26,10 +26,6 @@ const Particular = sequelize.define('Particular', {
 Particular.sync({ force: false }).then(() => {
     console.log('Tabla de particulares creada')
 })
-
-Particular.belongsTo(User, { foreignKey: 'id_user', as: "User" });
-
-
 
 async function createParticular(id_user) {
 
