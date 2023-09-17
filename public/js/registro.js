@@ -10,6 +10,10 @@ formRegistro.addEventListener('submit', async (e) => {
   const user_email = document.getElementById('user_email').value;
   const user_password = document.getElementById('user_password').value;
   console.log(user_name, user_email, user_password);
+  //REPETIR PAG1
+  const validarEmail = document.getElementById("validarEmail").value
+  const validarPass = document.getElementById("validarPass").value
+  console.log(validarEmail, validarPass)
   //PAGINA 2 
   const nombre = document.getElementById("nombre").value
   const apellido = document.getElementById("apellido").value
@@ -63,7 +67,9 @@ formRegistro.addEventListener('submit', async (e) => {
       body: JSON.stringify({
         user_name,
         user_email,
+        validarEmail,
         user_password,
+        validarPass,
         nombre,
         apellido,
         dni,

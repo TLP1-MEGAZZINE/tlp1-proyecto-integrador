@@ -1,10 +1,8 @@
 //IMPORTACIONES
 const crearRegistroCompleto = require("../helpers/registro.helper.js")
-
-const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
 // const { generarJWT } = require('../helpers/generarToken');
-const { User } = require("../models/users.model");
+const { findUserByEmailOrUsername, findAllUser } = require("../models/users.model");
 
 
 //CREAR EL OBJETO QUE CONTENDRA LOS METODOS POST
@@ -31,22 +29,14 @@ registerLogin.crearUsuario = async (req, res) => {
 
 
 // METODO PARA EL LOGIN
-
 registerLogin.loginUsuario = async (req, res) => {
 
-    const { user_name, user_email, user_password } = req.body
+    const userCredentials = req.body
     try {
 
         //VERIFICAR SI EXISTE EL USUARIO
 
-        const existeUsuario = await User.findOne({
-            where: {
-                [Op.or]: [
-                    { user_name },
-                    { user_email }
-                ]
-            }
-        });
+        const existeUsuario = await findUserByEmailOrUsername(userCredentials)
 
         if (!existeUsuario) {
             return res.status(404).json({
@@ -57,12 +47,12 @@ registerLogin.loginUsuario = async (req, res) => {
         // Verificar si el usuario está activo
         if (!existeUsuario.estado) {
             return res.status(404).json({
-                message: 'El usuario no está activo',
+                message: 'La cuenta esta suspendida',
             });
         }
 
         // Verificar la contraseña
-        const passwordValido = bcrypt.compareSync(user_password, existeUsuario.user_password);
+        const passwordValido = bcrypt.compareSync(userCredentials.user_password, existeUsuario.user_password);
 
         if (!passwordValido) {
             return res.status(400).json({
@@ -75,7 +65,7 @@ registerLogin.loginUsuario = async (req, res) => {
 
         req.session.user = {
             userId: existeUsuario.id_user,
-            // rol: existeUsuario.id_rol
+            rol: existeUsuario.id_rol
         };
 
         res.json({
@@ -88,6 +78,19 @@ registerLogin.loginUsuario = async (req, res) => {
         res.status(400).json({
             message: 'Error al iniciar sesión',
         });
+    }
+};
+
+registerLogin.ctrlFindUsers = async (req, res) => {
+
+    try {
+        const users = await findAllUser()
+
+        return res.status(200).json(users)
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json("Internal Server Error...")
     }
 };
 

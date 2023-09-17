@@ -1,6 +1,6 @@
 const { check } = require("express-validator")
 const { validateSchema } = require("../middlewares/validateHealper.js")
-const { User } = require("../models/users.model.js")
+const { findUserByEmail, findUserByUserName } = require("../models/users.model.js")
 
 const validatUser = [
     //OBLIGATORIOS
@@ -10,16 +10,12 @@ const validatUser = [
         .isAlphanumeric().withMessage("El nombre de usuario no debe estar vacio")
         .isLength({ min: 6, max: 30 }).withMessage('El nombre de usuario debe tener entre 6 y 30 caracteres')
         .custom(async (value,) => {
-            const existeUsername = await User.findOne({
-                where: {
-                    user_name: value
-                }
-            });
+            const existeUsername = await findUserByUserName(value)
             if (existeUsername) {
                 throw new Error('El nombre de usuario ya está registrado');
             }
             return true;
-        }), 
+        }),
 
     check("user_password")
         .exists()
@@ -27,21 +23,37 @@ const validatUser = [
         .isAlphanumeric().withMessage("La contraseña no debe estar vacia")
         .isLength({ min: 9, max: 30 }).withMessage('La contraseña debe tener entre 9 y 30 caracteres'),
 
+    check("validarPass")
+        .exists().withMessage("Debe confirmar la contraseña")
+        .notEmpty().withMessage("Debe confirmar la contraseña")
+        .custom((value, { req }) => {
+            if (value !== req.body.user_password) {
+                throw new Error("Las contraseñas no coinciden");
+            }
+            return true;
+        }),
+
     check("user_email")
         .exists()
         .notEmpty().withMessage("El email no puede estar vacio")
         .isEmail().withMessage("Se debe proporcionar un email valido")
         .custom(async (value,) => {
-            const existeEmail = await User.findOne({
-                where: {
-                    user_email: value
-                }
-            });
+            const existeEmail = await findUserByEmail(value)
             if (existeEmail) {
                 throw new Error('El email ya está registrado');
             }
             return true;
-        }), 
+        }),
+
+    check("validarEmail")
+        .exists().withMessage("Debe confirmar su email")
+        .notEmpty().withMessage("Debe confirmar su email")
+        .custom((value, { req }) => {
+            if (value !== req.body.user_email) {
+                throw new Error("Los emails no coinciden");
+            }
+            return true;
+        }),
 
     check("nombre")
         .exists()
@@ -91,7 +103,7 @@ const validatUser = [
     check("otro_pais")
         .optional()
         .notEmpty().withMessage("Debe seleccionar su pais de procedencia")
-        .isNumeric().withMessage("Debe seleccionar su pais de procedencia"),
+        .isAlpha().withMessage("Debe seleccionar su pais de procedencia"),
 
     //POSTULANTE
     check("id_EstadoLaboral")
@@ -117,7 +129,7 @@ const validatUser = [
     check("otro_rubro")
         .optional()
         .notEmpty().withMessage("Debe seleccionar su rubro")
-        .isNumeric().withMessage("Debe seleccionar su rubro"),
+        .isAlpha().withMessage("Debe seleccionar su rubro"),
 
     //EMPLEADOR
     check("num_telEmpresa")
