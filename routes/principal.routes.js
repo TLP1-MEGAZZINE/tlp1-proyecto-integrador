@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { ctrlFindUsers } = require("../controllers/registro.controller")
+const { crearPosteos } = require("../controllers/userActions.controller")
 
 router.get('/cerrar-sesion', (req, res) => {
     req.session.destroy(err => {
@@ -16,5 +17,7 @@ router.get('/cerrar-sesion', (req, res) => {
 
 
 router.get("/findAll", ctrlFindUsers)
+
+router.post("/posteo", crearPosteos)
 
 module.exports = router;

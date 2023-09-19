@@ -4,6 +4,7 @@ const { Contacto } = require("./contacto.model");
 const { Empleador } = require("./empleador.model");
 const { Particular } = require("./particular.model");
 const { Postulante } = require("./postulantes.model");
+const {Post} = require("./posteos.model")
 const UserRol = require("./userRol.model");
 const Rubro = require("./rubro.model");
 const Provincia = require("./provincias.models");
@@ -41,3 +42,6 @@ Rubro.hasOne(Empleador, { foreignKey: 'id_rubro' });
 
 Contacto.belongsTo(User, { foreignKey: 'id_user', as: "User" });
 User.hasOne(Contacto, {foreignKey: 'id_user'})
+
+Post.belongsTo(User, { foreignKey: "id_user" });
+User.hasMany(Post, { foreignKey: "id_user" });
