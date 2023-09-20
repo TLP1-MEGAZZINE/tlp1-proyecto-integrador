@@ -9,7 +9,6 @@ vista.index = (req, res) => {
 vista.masInfo = (req, res) => {
     res.render("mas-info")
 };
-
 // RUTAS DE REGISTRO-LOGIN
 
 vista.registro = (req, res) => {
@@ -31,6 +30,10 @@ vista.novedades = (req, res) => {
 
 vista.solicitudes = (req, res) => {
     res.render("./principal/solicitudes")
+}
+
+vista.file = (req, res) =>{
+    res.render("imagen")
 }
 
 // EDITAR PERFILES

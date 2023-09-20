@@ -12,7 +12,8 @@ const { index,
     novedades,
     perfil,
     perfilpostulante,
-    perfilempresa
+    perfilempresa, 
+    file
 } = require('../controllers/vista.controllers')
 
 // RUTAS INICIALES
@@ -29,6 +30,7 @@ router.get('/login', login)
 router.get('/inicio', protegerRuta, inicio)
 router.get('/novedades', protegerRuta, novedades);
 router.get('/solicitudes', protegerRuta, solicitudes);
+router.get('/file', file)
 
 // // EDITAR PERFILES
 router.get('/perfil', protegerRuta, perfil);

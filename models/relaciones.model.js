@@ -5,6 +5,7 @@ const { Empleador } = require("./empleador.model");
 const { Particular } = require("./particular.model");
 const { Postulante } = require("./postulantes.model");
 const {Post} = require("./posteos.model")
+const {Image} = require("./imagenes.model")
 const UserRol = require("./userRol.model");
 const Rubro = require("./rubro.model");
 const Provincia = require("./provincias.models");

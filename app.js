@@ -3,6 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const session = require('express-session');
+const multer = require("multer")
 const { createLogs, path } = require("./helpers/createLogs")
 const environments = require("./config/environment")
 
