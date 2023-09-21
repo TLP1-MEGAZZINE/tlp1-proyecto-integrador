@@ -1,10 +1,19 @@
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+
+// Directorio de destino para las imágenes subidas
+const uploadDirectory = path.join(__dirname, '../public/uploads');
+
+// Verificar si el directorio de carga existe, y créalo si no
+if (!fs.existsSync(uploadDirectory)) {
+    fs.mkdirSync(uploadDirectory, { recursive: true });
+}
 
 // Configuración del almacenamiento de Multer
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, '../public/uploads')); // Ajusta la ruta de destino según tu estructura de carpetas
+        cb(null, uploadDirectory); // Utiliza el directorio de carga
     },
     filename: (req, file, cb) => {
         // Genera un nombre único para el archivo
@@ -14,7 +23,7 @@ const storage = multer.diskStorage({
     }
 });
 
-// Configuración de la función de filtrado de archivos (solo imagenes)
+// Configuración de la función de filtrado de archivos (solo imágenes)
 const fileFilter = (req, file, cb) => {
     // Verifica el tipo de archivo permitido (ejemplo: solo imágenes)
     if (file.mimetype.startsWith('image/')) {

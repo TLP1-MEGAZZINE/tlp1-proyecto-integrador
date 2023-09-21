@@ -12,7 +12,7 @@ const Image = sequelize.define('image', {
     },
     description: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     idUser: {
         type: DataTypes.INTEGER,
@@ -20,6 +20,7 @@ const Image = sequelize.define('image', {
             model: "User",
             key: "id_user"
         },
+        allowNull: true,
     },
 }, {
     paranoid: false,
@@ -33,5 +34,17 @@ Image.sync({ force: false }).then(async () => {
 
 //SERVICIO
 
+async function subirArchivo(filename, description) {
+    try {
+        return await Image.create({
+            url: `/uploads/${filename}`,
+            description: description,
+            idUser: 1
+        }) ?? null
+    } catch (error) {
+        console.log("ERROR AL SUBIR ARCHIVO", error)
+    }
+};
 
-module.exports = { Image,  };
+
+module.exports = { Image, subirArchivo };

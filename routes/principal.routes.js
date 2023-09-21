@@ -3,6 +3,7 @@ const router = express.Router();
 const upload = require('../middlewares/multer');
 const { ctrlFindUsers } = require("../controllers/registro.controller")
 const { crearPosteos } = require("../controllers/userActions.controller")
+const { uploadImage } = require("../controllers/image.controller")
 
 router.get('/cerrar-sesion', (req, res) => {
     req.session.destroy(err => {
@@ -16,17 +17,9 @@ router.get('/cerrar-sesion', (req, res) => {
     });
 });
 
-
 router.get("/findAll", ctrlFindUsers)
 
-router.post("/posteo", upload.single("image"), (req, res) => {
-    if (req.file) {
-        const filename = req.file.fieldname;
-        res.send("Imagen subida con exito");
-    } else {
-        res.send("Error al subir imagen")
-    }
-})
+router.post("/file", upload.single("image"), uploadImage)
 
 
 module.exports = router;
