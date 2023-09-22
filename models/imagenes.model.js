@@ -1,5 +1,8 @@
 const { DataTypes, sequelize } = require('../config/db');
 
+//ACOMODAR LA HORA, RESTANDOLE 3 HORAS
+sequelize.options.timezone = '-03:00';
+
 const Image = sequelize.define('image', {
     idImage: {
         type: DataTypes.INTEGER,
@@ -25,7 +28,8 @@ const Image = sequelize.define('image', {
 }, {
     paranoid: false,
     underscored: true,
-    tableName: "Images"
+    tableName: "Images",
+    timestamps: true,
 });
 
 Image.sync({ force: false }).then(async () => {

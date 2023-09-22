@@ -1,10 +1,6 @@
 // const { request } = require('express');
 const { DataTypes, sequelize } = require('../config/db');
 
-const Nacionalidad = require("./paises.model");
-const UserGender = require('./genero.model');
-const Provincia = require("./provincias.models")
-
 const UserInfo = sequelize.define('User_info', {
     id_info: {
         type: DataTypes.INTEGER,
@@ -106,4 +102,16 @@ async function createInfoUser(id_user, userData) {
     }
 }
 
-module.exports = { createInfoUser, UserInfo }
+//BUSCAR POR RUBRO
+async function findByRubro(data,) {
+    try {
+        return await UserInfo.findOne({
+            where: { id_rol: value }
+        })
+    } catch (error) {
+        console.log("Error al encontrar usuario por rubro", error)
+    }
+}
+
+
+module.exports = { createInfoUser, UserInfo, findByRubro }

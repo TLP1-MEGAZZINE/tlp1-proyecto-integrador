@@ -46,15 +46,15 @@ const User = sequelize.define('User', {
     timestamps: false,
     paranoid: false,
     tableName: "User",
-    modelName: "User"
 });
 
 User.sync({ force: false }).then(() => {
     console.log('Tabla de usuarios creada')
 })
 
+//SERVICIOS
 
-//SERVICIO
+//CREA USUARIO EN LA DB
 async function createUser(userData) {
     try {
         //COMPROBAR SI EXISTEN REGISTROS
@@ -81,7 +81,6 @@ async function createUser(userData) {
         //ENCRIPTAR LA PASSWORD
         const hashedPass = await encriptar(userData.user_password)
 
-        //CREA USUARIO EN LA DB
         return await User.create({
             user_name: userData.user_name,
             user_email: userData.user_email,
@@ -95,18 +94,44 @@ async function createUser(userData) {
     }
 }
 
+//ACTUALIZAR USUARIO
+async function actualizarUsuario(userId, newData) {
+    try {
+        const user = await findUserById(userId)
+
+        if (!user) {
+            throw new Error("User no encontrado")
+        }
+
+        return await user.update({
+            user_name: newData.user_name,
+            user_email: newData.user_email,
+            user_password: newData.user_password,
+        })
+
+
+
+    } catch (error) {
+        console.log("Error at update user ", error)
+
+    }
+}
+
+//BUSCAR USUARIO POR EMAIL
 async function findUserByEmail(value) {
     return await User.findOne({
         where: { user_email: value }
     })
 }
 
+//BUSCAR USUARIO POR NOMBRE DE USUARIO
 async function findUserByUserName(value) {
     return await User.findOne({
         where: { user_name: value }
     })
 }
 
+//BUSCAR POR EMAIL O USERNAME
 async function findUserByEmailOrUsername(userCredentials) {
     return await User.findOne({
         where: {
@@ -118,6 +143,16 @@ async function findUserByEmailOrUsername(userCredentials) {
     });
 }
 
+//FIND ONE USER IN DB
+async function findUserById(userId) {
+    try {
+        return await User.findByPk(userId) ?? null
+
+    } catch (error) {
+        console.log("Error al encontrar usuario")
+    }
+};
+
 //FIND ALL USERS IN DB
 async function findAllUser() {
     try {
@@ -125,7 +160,7 @@ async function findAllUser() {
             where: { estado: true },
             include: [{
                 model: UserRol, // Modelo relacionado
-                attributes: ['description'] // Atributos que deseas obtener del modelo relacionado
+                attributes: ['rol_name'] // Atributos que deseas obtener del modelo relacionado
             }],
             attributes: { exclude: ['user_password', 'estado', 'id_rol'] }
         }) ?? null
@@ -135,4 +170,23 @@ async function findAllUser() {
     }
 };
 
-module.exports = { User, createUser, findUserByEmail, findUserByUserName, findUserByEmailOrUsername, findAllUser }
+//BUSCAR POR ROL
+async function findUserByRole(value) {
+    try {
+        return await User.findOne({
+            where: { id_rol: value }
+        })
+    } catch (error) {
+        console.log("Error al encontrar usuario por rol", error)
+    }
+}
+
+//BUSCAR POR LOCALIDAD
+
+//BUSCAR POR RANGO ETAREO
+
+//CAMBIAR LA CONTRASEÑA
+
+//ELIMINAR USUARIO
+
+module.exports = { User, createUser, findUserByEmail, findUserByUserName, findUserByEmailOrUsername, findAllUser, findUserByRole }

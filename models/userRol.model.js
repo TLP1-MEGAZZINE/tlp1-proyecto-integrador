@@ -8,7 +8,7 @@ const UserRol = sequelize.define('User_rol', {
     primaryKey: true,
     autoIncrement: true,
   },
-  description: {
+  rol_name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -28,9 +28,9 @@ UserRol.sync({ force: false }).then(async () => {
     // Crear los registros de roles después de crear la tabla
     try {
       await UserRol.bulkCreate([
-        { description: 'postulante' },
-        { description: 'empresa' },
-        { description: 'particular' }
+        { rol_name: 'postulante' },
+        { rol_name: 'empresa' },
+        { rol_name: 'particular' }
       ]);
       console.log('registros de roles creados exitosamente');
     } catch (error) {

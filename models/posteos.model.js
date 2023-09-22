@@ -1,5 +1,9 @@
 const { DataTypes, sequelize } = require('../config/db');
 
+//ACOMODAR LA HORA, RESTANDOLE 3 HORAS
+sequelize.options.timezone = '-03:00';
+
+
 const Post = sequelize.define('post', {
     idPost: {
         type: DataTypes.INTEGER,
@@ -24,7 +28,8 @@ const Post = sequelize.define('post', {
 }, {
     paranoid: false,
     underscored: true,
-    tableName: "Posts"
+    tableName: "Posts",
+    timestamps: true,
 });
 
 Post.sync({ force: true }).then(async () => {
@@ -46,5 +51,11 @@ async function createPost(postData) {
         throw error
     }
 };
+
+//ELIMINAR POST
+
+//BUSCAR POSTS SEGUN ROL
+
+//BUSCAR POSTS SEGUN RUBRO
 
 module.exports = { Post, createPost };
