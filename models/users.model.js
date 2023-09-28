@@ -158,12 +158,12 @@ async function findAllUser() {
     try {
         return await User.findAll({
             where: { estado: true },
+            attributes: { exclude: ['user_password', 'estado', 'id_rol',] },
             include: [{
                 model: UserRol, // Modelo relacionado
-                attributes: ['rol_name'] // Atributos que deseas obtener del modelo relacionado
+                attributes: ['description'] // Atributos que deseas obtener del modelo relacionado
             }],
-            attributes: { exclude: ['user_password', 'estado', 'id_rol'] }
-        }) ?? null
+        })
 
     } catch (error) {
         console.log("Error al encontrar usuarios", error)
@@ -188,5 +188,21 @@ async function findUserByRole(value) {
 //CAMBIAR LA CONTRASEÑA
 
 //ELIMINAR USUARIO
+async function deleteUser(userId) {
 
-module.exports = { User, createUser, findUserByEmail, findUserByUserName, findUserByEmailOrUsername, findAllUser, findUserByRole }
+    const deletedUser = await findUserById(userId)
+
+    if (!deleteUser) {
+        console.log("El usuario que esta tratando de eliminar no existe");
+    }
+
+    try {
+        deletedUser.update({
+            where: { estado: 0 }
+        })
+    } catch (error) {
+        console.log("Error al eliminar el usuario", error);
+    }
+}
+
+module.exports = { User, createUser, findUserByEmail, findUserByUserName, findUserByEmailOrUsername, findAllUser, findUserByRole, deleteUser }

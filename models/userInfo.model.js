@@ -106,12 +106,11 @@ async function createInfoUser(id_user, userData) {
 async function findByRubro(data,) {
     try {
         return await UserInfo.findOne({
-            where: { id_rol: value }
+            where: { id_rol: data }
         })
     } catch (error) {
         console.log("Error al encontrar usuario por rubro", error)
     }
 }
-
 
 module.exports = { createInfoUser, UserInfo, findByRubro }
