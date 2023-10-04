@@ -21,7 +21,8 @@ const validatUser = [
         .exists()
         .notEmpty().withMessage("La contraseña no debe estar vacia")
         .isAlphanumeric().withMessage("La contraseña no debe estar vacia")
-        .isLength({ min: 9, max: 30 }).withMessage('La contraseña debe tener entre 9 y 30 caracteres'),
+        .isStrongPassword({minLength: 9, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0 }).withMessage('La contraseña debe tener almenos 1 mayuscula, 1 minuscula, 1 numero y 9 caracteres'),
+    
 
     check("validarPass")
         .exists().withMessage("Debe confirmar la contraseña")

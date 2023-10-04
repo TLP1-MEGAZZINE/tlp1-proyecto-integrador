@@ -161,7 +161,7 @@ async function findAllUser() {
             attributes: { exclude: ['user_password', 'estado', 'id_rol',] },
             include: [{
                 model: UserRol, // Modelo relacionado
-                attributes: ['description'] // Atributos que deseas obtener del modelo relacionado
+                attributes: ['rol_name'] // Atributos que deseas obtener del modelo relacionado
             }],
         })
 

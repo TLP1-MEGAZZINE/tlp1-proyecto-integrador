@@ -15,7 +15,7 @@ const UserRol = sequelize.define('User_rol', {
 }, {
   timestamps: false,
   paranoid: false,
-  tableName: "User_rol"
+  tableName: "rol"
 });
 
 // Sincronizar el modelo con la base de datos (esto creará la tabla si no existe)

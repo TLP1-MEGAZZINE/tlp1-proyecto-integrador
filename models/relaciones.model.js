@@ -13,6 +13,8 @@ const Nacionalidad = require("./paises.model");
 const UserGender = require("./genero.model");
 const EstadoLaboral = require("./estado_laboral.model");
 const NivelEducacion = require("./nivelEduacion.model");
+const Departamento = require("./departamento.model");
+const Localidad = require("./localidad.model");
 
 //UNO A UNO
 User.belongsTo(UserInfo, { foreignKey: 'id_user' });
@@ -54,15 +56,13 @@ EstadoLaboral.hasMany(Postulante, { foreignKey: 'id_EstadoLaboral' });
 Postulante.belongsTo(NivelEducacion, { foreignKey: 'id_NivelEducacion' });
 NivelEducacion.hasMany(Postulante, { foreignKey: 'id_NivelEducacion' });
 
-
-
 Empleador.belongsTo(Rubro, { foreignKey: 'id_rubro' });
 Rubro.hasMany(Empleador, { foreignKey: 'id_rubro' });
 
 
 //CONTENIDO
-Post.belongsTo(User, { foreignKey: "id_user" });
-User.hasMany(Post, { foreignKey: "id_user" });
+Post.belongsTo(User, { foreignKey: "idUser" });
+User.hasMany(Post, { foreignKey: "idUser" });
 
 Image.belongsTo(User, { foreignKey: "id_user" });
 User.hasMany(Image, { foreignKey: "id_user" });

@@ -22,6 +22,7 @@ router.post("/file", upload.single("image"), uploadImage)
 //LLAMAR A TODOS LOS USUARIOS
 router.get("/findAll", ctrlFindUsers)
 
-
+//CREAR POSTEOS
+router.post("/createPost", crearPosteos)
 
 module.exports = router;
