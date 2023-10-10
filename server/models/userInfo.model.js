@@ -1,7 +1,7 @@
 // const { request } = require('express');
 const { DataTypes, sequelize } = require('../config/db');
 
-const UserInfo = sequelize.define('User_info', {
+const UserInfo = sequelize.define('user_info', {
     id_info: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -10,7 +10,7 @@ const UserInfo = sequelize.define('User_info', {
     id_user: {
         type: DataTypes.INTEGER,
         references: {
-            model: "User",
+            model: "user",
             key: "id_user"
         },
     },
@@ -52,14 +52,14 @@ const UserInfo = sequelize.define('User_info', {
     id_pais: {
         type: DataTypes.INTEGER,
         references: {
-            model: "nacionalidad",
+            model: "paises",
             key: "id_pais"
         },
     },
     id_provincia: {
         type: DataTypes.INTEGER,
         references: {
-            model: "Provincia",
+            model: "provincia",
             key: "id_provincia"
         },
     },
@@ -70,7 +70,8 @@ const UserInfo = sequelize.define('User_info', {
 }, {
     timestamps: false,
     paranoid: false,
-    tableName: "Users_info"
+    tableName: "user_info",
+    modelName: "user_info"
 });
 
 //SI NO FUNCIONA CAMBIAR EL FALSE A TRUE

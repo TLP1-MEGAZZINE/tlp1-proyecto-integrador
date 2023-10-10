@@ -3,22 +3,29 @@ const { DataTypes, sequelize } = require('../config/db');
 //ACOMODAR LA HORA, RESTANDOLE 3 HORAS
 sequelize.options.timezone = '-03:00';
 
+const { User } = require('./users.model');
+
 
 const Post = sequelize.define('post', {
-    idPost: {
+    id_post: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    postTittle: {
+    post_title: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    postContent: {
+    post_content: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    idUser: {
+    is_emprise_post: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    },
+    id_user: {
         type: DataTypes.INTEGER,
         references: {
             model: "User",
@@ -27,23 +34,36 @@ const Post = sequelize.define('post', {
     },
 }, {
     paranoid: false,
-    underscored: true,
-    tableName: "Posts",
+    tableName: "post",
     timestamps: true,
 });
 
-Post.sync({ force: true }).then(async () => {
+Post.sync({ force: false }).then(async () => {
     console.log('Tabla de posts creada');
 });
 
 //SERVICIO
 async function createPost(postData) {
     try {
+
+        let usuarioPost = await User.findOne({
+            where: { id_user: postData.id_user },
+        })
+
+        if (usuarioPost.id_rol == 2) {
+            return await Post.create({
+                id_user: postData.id_user,
+                post_title: postData.post_title,
+                post_content: postData.post_content,
+                is_emprise_post: true
+            });
+        }
         // Crea un post en la DB
         return await Post.create({
-            idUser: postData.idUser,
-            postTittle: postData.postTittle,
-            postContent: postData.postContent,
+            id_user: postData.id_user,
+            post_title: postData.post_title,
+            post_content: postData.post_content,
+            is_emprise_post: false
         });
 
     } catch (error) {

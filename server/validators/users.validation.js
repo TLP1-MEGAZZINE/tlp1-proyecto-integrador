@@ -21,8 +21,8 @@ const validatUser = [
         .exists()
         .notEmpty().withMessage("La contraseña no debe estar vacia")
         .isAlphanumeric().withMessage("La contraseña no debe estar vacia")
-        .isStrongPassword({minLength: 9, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0 }).withMessage('La contraseña debe tener almenos 1 mayuscula, 1 minuscula, 1 numero y 9 caracteres'),
-    
+        .isStrongPassword({ minLength: 9, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0 }).withMessage('La contraseña debe tener almenos 1 mayuscula, 1 minuscula, 1 numero y 9 caracteres'),
+
 
     check("validarPass")
         .exists().withMessage("Debe confirmar la contraseña")
@@ -94,6 +94,10 @@ const validatUser = [
         .notEmpty().withMessage("Debe seleccionar su pais de procedencia")
         .isNumeric().withMessage("Debe seleccionar su pais de procedencia"),
 
+    check("domicilio")
+        .exists()
+        .notEmpty().withMessage("Debe colocar su domicilio")
+        .isAlphanumeric().withMessage("Debe colocar su domicilio"),
 
     //OPCIONALES
     check("id_provincia")
@@ -107,20 +111,15 @@ const validatUser = [
         .isAlpha().withMessage("Debe seleccionar su pais de procedencia"),
 
     //POSTULANTE
-    check("id_EstadoLaboral")
+    check("id_estado_laboral")
         .optional()
         .notEmpty().withMessage("Debe seleccionar su estado laboral")
         .isNumeric().withMessage("Debe seleccionar su estado laboral"),
 
-    check("id_NivelEducacion")
+    check("id_nivel_educacion")
         .optional()
         .notEmpty().withMessage("Debe seleccionar su nivel de educacion alcanzado")
         .isNumeric().withMessage("Debe seleccionar su nivel de educacion alcanzado"),
-
-    check("id_EstadoLaboral")
-        .optional()
-        .notEmpty().withMessage("Debe seleccionar su estado laboral")
-        .isNumeric().withMessage("Debe seleccionar su estado laboral"),
 
     check("id_rubro")
         .optional()
@@ -133,12 +132,12 @@ const validatUser = [
         .isAlpha().withMessage("Debe seleccionar su rubro"),
 
     //EMPLEADOR
-    check("num_telEmpresa")
+    check("num_tel_empresa")
         .optional()
         .notEmpty().withMessage("Debe colocar su número de telefono empresarial")
         .isNumeric().withMessage("El telefono empresarial debe ser un número"),
 
-    check("domicilioEmpresa")
+    check("domicilio_empresa")
         .optional()
         .notEmpty().withMessage("Debe colocar el domicilio de su empresa")
         .isAlphanumeric().withMessage("Debe colocar el domicilio de su empresa"),

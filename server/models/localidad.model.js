@@ -1,6 +1,4 @@
 const { DataTypes, sequelize } = require('../config/db');
-const Departamento = require('../models/departamento.model');
-
 //CREAR MODELO DE USERS
 const Localidad = sequelize.define('Localidad', {
     id_local: {
@@ -26,8 +24,6 @@ const Localidad = sequelize.define('Localidad', {
     tableName: "Localidad",
 });
 
-Localidad.belongsTo(Departamento, { foreignKey: 'id_depar' });
-Departamento.hasMany(Localidad, { foreignKey: 'id_depar' });
 // Sincronizar el modelo con la base de datos (esto creará la tabla si no existe)
 Localidad.sync({ force: false }).then(async () => {
     console.log('Tabla de Localidad creada');

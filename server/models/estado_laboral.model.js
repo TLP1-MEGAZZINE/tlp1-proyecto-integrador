@@ -2,12 +2,12 @@ const { DataTypes, sequelize } = require('../config/db');
 
 // Definir el modelo para la tabla users_rol
 const EstadoLaboral = sequelize.define('estado_laboral', {
-  id_EstadoLaboral: {
+  id_estado_laboral: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  descripcion: {
+  desc_estado_laboral: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -26,8 +26,8 @@ EstadoLaboral.sync({ force: false }).then(async () => {
     // Crear los registros de estado laboral después de crear la tabla
     try {
       await EstadoLaboral.bulkCreate([
-        { descripcion: 'desempleado' },
-        { descripcion: 'empleado' },
+        { desc_estado_laboral: 'desempleado' },
+        { desc_estado_laboral: 'empleado' },
       ]);
       console.log('registros de estado laboral creada exitosamente');
     } catch (error) {

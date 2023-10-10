@@ -1,10 +1,11 @@
 const { DataTypes, sequelize } = require('../config/db');
 const { encriptar } = require('../helpers/encriptar');
 const { Op, where } = require('sequelize');
-const UserRol = require("./userRol.model")
+const Rol = require("./roles.model")
+const { UserInfo } = require("./userInfo.model");
 
 //CREAR MODELO DE USER
-const User = sequelize.define('User', {
+const User = sequelize.define('user', {
     id_user: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -33,7 +34,7 @@ const User = sequelize.define('User', {
     id_rol: {
         type: DataTypes.INTEGER,
         references: {
-            model: "User_rol",
+            model: "rol",
             key: "id_rol"
         },
     },
@@ -45,7 +46,8 @@ const User = sequelize.define('User', {
 }, {
     timestamps: false,
     paranoid: false,
-    tableName: "User",
+    tableName: "user",
+    modelName: "user"
 });
 
 User.sync({ force: false }).then(() => {
@@ -94,29 +96,6 @@ async function createUser(userData) {
     }
 }
 
-//ACTUALIZAR USUARIO
-async function actualizarUsuario(userId, newData) {
-    try {
-        const user = await findUserById(userId)
-
-        if (!user) {
-            throw new Error("User no encontrado")
-        }
-
-        return await user.update({
-            user_name: newData.user_name,
-            user_email: newData.user_email,
-            user_password: newData.user_password,
-        })
-
-
-
-    } catch (error) {
-        console.log("Error at update user ", error)
-
-    }
-}
-
 //BUSCAR USUARIO POR EMAIL
 async function findUserByEmail(value) {
     return await User.findOne({
@@ -160,7 +139,7 @@ async function findAllUser() {
             where: { estado: true },
             attributes: { exclude: ['user_password', 'estado', 'id_rol',] },
             include: [{
-                model: UserRol, // Modelo relacionado
+                model: Rol, // Modelo relacionado
                 attributes: ['rol_name'] // Atributos que deseas obtener del modelo relacionado
             }],
         })
@@ -182,10 +161,35 @@ async function findUserByRole(value) {
 }
 
 //BUSCAR POR LOCALIDAD
+async function findUserByLocalidad(value) {
+    try {
+        return await User.findOne({
+            where: { id_localidad: value }
+        })
+    } catch (error) {
+        console.log("Error al encontrar usuario por rol", error)
+    }
+}
 
 //BUSCAR POR RANGO ETAREO
 
-//CAMBIAR LA CONTRASEÑA
+//ACTUALIZAR USUARIO
+async function actualizarUsuario(userId, newData) {
+    try {
+        const user = await findUserById(userId)
+
+        if (user) {
+            const hashedPass = await encriptar(newData.user_password)
+            return await user.update({
+                user_name: newData.user_name,
+                user_email: newData.user_email,
+                user_password: hashedPass,
+            })
+        }
+    } catch (error) {
+        console.log("Error al encontrar usuario", error);
+    }
+}
 
 //ELIMINAR USUARIO
 async function deleteUser(userId) {
@@ -205,4 +209,4 @@ async function deleteUser(userId) {
     }
 }
 
-module.exports = { User, createUser, findUserByEmail, findUserByUserName, findUserByEmailOrUsername, findAllUser, findUserByRole, deleteUser }
+module.exports = { User, createUser, findUserByEmail, findUserByUserName, findUserByEmailOrUsername, findAllUser, findUserByRole, deleteUser, actualizarUsuario, findUserByLocalidad }

@@ -1,6 +1,6 @@
 const { DataTypes, sequelize } = require('../config/db');
 
-const Provincia = sequelize.define('Provincia', {
+const Provincia = sequelize.define('provincia', {
     id_provincia: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -13,7 +13,8 @@ const Provincia = sequelize.define('Provincia', {
 }, {
     timestamps: false,
     paranoid: false,
-    tableName: "Provincia"
+    tableName: "provincia",
+    modelName: "provincia"
 });
 
 // Sincronizar el modelo con la base de datos (esto creará la tabla si no existe)

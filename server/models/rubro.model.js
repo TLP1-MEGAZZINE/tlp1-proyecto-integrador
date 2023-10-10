@@ -7,7 +7,7 @@ const Rubro = sequelize.define('rubro', {
     primaryKey: true,
     autoIncrement: true,
   },
-  descripcion: {
+  desc_rubro: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -26,17 +26,17 @@ Rubro.sync({ force: false }).then(async () => {
     // Crear los registros de rubro después de crear la tabla
     try {
       await Rubro.bulkCreate([
-        { descripcion: 'Salud' },
-        { descripcion: 'Tecnologia' },
-        { descripcion: 'Educación' },
-        { descripcion: 'Finanzas' },
-        { descripcion: 'Manufactura' },
-        { descripcion: 'Ventas' },
-        { descripcion: 'Administración' },
-        { descripcion: 'Alimenticio' },
-        { descripcion: 'Construcción' },
-        { descripcion: 'Docente' },
-        { descripcion: 'Otros' },
+        { desc_rubro: 'Salud' },
+        { desc_rubro: 'Tecnologia' },
+        { desc_rubro: 'Educación' },
+        { desc_rubro: 'Finanzas' },
+        { desc_rubro: 'Manufactura' },
+        { desc_rubro: 'Ventas' },
+        { desc_rubro: 'Administración' },
+        { desc_rubro: 'Alimenticio' },
+        { desc_rubro: 'Construcción' },
+        { desc_rubro: 'Docente' },
+        { desc_rubro: 'Otros' },
       ]);
       console.log('registros de rubros creados exitosamente');
     } catch (error) {

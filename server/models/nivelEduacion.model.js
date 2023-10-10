@@ -2,12 +2,12 @@ const { DataTypes, sequelize } = require('../config/db');
 
 // Definir el modelo para la tabla users_rol
 const NivelEducacion = sequelize.define('nivel_educacion', {
-    id_NivelEducacion: {
+    id_nivel_educacion: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    descripcion: {
+    desc_nivel_educacion: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -26,10 +26,10 @@ NivelEducacion.sync({ force: false }).then(async () => {
         // Crear los registros de nivel_educacion después de crear la tabla
         try {
             await NivelEducacion.bulkCreate([
-                { descripcion: 'secundario completo' },
-                { descripcion: 'secundario incompleto' },
-                { descripcion: 'terciario completo' },
-                { descripcion: 'terciario incompleto' },
+                { desc_nivel_educacion: 'secundario completo' },
+                { desc_nivel_educacion: 'secundario incompleto' },
+                { desc_nivel_educacion: 'terciario completo' },
+                { desc_nivel_educacion: 'terciario incompleto' },
             ]);
             console.log('registros de nivel educacion creada exitosamente');
         } catch (error) {

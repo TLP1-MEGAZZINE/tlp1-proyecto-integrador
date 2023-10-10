@@ -18,18 +18,18 @@ const Postulante = sequelize.define('postulante', {
             key: "id_user"
         },
     },
-    id_EstadoLaboral: {
+    id_estado_laboral: {
         type: DataTypes.INTEGER,
         references: {
             model: "estado_laboral",
-            key: "id_EstadoLaboral"
+            key: "id_estado_laboral"
         }
     },
-    id_NivelEducacion: {
+    id_nivel_educacion: {
         type: DataTypes.INTEGER,
         references: {
             model: "nivel_educacion",
-            key: "id_NivelEducacion"
+            key: "id_nivel_educacion"
         }
     },
     id_rubro: {
@@ -60,8 +60,8 @@ async function createPostulante(id_user, userData) {
         return await Postulante.create(
             {
                 id_user: id_user,
-                id_EstadoLaboral: userData.id_EstadoLaboral,
-                id_NivelEducacion: userData.id_NivelEducacion,
+                id_estado_laboral: userData.id_estado_laboral,
+                id_nivel_educacion: userData.id_nivel_educacion,
                 id_rubro: userData.id_rubro,
                 otro_rubro: userData.otro_rubro
             },

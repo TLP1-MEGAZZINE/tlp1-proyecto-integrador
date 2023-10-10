@@ -1,6 +1,6 @@
 const { DataTypes, sequelize } = require('../config/db');
 
-const Rubro = require("./rubro.model")
+const Rubro = require("./rubro.model");
 
 //CREAR MODELO DE USERS
 const Empleador = sequelize.define('empleador', {
@@ -16,11 +16,11 @@ const Empleador = sequelize.define('empleador', {
             key: "id_user"
         },
     },
-    num_telEmpresa: {
+    num_tel_empresa: {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    domicilioEmpresa: {
+    domicilio_empresa: {
         type: DataTypes.STRING,
         allowNull: true,
     },
@@ -56,8 +56,8 @@ async function createEmpleador(id_user, userData) {
         return await Empleador.create(
             {
                 id_user: id_user,
-                num_telEmpresa: userData.num_telEmpresa,
-                domicilioEmpresa: userData.domicilioEmpresa,
+                num_tel_empresa: userData.num_tel_empresa,
+                domicilio_empresa: userData.domicilio_empresa,
                 nombre_empresa: userData.nombre_empresa,
                 id_rubro: userData.id_rubro,
                 otro_rubro: userData.otro_rubro

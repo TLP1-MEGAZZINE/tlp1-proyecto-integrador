@@ -1,7 +1,7 @@
 const { DataTypes, sequelize } = require('../config/db');
 
 //CREAR MODELO DE USERS
-const Nacionalidad = sequelize.define('Nacionalidad', {
+const Paises = sequelize.define('paises', {
     id_pais: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -14,19 +14,20 @@ const Nacionalidad = sequelize.define('Nacionalidad', {
 }, {
     timestamps: false,
     paranoid: false,
-    tableName: "Nacionalidad"
+    tableName: "paises",
+    modelName: "paises"
 });
 
 // Sincronizar el modelo con la base de datos (esto creará la tabla si no existe)
-Nacionalidad.sync({ force: false }).then(async () => {
-    console.log('Tabla de nacionalidades creada');
+Paises.sync({ force: false }).then(async () => {
+    console.log('Tabla de paises creada');
 
     // Verificar si ya existen registros en la tabla
-    const count = await Nacionalidad.count();
+    const count = await Paises.count();
     if (count === 0) {
-        // Crear los registros de nacionalidad solo si no existen
+        // Crear los registros de Paises solo si no existen
         try {
-            await Nacionalidad.bulkCreate([
+            await Paises.bulkCreate([
                 { nombre_pais: 'Argentina' },
                 { nombre_pais: 'Bolivia' },
                 { nombre_pais: 'Brasil' },
@@ -44,8 +45,8 @@ Nacionalidad.sync({ force: false }).then(async () => {
             console.error('Error al crear los registros paises', error);
         }
     } else {
-        console.log('La tabla de nacionalidades ya contiene registros, no se crearán nuevos.');
+        console.log('La tabla de Paiseses ya contiene registros, no se crearán nuevos.');
     }
 });
 
-module.exports = Nacionalidad;
+module.exports = Paises;

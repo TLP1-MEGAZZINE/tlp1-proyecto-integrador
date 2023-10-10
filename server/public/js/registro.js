@@ -29,7 +29,7 @@ formRegistro.addEventListener('submit', async (e) => {
   console.log(nombre, apellido, dni, cuil, fecha_nacimiento, id_genero, id_pais, id_rol);
   console.log(domicilio, num_tel)
 
-  let id_EstadoLaboral, id_NivelEducacion, id_rubro, domicilioEmpresa, num_telEmpresa, nombre_empresa, id_provincia, otro_rubro, otro_pais;
+  let id_estado_laboral, id_nivel_educacion, id_rubro, domicilio_empresa, num_tel_empresa, nombre_empresa, id_provincia, otro_rubro, otro_pais;
 
   if (id_pais === "1") {
     id_provincia = document.getElementById("provincia").value;
@@ -41,16 +41,16 @@ formRegistro.addEventListener('submit', async (e) => {
 
   if (id_rol === "1") {
     //POSTULANTE
-    id_EstadoLaboral = document.getElementById("estado_laboral").value;
-    id_NivelEducacion = document.getElementById("nivel_educacion").value;
+    id_estado_laboral = document.getElementById("estado_laboral").value;
+    id_nivel_educacion = document.getElementById("nivel_educacion").value;
     id_rubro = document.getElementById("selectorRubros").value;
     if (id_rubro === "11") {
       otro_rubro = document.getElementById("inputOtroRubro").value;
     }
   } else if (id_rol === "2") {
     //EMPLEADOR
-    domicilioEmpresa = document.getElementById("domicilioEmpresa").value;
-    num_telEmpresa = document.getElementById("telEmpresa").value;
+    domicilio_empresa = document.getElementById("domicilioEmpresa").value;
+    num_tel_empresa = document.getElementById("telEmpresa").value;
     nombre_empresa = document.getElementById("nombreEmpresa").value;
     id_rubro = document.getElementById("selectorRubros").value;
     if (id_rubro === "11") {
@@ -82,12 +82,12 @@ formRegistro.addEventListener('submit', async (e) => {
         domicilio,
         num_tel,
         id_rol,
-        id_EstadoLaboral,
-        id_NivelEducacion,
+        id_estado_laboral,
+        id_nivel_educacion,
         id_rubro,
         otro_rubro,
-        num_telEmpresa,
-        domicilioEmpresa,
+        num_tel_empresa,
+        domicilio_empresa,
         nombre_empresa
       })
     });

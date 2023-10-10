@@ -4,7 +4,7 @@ const { DataTypes, sequelize } = require('../config/db');
 sequelize.options.timezone = '-03:00';
 
 const Image = sequelize.define('image', {
-    idImage: {
+    id_image: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -17,7 +17,7 @@ const Image = sequelize.define('image', {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    idUser: {
+    id_user: {
         type: DataTypes.INTEGER,
         references: {
             model: "User",
@@ -27,7 +27,6 @@ const Image = sequelize.define('image', {
     },
 }, {
     paranoid: false,
-    underscored: true,
     tableName: "Images",
     timestamps: true,
 });
@@ -38,12 +37,12 @@ Image.sync({ force: false }).then(async () => {
 
 //SERVICIO
 
-async function subirArchivo(filename, description) {
+async function subirArchivo(filename, description,idUser) {
     try {
         return await Image.create({
             url: `/uploads/${filename}`,
             description: description,
-            idUser: 1
+            id_user: idUser
         }) ?? null
     } catch (error) {
         console.log("ERROR AL SUBIR ARCHIVO", error)

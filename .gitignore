@@ -1,4 +1,4 @@
-node_modules
+server/node_modules
 .env
-logs
-/public/uploads/
+server/logs
+server/public/uploads/

@@ -10,7 +10,7 @@ const Contacto = sequelize.define('Contacto', {
     id_user: {
         type: DataTypes.INTEGER,
         references: {
-            model: "User",
+            model: "user",
             key: "id_user"
         },
     },
@@ -25,7 +25,8 @@ const Contacto = sequelize.define('Contacto', {
 }, {
     timestamps: false,
     paranoid: false,
-    tableName: "Contacto"
+    tableName: "contacto",
+    modelName: "contacto",
 });
 
 
