@@ -139,7 +139,7 @@ const validatUser = [
         .isNumeric().withMessage("El telefono empresarial debe ser un número"),
 
     check("domicilio_empresa")
-        .exists()
+        .optional()
         .notEmpty().withMessage("Debe colocar la direccion de su empresa")
         .matches(/^[a-zA-Z0-9\s\-.,#]+$/).withMessage("La direccion de su empresa debe ser correcto"),
       
