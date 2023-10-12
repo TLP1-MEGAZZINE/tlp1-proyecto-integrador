@@ -32,6 +32,7 @@ registerLogin.crearUsuario = async (req, res) => {
 registerLogin.loginUsuario = async (req, res) => {
 
     const userCredentials = req.body
+    
     try {
 
         //VERIFICAR SI EXISTE EL USUARIO
@@ -64,7 +65,7 @@ registerLogin.loginUsuario = async (req, res) => {
         // const token = await generarJWT(existeUsuario.id_user)
 
         req.session.user = {
-            userId: existeUsuario.id_user,
+            id_user: existeUsuario.id_user,
             rol: existeUsuario.id_rol
         };
 

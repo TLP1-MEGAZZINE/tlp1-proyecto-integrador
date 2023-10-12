@@ -1,6 +1,8 @@
 // const { request } = require('express');
 const { DataTypes, sequelize } = require('../config/db');
 
+const {User} = require('./users.model'); 
+
 const UserInfo = sequelize.define('user_info', {
     id_info: {
         type: DataTypes.INTEGER,
@@ -114,4 +116,14 @@ async function findByRubro(data,) {
     }
 }
 
-module.exports = { createInfoUser, UserInfo, findByRubro }
+async function findUserInfo(data) {
+    try {
+        return await UserInfo.findByPk({
+            where: {id_user: data.id_user}
+        })
+    } catch (error) {
+        console.log("Error al encontrar usuario", error)
+    }
+}
+
+module.exports = { createInfoUser, UserInfo, findByRubro, findUserInfo }

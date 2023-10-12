@@ -1,6 +1,4 @@
-const user_name = document.getElementById("nombreEmail").value;
-const user_email = document.getElementById("nombreEmail").value;
-const user_password = document.getElementById('contraseña').value;
+
 
 function ocultarContraseña(button) {
   const passwordInput = document.getElementById("contraseña");
@@ -42,6 +40,9 @@ const formLogin = document.getElementById('formLogin');
 
 formLogin.addEventListener('submit', async (e) => {
   e.preventDefault();
+  const user_name = document.getElementById("nombreEmail").value;
+const user_email = document.getElementById("nombreEmail").value;
+const user_password = document.getElementById('contraseña').value;
 
   const respuesta = await fetch('/login', {
     method: 'POST',

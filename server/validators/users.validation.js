@@ -94,10 +94,11 @@ const validatUser = [
         .notEmpty().withMessage("Debe seleccionar su pais de procedencia")
         .isNumeric().withMessage("Debe seleccionar su pais de procedencia"),
 
-    check("domicilio")
+        check("domicilio")
         .exists()
         .notEmpty().withMessage("Debe colocar su domicilio")
-        .isAlphanumeric().withMessage("Debe colocar su domicilio"),
+        .matches(/^[a-zA-Z0-9\s\-.,#]+$/).withMessage("El domicilio debe ser correcto"),
+      
 
     //OPCIONALES
     check("id_provincia")
@@ -138,10 +139,10 @@ const validatUser = [
         .isNumeric().withMessage("El telefono empresarial debe ser un número"),
 
     check("domicilio_empresa")
-        .optional()
-        .notEmpty().withMessage("Debe colocar el domicilio de su empresa")
-        .isAlphanumeric().withMessage("Debe colocar el domicilio de su empresa"),
-
+        .exists()
+        .notEmpty().withMessage("Debe colocar la direccion de su empresa")
+        .matches(/^[a-zA-Z0-9\s\-.,#]+$/).withMessage("La direccion de su empresa debe ser correcto"),
+      
     check("nombre_empresa")
         .optional()
         .notEmpty().withMessage("Debe colocar el nombre de su empresa")
