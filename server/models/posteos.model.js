@@ -27,10 +27,10 @@ const Post = sequelize.define('post', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "User",
-            key: "id_user"
-        },
+        // references: {
+        //     model: "User",
+        //     key: "id_user"
+        // },
     },
 }, {
     paranoid: false,
@@ -78,4 +78,19 @@ async function createPost(postData) {
 
 //BUSCAR POSTS SEGUN RUBRO
 
-module.exports = { Post, createPost };
+//BUSCAR TODOS LOS POSTS
+const findAllPosts = async () => {
+    try {
+        return await Post.findAll({
+  include: {
+      model: User,
+      attributes: ['user_name', 'user_email']
+  }
+        });
+    } catch (error) {
+        console.log('Error al buscar todos los posts', error);
+        throw error;
+    }
+};
+
+module.exports = { Post, createPost, findAllPosts };

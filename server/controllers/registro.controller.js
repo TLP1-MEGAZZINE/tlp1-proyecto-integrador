@@ -27,7 +27,6 @@ registerLogin.crearUsuario = async (req, res) => {
     }
 }
 
-
 // METODO PARA EL LOGIN
 registerLogin.loginUsuario = async (req, res) => {
 
@@ -73,6 +72,8 @@ registerLogin.loginUsuario = async (req, res) => {
             message: 'Iniciando sesión',
             // token, // No necesitas un token JWT en este enfoque
         })
+
+        console.log("SESION INICIADA");
 
     } catch (error) {
         console.log(error);

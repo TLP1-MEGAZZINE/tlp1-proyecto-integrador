@@ -51,7 +51,7 @@ app.set('views', (__dirname + '/views'));
 // RUTAS
 app.use(require('./routes/vistas.routes'));
 app.use(require('./routes/registro.routes'));
-app.use(require('./routes/perfiles.routes'))
+app.use(require('./routes/posts.routes'))
 app.use(require('./routes/principal.routes'))
 
 //EJS 404 - not found

@@ -1,7 +1,7 @@
 const { DataTypes, sequelize } = require('../config/db');
 
 //CREAR MODELO DE USERS
-const Departamento = sequelize.define('Departamento', {
+const Departamento = sequelize.define('departamento', {
     id_depar: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -14,8 +14,8 @@ const Departamento = sequelize.define('Departamento', {
 }, {
     timestamps: false,
     paranoid: false,
-    tableName: "Departamento",
-    modelName: "Departamento"
+    tableName: "departamento",
+    modelName: "departamento"
 });
 
 // Sincronizar el modelo con la base de datos (esto creará la tabla si no existe)

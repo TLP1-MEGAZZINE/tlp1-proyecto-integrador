@@ -94,12 +94,16 @@ const validatUser = [
         .notEmpty().withMessage("Debe seleccionar su pais de procedencia")
         .isNumeric().withMessage("Debe seleccionar su pais de procedencia"),
 
-        check("domicilio")
+    check("domicilio")
         .exists()
         .notEmpty().withMessage("Debe colocar su domicilio")
         .matches(/^[a-zA-Z0-9\s\-.,#]+$/).withMessage("El domicilio debe ser correcto"),
-      
 
+    check("id_rol")
+        .exists()
+        .notEmpty().withMessage("Debe seleccionar su rol")
+        .isNumeric().withMessage("Debe seleccionar su rol"),
+        
     //OPCIONALES
     check("id_provincia")
         .optional()
@@ -142,7 +146,7 @@ const validatUser = [
         .optional()
         .notEmpty().withMessage("Debe colocar la direccion de su empresa")
         .matches(/^[a-zA-Z0-9\s\-.,#]+$/).withMessage("La direccion de su empresa debe ser correcto"),
-      
+
     check("nombre_empresa")
         .optional()
         .notEmpty().withMessage("Debe colocar el nombre de su empresa")

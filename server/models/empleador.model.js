@@ -11,10 +11,10 @@ const Empleador = sequelize.define('empleador', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "User",
-            key: "id_user"
-        },
+        // references: {
+        //     model: "User",
+        //     key: "id_user"
+        // },
     },
     num_tel_empresa: {
         type: DataTypes.STRING,
@@ -30,10 +30,10 @@ const Empleador = sequelize.define('empleador', {
     },
     id_rubro: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "rubro",
-            key: "id_rubro"
-        }
+        // references: {
+        //     model: "rubro",
+        //     key: "id_rubro"
+        // }
     },
     otro_rubro: {
         type: DataTypes.STRING,

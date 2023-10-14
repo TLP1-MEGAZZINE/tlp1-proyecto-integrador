@@ -9,10 +9,10 @@ const Contacto = sequelize.define('Contacto', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "user",
-            key: "id_user"
-        },
+        // references: {
+        //     model: "user",
+        //     key: "id_user"
+        // },
     },
     num_tel: {
         type: DataTypes.STRING,

@@ -13,31 +13,31 @@ const Postulante = sequelize.define('postulante', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "User",
-            key: "id_user"
-        },
+        // references: {
+        //     model: "User",
+        //     key: "id_user"
+        // },
     },
     id_estado_laboral: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "estado_laboral",
-            key: "id_estado_laboral"
-        }
+        // references: {
+        //     model: "estado_laboral",
+        //     key: "id_estado_laboral"
+        // }
     },
     id_nivel_educacion: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "nivel_educacion",
-            key: "id_nivel_educacion"
-        }
+        // references: {
+        //     model: "nivel_educacion",
+        //     key: "id_nivel_educacion"
+        // }
     },
     id_rubro: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "rubro",
-            key: "id_rubro"
-        }
+        // references: {
+        //     model: "rubro",
+        //     key: "id_rubro"
+        // }
     },
     otro_rubro: {
         type: DataTypes.STRING,

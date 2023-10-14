@@ -11,10 +11,10 @@ const UserInfo = sequelize.define('user_info', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "user",
-            key: "id_user"
-        },
+        // references: {
+        //     model: "user",
+        //     key: "id_user"
+        // },
     },
     nombre: {
         type: DataTypes.STRING,
@@ -46,24 +46,24 @@ const UserInfo = sequelize.define('user_info', {
     },
     id_genero: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "genero",
-            key: "id_genero"
-        }
+        // references: {
+        //     model: "genero",
+        //     key: "id_genero"
+        // }
     },
     id_pais: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "paises",
-            key: "id_pais"
-        },
+        // references: {
+        //     model: "paises",
+        //     key: "id_pais"
+        // },
     },
     id_provincia: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "provincia",
-            key: "id_provincia"
-        },
+        // references: {
+        //     model: "provincia",
+        //     key: "id_provincia"
+        // },
     },
     otro_pais: {
         type: DataTypes.STRING,

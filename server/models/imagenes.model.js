@@ -17,12 +17,17 @@ const Image = sequelize.define('image', {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    is_pfp: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    },
     id_user: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "User",
-            key: "id_user"
-        },
+        // references: {
+        //     model: "User",
+        //     key: "id_user"
+        // },
         allowNull: true,
     },
 }, {

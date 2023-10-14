@@ -33,10 +33,10 @@ const User = sequelize.define('user', {
     },
     id_rol: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "rol",
-            key: "id_rol"
-        },
+        // references: {
+        //     model: "rol",
+        //     key: "id_rol"
+        // },
     },
     estado: {
         type: DataTypes.BOOLEAN,
@@ -137,11 +137,11 @@ async function findAllUser() {
     try {
         return await User.findAll({
             where: { estado: true },
-            attributes: { exclude: ['user_password', 'estado', 'id_rol',] },
+            attributes: { exclude: ['user_password', 'estado', 'id_rol', 'id_user'] },
             include: [{
                 model: Rol, // Modelo relacionado
-                attributes: ['rol_name'] // Atributos que deseas obtener del modelo relacionado
-            }],
+                attributes: ['rol_name']
+            }]
         })
 
     } catch (error) {

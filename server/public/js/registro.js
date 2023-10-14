@@ -26,8 +26,10 @@ formRegistro.addEventListener('submit', async (e) => {
   const id_rol = document.getElementById("opcionRol").value;
   const domicilio = document.getElementById("domicilio").value;
   const num_tel = document.getElementById("numTelefono").value;
+  const id_depar = document.getElementById("id_depar").value;
+  const id_local = document.getElementById("id_local").value;
   console.log(nombre, apellido, dni, cuil, fecha_nacimiento, id_genero, id_pais, id_rol);
-  console.log(domicilio, num_tel)
+  console.log(domicilio, num_tel, id_depar, id_local);
 
   let id_estado_laboral, id_nivel_educacion, id_rubro, domicilio_empresa, num_tel_empresa, nombre_empresa, id_provincia, otro_rubro, otro_pais;
 
@@ -81,6 +83,8 @@ formRegistro.addEventListener('submit', async (e) => {
         id_provincia,
         domicilio,
         num_tel,
+        id_depar,
+        id_local,
         id_rol,
         id_estado_laboral,
         id_nivel_educacion,

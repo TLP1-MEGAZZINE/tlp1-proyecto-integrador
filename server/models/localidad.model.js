@@ -1,6 +1,6 @@
 const { DataTypes, sequelize } = require('../config/db');
 //CREAR MODELO DE USERS
-const Localidad = sequelize.define('Localidad', {
+const Localidad = sequelize.define('localidad', {
     id_local: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -14,14 +14,15 @@ const Localidad = sequelize.define('Localidad', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Departamento',
+            model: 'departamento',
             key: 'id_depar'
         }
     }
 }, {
     timestamps: false,
     paranoid: false,
-    tableName: "Localidad",
+    tableName: "localidad",
+    modelName: "localidad"
 });
 
 // Sincronizar el modelo con la base de datos (esto creará la tabla si no existe)
