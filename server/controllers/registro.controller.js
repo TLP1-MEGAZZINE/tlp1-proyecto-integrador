@@ -2,7 +2,7 @@
 const crearRegistroCompleto = require("../helpers/registro.helper.js")
 const bcrypt = require('bcrypt');
 // const { generarJWT } = require('../helpers/generarToken');
-const { findUserByEmailOrUsername, findAllUser } = require("../models/users.model");
+const { findUserByEmailOrUsername, } = require("../models/users.model");
 
 
 //CREAR EL OBJETO QUE CONTENDRA LOS METODOS POST
@@ -74,25 +74,13 @@ registerLogin.loginUsuario = async (req, res) => {
         })
 
         console.log("SESION INICIADA");
+        console.log(req.session.user);
 
     } catch (error) {
         console.log(error);
         res.status(400).json({
             message: 'Error al iniciar sesión',
         });
-    }
-};
-
-registerLogin.ctrlFindUsers = async (req, res) => {
-
-    try {
-        const users = await findAllUser()
-
-        return res.status(200).json(users)
-
-    } catch (error) {
-        console.log(error)
-        res.status(500).json("Internal Server Error...")
     }
 };
 

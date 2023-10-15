@@ -54,5 +54,15 @@ async function subirArchivo(filename, description,idUser) {
     }
 };
 
+//BUSCAR FOTO DE PERFIL
+async function findpfp(id_user){
+    const pfp = Image.findOne({
+        where: {
+            id_user: id_user,
+            is_pfp: true
+        }
+    }) 
+}
 
-module.exports = { Image, subirArchivo };
+
+module.exports = { Image, subirArchivo, findpfp };

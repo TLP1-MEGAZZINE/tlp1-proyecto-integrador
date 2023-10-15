@@ -160,31 +160,19 @@ async function findUserByRole(value) {
     }
 }
 
-//BUSCAR POR LOCALIDAD
-async function findUserByLocalidad(value) {
-    try {
-        return await User.findOne({
-            where: { id_localidad: value }
-        })
-    } catch (error) {
-        console.log("Error al encontrar usuario por rol", error)
-    }
-}
-
-//BUSCAR POR RANGO ETAREO
-
 //ACTUALIZAR USUARIO
-async function actualizarUsuario(userId, newData) {
+async function actualizarUsuario(newData) {
     try {
-        const user = await findUserById(userId)
+        const user = await findUserById(newData.userId)
 
         if (user) {
             const hashedPass = await encriptar(newData.user_password)
-            return await user.update({
+         await user.update({
                 user_name: newData.user_name,
                 user_email: newData.user_email,
                 user_password: hashedPass,
             })
+            user.save()
         }
     } catch (error) {
         console.log("Error al encontrar usuario", error);
@@ -192,21 +180,46 @@ async function actualizarUsuario(userId, newData) {
 }
 
 //ELIMINAR USUARIO
-async function deleteUser(userId) {
-
-    const deletedUser = await findUserById(userId)
-
-    if (!deleteUser) {
-        console.log("El usuario que esta tratando de eliminar no existe");
-    }
-
+async function deleteUser(user_id) {
     try {
-        deletedUser.update({
-            where: { estado: 0 }
-        })
+        const deletedUser = await User.findByPk(user_id);
+
+        if (!deletedUser) {
+            console.log("El usuario que estás tratando de eliminar no existe");
+            return; // Salir de la función si el usuario no existe
+        }
+
+       return await deletedUser.update({
+            estado: 0 // Cambia 'where' por 'estado' para marcar el usuario como eliminado
+        });
+
     } catch (error) {
-        console.log("Error al eliminar el usuario", error);
+        console.error("Error al eliminar el usuario", error);
     }
 }
 
-module.exports = { User, createUser, findUserByEmail, findUserByUserName, findUserByEmailOrUsername, findAllUser, findUserByRole, deleteUser, actualizarUsuario, findUserByLocalidad }
+//BUSCAR POR NOMBRE APROX
+async function findUserByName(userName) {
+
+    try {
+
+        const nameAprox = await User.findAll({
+            where: {
+                user_name: {
+                    [Op.like]: `%${userName}%`
+                },
+            },
+        });
+
+        return nameAprox;
+    } catch (error) {
+        console.log("Error al encontrar usuario ", error);
+        throw new Error
+    }
+}
+
+module.exports = {
+    User, createUser, findUserByEmail, findUserByUserName, findUserByEmailOrUsername,
+    findAllUser, findUserByRole, deleteUser,
+    actualizarUsuario, findUserByName
+}

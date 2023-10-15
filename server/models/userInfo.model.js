@@ -1,7 +1,7 @@
 // const { request } = require('express');
 const { DataTypes, sequelize } = require('../config/db');
 
-const {User} = require('./users.model'); 
+const { User } = require('./users.model');
 
 const UserInfo = sequelize.define('user_info', {
     id_info: {
@@ -69,6 +69,12 @@ const UserInfo = sequelize.define('user_info', {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    id_depar: {
+        type: DataTypes.INTEGER
+    },
+    id_local: {
+        type: DataTypes.INTEGER
+    },
 }, {
     timestamps: false,
     paranoid: false,
@@ -95,7 +101,9 @@ async function createInfoUser(id_user, userData) {
             id_genero: userData.id_genero,
             id_pais: userData.id_pais,
             otro_pais: userData.otro_pais,
-            id_provincia: userData.id_provincia
+            id_provincia: userData.id_provincia,
+            id_depar: userData.id_depar,
+            id_local: userData.id_local,
         },
         );
 
@@ -119,7 +127,7 @@ async function findByRubro(data,) {
 async function findUserInfo(data) {
     try {
         return await UserInfo.findByPk({
-            where: {id_user: data.id_user}
+            where: { id_user: data.id_user }
         })
     } catch (error) {
         console.log("Error al encontrar usuario", error)

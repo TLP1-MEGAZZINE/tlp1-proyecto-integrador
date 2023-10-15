@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(session({
     secret: process.env.SECRET_KEY,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     cookie: {
         maxAge: 600000, //10 minutos...  36000001hora
@@ -51,8 +51,10 @@ app.set('views', (__dirname + '/views'));
 // RUTAS
 app.use(require('./routes/vistas.routes'));
 app.use(require('./routes/registro.routes'));
-app.use(require('./routes/posts.routes'))
-app.use(require('./routes/principal.routes'))
+app.use(require('./routes/posts.routes'));
+app.use(require('./routes/principal.routes'));
+app.use(require('./routes/image.routes'));
+app.use(require('./routes/usuario.routes'))
 
 //EJS 404 - not found
 app.use((req, res, next) => {
