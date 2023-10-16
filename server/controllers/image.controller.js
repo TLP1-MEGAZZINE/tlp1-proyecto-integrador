@@ -28,7 +28,6 @@ const ctrlUploadImage = async (req, res) => {
 };
 
 const ctrlFindPfp = async (req, res) =>{
-    console.log(req.session.user);
     try {
         const id_user = req.session.user.id_user
         console.log(id_user);

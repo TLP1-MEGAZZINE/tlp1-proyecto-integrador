@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { validarJWT } = require("../middlewares/autenticarToken")
 const { protegerRuta } = require("../middlewares/protegerRuta")
+const { ctrlFindUserBySession } = require("../controllers/user.controllers")
 //SE IMPORTAN LOS CONTROLADORES PARA RENDERIZAR LAS VISTAS
 const { index,
     inicio,
@@ -33,7 +34,7 @@ router.get('/solicitudes', protegerRuta, solicitudes);
 router.get('/file', file)
 
 // // EDITAR PERFILES
-router.get('/perfil', protegerRuta, perfil);
+router.get('/perfil', protegerRuta, perfil, ctrlFindUserBySession);
 router.get('/perfil/editar-perfil-usuario',protegerRuta,  perfilpostulante);
 router.get('/perfil/editar-perfil-empresa',protegerRuta,  perfilempresa);
 

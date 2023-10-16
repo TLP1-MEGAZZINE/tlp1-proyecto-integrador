@@ -74,6 +74,9 @@ Empleador.belongsTo(Rubro);
 User.hasMany(Post, { foreignKey: "id_user" });
 Post.belongsTo(User, { foreignKey: "id_user" });
 
+Rubro.hasMany(Post, { foreignKey: "id_rubro" });
+Post.belongsTo(Rubro, { foreignKey: "id_rubro" });
+
 Image.belongsTo(User, { foreignKey: "id_user" });
 User.hasMany(Image);
 

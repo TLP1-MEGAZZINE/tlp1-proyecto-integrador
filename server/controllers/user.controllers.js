@@ -52,7 +52,7 @@ const ctrlUpdateUser = async (req, res) => {
     try {
         const newData = req.body
 
-        const updatedUser = await actualizarUsuario( newData)
+        const updatedUser = await actualizarUsuario(newData)
 
         if (updatedUser) {
             return res.status(200).send("Usuario Actualizado")
@@ -64,9 +64,36 @@ const ctrlUpdateUser = async (req, res) => {
     }
 }
 
+//BUSCAR USUARIO POR SESSION
+const ctrlFindUserBySession = async (req, res) => {
+    try {
+        const userId = req.session.id_user
+        res.json({
+            userId
+        });
+        console.log({userId});
+    } catch (error) {
+        console.log("Error al buscar usuario por session", error);
+    }
+}
+
+const ctrlMiControlador = (req, res) => {
+    // Accede a una cookie específica por su nombre
+    const miCookie = req.cookies.user;
+  
+    if (miCookie) {
+      res.send(`Valor de la cookie 'miCookie': ${miCookie}`);
+    } else {
+      res.send('La cookie no está presente.');
+    }
+  };
+  
+
 module.exports = {
     ctrlFindUserByName,
     ctrlFindUsers,
     ctrlUpdateUser,
-    ctrlDeleteUser
+    ctrlDeleteUser,
+    ctrlFindUserBySession,
+    ctrlMiControlador
 }

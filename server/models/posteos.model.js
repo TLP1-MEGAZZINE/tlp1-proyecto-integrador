@@ -1,4 +1,5 @@
 const { DataTypes, sequelize } = require('../config/db');
+const Rubro = require('./rubro.model');
 
 //ACOMODAR LA HORA, RESTANDOLE 3 HORAS
 sequelize.options.timezone = '-03:00';
@@ -32,6 +33,9 @@ const Post = sequelize.define('post', {
         //     key: "id_user"
         // },
     },
+    id_rubro: {
+        type: DataTypes.INTEGER
+    }
 }, {
     paranoid: false,
     tableName: "post",
@@ -55,7 +59,8 @@ async function createPost(postData) {
                 id_user: postData.id_user,
                 post_title: postData.post_title,
                 post_content: postData.post_content,
-                is_emprise_post: true
+                is_emprise_post: true,
+                id_rubro: postData.id_rubro
             });
         }
         // Crea un post en la DB
@@ -63,7 +68,8 @@ async function createPost(postData) {
             id_user: postData.id_user,
             post_title: postData.post_title,
             post_content: postData.post_content,
-            is_emprise_post: false
+            is_emprise_post: false,
+            id_rubro: postData.id_rubro
         });
 
     } catch (error) {
@@ -73,19 +79,31 @@ async function createPost(postData) {
 };
 
 //ELIMINAR POST
-
-//BUSCAR POSTS SEGUN ROL
-
-//BUSCAR POSTS SEGUN RUBRO
+const deletePost = async (id_post) => {
+    try {
+        return await Post.destroy({
+            where: { id_post: id_post }
+        });
+    } catch (error) {
+        console.log('Error al eliminar el post', error);
+        throw error;
+    }
+}
 
 //BUSCAR TODOS LOS POSTS
 const findAllPosts = async () => {
     try {
         return await Post.findAll({
-  include: {
-      model: User,
-      attributes: ['user_name', 'user_email']
-  }
+            include: [
+                {
+                    model: User,
+                    attributes: ['user_name', 'user_email']
+                },
+                {
+                    model: Rubro,
+                    attributes: ['desc_rubro']
+                }
+            ]
         });
     } catch (error) {
         console.log('Error al buscar todos los posts', error);
@@ -93,4 +111,74 @@ const findAllPosts = async () => {
     }
 };
 
-module.exports = { Post, createPost, findAllPosts };
+//BUSCAR POSTS SEGUN RUBRO
+const findPostbyRubro = async (id_rubro) => {
+    try {
+        return await Post.findAll({
+            where: { id_rubro: id_rubro },
+            include: [
+                {
+                    model: User,
+                    attributes: ['user_name', 'user_email']
+                },
+                {
+                    model: Rubro,
+                    attributes: ['desc_rubro']
+                }
+            ]
+        });
+    } catch (error) {
+        console.log('Error al buscar los posts por rubro', error);
+        throw error;
+    }
+}
+
+//BUSCAR POSTS DE EMPRESA
+const findPostEmpresa = async () => {
+    try {
+        return await Post.findAll({
+            where: {
+                is_emprise_post: true
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: ['user_name', 'user_email']
+                },
+                {
+                    model: Rubro,
+                    attributes: ['desc_rubro']
+                }
+            ]
+        })
+    } catch (error) {
+        console.log('Error al buscar los posts por rol', error);
+        throw error
+    }
+}
+
+//BUSCAR POSTS DE POSPULANTE 
+const findPostPostulante = async () => {
+    try {
+        return await Post.findAll({
+            where: {
+                is_emprise_post: false
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: ['user_name', 'user_email']
+                },
+                {
+                    model: Rubro,
+                    attributes: ['desc_rubro']
+                }
+            ]
+        })
+    } catch (error) {
+        console.log('Error al buscar los posts por rol', error);
+        throw error
+    }
+}
+
+module.exports = { Post, createPost, findAllPosts, findPostbyRubro, deletePost, findPostEmpresa, findPostPostulante };

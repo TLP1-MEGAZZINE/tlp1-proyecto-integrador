@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const session = require('express-session');
 const multer = require("multer")
+const cookieParser = require("cookie-parser");
 const { createLogs, path } = require("./helpers/createLogs")
 const environments = require("./config/environment")
 
@@ -31,10 +32,11 @@ app.use(morgan('combined', {
     }
 }));
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(session({
     secret: process.env.SECRET_KEY,
-    resave: true,
+    resave: false,
     saveUninitialized: true,
     cookie: {
         maxAge: 600000, //10 minutos...  36000001hora

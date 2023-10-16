@@ -31,7 +31,7 @@ registerLogin.crearUsuario = async (req, res) => {
 registerLogin.loginUsuario = async (req, res) => {
 
     const userCredentials = req.body
-    
+
     try {
 
         //VERIFICAR SI EXISTE EL USUARIO
