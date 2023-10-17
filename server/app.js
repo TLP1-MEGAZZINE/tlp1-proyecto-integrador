@@ -33,7 +33,7 @@ app.use(morgan('combined', {
 }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: process.env.SECRET_KEY,
     resave: false,

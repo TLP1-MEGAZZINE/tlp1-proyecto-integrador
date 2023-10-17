@@ -28,10 +28,10 @@ router.get('/login', login)
 
 
 // // RUTAS PRINCIPAL
-router.get('/inicio', protegerRuta, inicio)
+router.get('/inicio', validarJWT, inicio)
 router.get('/novedades', protegerRuta, novedades);
 router.get('/solicitudes', protegerRuta, solicitudes);
-router.get('/file', file)
+router.get('/file', validarJWT, file)
 
 // // EDITAR PERFILES
 router.get('/perfil', protegerRuta, perfil, ctrlFindUserBySession);

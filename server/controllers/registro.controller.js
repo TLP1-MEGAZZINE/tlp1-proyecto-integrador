@@ -1,7 +1,7 @@
 //IMPORTACIONES
 const crearRegistroCompleto = require("../helpers/registro.helper.js")
 const bcrypt = require('bcrypt');
-// const { generarJWT } = require('../helpers/generarToken');
+const { generarJWT } = require('../helpers/generarToken');
 const { findUserByEmailOrUsername, } = require("../models/users.model");
 
 
@@ -61,20 +61,30 @@ registerLogin.loginUsuario = async (req, res) => {
         }
 
         // Generar el JWT
-        // const token = await generarJWT(existeUsuario.id_user)
+        const token = await generarJWT(existeUsuario.id_user);
 
-        req.session.user = {
-            id_user: existeUsuario.id_user,
-            rol: existeUsuario.id_rol
-        };
+        /*     req.session.user = {
+                id_user: existeUsuario.id_user,
+                rol: existeUsuario.id_rol
+            }; */
 
-        res.json({
-            message: 'Iniciando sesión',
-            // token, // No necesitas un token JWT en este enfoque
-        })
+        // res.status(200).json({ token });
 
         console.log("SESION INICIADA");
-        console.log(req.session.user);
+        console.log({ token });
+
+        const cookieOptions = {
+            expires: new Date(Date.now() + 60 * 60 * 1000),
+            httpOnly: true,
+            sameSite: "strict"
+        }
+
+        res.cookie('token', token, cookieOptions)
+
+        res.json({
+            message: "Login correcto",
+            token
+        })
 
     } catch (error) {
         console.log(error);

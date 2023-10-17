@@ -1,4 +1,8 @@
 const { findUserByName, findAllUser, deleteUser, actualizarUsuario } = require("../models/users.model")
+const jwt = require('jsonwebtoken')
+
+const { User } = require("../models/users.model");
+
 
 //BUSQUEDAS
 const ctrlFindUsers = async (req, res) => {
@@ -67,27 +71,32 @@ const ctrlUpdateUser = async (req, res) => {
 //BUSCAR USUARIO POR SESSION
 const ctrlFindUserBySession = async (req, res) => {
     try {
-        const userId = req.session.id_user
-        res.json({
-            userId
+
+        const token = req.cookies.token;
+        // El middleware ya habrá verificado el token, por lo que puedes obtener el ID del usuario desde el token
+        const { id_user } = jwt.verify(token, process.env.SECRET_KEY);
+
+        // Leer el usuario que corresponde al ID
+        const user = await User.findByPk(id_user);
+
+        if (!user) {
+            return res.status(401).json({
+                message: 'Token no válido - usuario no existe en la base de datos',
+            });
+        }
+
+        // Devolver información del usuario (por ejemplo, el nombre)
+        return res.status(200).json({
+            username: user.user_name,
         });
-        console.log({userId});
+
     } catch (error) {
-        console.log("Error al buscar usuario por session", error);
+        console.error(error);
+        return res.status(401).json({
+            message: 'Token no válido',
+        });
     }
 }
-
-const ctrlMiControlador = (req, res) => {
-    // Accede a una cookie específica por su nombre
-    const miCookie = req.cookies.user;
-  
-    if (miCookie) {
-      res.send(`Valor de la cookie 'miCookie': ${miCookie}`);
-    } else {
-      res.send('La cookie no está presente.');
-    }
-  };
-  
 
 module.exports = {
     ctrlFindUserByName,
@@ -95,5 +104,5 @@ module.exports = {
     ctrlUpdateUser,
     ctrlDeleteUser,
     ctrlFindUserBySession,
-    ctrlMiControlador
+    
 }
