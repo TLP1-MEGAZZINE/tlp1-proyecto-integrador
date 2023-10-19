@@ -42,26 +42,49 @@ Image.sync({ force: false }).then(async () => {
 
 //SERVICIO
 
-async function subirArchivo(filename, description,idUser) {
+async function subirArchivo(filename, description, id_user) {
     try {
-        return await Image.create({
-            url: `/uploads/${filename}`,
-            description: description,
-            id_user: idUser
-        }) ?? null
+
+        const existePfp = await findpfp(id_user)
+        console.log("existePfp");
+
+        console.log(existePfp);
+
+        if(existePfp){
+            return await existePfp.update({
+                url: `/uploads/${filename}`,
+                is_pfp: 1,
+            }) ?? null
+        }
+
+        if (description !== "") {
+
+            return await Image.create({
+                url: `/uploads/${filename}`,
+                description: description,
+                id_user: id_user
+            }) ?? null
+        }else{
+            return await Image.create({
+                url: `/uploads/${filename}`,
+                is_pfp: 1,
+                id_user: id_user
+            }) ?? null
+        }  
     } catch (error) {
         console.log("ERROR AL SUBIR ARCHIVO", error)
     }
 };
 
 //BUSCAR FOTO DE PERFIL
-async function findpfp(id_user){
+async function findpfp(id_user) {
     const pfp = Image.findOne({
         where: {
             id_user: id_user,
-            is_pfp: true
+            is_pfp: 1
         }
-    }) 
+    })
+    return pfp
 }
 
 

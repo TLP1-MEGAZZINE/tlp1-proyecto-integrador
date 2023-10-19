@@ -7,16 +7,18 @@ const { subirArchivo, findpfp } = require('../models/imagenes.model');
 const ctrlUploadImage = async (req, res) => {
     try {
         if (req.file) {
-            const {filename} = req.file;
-            const {description} = req.body;
+
+            const id_user = req.cookies.id_user
+            const { filename } = req.file;
+            const { description } = req.body;
 
             // Guardar la información de la imagen en la base de datos
-            const newImage = subirArchivo(filename, description);
+            const newImage = subirArchivo(filename, description, id_user);
 
-            if(!newImage){
+            if (!newImage) {
                 res.status(400).json("Bad request")
-            }else{
-                res.send(`Imagen subida con éxito. Nombre del archivo: ${filename}`);
+            } else {
+                res.status(201).json(`Imagen subida con éxito. Nombre del archivo: ${filename}`);
             }
         } else {
             res.send('No se pudo cargar la imagen.');
@@ -27,12 +29,12 @@ const ctrlUploadImage = async (req, res) => {
     }
 };
 
-const ctrlFindPfp = async (req, res) =>{
+const ctrlFindPfp = async (req, res) => {
     try {
         const id_user = req.session.user.id_user
         console.log(id_user);
         const pfp = await findpfp(id_user);
-        if(pfp){
+        if (pfp) {
             return pfp
         }
         return res.status(400).send("No se encontro la foto de perfil")
@@ -42,4 +44,4 @@ const ctrlFindPfp = async (req, res) =>{
     }
 }
 
-module.exports = {ctrlUploadImage, ctrlFindPfp };
+module.exports = { ctrlUploadImage, ctrlFindPfp };

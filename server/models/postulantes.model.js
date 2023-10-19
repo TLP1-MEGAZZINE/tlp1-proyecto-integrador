@@ -68,9 +68,18 @@ async function createPostulante(id_user, userData) {
         );
 
     } catch (error) {
-        console.log = ("Error al crear el registro de postulantes ", error)
+        console.log("Error al crear el registro de postulantes ", error)
         throw error
     }
 }
 
-module.exports = { Postulante, createPostulante }
+async function findRubroByIdPostulante(userId) {
+    try {
+        return await Postulante.findOne({ where: { id_user: userId } }) ?? null
+    } catch (error) {
+        console.log("Error al encontrar el registro de postulantes ", error)
+        throw error;
+    }
+}
+
+module.exports = { Postulante, createPostulante, findRubroByIdPostulante }

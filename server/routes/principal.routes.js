@@ -11,8 +11,12 @@ router.get('/cerrar-sesion', (req, res) => {
             console.log("SESION CERRADA")
         }
     }); */
-
-return res.redirect('/index');
+    res.clearCookie("id_user")
+    res.clearCookie("id_rol")
+    res.clearCookie("username")
+    console.log("SESION CERRADA");
+    
+    return res.redirect('/index');
 });
 
 

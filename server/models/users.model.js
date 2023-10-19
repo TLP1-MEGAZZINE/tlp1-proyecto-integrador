@@ -221,5 +221,5 @@ async function findUserByName(userName) {
 module.exports = {
     User, createUser, findUserByEmail, findUserByUserName, findUserByEmailOrUsername,
     findAllUser, findUserByRole, deleteUser,
-    actualizarUsuario, findUserByName
+    actualizarUsuario, findUserByName, findUserById
 }
