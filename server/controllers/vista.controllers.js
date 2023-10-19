@@ -1,6 +1,5 @@
 const vista = {}
 
-
 // RUTAS INICIALES
 vista.index = (req, res) => {
     res.render('index')
@@ -21,7 +20,7 @@ vista.login = (req, res) => {
 
 // RUTAS PRINCIPAL
 vista.inicio = (req, res) => {
-    res.render("inicio")
+    res.render("inicio", { user_name: req.cookies.username })
 };
 
 vista.novedades = (req, res) => {
@@ -33,18 +32,18 @@ vista.solicitudes = (req, res) => {
 }
 
 vista.file = (req, res) =>{
-    res.render("imagen")
+    res.render("imagen", { user_name: req.cookies.username })
 }
 
 vista.posteos = (req, res) =>{
-    res.render("principal/posteos")
+    res.render("principal/posteos", { user_name: req.cookies.username })
 }
 
 // EDITAR PERFILES
 
 vista.perfil = (req, res) => {
-    // return res.json(req.session)
-    res.render("./perfiles/perfil", { rol: req.session.user.rol })
+const user_name = req.cookies.username
+    res.render("./perfiles/perfil" , { user_name })
 }
 
 vista.perfilpostulante = (req, res) => {

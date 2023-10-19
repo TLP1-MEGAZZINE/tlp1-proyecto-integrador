@@ -72,10 +72,9 @@ const ctrlUpdateUser = async (req, res) => {
 const ctrlFindUserBySession = async (req, res) => {
     try {
 
-        const token = req.cookies.token;
-        console.log(token);
+        const id_user = req.cookies.id_user;
+        console.log(id_user);
 
-        const { id_user } = jwt.verify(token, process.env.SECRET_KEY);
 
         // Leer el usuario que corresponde al ID
         const user = await User.findByPk(id_user);
@@ -86,7 +85,6 @@ const ctrlFindUserBySession = async (req, res) => {
             });
         }
 
-        // Devolver información del usuario (por ejemplo, el nombre)
         return res.status(200).json({
             username: user.user_name,
         });
@@ -98,6 +96,10 @@ const ctrlFindUserBySession = async (req, res) => {
         });
     }
 }
+
+// const ctrlFindUserInfo = async (req, res) => {
+    
+// }
 
 module.exports = {
     ctrlFindUserByName,

@@ -46,35 +46,32 @@ async function subirArchivo(filename, description, id_user) {
     try {
 
         const existePfp = await findpfp(id_user)
-        console.log("existePfp");
 
-        console.log(existePfp);
 
-        if(existePfp){
+        if (existePfp) {
             return await existePfp.update({
                 url: `/uploads/${filename}`,
-                is_pfp: 1,
-            }) ?? null
+            })
+        } else {
+            if (description == null || description == "") {
+                return await Image.create({
+                    url: `/uploads/${filename}`,
+                    is_pfp: 1,
+                    id_user: id_user
+                })
+            } else {
+                return await Image.create({
+                    url: `/uploads/${filename}`,
+                    description: description,
+                    id_user: id_user
+                })
+            }
         }
-
-        if (description !== "") {
-
-            return await Image.create({
-                url: `/uploads/${filename}`,
-                description: description,
-                id_user: id_user
-            }) ?? null
-        }else{
-            return await Image.create({
-                url: `/uploads/${filename}`,
-                is_pfp: 1,
-                id_user: id_user
-            }) ?? null
-        }  
     } catch (error) {
         console.log("ERROR AL SUBIR ARCHIVO", error)
     }
 };
+
 
 //BUSCAR FOTO DE PERFIL
 async function findpfp(id_user) {

@@ -58,9 +58,11 @@
                                 id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="../img/icon.png" alt="pfp" width=" 32" height="32"
                                     class="rounded-circle me-2">
-                                <strong class="text-light" id="UsuarioNombre">Usuario</strong>
+                                <strong class="text-light" id="UsuarioNombre">
+                                    <%= user_name %>
+                                </strong>
                             </a>
-                            
+
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow"
                                 aria-labelledby="dropdownUser1">
                                 <li><a class="dropdown-item" href="perfil">Perfil</a></li>
@@ -68,7 +70,8 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><button class="dropdown-item" id="cerrarSesion" type="submit" href="index">Cerrar sesion</button></li>
+                                <li><button class="dropdown-item" id="cerrarSesion" type="submit" href="index">Cerrar
+                                        sesion</button></li>
                             </ul>
                         </div>
                     </div>
@@ -77,60 +80,12 @@
         </header>
 
         <main class="container">
+
             <!-- NOVEDADES -->
             <article>
                 <div class="my-3 p-3 bg-body rounded shadow-sm">
                     <h6 class="border-bottom pb-2 mb-0">Nuevas Ofertas</h6>
-                    <!-- TARJETA 1 -->
-                    <div class="d-flex text-muted pt-3">
-                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
-                            xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                            preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff"
-                                dy=".3em">32x32</text>
-                        </svg>
-
-                        <p class="pb-3 mb-0 small lh-sm border-bottom">
-                            <strong class="d-block text-gray-dark">@username</strong>
-                            Some representative placeholder content, with some information about this user. Imagine this
-                            being some sort of status update, perhaps?
-                        </p>
-                    </div>
-                    <!-- TARJETA 2 -->
-                    <div class="d-flex text-muted pt-3">
-                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
-                            xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                            preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#e83e8c"></rect><text x="50%" y="50%" fill="#e83e8c"
-                                dy=".3em">32x32</text>
-                        </svg>
-
-                        <p class="pb-3 mb-0 small lh-sm border-bottom">
-                            <strong class="d-block text-gray-dark">@username</strong>
-                            Some more representative placeholder content, related to this other user. Another status
-                            update,
-                            perhaps.
-                        </p>
-                    </div>
-                    <!-- TARJETA 3 -->
-
-                    <div class="d-flex text-muted pt-3">
-                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
-                            xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                            preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#6f42c1"></rect><text x="50%" y="50%" fill="#6f42c1"
-                                dy=".3em">32x32</text>
-                        </svg>
-
-                        <p class="pb-3 mb-0 small lh-sm border-bottom">
-                            <strong class="d-block text-gray-dark">@username</strong>
-                            This user also gets some representative placeholder content. Maybe they did something
-                            interesting, and you really want to highlight this in the recent updates.
-                        </p>
-                    </div>
+                    <div id="postsDiv" class="d-flex flex-column w-100"></div>
                     <small class="d-block text-end mt-3">
                         <a href="novedades">Todas las novedades</a>
                     </small>
@@ -145,59 +100,9 @@
                 <div class="my-3 p-3 bg-body rounded shadow-sm">
                     <h6 class="border-bottom pb-2 mb-0">Usuarios Sugeridos</h6>
                     <div class="d-flex text-muted pt-3">
-                        <!-- USUARIO 1 -->
-                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
-                            xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                            preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff"
-                                dy=".3em">32x32</text>
-                        </svg>
 
-                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-                            <div class="d-flex justify-content-between">
-                                <strong class="text-gray-dark">Full Name</strong>
-                                <a href="#">Follow</a>
-                            </div>
-                            <span class="d-block">@username</span>
-                        </div>
-                    </div>
-                    <!-- USUARIO 2 -->
-                    <div class="d-flex text-muted pt-3">
-                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
-                            xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                            preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff"
-                                dy=".3em">32x32</text>
-                        </svg>
+                        <div id="usersDiv" class="d-flex flex-column w-100"></div>
 
-                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-                            <div class="d-flex justify-content-between">
-                                <strong class="text-gray-dark">Full Name</strong>
-                                <a href="#">Follow</a>
-                            </div>
-                            <span class="d-block">@username</span>
-                        </div>
-                    </div>
-                    <!-- USUARIO 3 -->
-
-                    <div class="d-flex text-muted pt-3">
-                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
-                            xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                            preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff"
-                                dy=".3em">32x32</text>
-                        </svg>
-
-                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-                            <div class="d-flex justify-content-between">
-                                <strong class="text-gray-dark">Full Name</strong>
-                                <a href="#">Follow</a>
-                            </div>
-                            <span class="d-block">@username</span>
-                        </div>
                     </div>
                     <small class="d-block text-end mt-3">
                         <a href="solicitudes">Ver todas las solicitudes</a>
@@ -209,4 +114,4 @@
 
         <script src="../../js/cambios.js"></script>
 
-    <%- include ('partials/footer') -%>
+        <%- include ('partials/footer') -%>
