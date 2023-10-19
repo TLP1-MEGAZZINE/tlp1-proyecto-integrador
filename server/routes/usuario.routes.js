@@ -19,5 +19,4 @@ router.put("/update", ctrlUpdateUser)
 
 router.get("/session", validarJWT, ctrlFindUserBySession)
 
-
 module.exports = router;

@@ -73,7 +73,8 @@ const ctrlFindUserBySession = async (req, res) => {
     try {
 
         const token = req.cookies.token;
-        // El middleware ya habrá verificado el token, por lo que puedes obtener el ID del usuario desde el token
+        console.log(token);
+
         const { id_user } = jwt.verify(token, process.env.SECRET_KEY);
 
         // Leer el usuario que corresponde al ID
