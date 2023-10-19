@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { ctrlFindUsers, ctrlFindUserByName, ctrlDeleteUser, ctrlUpdateUser, 
     ctrlFindUserBySession } = require("../controllers/user.controllers")
+    
 const { protegerRuta } = require("../middlewares/protegerRuta");
 const { validarJWT } = require('../middlewares/autenticarToken');
 
