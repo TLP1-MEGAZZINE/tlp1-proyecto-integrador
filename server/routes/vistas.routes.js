@@ -3,6 +3,7 @@ const router = express.Router();
 const { validarJWT } = require("../middlewares/autenticarToken")
 const { protegerRuta } = require("../middlewares/protegerRuta")
 const { ctrlFindUserBySession } = require("../controllers/user.controllers")
+const {ctrlCrearPosteos} = require("../controllers/posts.controllers")
 //SE IMPORTAN LOS CONTROLADORES PARA RENDERIZAR LAS VISTAS
 const { index,
     inicio,
@@ -14,7 +15,8 @@ const { index,
     perfil,
     perfilpostulante,
     perfilempresa, 
-    file
+    file,
+    posteos
 } = require('../controllers/vista.controllers')
 
 // RUTAS INICIALES
@@ -32,6 +34,8 @@ router.get('/inicio', validarJWT, inicio)
 router.get('/novedades', protegerRuta, novedades);
 router.get('/solicitudes', protegerRuta, solicitudes);
 router.get('/file', validarJWT, file)
+router.get('/posteos', validarJWT, posteos)
+
 
 // // EDITAR PERFILES
 router.get('/perfil', protegerRuta, perfil, ctrlFindUserBySession);

@@ -36,6 +36,10 @@ vista.file = (req, res) =>{
     res.render("imagen")
 }
 
+vista.posteos = (req, res) =>{
+    res.render("principal/posteos")
+}
+
 // EDITAR PERFILES
 
 vista.perfil = (req, res) => {
