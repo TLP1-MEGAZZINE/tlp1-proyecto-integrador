@@ -61,10 +61,10 @@ Rubro.hasMany(Postulante, { foreignKey: 'id_rubro' });
 Postulante.belongsTo(Rubro, { foreignKey: 'id_rubro' });
 
 EstadoLaboral.hasMany(Postulante, { foreignKey: 'id_estado_laboral' });
-Postulante.belongsTo(EstadoLaboral);
+Postulante.belongsTo(EstadoLaboral, { foreignKey: 'id_estado_laboral' });
 
 NivelEducacion.hasMany(Postulante, { foreignKey: 'id_nivel_educacion' });
-Postulante.belongsTo(NivelEducacion);
+Postulante.belongsTo(NivelEducacion, { foreignKey: 'id_nivel_educacion' });
 
 Rubro.hasMany(Empleador, { foreignKey: 'id_rubro' });
 Empleador.belongsTo(Rubro, { foreignKey: 'id_rubro' });
