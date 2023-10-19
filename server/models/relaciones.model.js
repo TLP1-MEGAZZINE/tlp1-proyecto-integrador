@@ -78,4 +78,4 @@ Rubro.hasMany(Post, { foreignKey: "id_rubro" });
 Post.belongsTo(Rubro, { foreignKey: "id_rubro" });
 
 Image.belongsTo(User, { foreignKey: "id_user" });
-User.hasMany(Image);
+User.hasMany(Image, { foreignKey: "id_user" });
