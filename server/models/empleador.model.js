@@ -71,4 +71,13 @@ async function createEmpleador(id_user, userData) {
     }
 };
 
-module.exports = { Empleador, createEmpleador }
+async function findRubroByIdEmpleador(userId) {
+    try {
+        return await Empleador.findOne({ where: { id_user: userId } }) ?? null
+    } catch (error) {
+        console.log("Error al encontrar el registro de Empleadors ", error)
+        throw error;
+    }
+}
+
+module.exports = { Empleador, createEmpleador, findRubroByIdEmpleador }

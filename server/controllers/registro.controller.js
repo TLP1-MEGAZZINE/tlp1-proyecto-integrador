@@ -63,13 +63,6 @@ registerLogin.loginUsuario = async (req, res) => {
         // Generar el JWT
         const token = await generarJWT(existeUsuario.id_user);
 
-        /*     req.session.user = {
-                id_user: existeUsuario.id_user,
-                rol: existeUsuario.id_rol
-            }; */
-
-        // res.status(200).json({ token });
-
         console.log("SESION INICIADA");
         console.log({ token });
 
@@ -80,6 +73,10 @@ registerLogin.loginUsuario = async (req, res) => {
         }
 
         res.cookie('token', token, cookieOptions)
+        res.cookie('username', existeUsuario.user_name)
+        res.cookie('id_user', existeUsuario.id_user)
+        res.cookie("id_rol", existeUsuario.id_rol)
+
 
         res.json({
             message: "Login correcto",

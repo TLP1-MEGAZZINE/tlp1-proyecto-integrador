@@ -1,14 +1,16 @@
 const formPost = document.getElementById('formPost');
 
-formLogin.addEventListener('submit', async (e) => {
+formPost.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const post_title = document.getElementById("post_title").value;
   const post_content = document.getElementById("post_content").value;
 
   const postData = {
+    id_user: 1,
     post_title,
     post_content,
+    id_rubro:5
   }
 
   const respuesta = await fetch('/createPost', {
@@ -21,14 +23,11 @@ formLogin.addEventListener('submit', async (e) => {
 
   if (!respuesta.ok) {
     const { message } = await respuesta.json();
-    return Swal.fire('Error, datos incorrectos', message, 'error',);
+    return Swal.fire('Error, al crear el posteo', message, 'error',);
   } else {
-    const { token } = await respuesta.json();
-
-    console.log(token);
 
     Swal.fire({
-      title: "Correcto, iniciando sesion.",
+      title: "Post creado correctamente.",
       text: "Espero un momento...",
       icon: "success",
       showConfirmButton: false
