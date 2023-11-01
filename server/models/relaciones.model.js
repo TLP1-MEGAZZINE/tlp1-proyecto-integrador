@@ -39,19 +39,19 @@ Rol.hasMany(User, { foreignKey: 'id_rol' });
 User.belongsTo(Rol,{ foreignKey: 'id_rol' });
 
 Paises.hasMany(UserInfo, { foreignKey: 'id_pais' });
-UserInfo.belongsTo(Paises);
+UserInfo.belongsTo(Paises, { foreignKey: 'id_pais' });
 
 Provincia.hasMany(UserInfo, { foreignKey: 'id_provincia' });
-UserInfo.belongsTo(Provincia);
+UserInfo.belongsTo(Provincia, { foreignKey: 'id_provincia' });
 
 Departamento.hasMany(UserInfo, { foreignKey: 'id_depar' });
-UserInfo.belongsTo(Departamento);
+UserInfo.belongsTo(Departamento, { foreignKey: 'id_depar' });
 
 Localidad.hasMany(UserInfo, { foreignKey: 'id_local' });
-UserInfo.belongsTo(Localidad);
+UserInfo.belongsTo(Localidad, { foreignKey: 'id_local' });
 
 Genero.hasMany(UserInfo, { foreignKey: 'id_genero' });
-UserInfo.belongsTo(Genero);
+UserInfo.belongsTo(Genero, { foreignKey: 'id_genero' });
 
 Departamento.hasMany(Localidad, { foreignKey: 'id_depar' });
 Localidad.belongsTo(Departamento);
@@ -79,22 +79,3 @@ Post.belongsTo(Rubro, { foreignKey: "id_rubro" });
 
 Image.belongsTo(User, { foreignKey: "id_user" });
 User.hasMany(Image);
-
-// User.sync({force: true});
-// UserInfo.sync({force: true});
-//  Contacto.sync({force: true});
-//  Empleador.sync({force: true});
-//  Particular.sync({force: true});
-//  Postulante.sync({force: true});
-//  Post.sync({force: true});
-//  Image.sync({force: true});
-//  Rol.sync({force: true});
-//  Rubro.sync({force: true});
-//  Provincia.sync({force: true});
-//  Paises.sync({force: true});
-//  Genero.sync({force: true});
-//  Departamento.sync({force: true});
-//  Localidad.sync({force: true});
-//  EstadoLaboral.sync({force: true});
-//  NivelEducacion.sync({force: true});
-
