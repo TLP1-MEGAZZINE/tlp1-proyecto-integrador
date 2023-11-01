@@ -59,12 +59,13 @@ const validatUser = [
     check("nombre")
         .exists()
         .notEmpty().withMessage("El nombre no puede estar vacio")
-        .isAlpha().withMessage("El nombre debe ser alfabetico"),
+        .matches(/^[a-zA-Z0-9\s\-.,#]+$/).withMessage("El nombre debe ser alfabetico"),
 
     check("apellido")
         .exists()
         .notEmpty().withMessage("El apellido no puede estar vacio")
-        .isAlpha().withMessage("El apellido debe ser alfabetico"),
+        .matches(/^[a-zA-Z0-9\s\-.,#]+$/).withMessage("El apellido debe ser alfabetico"),
+
 
     check("dni")
         .exists()
@@ -103,7 +104,7 @@ const validatUser = [
         .exists()
         .notEmpty().withMessage("Debe seleccionar su rol")
         .isNumeric().withMessage("Debe seleccionar su rol"),
-        
+
     //OPCIONALES
     check("id_provincia")
         .optional()
@@ -150,7 +151,7 @@ const validatUser = [
     check("nombre_empresa")
         .optional()
         .notEmpty().withMessage("Debe colocar el nombre de su empresa")
-        .isAlphanumeric().withMessage("Debe colocar el nombre de su empresa"),
+        .matches(/^[a-zA-Z0-9\s\-.,#]+$/).withMessage("Debe colocar el nombre de su empresa"),
 
     (req, res, next) => {
         validateSchema(req, res, next)

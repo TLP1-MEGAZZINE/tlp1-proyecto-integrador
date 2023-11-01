@@ -28,10 +28,10 @@ Particular.belongsTo(User, { foreignKey: 'id_user' });
 User.hasOne(Contacto)
 Contacto.belongsTo(User, { foreignKey: 'id_user' });
 
-User.hasOne(Empleador)
+User.hasOne(Empleador, { foreignKey: 'id_user' });
 Empleador.belongsTo(User, { foreignKey: 'id_user' });
 
-User.hasOne(Postulante)
+User.hasOne(Postulante, { foreignKey: 'id_user' });
 Postulante.belongsTo(User, { foreignKey: 'id_user' });
 
 // //UNO A MUCHOS
@@ -58,16 +58,16 @@ Localidad.belongsTo(Departamento);
 
 
 Rubro.hasMany(Postulante, { foreignKey: 'id_rubro' });
-Postulante.belongsTo(Rubro);
+Postulante.belongsTo(Rubro, { foreignKey: 'id_rubro' });
 
 EstadoLaboral.hasMany(Postulante, { foreignKey: 'id_estado_laboral' });
-Postulante.belongsTo(EstadoLaboral);
+Postulante.belongsTo(EstadoLaboral, { foreignKey: 'id_estado_laboral' });
 
 NivelEducacion.hasMany(Postulante, { foreignKey: 'id_nivel_educacion' });
-Postulante.belongsTo(NivelEducacion);
+Postulante.belongsTo(NivelEducacion, { foreignKey: 'id_nivel_educacion' });
 
 Rubro.hasMany(Empleador, { foreignKey: 'id_rubro' });
-Empleador.belongsTo(Rubro);
+Empleador.belongsTo(Rubro, { foreignKey: 'id_rubro' });
 
 
 // //CONTENIDO
@@ -78,4 +78,4 @@ Rubro.hasMany(Post, { foreignKey: "id_rubro" });
 Post.belongsTo(Rubro, { foreignKey: "id_rubro" });
 
 Image.belongsTo(User, { foreignKey: "id_user" });
-User.hasMany(Image);
+User.hasMany(Image, { foreignKey: "id_user" });
