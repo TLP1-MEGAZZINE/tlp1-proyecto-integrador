@@ -1,5 +1,7 @@
 const { DataTypes, sequelize } = require('../config/db');
+const Localidad = require('./localidad.model');
 const Rubro = require('./rubro.model');
+const { UserInfo } = require('./userInfo.model');
 
 //ACOMODAR LA HORA, RESTANDOLE 3 HORAS
 sequelize.options.timezone = '-03:00';
@@ -93,23 +95,58 @@ const deletePost = async (id_post) => {
 //BUSCAR TODOS LOS POSTS
 const findAllPosts = async () => {
     try {
-        return await Post.findAll({
+        const posts = await Post.findAll({
             include: [
                 {
                     model: User,
-                    attributes: ['user_name', 'user_email']
+                    attributes: ['user_name', 'user_email'],
                 },
                 {
                     model: Rubro,
-                    attributes: ['desc_rubro']
-                }
-            ]
+                },
+            ],
         });
+        
+        // Obtener los IDs de usuario de los posts
+        const userIds = posts.map(post => post.id_user);
+        
+        // Consulta los registros de user_info para los usuarios
+        const userInfos = await UserInfo.findAll({
+            where: {
+                id_user: userIds,
+            },
+            include:[
+                {
+                    model:Localidad,
+                    attributes:["nombre_local"]
+                }
+            ]            
+        });
+        
+        const postsWithUserInfo = posts.map(post => {
+            const userInfo = userInfos.find(info => info.id_user === post.id_user);
+
+            if (userInfo) {
+                return {
+                    ...post.get(),
+                    id_local: userInfo.localidad.nombre_local, // Reemplaza "field1" con el nombre real del campo
+                    id_depar: userInfo.id_depar, // Reemplaza "field2" con el nombre real del campo
+                    // Agrega más campos según sea necesario
+                };
+            } else {
+                return post;
+            }
+        });
+        
+        // Ahora postsWithUserInfo contiene la información de usuario agregada a los objetos de posts
+        return postsWithUserInfo;
+        
     } catch (error) {
         console.log('Error al buscar todos los posts', error);
         throw error;
     }
 };
+
 
 //BUSCAR POSTS SEGUN RUBRO
 const findPostbyRubro = async (id_rubro) => {
@@ -182,3 +219,4 @@ const findPostPostulante = async () => {
 }
 
 module.exports = { Post, createPost, findAllPosts, findPostbyRubro, deletePost, findPostEmpresa, findPostPostulante };
+
