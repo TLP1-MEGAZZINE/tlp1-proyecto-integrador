@@ -219,3 +219,4 @@ const findPostPostulante = async () => {
 }
 
 module.exports = { Post, createPost, findAllPosts, findPostbyRubro, deletePost, findPostEmpresa, findPostPostulante };
+
