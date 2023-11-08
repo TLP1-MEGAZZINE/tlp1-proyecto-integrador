@@ -5,8 +5,8 @@ const { findRubroByIdEmpleador } = require("../models/empleador.model")
 //CREAR UN POSTEO EN LA DB
 const ctrlCrearPosteos = async (req, res) => {
     try {
-        const userId = req.cookies.id_user
-        const id_rol = req.cookies.id_rol
+        const userId = req.cookies.id_user || 4
+        const id_rol = req.cookies.id_rol || 1
         const postData = req.body
 
         if(id_rol == 1){

@@ -8,25 +8,17 @@ const cookieParser = require("cookie-parser");
 const { createLogs, path } = require("./helpers/createLogs")
 const environments = require("./config/environment")
 const { createServer } = require('node:http');
-const { Server } = require ("socket.io");
-
+const { conectarDB } = require('./config/db');
+const {socketFunction} = require("./helpers/socketio")
 
 //MODELO DE PLANTILLAS
 require('ejs');
 //MODELOS DE LA DB
 require("./models/relaciones.model")
-//CONECTAR A LA DB
-const { conectarDB } = require('./config/db');
-conectarDB();
 
 // INICIALIZACION DE EXPRESS
 const app = express();
 const server = createServer(app)
-const io = new Server(server, {
-    cors: {
-        origin: "*",
-    },
-})
 
 //MIDDLEWARES
 app.use(cors());
@@ -51,13 +43,9 @@ app.use(session({
         maxAge: 600000, //10 minutos...  36000001hora
     }
 }));
-io.on("connection", (socket) =>{
-    console.log("socket funcionando");
 
-    socket.on("message", data =>{
-        io.emit("message", data)
-    })
-})
+
+socketFunction(server)
 
 //ARCHIVOS ESTATICOS
 app.use(express.static(path.join(__dirname, 'public')));
@@ -84,5 +72,7 @@ app.use((req, res, next) => {
 
 //LEVANTAR EL SERVIDOR
 server.listen(environments.PORT, () => {
+    //CONECTAR A LA DB
+    conectarDB();
     console.log(`SERVIDOR EJECUTANDOSE EN EL PUERTO: ${environments.PORT}`);
 });
