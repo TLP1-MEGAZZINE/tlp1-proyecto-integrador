@@ -47,4 +47,12 @@ Departamento.sync({ force: false }).then(async () => {
     }
 });
 
-module.exports = Departamento;
+async function findDepar() {
+    try {
+        return await Departamento.findAll()
+    } catch (error) {
+        console.log("Error al buscar departamentos", error);
+    }
+}
+
+module.exports = {Departamento, findDepar};
