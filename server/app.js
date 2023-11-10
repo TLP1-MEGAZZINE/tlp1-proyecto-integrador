@@ -61,6 +61,7 @@ app.use(require('./routes/posts.routes'));
 app.use(require('./routes/principal.routes'));
 app.use(require('./routes/image.routes'));
 app.use(require('./routes/usuario.routes'))
+app.use(require('./routes/info.routes'))
 
 //EJS 404 - not found
 app.use((req, res, next) => {

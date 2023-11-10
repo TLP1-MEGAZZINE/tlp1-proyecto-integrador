@@ -1,11 +1,11 @@
 const Rol = require("./roles.model");
-const Rubro = require("./rubro.model");
+const {Rubro} = require("./rubro.model");
 const Provincia = require("./provincias.models");
-const Paises = require("./paises.model");
+const {Paises} = require("./paises.model");
 const Genero = require("./genero.model");
 const EstadoLaboral = require("./estado_laboral.model");
 const NivelEducacion = require("./nivelEduacion.model");
-const Departamento = require("./departamento.model");
+const {Departamento} = require("./departamento.model");
 const Localidad = require("./localidad.model");
 const { User } = require("./users.model")
 const { UserInfo } = require("./userInfo.model");

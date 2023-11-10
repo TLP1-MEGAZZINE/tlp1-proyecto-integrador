@@ -45,4 +45,12 @@ Rubro.sync({ force: false }).then(async () => {
   }
 });
 
-module.exports = Rubro; 
+async function findRubro() {
+  try {
+      return await Rubro.findAll()
+  } catch (error) {
+      console.log("Error al buscar rubros", error);
+  }
+}
+
+module.exports = {Rubro, findRubro}; 
