@@ -96,4 +96,12 @@ Localidad.sync({ force: false }).then(async () => {
     }
 });
 
-module.exports = Localidad;
+async function findLocal() {
+    try {
+        return await Localidad.findAll()
+    } catch (error) {
+        console.log("Error al buscar localidades", error);
+    }
+}
+
+module.exports = {Localidad, findLocal};

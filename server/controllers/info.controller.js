@@ -1,6 +1,8 @@
 const { findPaises } = require("../models/paises.model")
 const { findDepar } = require("../models/departamento.model")
 const { findRubro } = require("../models/rubro.model")
+const { findLocal } = require("../models/localidad.model")
+const { findProvinces } = require("../models/provincias.models")
 
 const ctrlFindPaises = async (req, res) => {
 
@@ -44,4 +46,32 @@ const ctrlFindRubro = async (req, res) => {
     }
 }
 
-module.exports = { ctrlFindPaises, ctrlFindDepar, ctrlFindRubro }
+const ctrlFindLocal = async (req, res) => {
+
+    try {
+        const local = await findLocal()
+        if (!local) {
+            throw new Error("Error buscar rubros")
+        } else {
+            return res.status(200).json(local)
+        }
+    } catch (error) {
+        res.status(500).json("Internal Server Error...")
+    }
+}
+
+const ctrlFindProvinces = async (req, res) => {
+
+    try {
+        const local = await findProvinces()
+        if (!local) {
+            throw new Error("Error buscar rubros")
+        } else {
+            return res.status(200).json(local)
+        }
+    } catch (error) {
+        res.status(500).json("Internal Server Error...")
+    }
+}
+
+module.exports = { ctrlFindPaises, ctrlFindDepar, ctrlFindRubro, ctrlFindLocal, ctrlFindProvinces }

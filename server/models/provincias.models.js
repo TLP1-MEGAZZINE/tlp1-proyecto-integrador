@@ -58,4 +58,13 @@ Provincia.sync({ force: false }).then(async () => {
     }
 });
 
-module.exports = Provincia;
+
+async function findProvinces() {
+    try {
+        return await Provincia.findAll()
+    } catch (error) {
+        console.log("Error al buscar provincias", error);
+    }
+}
+
+module.exports = {Provincia, findProvinces};

@@ -1,6 +1,6 @@
 const { DataTypes, sequelize } = require('../config/db');
-const Localidad = require('./localidad.model');
-const Rubro = require('./rubro.model');
+const {Localidad} = require('./localidad.model');
+const {Rubro} = require('./rubro.model');
 const { UserInfo } = require('./userInfo.model');
 
 //ACOMODAR LA HORA, RESTANDOLE 3 HORAS

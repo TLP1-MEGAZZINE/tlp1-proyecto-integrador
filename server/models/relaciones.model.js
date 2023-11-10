@@ -1,12 +1,12 @@
 const Rol = require("./roles.model");
-const {Rubro} = require("./rubro.model");
-const Provincia = require("./provincias.models");
-const {Paises} = require("./paises.model");
+const { Rubro } = require("./rubro.model");
+const {Provincia} = require("./provincias.models");
+const { Paises } = require("./paises.model");
 const Genero = require("./genero.model");
 const EstadoLaboral = require("./estado_laboral.model");
 const NivelEducacion = require("./nivelEduacion.model");
-const {Departamento} = require("./departamento.model");
-const Localidad = require("./localidad.model");
+const { Departamento } = require("./departamento.model");
+const { Localidad } = require("./localidad.model");
 const { User } = require("./users.model")
 const { UserInfo } = require("./userInfo.model");
 const { Contacto } = require("./contacto.model");
@@ -36,7 +36,7 @@ Postulante.belongsTo(User, { foreignKey: 'id_user' });
 
 // //UNO A MUCHOS
 Rol.hasMany(User, { foreignKey: 'id_rol' });
-User.belongsTo(Rol,{ foreignKey: 'id_rol' });
+User.belongsTo(Rol, { foreignKey: 'id_rol' });
 
 Paises.hasMany(UserInfo, { foreignKey: 'id_pais' });
 UserInfo.belongsTo(Paises, { foreignKey: 'id_pais' });
@@ -54,7 +54,7 @@ Genero.hasMany(UserInfo, { foreignKey: 'id_genero' });
 UserInfo.belongsTo(Genero, { foreignKey: 'id_genero' });
 
 Departamento.hasMany(Localidad, { foreignKey: 'id_depar' });
-Localidad.belongsTo(Departamento);
+Localidad.belongsTo(Departamento, { foreignKey: 'id_depar' });
 
 
 Rubro.hasMany(Postulante, { foreignKey: 'id_rubro' });
