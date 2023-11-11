@@ -28,7 +28,7 @@ Rubro.sync({ force: false }).then(async () => {
       await Rubro.bulkCreate([
         { desc_rubro: 'Salud' },
         { desc_rubro: 'Tecnologia' },
-        { desc_rubro: 'Educación' },
+        { desc_rubro: 'Reparaciones' },
         { desc_rubro: 'Finanzas' },
         { desc_rubro: 'Manufactura' },
         { desc_rubro: 'Ventas' },

@@ -72,16 +72,20 @@ registerLogin.loginUsuario = async (req, res) => {
             sameSite: "strict"
         }
 
-        res.cookie('token', token, cookieOptions)
-        res.cookie('username', existeUsuario.user_name)
-        res.cookie('id_user', existeUsuario.id_user)
-        res.cookie("id_rol", existeUsuario.id_rol)
+        return (
 
+            res.cookie('token', token, cookieOptions),
+            res.cookie('username', existeUsuario.user_name),
+            res.cookie('id_user', existeUsuario.id_user),
+            res.cookie("id_rol", existeUsuario.id_rol),
 
-        res.json({
-            message: "Login correcto",
-            token
-        })
+            res.status(200).json({ message: "Login correcto", token })
+
+        // res.json({
+        //     message: "Login correcto",
+        //     token
+        // })
+        )
 
     } catch (error) {
         console.log(error);

@@ -1,0 +1,42 @@
+export const contactos = [
+    {
+        id: 1,
+        pfp: "",
+        userName: "Carlos",
+        userEmail: "carlos@gmail.com",
+        userPhone: "123456789",
+        lastMessage: "Hola",
+    },
+    {
+        id: 2,
+        pfp: "",
+        userName: "Carlos",
+        userEmail: "carlos@gmail.com",
+        userPhone: "123456789",
+        lastMessage: "Hola",
+    },
+    {
+        id: 3,
+        pfp: "",
+        userName: "Carlos",
+        userEmail: "carlos@gmail.com",
+        userPhone: "123456789",
+        lastMessage: "Hola",
+    },
+    {
+        id: 4,
+        pfp: "",
+        userName: "Carlos",
+        userEmail: "carlos@gmail.com",
+        userPhone: "123456789",
+        lastMessage: "Hola",
+    },
+    {
+        id: 5,
+        pfp: "",
+        userName: "Carlos",
+        userEmail: "carlos@gmail.com",
+        userPhone: "123456789",
+        lastMessage: "Hola",
+    },
+]

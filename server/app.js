@@ -3,7 +3,6 @@ const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const session = require('express-session');
-const multer = require("multer")
 const cookieParser = require("cookie-parser");
 const { createLogs, path } = require("./helpers/createLogs")
 const environments = require("./config/environment")
@@ -25,6 +24,7 @@ app.use(cors());
 app.use(helmet({
     contentSecurityPolicy: false
 }));
+
 app.use(morgan('combined', {
     stream: {
         write: (message) => {

@@ -1,0 +1,38 @@
+/* ESTILO GENERALES */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+  display: grid;
+  place-items: center;
+}
+
+.colorPrincipal {
+  background-color: #0b2e59
+}
+
+footer {
+  background-color: #0b2e59;
+}
+
+.colorFondo {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(19, 153, 216, 0.7550478809687937) 55%, rgba(2, 0, 36, 1) 100%);
+}
+
+.unite{
+  color: aqua;
+}
+
+a:hover{
+  color: aqua;
+}
+
+#root{
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+}

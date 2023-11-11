@@ -111,12 +111,12 @@ async function findUserByUserName(value) {
 }
 
 //BUSCAR POR EMAIL O USERNAME
-async function findUserByEmailOrUsername(userCredentials) {
+async function findUserByEmailOrUsername(form) {
     return await User.findOne({
         where: {
             [Op.or]: [
-                { user_name: userCredentials.user_name },
-                { user_email: userCredentials.user_email }
+                { user_name: form.user_name },
+                { user_email: form.user_name }
             ]
         }
     });
