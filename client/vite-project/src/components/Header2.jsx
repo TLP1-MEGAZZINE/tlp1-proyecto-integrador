@@ -1,11 +1,33 @@
 import logo from "../assets/logo.png";
 import userIcon from "../assets/userIcon.png"
-import { useState } from "react";
+import { useContext } from "react";
+import { types } from "../types/type";
+import { AuthContext } from "../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 function Header2() {
 
+    const { dispatch } = useContext(AuthContext)
 
+    const navigate = useNavigate()
 
+    const handleLogout = () => {
+
+        Swal.fire({
+            title: 'Cerrando Sesión',
+            text: 'Espere un momento...',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        dispatch({
+            type: types.LOGOUT,
+            payload: {
+                logged: false
+            }
+        })
+
+        navigate("/login")
+    }
 
     return (
         <header>
@@ -38,7 +60,7 @@ function Header2() {
                                 </ul>
                             </li>
                         </ul>
-                       
+
 
                         <form className="d-flex">
                             <input className="form-control me-2" type="search" placeholder="¿Que deseas buscar?"
@@ -61,7 +83,9 @@ function Header2() {
                                 <li>
                                     <hr className="dropdown-divider" />
                                 </li>
-                                <li><button className="dropdown-item" id="cerrarSesion" type="submit" href="index">Cerrar sesion</button></li>
+                                <li><button className="dropdown-item" id="cerrarSesion" type="submit"
+                                    onClick={handleLogout}
+                                    href="index">Cerrar sesion</button></li>
                             </ul>
                         </div>
                     </div>
@@ -69,5 +93,5 @@ function Header2() {
             </nav>
         </header>
     )
-        }
+}
 export default Header2

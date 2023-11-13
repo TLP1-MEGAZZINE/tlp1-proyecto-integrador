@@ -1,14 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Footer from "../components/Footer";
 import Header2 from "../components/Header2";
 import { Users } from "../components/Users";
 import { Posteos } from "../components/Posteos";
+import { types } from "../types/type";
+import { AuthContext } from "../context/AuthProvider";
 import dayjs from "dayjs";
 
 
 function Inicio() {
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [selectedRubro, setSelectedRubro] = useState(0);
+
 
     // Mover la definición de posts a este ámbito
     const [posts, setPosts] = useState([]);

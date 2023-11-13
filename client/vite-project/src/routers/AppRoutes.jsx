@@ -8,11 +8,9 @@ import { Register } from '../pages/Register';
 import { Profile } from "../pages/Profile"
 import { Post } from '../pages/Post';
 import Messages from '../pages/Messages';
-
+import { Index } from '../pages/Index';
 
 export const AppRoutes = () => {
-
-
     return (
         <BrowserRouter>
             {/*RUTAS PUBLICAS*/}
@@ -21,7 +19,7 @@ export const AppRoutes = () => {
                 <Route path='*' element={<Error404 />} />
                 <Route path='/Mas-info' element={<MasInfo />} />
                 <Route path='/Register' element={<Register />} />
-
+                <Route path='/index' element={<Index />} />
 
                 {/*RUTAS PRIVADAS*/}
                 <Route path='/Home' element={<Inicio />} />
