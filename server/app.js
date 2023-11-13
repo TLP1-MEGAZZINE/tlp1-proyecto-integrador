@@ -8,7 +8,7 @@ const { createLogs, path } = require("./helpers/createLogs")
 const environments = require("./config/environment")
 const { createServer } = require('node:http');
 const { conectarDB } = require('./config/db');
-const {socketFunction} = require("./helpers/socketio")
+const { socketFunction } = require("./helpers/socketio")
 
 //MODELO DE PLANTILLAS
 require('ejs');
@@ -33,7 +33,12 @@ app.use(morgan('combined', {
     }
 }));
 app.use(express.json());
-app.use(cookieParser());
+app.use(cookieParser(
+    process.env.SECRET_KEY,
+    {
+        sameSite: 'none',
+    }
+));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: process.env.SECRET_KEY,
