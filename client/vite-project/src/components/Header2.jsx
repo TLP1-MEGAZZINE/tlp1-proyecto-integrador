@@ -34,7 +34,7 @@ function Header2() {
             <nav className="navbar navbar-expand-lg navbar-light colorPrincipal">
                 <div className="container-fluid">
                     <img src={logo} alt="logo" width="30" height="30" />
-                    <a className="navbar-brand text-light" href="#">Job <span className="unite">Unite</span></a>
+                    <a className="navbar-brand text-light" href="#" onClick={navigate("/index")}>Job <span className="unite">Unite</span></a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">

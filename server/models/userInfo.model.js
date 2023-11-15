@@ -131,44 +131,35 @@ async function findByRubro(data,) {
 
 async function findUserInfo(data) {
     try {
-        return await UserInfo.findByPk(data.id_user,
-            {
-                include: [{
-                    model: Localidad, // Modelo relacionado
-                    attributes: ['nombre_local']
-                }, {
-                    model: Departamento, // Modelo relacionado
-                    attributes: ['nombre_depar']
-                },
-                {
-                    model: Genero, // Modelo relacionado
-                    attributes: ['genero']
-                },
-                {
-                    model: Genero, // Modelo relacionado
-                    attributes: ['genero']
-                },
-                {
-                    model: Paises, // Modelo relacionado
-                    attributes: ['nombre_pais']
-                },
-                {
-                    model: Provincia, // Modelo relacionado
-                    attributes: ['nombre_provincia']
-                },
-                {
-                    model: Provincia, // Modelo relacionado
-                    attributes: ['nombre_provincia']
-                }
-                ]
+        return await UserInfo.findByPk(data.id_user, {
+            attributes: {
+                exclude: ['id_user', 'id_info', 'id_pais', 'id_provincia', 'id_depar', 'id_local', 'id_genero']
+            },
+            include: [{
+                model: Localidad,
+                attributes: ['nombre_local']
             }, {
-            exclude: ['id_user', 'id_info', 'id_pais', 'id_provincia', 'id_depar', 'id_local', 'id_genero']
-        }
-        )
+                model: Departamento,
+                attributes: ['nombre_depar']
+            },
+            {
+                model: Genero,
+                attributes: ['genero']
+            },
+            {
+                model: Paises,
+                attributes: ['nombre_pais']
+            },
+            {
+                model: Provincia,
+                attributes: ['nombre_provincia']
+            }]
+        });
     } catch (error) {
-        console.log("Error al encontrar usuario", error)
+        console.log("Error al encontrar usuario", error);
     }
 }
+
 
 
 
