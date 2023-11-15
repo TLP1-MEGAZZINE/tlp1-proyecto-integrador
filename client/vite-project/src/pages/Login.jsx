@@ -33,6 +33,8 @@ function Login() {
         payload: resp
       })
 
+      localStorage.setItem("userFormData", JSON.stringify(form));
+
       Swal.fire({
         title: "Correcto, iniciando sesion.",
         text: "Espero un momento...",

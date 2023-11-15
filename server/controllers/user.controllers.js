@@ -1,5 +1,6 @@
-const { findUserByName, findAllUser, deleteUser, actualizarUsuario } = require("../models/users.model")
+const { findUserByName, findAllUser, deleteUser, actualizarUsuario, } = require("../models/users.model")
 const jwt = require('jsonwebtoken')
+const { findUserInfo } = require('../models/userInfo.model')
 
 const { User } = require("../models/users.model");
 
@@ -97,9 +98,21 @@ const ctrlFindUserBySession = async (req, res) => {
     }
 }
 
-// const ctrlFindUserInfo = async (req, res) => {
-    
-// }
+const ctrlFindUserInfo = async (req, res) => {
+    try {
+        const data = req.body
+
+        const userInfo = await findUserInfo(data)
+
+        if (userInfo) {
+            return res.status(200).json(userInfo)
+        }
+
+    } catch (error) {
+        console.log("Error al buscar info de usuario");
+        res.status(500).send("Internal Server Error")
+    }
+}
 
 module.exports = {
     ctrlFindUserByName,
@@ -107,5 +120,5 @@ module.exports = {
     ctrlUpdateUser,
     ctrlDeleteUser,
     ctrlFindUserBySession,
-    
+    ctrlFindUserInfo
 }

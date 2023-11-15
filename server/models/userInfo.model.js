@@ -2,6 +2,11 @@
 const { DataTypes, sequelize } = require('../config/db');
 
 const { User } = require('./users.model');
+const { Localidad } = require('./localidad.model')
+const { Departamento } = require('./departamento.model')
+const { Genero } = require('./genero.model');
+const { Paises } = require('./paises.model');
+const { Provincia } = require('./provincias.models');
 
 const UserInfo = sequelize.define('user_info', {
     id_info: {
@@ -126,12 +131,45 @@ async function findByRubro(data,) {
 
 async function findUserInfo(data) {
     try {
-        return await UserInfo.findByPk({
-            where: { id_user: data.id_user }
-        })
+        return await UserInfo.findByPk(data.id_user,
+            {
+                include: [{
+                    model: Localidad, // Modelo relacionado
+                    attributes: ['nombre_local']
+                }, {
+                    model: Departamento, // Modelo relacionado
+                    attributes: ['nombre_depar']
+                },
+                {
+                    model: Genero, // Modelo relacionado
+                    attributes: ['genero']
+                },
+                {
+                    model: Genero, // Modelo relacionado
+                    attributes: ['genero']
+                },
+                {
+                    model: Paises, // Modelo relacionado
+                    attributes: ['nombre_pais']
+                },
+                {
+                    model: Provincia, // Modelo relacionado
+                    attributes: ['nombre_provincia']
+                },
+                {
+                    model: Provincia, // Modelo relacionado
+                    attributes: ['nombre_provincia']
+                }
+                ]
+            }, {
+            exclude: ['id_user', 'id_info', 'id_pais', 'id_provincia', 'id_depar', 'id_local', 'id_genero']
+        }
+        )
     } catch (error) {
         console.log("Error al encontrar usuario", error)
     }
 }
+
+
 
 module.exports = { createInfoUser, UserInfo, findByRubro, findUserInfo }

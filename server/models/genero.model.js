@@ -40,4 +40,4 @@ Genero.sync({ force: false }).then(async () => {
 });
 
 
-module.exports = Genero; 
+module.exports = {Genero}; 

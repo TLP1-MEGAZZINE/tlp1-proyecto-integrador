@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { ctrlFindUsers, ctrlFindUserByName, ctrlDeleteUser, ctrlUpdateUser, 
-    ctrlFindUserBySession } = require("../controllers/user.controllers")
+    ctrlFindUserBySession, ctrlFindUserInfo } = require("../controllers/user.controllers")
     
 const { protegerRuta } = require("../middlewares/protegerRuta");
 const { validarJWT } = require('../middlewares/autenticarToken');
@@ -19,5 +19,7 @@ router.delete("/delete", ctrlDeleteUser)
 router.put("/update", ctrlUpdateUser)
 
 router.get("/session", validarJWT, ctrlFindUserBySession)
+
+router.get("/findUserInfo", ctrlFindUserInfo) //agregar ruta protegida
 
 module.exports = router;
