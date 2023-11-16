@@ -6,14 +6,14 @@ import lock from "../assets/lock-solid.png"
 import user from "../assets/user-solid.png"
 import userIcon from "../assets/userIcon.png"
 import '../Style.css'
-import { login } from '../api/apiPost'
 import { useForm } from '../hooks/useForms'
-import { AuthContext } from '../context/AuthProvider'
-import { types } from "../types/type";
 import { useNavigate } from "react-router-dom"
+import { AuthContext } from '../context/AuthProvider'
+import { fetchFunction } from '../api/apiFetch'
 
 function Login() {
-  const { dispatch } = useContext(AuthContext)
+
+  const { login } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -25,15 +25,15 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const resp = await login(form)
+    const resp = await fetchFunction("login", "POST", form);
+
+console.log(resp);
 
     if (resp) {
-      dispatch({
-        type: types.LOGIN,
-        payload: resp
-      })
 
-      localStorage.setItem("userFormData", JSON.stringify(form));
+      login(resp)
+
+      localStorage.setItem("token", JSON.stringify(resp.token));
 
       Swal.fire({
         title: "Correcto, iniciando sesion.",
