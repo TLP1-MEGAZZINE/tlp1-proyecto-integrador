@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom"
         if (countdown > 0) {
           setCountdown(countdown - 1);
         } else {
-          navigate("/login");
+          navigate("/index");
         }
       }, 1000);
   

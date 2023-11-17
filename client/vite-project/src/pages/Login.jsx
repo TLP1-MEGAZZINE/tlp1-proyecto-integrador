@@ -6,14 +6,14 @@ import lock from "../assets/lock-solid.png"
 import user from "../assets/user-solid.png"
 import userIcon from "../assets/userIcon.png"
 import '../Style.css'
-import { login } from '../api/apiPost'
 import { useForm } from '../hooks/useForms'
-import { AuthContext } from '../context/AuthProvider'
-import { types } from "../types/type";
 import { useNavigate } from "react-router-dom"
+import { AuthContext } from '../context/AuthProvider'
+import { fetchFunction } from '../api/apiFetch'
 
 function Login() {
-  const { dispatch } = useContext(AuthContext)
+
+  const { login } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -22,18 +22,21 @@ function Login() {
     user_password: "",
   })
 
+  const handleRegisterClick = () => {
+    navigate("/register");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const resp = await login(form)
+    const resp = await fetchFunction("login", "POST", form);
+
+    console.log(resp);
 
     if (resp) {
-      dispatch({
-        type: types.LOGIN,
-        payload: resp
-      })
 
-      localStorage.setItem("userFormData", JSON.stringify(form));
+
+      localStorage.setItem("token", JSON.stringify(resp.token));
 
       Swal.fire({
         title: "Correcto, iniciando sesion.",
@@ -42,8 +45,10 @@ function Login() {
         showConfirmButton: false,
         timer: 2000
       })
+
       setTimeout(() => {
-        navigate("/home")
+        login(resp)
+        navigate("/auth/home")
       }, 2000)
     }
   }
@@ -61,7 +66,7 @@ function Login() {
 
       <main className="colorFondo">
 
-        <form action="#" id="formLogin" onSubmit={handleSubmit}>
+        <form action="#" onSubmit={handleSubmit} className='p-4'>
 
           <div className="bg-light p-4 rounded-5" >
 
@@ -111,7 +116,7 @@ function Login() {
 
             <div className="mt-3 text-center">
               <div>¿No tienes una cuenta?</div>
-              <a href="registro">Registrarse</a>
+              <a href="#" onClick={handleRegisterClick}>Registrarse</a>
             </div>
 
             <div>

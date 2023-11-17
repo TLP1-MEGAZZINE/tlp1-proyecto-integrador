@@ -5,6 +5,14 @@ body {
   box-sizing: border-box;
 }
 
+.landing {
+  background-image: url(./assets/landing.png);
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: right;
+  background-attachment: fixed;
+}
+
 main {
   display: grid;
   place-items: center;

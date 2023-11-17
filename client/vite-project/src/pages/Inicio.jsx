@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import Footer from "../components/Footer";
-import Header2 from "../components/Header2";
+import Header from "../components/Header";
 import { Users } from "../components/Users";
 import { Posteos } from "../components/Posteos";
 import { types } from "../types/type";
@@ -27,9 +27,9 @@ function Inicio() {
 
     return (
         <>
-            <Header2 />
+            <Header />
 
-            <main className="container">
+     
 
                 <li className="nav-item dropdown d-flex px-5">
 
@@ -51,8 +51,9 @@ function Inicio() {
                     </select>
                 </li>
 
-                <article className="d-flex space-between">
-                    <section className="px-5">
+                <article className="row">
+
+                    <section className="col-8">
                         <div className="my-3 p-3 bg-body rounded shadow-sm">
                             <h6 className="border-bottom pb-2 mb-0">Nuevas Ofertas</h6>
 
@@ -64,7 +65,7 @@ function Inicio() {
 
                                     <Posteos selectedRubro={selectedRubro} />
 
-                       
+
                             }
 
                             <small className="d-block text-end mt-3">
@@ -73,7 +74,7 @@ function Inicio() {
                         </div>
                     </section>
 
-                    <section className="px-3">
+                    <section className="col-4">
                         <div className="container my-3 p-3 bg-body rounded shadow-sm">
                             <h6 className="border-bottom pb-2 mb-0">Usuarios Sugeridos</h6>
 
@@ -85,9 +86,11 @@ function Inicio() {
                         </div>
 
                     </section>
+                    
+
                 </article>
 
-            </main>
+       
 
             <Footer />
         </>

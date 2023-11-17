@@ -1,4 +1,4 @@
-import Header2 from "../components/Header2"
+import Header from "../components/Header"
 import Footer from "../components/Footer"
 import logo from "../assets/logo.png"
 import { useState, useEffect } from "react"
@@ -55,7 +55,7 @@ export const Post = () => {
   }
   return (
     <>
-      <Header2 />
+      <Header />
       <main className="colorFondo">
         <form action="#" name="formPost" onSubmit={handleForm}>
           <div className="d-flex justify-content-center align-items-center">

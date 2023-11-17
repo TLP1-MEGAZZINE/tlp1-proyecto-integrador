@@ -1,5 +1,5 @@
 import Footer from "../components/Footer"
-import Header2 from "../components/Header2"
+import Header from "../components/Header"
 import { Selects } from "../components/Selects";
 import Slide from "../components/Slide";
 import { useForm } from "../hooks/useForms";
@@ -12,7 +12,7 @@ export const Register = () => {
 
   return (
     <>
-      <Header2 />
+      <Header />
 
       <main className="p-4 d-flex justify-content-center align-items-center colorFondo">
 

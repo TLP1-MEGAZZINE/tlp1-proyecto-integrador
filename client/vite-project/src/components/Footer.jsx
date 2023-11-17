@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthProvider";
+import { useContext } from "react";
 
 export default function Footer() {
     const navigate = useNavigate();
+
+    const { authState } = useContext(AuthContext);
 
     const handleMasInfoClick = () => {
         navigate("/mas-info");
@@ -9,6 +13,10 @@ export default function Footer() {
 
     const handleIndexClick = () => {
         navigate("/index");
+    };
+
+    const handleHomeClick = () => {
+        navigate("/home");
     };
 
     return (
@@ -23,6 +31,16 @@ export default function Footer() {
                         Mas Información
                     </a>
                 </li>
+
+                {authState.logged && (
+                    <li className="nav-item">
+                        <a href="#" className="nav-link px-2 text-light" onClick={handleHomeClick}>
+                            Home
+                        </a>
+                    </li>
+                )
+                }
+
             </ul>
             <p className="text-center text-light">©Copyright by: @<a href="#" className="text-light">JobUniteContact</a>.</p>
         </footer>

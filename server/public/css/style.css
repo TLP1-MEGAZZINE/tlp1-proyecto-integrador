@@ -28,7 +28,7 @@ footer {
 /* ESTILO DE LA LANDING PAGE */
 
 .landing {
-  background-image: url(./assets/landing.png);
+  background-image: url(../assets/landing.png);
   background-repeat: no-repeat;
   background-size: auto;
   background-position: right;

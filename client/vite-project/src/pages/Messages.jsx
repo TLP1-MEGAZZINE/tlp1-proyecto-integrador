@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react"
 import { io } from "socket.io-client"
-import Header2 from "../components/Header2"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
 import { contactos } from "../data/Contactos"

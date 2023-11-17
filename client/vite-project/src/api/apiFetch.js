@@ -1,14 +1,16 @@
 import { env } from "../config/config";
 
-export const fetchFunction = async (route, method = "GET", payload) => {
+export const fetchFunction = async (route, method, payload) => {
 
     const url = `${env.SERVER_PATH}/${route}`;
-
 
     if (method === "GET") {
         const response = await fetch(url, {
             method: method,
         });
+
+        return response.json();
+
     } else {
         const response = await fetch(url, {
             method: method,
@@ -17,5 +19,7 @@ export const fetchFunction = async (route, method = "GET", payload) => {
             },
             body: JSON.stringify(payload),
         });
+
+        return response.json();
     }
 }
