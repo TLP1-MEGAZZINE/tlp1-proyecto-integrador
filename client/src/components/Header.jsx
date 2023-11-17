@@ -1,13 +1,17 @@
 import logo from "../assets/logo.png";
 import userIcon from "../assets/userIcon.png"
 import React, { useContext } from "react";
-import { types } from "../types/type";
 import { AuthContext } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
     const { authState, logout } = useContext(AuthContext); // Obtén el estado del contexto
     const navigate = useNavigate();
+
+    const handleMessageClick = () => {
+        navigate("/auth/messages");
+    }
+
 
     const handleLogout = () => {
         Swal.fire({
@@ -16,6 +20,8 @@ function Header() {
             showConfirmButton: false,
             timer: 2000,
         });
+
+
 
         setTimeout(() => {
             logout();
@@ -58,7 +64,7 @@ function Header() {
                         <>
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0 pe-2">
                                 <li className="nav-item">
-                                    <a className="nav-link text-light" aria-current="page" href="#">
+                                    <a className="nav-link text-light" aria-current="page" href="#" onClick={handleMessageClick}>
                                         Mensajes
                                     </a>
                                 </li>

@@ -14,7 +14,7 @@ export const Posteos = ({ selectedRubro }) => {
 
                     posts.map((post, id_post) => (
 
-                        <div key={id_post} className="d-flex text-muted pt-3 mx-5 pe-5">
+                        <div key={id_post} className="text-muted pt-3 mx-5">
                             <div className="d-flex ">
 
                                 <svg className="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"

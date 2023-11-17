@@ -16,7 +16,7 @@ export default function Footer() {
     };
 
     const handleHomeClick = () => {
-        navigate("/home");
+        navigate("/auth/Home");
     };
 
     return (
