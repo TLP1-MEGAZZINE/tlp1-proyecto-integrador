@@ -10,7 +10,7 @@ export const Index = () => {
 
   return (
     <>
-      <Header />
+      <Header/>
 
     <div className="landing">
       <article className="mx-auto p-4">

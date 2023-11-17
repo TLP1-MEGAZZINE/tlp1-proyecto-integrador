@@ -5,7 +5,7 @@ import { useContext } from "react";
 export default function Footer() {
     const navigate = useNavigate();
 
-    const { state } = useContext(AuthContext);
+    const { authState } = useContext(AuthContext);
 
     const handleMasInfoClick = () => {
         navigate("/mas-info");
@@ -32,7 +32,7 @@ export default function Footer() {
                     </a>
                 </li>
 
-                {state.logged && (
+                {authState.logged && (
                     <li className="nav-item">
                         <a href="#" className="nav-link px-2 text-light" onClick={handleHomeClick}>
                             Home

@@ -9,8 +9,26 @@ import { Profile } from "../pages/Profile"
 import { Post } from '../pages/Post';
 import Messages from '../pages/Messages';
 import { Index } from '../pages/Index';
+import { PrivateRoutes } from './PrivateRoutes';
+import { useEffect, useContext } from 'react';
+import { AuthContext } from '../context/AuthProvider';
+import { MainRoutes } from './MainRoutes';
 
 export const AppRoutes = () => {
+
+    const { login, logout } = useContext(AuthContext)
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('userData'));
+
+        if (user) {
+            login(user)
+        } else {
+            logout()
+            localStorage.removeItem('userData');
+        }
+    }, [])
+
     return (
         <BrowserRouter>
             {/*RUTAS PUBLICAS*/}
@@ -22,12 +40,12 @@ export const AppRoutes = () => {
                 <Route path='/index' element={<Index />} />
 
                 {/*RUTAS PRIVADAS*/}
-                <Route path='/Home' element={<Inicio />} />
-                <Route path='/Files' element={<Files />} />
-                <Route path='/My-profile' element={<Profile />} />
-                <Route path='/Post' element={<Post />} />
-                <Route path='/Messages' element={<Messages />} />
 
+                <Route path='auth/*' element={
+                    <PrivateRoutes>
+                        <MainRoutes />
+                    </PrivateRoutes>
+                } />
 
             </Routes>
         </BrowserRouter>

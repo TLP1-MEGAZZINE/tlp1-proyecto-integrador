@@ -22,16 +22,19 @@ function Login() {
     user_password: "",
   })
 
+  const handleRegisterClick = () => {
+    navigate("/register");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     const resp = await fetchFunction("login", "POST", form);
 
-console.log(resp);
+    console.log(resp);
 
     if (resp) {
 
-      login(resp)
 
       localStorage.setItem("token", JSON.stringify(resp.token));
 
@@ -42,8 +45,10 @@ console.log(resp);
         showConfirmButton: false,
         timer: 2000
       })
+
       setTimeout(() => {
-        navigate("/home")
+        login(resp)
+        navigate("/auth/home")
       }, 2000)
     }
   }
@@ -61,7 +66,7 @@ console.log(resp);
 
       <main className="colorFondo">
 
-        <form action="#" id="formLogin" onSubmit={handleSubmit}>
+        <form action="#" onSubmit={handleSubmit} className='p-4'>
 
           <div className="bg-light p-4 rounded-5" >
 
@@ -111,7 +116,7 @@ console.log(resp);
 
             <div className="mt-3 text-center">
               <div>¿No tienes una cuenta?</div>
-              <a href="registro">Registrarse</a>
+              <a href="#" onClick={handleRegisterClick}>Registrarse</a>
             </div>
 
             <div>

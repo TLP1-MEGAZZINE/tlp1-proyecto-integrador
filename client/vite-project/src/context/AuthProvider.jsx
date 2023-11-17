@@ -6,7 +6,7 @@ export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
 
-    const [state, dispatch] = useReducer(authReducer, { logged: false });
+    const [authState, dispatch] = useReducer(authReducer, { logged: false });
 
     const login = (payload) => {
         dispatch({
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ state, login, logout }}>
+        <AuthContext.Provider value={{ authState, login, logout }}>
             {children}
         </AuthContext.Provider>
     )
