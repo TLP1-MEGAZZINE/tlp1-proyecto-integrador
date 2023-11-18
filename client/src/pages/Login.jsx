@@ -13,9 +13,14 @@ import { fetchFunction } from '../api/apiFetch'
 
 function Login() {
 
-  const { login } = useContext(AuthContext)
+  const { login, authState } = useContext(AuthContext)
 
   const navigate = useNavigate()
+
+  if(authState.logged){
+    navigate("/auth/home")
+    return;
+  }
 
   const { form, handleInputChange } = useForm({
     user_name: "",
@@ -33,7 +38,8 @@ function Login() {
 
     console.log(resp);
 
-    if (resp) {
+    if (resp.token) {
+      login(resp)
 
       localStorage.setItem("token", JSON.stringify(resp.token));
       localStorage.setItem("user_name", JSON.stringify(resp.user_name));
@@ -48,9 +54,10 @@ function Login() {
         timer: 2000
       })
 
+      const lastLocation = localStorage.getItem("lastPath")
+
       setTimeout(() => {
-        login(resp)
-        navigate("/auth/home")
+        return navigate(lastLocation || "/auth/home")
       }, 2000)
     }
   }

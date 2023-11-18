@@ -19,13 +19,13 @@ const { Image } = require("./imagenes.model")
 
 // //UNO A UNO
 
-// UserInfo.hasOne(User);
+UserInfo.hasOne(User, { foreignKey: 'id_user' });
 UserInfo.belongsTo(User, { foreignKey: 'id_user' });
 
-User.hasOne(Particular)
+User.hasOne(Particular, {foreignKey: 'id_user'})
 Particular.belongsTo(User, { foreignKey: 'id_user' });
 
-User.hasOne(Contacto)
+User.hasOne(Contacto, {foreignKey: 'id_user'})
 Contacto.belongsTo(User, { foreignKey: 'id_user' });
 
 User.hasOne(Empleador, { foreignKey: 'id_user' });
@@ -68,7 +68,6 @@ Postulante.belongsTo(NivelEducacion, { foreignKey: 'id_nivel_educacion' });
 
 Rubro.hasMany(Empleador, { foreignKey: 'id_rubro' });
 Empleador.belongsTo(Rubro, { foreignKey: 'id_rubro' });
-
 
 // //CONTENIDO
 User.hasMany(Post, { foreignKey: "id_user" });

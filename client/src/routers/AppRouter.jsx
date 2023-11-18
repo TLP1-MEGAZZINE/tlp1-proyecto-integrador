@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 import Login from "../pages/Login"
 import Error404 from '../pages/error404';
 import MasInfo from '../pages/Mas-info';
@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const AppRoutes = () => {
 
-    const { login, logout } = useContext(AuthContext)
+    const { login, logout, authState } = useContext(AuthContext)
 
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('token'));
@@ -27,16 +27,18 @@ export const AppRoutes = () => {
          id_rol   
         }
 
-        if (user.token || user.user_name || user.id_user) {
+        if (user.token && user.user_name && user.id_user) {
             login(user)
+            return;
         } else {
             logout()
             localStorage.removeItem('token');
             localStorage.removeItem('user_name');
             localStorage.removeItem('id_user');
             localStorage.removeItem('id_rol');
+            return;
         }
-    }, [])
+    }, [authState.logged])
 
     return (
         <BrowserRouter>

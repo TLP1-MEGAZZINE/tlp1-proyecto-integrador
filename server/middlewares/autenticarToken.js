@@ -2,8 +2,9 @@ const jwt = require('jsonwebtoken');
 const {User} = require('../models/users.model.js');
 
 const validarJWT = async (req, res, next) => {
+    console.log(req.headers.authorization);
     // Leer el token
-    const token = req.cookies.token
+    const token = req.headers.authorization
 
     try {
         const { id_user } = jwt.verify(token, process.env.SECRET_KEY);
@@ -35,7 +36,7 @@ const validarJWT = async (req, res, next) => {
             message: 'Token no válido',
         }); */
 
-        res.redirect('/login');
+        // res.redirect('/login');
     }
 }
 

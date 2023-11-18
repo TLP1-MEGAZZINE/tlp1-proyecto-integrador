@@ -14,6 +14,7 @@ export const fetchFunction = async (route, method, payload) => {
             method: method,
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
             },
             body: JSON.stringify(payload),
         });

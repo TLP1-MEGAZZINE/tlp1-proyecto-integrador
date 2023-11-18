@@ -76,13 +76,8 @@ function Header() {
                                     </a>
                                 </li>
                                 <li className="nav-item dropdown">
-                                    <a
-                                        className="nav-link dropdown-toggle text-light"
-                                        href="#"
-                                        id="navbarDropdown"
-                                        role="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
+                                    <a className="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown"
+                                        role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                     >
                                         Notificaciones
                                     </a>

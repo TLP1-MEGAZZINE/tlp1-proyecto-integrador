@@ -26,27 +26,26 @@ function Inicio() {
         <>
             <Header />
 
-            <li className="nav-item dropdown d-flex px-5">
-
-                <select id="selectorRubros" onChange={handleSelectChange}
-                    value={selectedRubro} className="form-select" aria-label="Default select example" required>
-
-                    <option value="0" >Filtro Rubros</option>
-                    <option value="1">Salud</option>
-                    <option value="2">Tecnologia/Informatica</option>
-                    <option value="3">Educación</option>
-                    <option value="4">Finanzas</option>
-                    <option value="5">Manufactura</option>
-                    <option value="6">Ventas</option>
-                    <option value="7">Administración</option>
-                    <option value="8">Alimenticio</option>
-                    <option value="9">Construcción</option>
-                    <option value="10">Docente</option>
-                    <option value="11">Otros</option>
-                </select>
-            </li>
-
             <article className="row">
+                <li className="nav-item dropdown d-flex px-5">
+
+                    <select onChange={handleSelectChange}
+                        value={selectedRubro} className="form-select" aria-label="Default select example" required>
+
+                        <option value="0" >Filtro Rubros</option>
+                        <option value="1">Salud</option>
+                        <option value="2">Tecnologia/Informatica</option>
+                        <option value="3">Educación</option>
+                        <option value="4">Finanzas</option>
+                        <option value="5">Manufactura</option>
+                        <option value="6">Ventas</option>
+                        <option value="7">Administración</option>
+                        <option value="8">Alimenticio</option>
+                        <option value="9">Construcción</option>
+                        <option value="10">Docente</option>
+                        <option value="11">Otros</option>
+                    </select>
+                </li>
 
                 <section className="col-8">
                     <div className="my-3 p-3 bg-body rounded shadow-sm">
@@ -67,7 +66,7 @@ function Inicio() {
                 </section>
 
                 <section className="col-4">
-                    <div className= "my-3 p-3 bg-body rounded shadow-sm">
+                    <div className="my-3 p-3 bg-body rounded shadow-sm">
                         <h6 className="border-bottom pb-2 mb-0">Usuarios Sugeridos</h6>
 
                         <Users />

@@ -1,11 +1,10 @@
 const { DataTypes, sequelize } = require('../config/db');
 const { encriptar } = require('../helpers/encriptar');
-const { Op, where } = require('sequelize');
+const { Op } = require('sequelize');
 const Rol = require("./roles.model")
-const { UserInfo } = require("./userInfo.model");
 
 //CREAR MODELO DE USER
-const User = sequelize.define('user', {
+const User = sequelize.define('User', {
     id_user: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -33,10 +32,6 @@ const User = sequelize.define('user', {
     },
     id_rol: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "rol",
-        //     key: "id_rol"
-        // },
     },
     estado: {
         type: DataTypes.BOOLEAN,
@@ -46,8 +41,8 @@ const User = sequelize.define('user', {
 }, {
     timestamps: false,
     paranoid: false,
-    tableName: "user",
-    modelName: "user"
+    tableName: "User",
+    modelName: "User"
 });
 
 User.sync({ force: false }).then(() => {

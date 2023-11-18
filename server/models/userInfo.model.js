@@ -16,10 +16,6 @@ const UserInfo = sequelize.define('user_info', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "user",
-        //     key: "id_user"
-        // },
     },
     nombre: {
         type: DataTypes.STRING,
@@ -32,18 +28,10 @@ const UserInfo = sequelize.define('user_info', {
     dni: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        // unique: {
-        //     args: true,
-        //     messge: 'El dni ya esta registrado'
-        // }
     },
     cuil: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        // unique: {
-        //     args: true,
-        //     messge: 'El cuil ya esta registrado'
-        // }
     },
     fecha_nacimiento: {
         type: DataTypes.DATEONLY,
@@ -51,24 +39,12 @@ const UserInfo = sequelize.define('user_info', {
     },
     id_genero: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "genero",
-        //     key: "id_genero"
-        // }
     },
     id_pais: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "paises",
-        //     key: "id_pais"
-        // },
     },
     id_provincia: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "provincia",
-        //     key: "id_provincia"
-        // },
     },
     otro_pais: {
         type: DataTypes.STRING,
@@ -87,7 +63,6 @@ const UserInfo = sequelize.define('user_info', {
     modelName: "user_info"
 });
 
-//SI NO FUNCIONA CAMBIAR EL FALSE A TRUE
 UserInfo.sync({ force: false }).then(() => {
     console.log('Tabla de info usuario creada')
 })
@@ -130,6 +105,7 @@ async function findByRubro(data,) {
     }
 }
 
+//BUSCAR TODA LA INFO DE USUARIO
 async function findUserInfo(data) {
     try {
         return await UserInfo.findOne({
@@ -158,11 +134,14 @@ async function findUserInfo(data) {
                     model: Provincia,
                     attributes: ['nombre_provincia']
                 },
-
+                {
+                    model: User,
+                    attributes: ["user_name", "user_email"]
+                },
             ]
         })
     } catch (error) {
-        console.log("Error al encontrar usuario", error);
+        console.log("Error al encontrar info de usuario", error);
     }
 }
 

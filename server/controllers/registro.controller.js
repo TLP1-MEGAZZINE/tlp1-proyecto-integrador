@@ -73,18 +73,18 @@ registerLogin.loginUsuario = async (req, res) => {
         }
 
         return (
-
+            //NO SE USA EN REACT
             res.cookie('token', token, cookieOptions),
             res.cookie('username', existeUsuario.user_name),
             res.cookie('id_user', existeUsuario.id_user),
             res.cookie("id_rol", existeUsuario.id_rol),
 
-            res.status(200).json({ id_user: existeUsuario.id_rol, user_name: existeUsuario.user_name, id_rol:existeUsuario.id_rol, token })
+            res.status(200).json({ id_user: existeUsuario.id_user, user_name: existeUsuario.user_name, id_rol: existeUsuario.id_rol, token })
 
-        // res.json({
-        //     message: "Login correcto",
-        //     token
-        // })
+            // res.json({
+            //     message: "Login correcto",
+            //     token
+            // })
         )
 
     } catch (error) {

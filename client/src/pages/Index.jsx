@@ -14,14 +14,13 @@ export const Index = () => {
   ];
 
   useEffect(() => {
-    // Función para cambiar el texto cada 3 segundos
     const changeText = () => {
       const randomIndex = Math.floor(Math.random() * legend.length);
       setText(legend[randomIndex]);
     };
 
     // Iniciar el intervalo cuando el componente se monta
-    const intervalId = setInterval(changeText, 6000);
+    const intervalId = setInterval(changeText, 4000);
 
     // Limpiar el intervalo cuando el componente se desmonta
     return () => clearInterval(intervalId);

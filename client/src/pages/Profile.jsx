@@ -11,7 +11,7 @@ export const Profile = () => {
   const data = {
     id_user
   }
-  const [datos, setDatos] = useState(null); 
+  const [datos, setDatos] = useState(null);
 
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -27,7 +27,7 @@ export const Profile = () => {
     };
 
     obtenerDatos();
-  }, []); 
+  }, []);
 
   return (
     <>
@@ -36,7 +36,7 @@ export const Profile = () => {
       <div className="colorFondo">
         <div className="container">
           <div className="row py-4">
-            
+
             <div className="col-md-4 col-sm-12">
               <div className="card">
                 <img
@@ -48,7 +48,9 @@ export const Profile = () => {
                 />
                 <div className="card-body text-center">
                   <h5 className="card-title">Nombre de usuario:
-                  <br /> XD</h5>
+                    <br />{datos?.User.user_name}</h5>
+
+                  <h6 className="card-text">Correo: {datos?.User.user_email}</h6>
 
                   <a href="#" className="btn btn-primary">Editar perfil</a>
 
@@ -71,30 +73,30 @@ export const Profile = () => {
             <div className="col-md-8 col-sm-12">
               <div className="card text-center d-flex flex-column justify-content-center colorFondo">
                 <div className="card-body">
-                  <h5 className="card-title text-light">Información básica</h5>
+                  <h5 className="card-title text-light">Información del usuario</h5>
                   <div className="table-responsive">
                     <ul className="list-group table">
 
                       <li className="list-group-item">Nombre y apellido: <br />
-                      {datos?.nombre} {datos?.apellido} </li>
+                        {datos?.nombre} {datos?.apellido} </li>
 
                       <li className="list-group-item">DNI: <br />
-                      {datos?.dni}</li>
+                        {datos?.dni}</li>
 
                       <li className="list-group-item">CUIL: <br />
-                      {datos?.cuil}</li>
+                        {datos?.cuil}</li>
 
                       <li className="list-group-item">Pais: <br />
-                      {datos?.paise.nombre_pais}</li>
+                        {datos?.paise.nombre_pais}</li>
 
                       <li className="list-group-item">Genero: <br />
-                      {datos?.genero.genero}</li>
+                        {datos?.genero.genero}</li>
 
                       <li className="list-group-item">Departamento: <br />
-                      {datos?.departamento.nombre_depar}</li>
+                        {datos?.departamento.nombre_depar}</li>
 
                       <li className="list-group-item">Localidad: <br />
-                      {datos?.localidad.nombre_local}</li>
+                        {datos?.localidad.nombre_local}</li>
 
                       <li className="list-group-item"></li>
                     </ul>

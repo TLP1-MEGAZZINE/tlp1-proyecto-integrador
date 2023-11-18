@@ -4,7 +4,7 @@ import { useFetchData } from "../hooks/useFetchGet";
 
 export const Posteos = ({ selectedRubro }) => {
     const url = 'http://localhost:5000/findAllPosts'
-    
+
     const posts = useFetchData(url)
 
     console.log(posts);
@@ -27,8 +27,8 @@ export const Posteos = ({ selectedRubro }) => {
                                         dy=".3em">32x32</text>
                                 </svg>
                                 <p className="pb-3 mb-0 small lh-sm border-bottom">
-                                    <strong className="d-block text-gray-dark">{post.user.user_name}</strong>
-                                    <strong className="d-block text-gray-dark">{post.user.user_email}</strong>
+                                    <strong className="d-block text-gray-dark">{post.User.user_name}</strong>
+                                    <strong className="d-block text-gray-dark">{post.User.user_email}</strong>
                                     <strong className="d-block text-gray-dark">{post.post_title}</strong>
                                     {post.post_content}
                                     <br />
@@ -56,8 +56,8 @@ export const Posteos = ({ selectedRubro }) => {
                                             dy=".3em">32x32</text>
                                     </svg>
                                     <p className="pb-3 mb-0 small lh-sm border-bottom">
-                                        <strong className="d-block text-gray-dark">{post.user.user_name}</strong>
-                                        <strong className="d-block text-gray-dark">{post.user.user_email}</strong>
+                                        <strong className="d-block text-gray-dark">{post.User.user_name}</strong>
+                                        <strong className="d-block text-gray-dark">{post.User.user_email}</strong>
                                         <strong className="d-block text-gray-dark">{post.post_title}</strong>
                                         {post.post_content}
                                         <br />

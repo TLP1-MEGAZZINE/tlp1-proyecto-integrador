@@ -31,13 +31,15 @@ const ctrlUploadImage = async (req, res) => {
 
 const ctrlFindPfp = async (req, res) => {
     try {
-        const id_user = req.session.user.id_user
-        console.log(id_user);
-        const pfp = await findpfp(id_user);
+        const data = req.body
+
+        console.log(data);
+        const pfp = await findpfp(data);
         if (pfp) {
-            return pfp
+            return res.status(200).send(pfp.url)
         }
         return res.status(400).send("No se encontro la foto de perfil")
+
     } catch (error) {
         console.log("No se pudo encontrar la pfp", error);
         return res.status(500).send("Internal Server Error")

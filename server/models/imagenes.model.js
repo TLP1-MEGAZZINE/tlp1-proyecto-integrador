@@ -24,10 +24,6 @@ const Image = sequelize.define('image', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "User",
-        //     key: "id_user"
-        // },
         allowNull: true,
     },
 }, {
@@ -74,14 +70,16 @@ async function subirArchivo(filename, description, id_user) {
 
 
 //BUSCAR FOTO DE PERFIL
-async function findpfp(id_user) {
-    const pfp = Image.findOne({
+async function findpfp(data) {
+    const pfp = await Image.findOne({
         where: {
-            id_user: id_user,
-            is_pfp: 1
+            id_user: data.id_user, is_pfp: 1
         }
     })
+
+    console.log("IMAGEN", pfp);
     return pfp
+    
 }
 
 
