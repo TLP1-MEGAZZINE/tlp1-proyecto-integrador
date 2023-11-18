@@ -1,15 +1,12 @@
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { Users } from "../components/Users";
 import { Posteos } from "../components/Posteos";
-import { types } from "../types/type";
-import { AuthContext } from "../context/AuthProvider";
-import dayjs from "dayjs";
+
 
 
 function Inicio() {
-    const [filteredPosts, setFilteredPosts] = useState([]);
     const [selectedRubro, setSelectedRubro] = useState(0);
 
 
@@ -28,8 +25,6 @@ function Inicio() {
     return (
         <>
             <Header />
-
-
 
             <li className="nav-item dropdown d-flex px-5">
 
@@ -62,7 +57,6 @@ function Inicio() {
                                 <Posteos selectedRubro={""} />
                             )
                                 :
-
                                 <Posteos selectedRubro={selectedRubro} />
                         }
 

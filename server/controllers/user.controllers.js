@@ -107,7 +107,6 @@ const ctrlFindUserInfo = async (req, res) => {
         if (userInfo) {
             return res.status(200).json(userInfo)
         }
-
     } catch (error) {
         console.log("Error al buscar info de usuario");
         res.status(500).send("Internal Server Error")

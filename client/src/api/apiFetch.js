@@ -1,7 +1,6 @@
 import { env } from "../config/config";
 
 export const fetchFunction = async (route, method, payload) => {
-
     const url = `${env.SERVER_PATH}/${route}`;
 
     if (method === "GET") {
@@ -10,9 +9,8 @@ export const fetchFunction = async (route, method, payload) => {
         });
 
         return response.json();
-
     } else {
-        const response = await fetch(url, {
+        const data = await fetch(url, {
             method: method,
             headers: {
                 "Content-Type": "application/json",
@@ -20,6 +18,12 @@ export const fetchFunction = async (route, method, payload) => {
             body: JSON.stringify(payload),
         });
 
-        return response.json();
+        if (data.ok) {
+            const jsonResponse = await data.json();
+            return jsonResponse;
+        } else {
+            // Manejar el caso en el que la respuesta no es exitosa
+            throw new Error(`Error en la solicitud: ${data.statusText}`);
+        }
     }
 }

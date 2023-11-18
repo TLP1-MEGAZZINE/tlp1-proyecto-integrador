@@ -7,6 +7,8 @@ export const Posteos = ({ selectedRubro }) => {
     
     const posts = useFetchData(url)
 
+    console.log(posts);
+
     return (
         <>
             {

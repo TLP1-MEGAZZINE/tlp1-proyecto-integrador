@@ -1,31 +1,40 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import Inicio from '../pages/Inicio';
 import Login from "../pages/Login"
 import Error404 from '../pages/error404';
 import MasInfo from '../pages/Mas-info';
-import { Files } from "../pages/Files"
 import { Register } from '../pages/Register';
-import { Profile } from "../pages/Profile"
-import { Post } from '../pages/Post';
-import Messages from '../pages/Messages';
 import { Index } from '../pages/Index';
 import { PrivateRoutes } from './PrivateRoutes';
 import { useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import { MainRoutes } from './MainRoutes';
+import { useNavigate } from 'react-router-dom';
 
 export const AppRoutes = () => {
 
     const { login, logout } = useContext(AuthContext)
 
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('userData'));
+        const token = JSON.parse(localStorage.getItem('token'));
+        const user_name = JSON.parse(localStorage.getItem('user_name'));
+        const id_user = JSON.parse(localStorage.getItem('id_user'));
+        const id_rol = JSON.parse(localStorage.getItem('id_rol'));
 
-        if (user) {
+        const user ={
+         token,
+         user_name,
+         id_user,
+         id_rol   
+        }
+
+        if (user.token || user.user_name || user.id_user) {
             login(user)
         } else {
             logout()
-            localStorage.removeItem('userData');
+            localStorage.removeItem('token');
+            localStorage.removeItem('user_name');
+            localStorage.removeItem('id_user');
+            localStorage.removeItem('id_rol');
         }
     }, [])
 

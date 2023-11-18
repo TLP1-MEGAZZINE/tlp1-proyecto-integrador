@@ -35,8 +35,10 @@ function Login() {
 
     if (resp) {
 
-
       localStorage.setItem("token", JSON.stringify(resp.token));
+      localStorage.setItem("user_name", JSON.stringify(resp.user_name));
+      localStorage.setItem("id_user", JSON.stringify(resp.id_user));
+      localStorage.setItem("id_rol", JSON.stringify(resp.id_rol));
 
       Swal.fire({
         title: "Correcto, iniciando sesion.",

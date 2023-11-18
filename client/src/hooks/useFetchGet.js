@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
+import { fetchFunction } from "../api/apiFetch";
 
 export const useFetchData = (url) => {
     const [data, setData] = useState([])
 
     const fetchData = async () => {
 
-        try {
+const response = fetchFunction()
+
+         try {
             const response = await fetch(url, {
                 method: 'GET',
             });
@@ -16,7 +19,7 @@ export const useFetchData = (url) => {
             }
         } catch (error) {
             console.error('Error al enviar la solicitud:', error);
-        }
+        } 
     }
     useEffect(() => {
         fetchData();

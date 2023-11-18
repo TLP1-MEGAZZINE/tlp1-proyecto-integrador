@@ -20,6 +20,6 @@ router.put("/update", ctrlUpdateUser)
 
 router.get("/session", validarJWT, ctrlFindUserBySession)
 
-router.get("/findUserInfo", ctrlFindUserInfo) //agregar ruta protegida
+router.post("/findUserInfo", ctrlFindUserInfo) //agregar ruta protegida
 
 module.exports = router;

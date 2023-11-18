@@ -4,9 +4,9 @@ import Header from '../components/Header';
 import "../Style.css";
 
 export const Index = () => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState("Brindar apoyo a jóvenes recién graduados");
 
-  const legend = ["Brindar apoyo a jóvenes recién graduados",
+  const legend = [
     "Facilitar la entrada al mercado laboral",
     "Conseguir una primer experiencia laboral",
     "Ayudar a las Pymes emergentes a conseguir empleados",

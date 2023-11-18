@@ -8,10 +8,15 @@ function Header() {
     const { authState, logout } = useContext(AuthContext); // Obtén el estado del contexto
     const navigate = useNavigate();
 
+    const user_name = localStorage.getItem("user_name");
+
     const handleMessageClick = () => {
         navigate("/auth/messages");
     }
 
+    const handleProfileClick = () => {
+        navigate("/auth/my-profile");
+    }
 
     const handleLogout = () => {
         Swal.fire({
@@ -21,11 +26,13 @@ function Header() {
             timer: 2000,
         });
 
-
-
         setTimeout(() => {
             logout();
-            localStorage.removeItem("userData");
+            localStorage.removeItem("token");
+            localStorage.removeItem("user_name");
+            localStorage.removeItem("id_user");
+            localStorage.removeItem("id_rol");
+
             navigate("/index");
         }, 2000);
     };
@@ -86,7 +93,7 @@ function Header() {
                                             </a>
                                         </li>
                                         <li>
-                                            <a className="dropdown-item" href="novedades">
+                                            <a className="dropdown-item" href="#">
                                                 Novedades
                                             </a>
                                         </li>
@@ -113,12 +120,12 @@ function Header() {
                                     id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src={userIcon} alt="pfp" width=" 32" height="32"
                                         className="rounded-circle me-2" />
-                                    <strong className="text-light" id="UsuarioNombre">Usuario</strong>
+                                    <strong className="text-light" id="UsuarioNombre">{user_name}</strong>
                                 </a>
 
                                 <ul className="dropdown-menu dropdown-menu-dark text-small shadow"
                                     aria-labelledby="dropdownUser1">
-                                    <li><a className="dropdown-item" href="perfil">Perfil</a></li>
+                                    <li><a className="dropdown-item" href="#" onClick={handleProfileClick}>Perfil</a></li>
                                     <li><a className="dropdown-item" href="#">Ajustes</a></li>
                                     <li>
                                         <hr className="dropdown-divider" />
