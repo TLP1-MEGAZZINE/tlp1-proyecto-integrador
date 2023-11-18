@@ -10,21 +10,21 @@ export const fetchFunction = async (route, method, payload) => {
 
         return response.json();
     } else {
-        const data = await fetch(url, {
-            method: method,
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: JSON.stringify(payload),
-        });
+        // METODO POST
+        try {
+            const response = await fetch(url, {
+                method: method,
+                headers: {
+                    "Content-Type": "application/json"
+                    // "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                },
+                body: JSON.stringify(payload),
+            });
 
-        if (data.ok) {
-            const jsonResponse = await data.json();
-            return jsonResponse;
-        } else {
-            // Manejar el caso en el que la respuesta no es exitosa
-            throw new Error(`Error en la solicitud: ${data.statusText}`);
+            const data = await response.json();
+            return data;
+        } catch {
+            console.log(error);
         }
     }
 }

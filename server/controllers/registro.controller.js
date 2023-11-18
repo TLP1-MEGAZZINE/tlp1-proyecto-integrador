@@ -3,25 +3,44 @@ const crearRegistroCompleto = require("../helpers/registro.helper.js")
 const bcrypt = require('bcrypt');
 const { generarJWT } = require('../helpers/generarToken');
 const { findUserByEmailOrUsername, } = require("../models/users.model");
+const { createUser } = require("../models/users.model");
 
 
 //CREAR EL OBJETO QUE CONTENDRA LOS METODOS POST
 const registerLogin = {}
 
-// METODO PARA CREAR UN USUARIO Y ENCRIPTAR SU PASSWORD
-registerLogin.crearUsuario = async (req, res) => {
+// METODO PARA CREAR UN USUARIO Y ENCRIPTAR SU PASSWORD EJS
+// registerLogin.crearUsuario = async (req, res) => {
 
+//     const userData = req.body
+//     console.log("llegue al registro principal", userData);
+
+//     try {
+
+//         const registroCompleto = await crearRegistroCompleto(userData);
+
+//         if (!registroCompleto) {
+//             throw new Error("Error al crear el registro de usuario")
+//         } else {
+//             return res.status(200).json({ message: "Registro creado-controller" })
+//         }
+//     } catch (error) {
+//         console.log("Error del servidor", error)
+//     }
+// }
+
+registerLogin.crearUser = async (req, res) => {
     const userData = req.body
+    console.log("llegue al registro principal", userData);
 
     try {
+        const user = await createUser(userData);
 
-        const registroCompleto = await crearRegistroCompleto(userData);
-
-        if (!registroCompleto) {
-            throw new Error("Error al crear el registro de usuario")
-        } else {
+        if (user) {
+            console.log(user);
             return res.status(200).json({ message: "Registro creado-controller" })
         }
+
     } catch (error) {
         console.log("Error del servidor", error)
     }
