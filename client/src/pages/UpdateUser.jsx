@@ -191,45 +191,53 @@ export const UpdateUser = () => {
 
                                         {id_rol == 2 && (
                                             <>
-                                                <div className="col-md-6">
-                                                    <label className="form-label">Nombre de la empresa</label>
-                                                    <input type="text" id="nombreEmpresa" className="form-control" placeholder="Nombre de la empresa"
-                                                        name="nombreEmpresa"
-                                                        value={form[name]} onChange={handleInputChange}
-                                                    />
-                                                    <span className="text-danger fw-bold" id="errorEmpresa"></span>
-                                                </div>
-
-                                                <Selects
-                                                    label={"Rubros."}
-                                                    placeholder={"Elija el rubro de su empresa"}
-                                                    position={"id_rubro"}
-                                                    itemName={"desc_rubro"}
-                                                    name={"id_rubro"}
-                                                    url={'http://localhost:5000/findRubro'}
-                                                    value={form[name]}
-                                                    onChange={handleInputChange}
-                                                />
-
-                                                <div className="col-md-6">
-                                                    <label className="form-label">Locación de la empresa</label>
-                                                    <input type="text" className="form-control" id="domicilioEmpresa"
-                                                        placeholder="Mz24 Cs45, Barrio XYZ" name="domicilioEmpresa"
-                                                        value={form[name]} onChange={handleInputChange}
-                                                    />
-                                                    <span className="text-danger fw-bold" id="errorDomEmpresa"></span>
-                                                </div>
-
-                                                <div className="col-md-6">
-                                                    <label className="form-label">Numero de telefono Empresarial</label>
-                                                    <div className="input-group">
-                                                        <span id="prefijoEmpresa" className="input-group-text">+</span>
-                                                        <input id="telEmpresa" type="text" className="form-control" name="telEmpresa"
+                                                <div className='d-flex'>
+                                                    <div className="col-md-6 px-1">
+                                                        <label className="form-label">Nombre de la empresa</label>
+                                                        <input type="text" className="form-control" placeholder="Nombre de la empresa"
+                                                            name="nombre_empresa"
                                                             value={form[name]} onChange={handleInputChange}
                                                         />
+                                                        <span className="text-danger fw-bold" id="errorEmpresa"></span>
                                                     </div>
-                                                    <span className="text-danger fw-bold" id="errorTelEmpresa"></span>
+
+                                                    <div className="col-md-6 px-1">
+                                                        <label className="form-label">Locación de la empresa</label>
+                                                        <input type="text" className="form-control" 
+                                                            placeholder="Mz24 Cs45, Barrio XYZ" name="domicilio_empresa"
+                                                            value={form[name]} onChange={handleInputChange}
+                                                        />
+                                                        <span className="text-danger fw-bold" id="errorDomEmpresa"></span>
+                                                    </div>
+
                                                 </div>
+
+
+                                                <div className="d-flex">
+
+                                                    <Selects
+                                                        label={"Rubros."}
+                                                        placeholder={"Elija el rubro de su empresa"}
+                                                        position={"id_rubro"}
+                                                        itemName={"desc_rubro"}
+                                                        name={"id_rubro"}
+                                                        url={'http://localhost:5000/findRubro'}
+                                                        value={form[name]}
+                                                        onChange={handleInputChange}
+                                                    />
+
+                                                    <div className="col-md-6">
+                                                        <label className="form-label">Numero de telefono Empresarial</label>
+                                                        <div className="input-group">
+                                                            <span id="prefijoEmpresa" className="input-group-text">+</span>
+                                                            <input type="text" className="form-control" name="num_tel_empresa"
+                                                                value={form[name]} onChange={handleInputChange}
+                                                            />
+                                                        </div>
+                                                        <span className="text-danger fw-bold" id="errorTelEmpresa"></span>
+                                                    </div>
+                                                </div>
+
                                             </>
                                         )
                                         }

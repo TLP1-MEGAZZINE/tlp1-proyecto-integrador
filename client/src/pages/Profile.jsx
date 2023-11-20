@@ -5,8 +5,12 @@ import { fetchFunction } from "../api/apiFetch";
 import Header from "../components/Header";
 import Footer from "../components/Footer"
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthProvider";
 
 export const Profile = () => {
+
+  const { logout } = useContext(AuthContext);
   const navigate = useNavigate()
 
   const id_user = localStorage.getItem("id_user");
@@ -53,7 +57,7 @@ export const Profile = () => {
     useEffect(() => {
       const obtenerDatos = async () => {
         try {
-          const resultado = await fetchFunction("findPostulante", "POST", data);
+          const resultado = await fetchFunction("findEmpleador", "POST", data);
           // Actualizar el estado con los datos obtenidos
           setTipoRol(resultado);
         } catch (error) {
@@ -67,9 +71,9 @@ export const Profile = () => {
   const handleDelete = () => {
     const response = fetchFunction("destroyUser", "DELETE", data)
 
-    if (response.message) {
+    if (response) {
       Swal.fire({
-        title: response.message,
+        title: "Usuario Eliminado Correctamente",
         text: "Espero un momento...",
         icon: "success",
         showConfirmButton: false,
@@ -77,8 +81,15 @@ export const Profile = () => {
       })
 
       setTimeout(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user_name");
+        localStorage.removeItem("id_user");
+        localStorage.removeItem("id_rol");
+        logout()
         navigate("/index")
       }, 2000);
+
+
     }
   }
 
@@ -129,6 +140,25 @@ export const Profile = () => {
                         {tipoRol?.nivel_educacion.desc_nivel_educacion}</h5>
 
                       <h5 className="card-title">Rubro en el que te desempeñas: <br />
+                        {tipoRol?.id_rubro == 11 ? tipoRol.otro_rubro : tipoRol?.rubro.desc_rubro}</h5>
+
+                    </>
+                  )
+                  }
+
+                  {id_rol == 2 && (
+                    <>
+                      <h5 className="card-title">Nombre de la Empresa: <br />
+                        {tipoRol?.nombre_empresa}</h5>
+
+                      <h5 className="card-title">Locacion de la empresa: <br />
+                        {tipoRol?.domicilio_empresa}</h5>
+
+
+                      <h5 className="card-title">Numero telefonico de la empresa: <br />
+                        {tipoRol?.num_tel_empresa}</h5>
+
+                      <h5 className="card-title">Rubro de la empresa: <br />
                         {tipoRol?.id_rubro == 11 ? tipoRol.otro_rubro : tipoRol?.rubro.desc_rubro}</h5>
 
                     </>

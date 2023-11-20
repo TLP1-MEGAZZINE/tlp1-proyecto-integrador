@@ -132,15 +132,17 @@ const ctrlUpdateUser = async (req, res) => {
 //DESTRUIR USUARIOS
 const ctrlDestroyUser = async (req, res) => {
     try {
-        const data = req.body
+        const data = req.body;
+        // Espera a que se complete la operación asíncrona
+        await destroyUser(data);
 
-        const deletedUser = destroyUser(data)
-            return res.status(204).json({ message: "Usuario Eliminado" })
+        return res.status(204).json({ message: "Usuario Eliminado" });
     } catch (error) {
-        console.log("Internal Server Error");
-        return res.status(500).send("Internal Server Error")
+        console.log("Internal Server Error", error);
+        return res.status(500).send("Internal Server Error");
     }
-}
+};
+
 
 module.exports = {
     ctrlFindUserByName,

@@ -1,6 +1,6 @@
 const { DataTypes, sequelize } = require('../config/db');
 
-const Rubro = require("./rubro.model");
+const {Rubro} = require("./rubro.model");
 
 //CREAR MODELO DE USERS
 const Empleador = sequelize.define('empleador', {
@@ -83,11 +83,11 @@ async function updateEmpleador(data) {
                 nombre_empresa: data.nombre_empresa,
                 id_rubro: data.id_rubro,
                 otro_rubro: data.otro_rubro
-            },{
-                where: {
-                    id_user: data.id_user
-                }
+            }, {
+            where: {
+                id_user: data.id_user
             }
+        }
         );
 
     } catch (error) {
@@ -99,11 +99,19 @@ async function updateEmpleador(data) {
 //BUSCAR EMPLEADOR POR ID
 async function findEmpleador(data) {
     try {
-        return await Empleador.findOne({ where: { id_user: data.id_user } }) ?? null
+        return await Empleador.findOne({
+            where: { id_user: data.id_user },
+            include: [
+                {
+                    model: Rubro,
+                    attributes: ['desc_rubro'],
+                }
+            ]
+        }) ?? null
     } catch (error) {
         console.log("Error al encontrar el registro de Empleadors ", error)
         throw error;
     }
 }
 
-module.exports = { Empleador, createEmpleador, findRubroByIdEmpleador,updateEmpleador,findEmpleador }
+module.exports = { Empleador, createEmpleador, findRubroByIdEmpleador, updateEmpleador, findEmpleador }
