@@ -31,24 +31,6 @@ Contacto.sync({ force: true }).then(() => {
     console.log('Tabla de contactos creada')
 })
 
-async function createContacto2(id_user, userData) {
-
-    try {
-
-        return await Contacto.create(
-            {
-                id_user: id_user,
-                num_tel: userData.num_tel,
-                domicilio: userData.domicilio,
-            }
-        );
-
-    } catch (error) {
-        console.log("Error al crear registro de contacto", error)
-        throw error
-    }
-}
-
 async function createContacto(id_user) {
 
     try {
@@ -67,4 +49,25 @@ async function createContacto(id_user) {
     }
 }
 
-module.exports = { createContacto, Contacto, createContacto2 }
+async function updateUserContact(data) {
+
+    try {
+        const user_contact = await Contacto.update(
+            {
+                num_tel: data.num_tel,
+                domicilio: data.domicilio,
+            },
+            {
+                where: {
+                    id_user: data.id_user
+                }
+            }
+        );
+        return user_contact;
+    } catch (error) {
+        console.log("Error al actualizar registro de contacto", error);
+        throw error
+    }
+}
+
+module.exports = { createContacto, Contacto, updateUserContact }

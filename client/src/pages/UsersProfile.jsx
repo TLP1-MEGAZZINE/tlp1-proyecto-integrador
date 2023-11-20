@@ -11,15 +11,11 @@ export const Profile = () => {
 
   const id_user = localStorage.getItem("id_user");
   const user_name = localStorage.getItem("user_name");
-  const id_rol = localStorage.getItem("id_rol");
 
   const data = {
-    id_user,
-    id_rol
+    id_user
   }
   const [datos, setDatos] = useState(null);
-
-  const [tipoRol, setTipoRol] = useState(null);
 
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -35,59 +31,9 @@ export const Profile = () => {
     obtenerDatos();
   }, []);
 
-  if (id_rol == 1) {
-    useEffect(() => {
-      const obtenerDatos = async () => {
-        try {
-          const resultado = await fetchFunction("findPostulante", "POST", data);
-          // Actualizar el estado con los datos obtenidos
-          setTipoRol(resultado);
-        } catch (error) {
-          console.error("Hubo un error:", error);
-        }
-      };
-
-      obtenerDatos();
-    }, []);
-  } else if (id_rol == 2) {
-    useEffect(() => {
-      const obtenerDatos = async () => {
-        try {
-          const resultado = await fetchFunction("findPostulante", "POST", data);
-          // Actualizar el estado con los datos obtenidos
-          setTipoRol(resultado);
-        } catch (error) {
-          console.error("Hubo un error:", error);
-        }
-      };
-      obtenerDatos();
-    }, []);
-  }
-
-  const handleDelete = () => {
-    const response = fetchFunction("destroyUser", "DELETE", data)
-
-    if (response.message) {
-      Swal.fire({
-        title: response.message,
-        text: "Espero un momento...",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 2000
-      })
-
-      setTimeout(() => {
-        navigate("/index")
-      }, 2000);
-    }
-  }
 
   const handleEditarClick = () => {
     navigate("/auth/register-info")
-  }
-
-  const handleUpdateClick = () => {
-    navigate("/auth/update-user")
   }
 
   return (
@@ -101,7 +47,7 @@ export const Profile = () => {
             <div className="col-md-4 col-sm-12">
               <div className="card">
                 <div>
-                  <i className="bi bi-pencil btn btn-primary"> Editar foto de perfil</i>
+                  <i className="bi bi-pencil btn btn-primary" onClick={handleEditarClick}> Editar foto de perfil</i>
                 </div>
 
                 <img
@@ -116,27 +62,9 @@ export const Profile = () => {
                   <h5 className="card-title">Nombre de usuario:
                     <br />{user_name}</h5>
 
-                  <h5 className="card-title">Correo: <br />
-                    {datos?.User.user_email}</h5>
+                  <h6 className="card-text">Correo: {datos?.User.user_email}</h6>
 
-
-                  {id_rol == 1 && (
-                    <>
-                      <h5 className="card-title">Estado Laboral: <br />
-                        {tipoRol?.estado_laboral.desc_estado_laboral}</h5>
-
-                      <h5 className="card-title">Nivel de Educación: <br />
-                        {tipoRol?.nivel_educacion.desc_nivel_educacion}</h5>
-
-                      <h5 className="card-title">Rubro en el que te desempeñas: <br />
-                        {tipoRol?.id_rubro == 11 ? tipoRol.otro_rubro : tipoRol?.rubro.desc_rubro}</h5>
-
-                    </>
-                  )
-                  }
-
-
-                  <button href="#" className="btn btn-primary" onClick={handleUpdateClick}>Editar perfil</button>
+                  <a href="#" className="btn btn-primary">Editar perfil</a>
 
                   <h6>Calificación con estrellas:</h6>
 
@@ -148,7 +76,7 @@ export const Profile = () => {
                     <input type="radio" id="star1" name="rating" value="1" />
                   </div>
 
-                  <button href="#" className="btn btn-danger" onClick={handleDelete}>Eliminar perfil</button>
+                  <p id="selectedRating"></p>
 
                 </div>
               </div>
@@ -170,11 +98,11 @@ export const Profile = () => {
                       <li className="list-group-item">CUIL: <br />
                         {datos?.cuil}</li>
 
+                      <li className="list-group-item">Pais: <br />
+                        {datos?.paise?.nombre_pais}</li>
+
                       <li className="list-group-item">Genero: <br />
                         {datos?.genero?.genero}</li>
-
-                      <li className="list-group-item">Pais: <br />
-                        {datos?.paise?.nombre_pais != "Otros" ? datos?.paise?.nombre_pais : datos?.otro_pais}</li>
 
                       <li className="list-group-item">Departamento: <br />
                         {datos?.departamento?.nombre_depar}</li>
@@ -185,29 +113,15 @@ export const Profile = () => {
                       <li className="list-group-item"></li>
                     </ul>
                   </div>
-                  <div className="d-flex justify-content-end py-2">
-                    <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleEditarClick}>Editar</i>
-                  </div>
                 </div>
                 <div className="card-body">
-
                   <h5 className="card-title text-light">Información de contacto</h5>
-
                   <div className="table-responsive">
-
                     <ul className="list-group table">
-
-                      <li className="list-group-item">Número de telefono: <br /></li>
-
-                      <li className="list-group-item">Domicilio: <br /></li>
-
+                      <li className="list-group-item">Descripcion: <br /></li>
                     </ul>
                   </div>
-                  <div className="d-flex justify-content-end py-2">
-                    <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleEditarClick}>Editar</i>
-                  </div>
                 </div>
-
               </div>
             </div>
 

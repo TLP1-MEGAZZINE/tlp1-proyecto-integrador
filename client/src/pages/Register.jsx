@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer"
 import Header from "../components/Header"
-import { useErrors } from "../hooks/useErrors";
 import { useForm } from "../hooks/useForms";
 import { fetchFunction } from "../api/apiFetch";
 import { useState } from "react";

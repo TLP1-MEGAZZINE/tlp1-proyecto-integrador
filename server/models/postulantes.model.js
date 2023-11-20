@@ -2,7 +2,7 @@ const { DataTypes, sequelize } = require('../config/db');
 
 const EstadoLaboral = require("./estado_laboral.model")
 const NivelEducacion = require("./nivelEduacion.model")
-const Rubro = require("./rubro.model")
+const { Rubro } = require("./rubro.model")
 
 //CREAR MODELO DE USERS
 const Postulante = sequelize.define('postulante', {
@@ -36,27 +36,7 @@ const Postulante = sequelize.define('postulante', {
 Postulante.sync({ force: false }).then(() => {
     console.log('Tabla de postulantes creada')
 })
-
-async function createPostulante2(id_user) {
-
-    try {
-
-        return await Postulante.create(
-            {
-                id_user: id_user,
-                id_estado_laboral: userData.id_estado_laboral,
-                id_nivel_educacion: userData.id_nivel_educacion,
-                id_rubro: userData.id_rubro,
-                otro_rubro: userData.otro_rubro
-            },
-        );
-
-    } catch (error) {
-        console.log("Error al crear el registro de postulantes ", error)
-        throw error
-    }
-}
-
+//BUSCAR POSTULANTE POR RUBRO
 async function findRubroByIdPostulante(userId) {
     try {
         return await Postulante.findOne({ where: { id_user: userId } }) ?? null
@@ -65,7 +45,7 @@ async function findRubroByIdPostulante(userId) {
         throw error;
     }
 }
-
+//CREAR POSTULANTE
 async function createPostulante(id_user, userData) {
 
     try {
@@ -85,5 +65,63 @@ async function createPostulante(id_user, userData) {
         throw error
     }
 }
+//ACTUALIZAR POSTULANTE
+async function updatePostulante(data) {
 
-module.exports = { Postulante, createPostulante, findRubroByIdPostulante }
+    try {
+
+        return await Postulante.update(
+            {
+                id_estado_laboral: data.id_estado_laboral,
+                id_nivel_educacion: data.id_nivel_educacion,
+                id_rubro: data.id_rubro,
+                otro_rubro: data.otro_rubro
+            },
+            {
+                where: {
+                    id_user: data.id_user
+                }
+            }
+        );
+
+    } catch (error) {
+        console.log("Error al actualizar el registro de postulantes ", error)
+        throw error
+    }
+}
+
+//BUSCAR POSTULANTE
+async function findPostulante(data) {
+    try {
+        return await Postulante.findOne({
+            where: { id_user: data.id_user },
+            include: [
+                {
+                    model: EstadoLaboral,
+                    attributes: [
+                        "desc_estado_laboral"
+                    ]
+                },
+                {
+                    model: NivelEducacion,
+                    attributes: [
+                        "desc_nivel_educacion"
+                    ]
+                },
+                {
+                    model: Rubro,
+                    attributes: [
+                        "desc_rubro"
+                    ]
+                }
+            ]
+        },
+
+        ) ?? null
+    } catch (error) {
+        console.log("Error al encontrar el registro de Empleadors ", error)
+        throw error;
+    }
+}
+
+module.exports = { Postulante, createPostulante, findRubroByIdPostulante, updatePostulante, findPostulante }

@@ -39,7 +39,6 @@ router.get('/posteos', validarJWT, posteos)
 
 
 // // EDITAR PERFILES
-router.get('/perfil', validarJWT, perfil, ctrlFindUserBySession);
 router.get('/perfil/editar-perfil-usuario',validarJWT,  perfilpostulante);
 router.get('/perfil/editar-perfil-empresa',validarJWT,  perfilempresa);
 

@@ -59,6 +59,14 @@ useEffect(() => {
       setTimeout(() => {
         return navigate(lastLocation || "/auth/home")
       }, 2000)
+    }else{
+      Swal.fire({
+        title: "Se produjo un error",
+        text: resp.message,
+        icon: "error",
+        showConfirmButton: true,
+        confirmButtonText: "Aceptar"
+      })
     }
   }
 

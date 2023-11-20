@@ -1,5 +1,4 @@
 //IMPORTACIONES
-const crearRegistroCompleto = require("../helpers/registro.helper.js")
 const bcrypt = require('bcrypt');
 const { generarJWT } = require('../helpers/generarToken');
 const { findUserByEmailOrUsername, } = require("../models/users.model");
@@ -12,26 +11,6 @@ const { createPostulante } = require("../models/postulantes.model");
 
 //CREAR EL OBJETO QUE CONTENDRA LOS METODOS POST
 const registerLogin = {}
-
-// METODO PARA CREAR UN USUARIO Y ENCRIPTAR SU PASSWORD EJS
-// registerLogin.crearUsuario = async (req, res) => {
-
-//     const userData = req.body
-//     console.log("llegue al registro principal", userData);
-
-//     try {
-
-//         const registroCompleto = await crearRegistroCompleto(userData);
-
-//         if (!registroCompleto) {
-//             throw new Error("Error al crear el registro de usuario")
-//         } else {
-//             return res.status(200).json({ message: "Registro creado-controller" })
-//         }
-//     } catch (error) {
-//         console.log("Error del servidor", error)
-//     }
-// }
 
 registerLogin.crearUser = async (req, res) => {
     const userData = req.body
@@ -63,37 +42,6 @@ registerLogin.crearUser = async (req, res) => {
                     return res.status(200).json({ message: "Registro creado-controller" })
                 }
 
-              /*   switch (user.id_rol) {
-                    case 1:
-                        //POSTULANTE
-                        const postulante = await createPostulante(user.id_user);
-                        if (postulante) {
-                            return res.status(200).json({ message: "Registro creado-controller" })
-                        } else {
-                            return res.status(500).json({ message: "Error del servidor" })
-                        }
-                    case 2:
-                        //EMPLEADOR
-                        const empleador = await createEmpleador(user.id_user);
-                        if (empleador) {
-                            return res.status(200).json({ message: "Registro creado-controller" })
-                        } else {
-                            return res.status(500).json({ message: "Error del servidor" })
-                        }
-
-                    case 3:
-                        console.log("llegue al tercer case");
-                        //PARTICULAR
-                        const particular = await createParticular(user.id_user);
-                        if (particular) {
-                            return res.status(200).json({ message: "Registro creado-controller" })
-                        } else {
-                            return res.status(500).json({ message: "Error del servidor" })
-                        }
-                    default:
-                        // Código para el caso por defecto (si id_rol no coincide con ninguno de los casos anteriores)
-                        return res.status(500).json({ message: "Error del servidor: id_rol no reconocido" });
-                } */
             }
         }
 
@@ -155,11 +103,6 @@ registerLogin.loginUsuario = async (req, res) => {
             res.cookie("id_rol", existeUsuario.id_rol),
 
             res.status(200).json({ id_user: existeUsuario.id_user, user_name: existeUsuario.user_name, id_rol: existeUsuario.id_rol, token })
-
-            // res.json({
-            //     message: "Login correcto",
-            //     token
-            // })
         )
 
     } catch (error) {

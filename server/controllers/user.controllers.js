@@ -1,11 +1,11 @@
-const { findUserByName, findAllUser, deleteUser, actualizarUsuario, } = require("../models/users.model")
 const jwt = require('jsonwebtoken')
+const { findUserByName, findAllUser, deleteUser, actualizarUsuario, destroyUser, } = require("../models/users.model")
 const { findUserInfo } = require('../models/userInfo.model')
+const { updatePostulante, findPostulante } = require('../models/postulantes.model')
+const { updateEmpleador, findEmpleador } = require('../models/empleador.model')
 
-const { User } = require("../models/users.model");
 
-
-//BUSQUEDAS
+//BUSCAR TODOS LOS USUARIOS
 const ctrlFindUsers = async (req, res) => {
 
     try {
@@ -19,6 +19,7 @@ const ctrlFindUsers = async (req, res) => {
     }
 };
 
+//BUSCAR USUARIO POR NOMBRE
 const ctrlFindUserByName = async (req, res) => {
     try {
         const userName = req.body.userName
@@ -36,7 +37,7 @@ const ctrlFindUserByName = async (req, res) => {
     }
 }
 
-//ELIMINAR USUARIOS
+//ELIMINAR USUARIOS LOGICAMENTE
 const ctrlDeleteUser = async (req, res) => {
     try {
         const id_user = req.body.id_user
@@ -52,52 +53,7 @@ const ctrlDeleteUser = async (req, res) => {
     }
 }
 
-//ACTUALIZAR USUARIOS
-const ctrlUpdateUser = async (req, res) => {
-    try {
-        const newData = req.body
-
-        const updatedUser = await actualizarUsuario(newData)
-
-        if (updatedUser) {
-            return res.status(200).send("Usuario Actualizado")
-        }
-
-    } catch (error) {
-        console.log("Error al actualizar usuario");
-        res.status(500).send("Internal Server Error")
-    }
-}
-
-//BUSCAR USUARIO POR SESSION
-const ctrlFindUserBySession = async (req, res) => {
-    try {
-
-        const id_user = req.cookies.id_user;
-        console.log(id_user);
-
-
-        // Leer el usuario que corresponde al ID
-        const user = await User.findByPk(id_user);
-
-        if (!user) {
-            return res.status(401).json({
-                message: 'Token no válido - usuario no existe en la base de datos',
-            });
-        }
-
-        return res.status(200).json({
-            username: user.user_name,
-        });
-
-    } catch (error) {
-        console.error(error);
-        return res.status(401).json({
-            message: 'Token no válido',
-        });
-    }
-}
-
+//BUSCAR INFO DE USUARIOS
 const ctrlFindUserInfo = async (req, res) => {
     try {
         const data = req.body
@@ -113,11 +69,86 @@ const ctrlFindUserInfo = async (req, res) => {
     }
 }
 
+//BUSCAR EMPLEADOR	
+const ctrlFindEmpleador = async (req, res) => {
+    try {
+        const data = req.body
+
+        const empleador = await findEmpleador(data)
+
+        if (empleador) {
+            return res.status(200).json(empleador)
+        }
+    } catch (error) {
+        console.log("Error al buscar empleador");
+        res.status(500).send("Internal Server Error")
+    }
+}
+
+//BUSCAR POSTULANTES	
+const ctrlFindPostulante = async (req, res) => {
+    try {
+        const data = req.body
+
+        const postulante = await findPostulante(data)
+
+        if (postulante) {
+            return res.status(200).json(postulante)
+        }
+    } catch (error) {
+        console.log("Error al buscar postulante");
+        res.status(500).send("Internal Server Error")
+    }
+}
+
+//ACTUALIZAR USUARIOS
+const ctrlUpdateUser = async (req, res) => {
+    try {
+        const data = req.body
+
+        const updatedUser = await actualizarUsuario(data)
+
+        if (updatedUser) {
+            if (data.id_rol == 1) {
+
+                const postulante = await updatePostulante(data)
+                return res.status(200).send({ message: "Usuario Actualizado" })
+
+            } else if (data.id_rol == 2) {
+                const postulante = await updateEmpleador(data)
+
+                return res.status(200).send({ message: "Usuario Actualizado" })
+            } else {
+                return res.status(200).send({ message: "Usuario Actualizado" })
+            }
+        }
+
+    } catch (error) {
+        console.log("Error al actualizar usuario");
+        res.status(500).send("Internal Server Error")
+    }
+}
+
+//DESTRUIR USUARIOS
+const ctrlDestroyUser = async (req, res) => {
+    try {
+        const data = req.body
+
+        const deletedUser = destroyUser(data)
+            return res.status(204).json({ message: "Usuario Eliminado" })
+    } catch (error) {
+        console.log("Internal Server Error");
+        return res.status(500).send("Internal Server Error")
+    }
+}
+
 module.exports = {
     ctrlFindUserByName,
     ctrlFindUsers,
     ctrlUpdateUser,
     ctrlDeleteUser,
-    ctrlFindUserBySession,
-    ctrlFindUserInfo
+    ctrlFindUserInfo,
+    ctrlFindPostulante,
+    ctrlFindEmpleador,
+    ctrlDestroyUser
 }

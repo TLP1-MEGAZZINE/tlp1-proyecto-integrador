@@ -156,25 +156,25 @@ async function findUserByRole(value) {
 }
 
 //ACTUALIZAR USUARIO
-async function actualizarUsuario(newData) {
+async function actualizarUsuario(data) {
     try {
-        const user = await findUserById(newData.userId)
-
-        if (user) {
-            const hashedPass = await encriptar(newData.user_password)
-         await user.update({
-                user_name: newData.user_name,
-                user_email: newData.user_email,
-                user_password: hashedPass,
-            })
-            user.save()
-        }
+        const hashedPass = await encriptar(data.user_password)
+        const updatedUser = await User.update({
+            user_name: data.user_name,
+            user_email: data.user_email,
+            user_password: hashedPass,
+        }, {
+            where: {
+                id_user: data.id_user
+            }
+        })
+        return updatedUser;
     } catch (error) {
         console.log("Error al encontrar usuario", error);
     }
 }
 
-//ELIMINAR USUARIO
+//ELIMINAR USUARIO LOGICAMENTE
 async function deleteUser(user_id) {
     try {
         const deletedUser = await User.findByPk(user_id);
@@ -184,7 +184,7 @@ async function deleteUser(user_id) {
             return; // Salir de la función si el usuario no existe
         }
 
-       return await deletedUser.update({
+        return await deletedUser.update({
             estado: 0 // Cambia 'where' por 'estado' para marcar el usuario como eliminado
         });
 
@@ -213,10 +213,25 @@ async function findUserByName(userName) {
     }
 }
 
+//ELIMINAR USUARIO
+async function destroyUser(data) {
+    try {
+
+        return await User.destroy({
+            where: {
+                id_user: data.id_user
+            }
+        })
+
+    } catch (error) {
+        console.error("Error al eliminar el usuario", error);
+    }
+}
+
 
 
 module.exports = {
     User, createUser, findUserByEmail, findUserByUserName, findUserByEmailOrUsername,
     findAllUser, findUserByRole, deleteUser,
-    actualizarUsuario, findUserByName, findUserById
+    actualizarUsuario, findUserByName, findUserById, destroyUser
 }

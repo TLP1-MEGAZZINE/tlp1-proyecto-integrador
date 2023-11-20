@@ -4,14 +4,15 @@ import { Profile } from "../pages/Profile"
 import { Post } from "../pages/Post"
 import Messages from "../pages/Messages"
 import Inicio from "../pages/Inicio"
-import { RegisterInfo } from "../pages/RegisterInfo"
-
+import { UpdateInfo } from "../pages/UpdateInfo"
+import { UpdateUser } from "../pages/UpdateUser"
 
 export const MainRoutes = () => {
     return (
         <>
             <Routes>
-                <Route path='/register-info' element={<RegisterInfo />} />
+                <Route path='/update-user' element={< UpdateUser />} />
+                <Route path='/register-info' element={<UpdateInfo />} />
                 <Route path='/home' element={<Inicio />} />
                 <Route path='/files' element={<Files />} />
                 <Route path='/my-profile' element={<Profile />} />

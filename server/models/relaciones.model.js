@@ -17,20 +17,20 @@ const { Post } = require("./posteos.model")
 const { Image } = require("./imagenes.model")
 
 //UNO A UNO COMENTAR SI NO SE CREAN LAS RELACIONES AL PRINCIPIO
-User.hasOne(UserInfo, { foreignKey: 'id_user' });
-UserInfo.belongsTo(User, { foreignKey: 'id_user' });
+User.hasOne(UserInfo, { foreignKey: 'id_user', onDelete: 'CASCADE' });
+UserInfo.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE' });
 
-User.hasOne(Particular, { foreignKey: 'id_user' })
-Particular.belongsTo(User, { foreignKey: 'id_user' });
+User.hasOne(Particular, { foreignKey: 'id_user', onDelete: 'CASCADE' })
+Particular.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE' });
 
-User.hasOne(Contacto, { foreignKey: 'id_user' })
-Contacto.belongsTo(User, { foreignKey: 'id_user' });
+User.hasOne(Contacto, { foreignKey: 'id_user', onDelete: 'CASCADE' })
+Contacto.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE' });
 
-User.hasOne(Empleador, { foreignKey: 'id_user' });
-Empleador.belongsTo(User, { foreignKey: 'id_user' });
+User.hasOne(Empleador, { foreignKey: 'id_user', onDelete: 'CASCADE' });
+Empleador.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE' });
 
-User.hasOne(Postulante, { foreignKey: 'id_user' });
-Postulante.belongsTo(User, { foreignKey: 'id_user' });
+User.hasOne(Postulante, { foreignKey: 'id_user', onDelete: 'CASCADE' });
+Postulante.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE' });
 
 // //UNO A MUCHOS
 Rol.hasMany(User, { foreignKey: 'id_rol' });
@@ -68,11 +68,11 @@ Rubro.hasMany(Empleador, { foreignKey: 'id_rubro' });
 Empleador.belongsTo(Rubro, { foreignKey: 'id_rubro' });
 
 // //CONTENIDO
-User.hasMany(Post, { foreignKey: "id_user" });
-Post.belongsTo(User, { foreignKey: "id_user" });
+User.hasMany(Post, { foreignKey: "id_user", onDelete: 'CASCADE' });
+Post.belongsTo(User, { foreignKey: "id_user", onDelete: 'CASCADE' });
 
 Rubro.hasMany(Post, { foreignKey: "id_rubro" });
 Post.belongsTo(Rubro, { foreignKey: "id_rubro" });
 
-Image.belongsTo(User, { foreignKey: "id_user" });
-User.hasMany(Image, { foreignKey: "id_user" });
+Image.belongsTo(User, { foreignKey: "id_user", onDelete: 'CASCADE' });
+User.hasMany(Image, { foreignKey: "id_user", onDelete: 'CASCADE' });

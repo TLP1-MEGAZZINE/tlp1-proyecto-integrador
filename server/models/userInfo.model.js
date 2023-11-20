@@ -7,6 +7,7 @@ const { Departamento } = require('./departamento.model')
 const { Genero } = require('./genero.model');
 const { Paises } = require('./paises.model');
 const { Provincia } = require('./provincias.models');
+const { where } = require('sequelize');
 
 const UserInfo = sequelize.define('user_info', {
     id_info: {
@@ -73,33 +74,6 @@ UserInfo.sync({ force: false }).then(() => {
     console.log('Tabla de info usuario creada')
 })
 
-//FUNCION PARA CREAR REGISTRO EN USERINFO
-async function createInfoUser2(id_user, userData) {
-
-    try {
-        const user_info = await UserInfo.create({
-            id_user: id_user,
-            nombre: userData.nombre,
-            apellido: userData.apellido,
-            dni: userData.dni,
-            cuil: userData.cuil,
-            fecha_nacimiento: userData.fecha_nacimiento,
-            id_genero: userData.id_genero,
-            id_pais: userData.id_pais,
-            otro_pais: userData.otro_pais,
-            id_provincia: userData.id_provincia,
-            id_depar: userData.id_depar,
-            id_local: userData.id_local,
-        },
-        );
-        return user_info
-
-    } catch (error) {
-        console.log("Error al crear registro de user_info", error);
-        throw error
-    }
-}
-
 //BUSCAR POR RUBRO
 async function findByRubro(data,) {
     try {
@@ -151,7 +125,7 @@ async function findUserInfo(data) {
     }
 }
 
-
+//FUNCION PARA CREAR REGISTRO EN USERINFO
 async function createInfoUser(id_user) {
 
     try {
@@ -178,4 +152,35 @@ async function createInfoUser(id_user) {
     }
 }
 
-module.exports = { createInfoUser2, UserInfo, findByRubro, findUserInfo, createInfoUser }
+async function updateInfoUser(data) {
+
+    try {
+        const user_info = await UserInfo.update(
+            {
+                id_user: data.id_user,
+                nombre: data.nombre,
+                apellido: data.apellido,
+                dni: data.dni,
+                cuil: data.cuil,
+                fecha_nacimiento: data.fecha_nacimiento,
+                id_genero: data.id_genero,
+                id_pais: data.id_pais,
+                otro_pais: data.otro_pais,
+                id_provincia: data.id_provincia,
+                id_depar: data.id_depar,
+                id_local: data.id_local,
+            },
+            {
+                where: {
+                    id_user: data.id_user
+                }
+            }
+        );
+        return user_info;
+} catch (error) {
+    console.log("Error al actualizar registro de user_info", error);
+    throw error
+}
+}
+
+module.exports = { UserInfo, findByRubro, findUserInfo, createInfoUser, updateInfoUser }
