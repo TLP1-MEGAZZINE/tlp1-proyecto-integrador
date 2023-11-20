@@ -5,7 +5,7 @@ const { findUserByEmail, findUserByUserName } = require("../models/users.model.j
 const validatUserReact = [
     //OBLIGATORIOS
     check("user_name")
-        .exists()
+        // .exists()
         .notEmpty().withMessage("El nombre de usuario no debe estar vacio")
         .isAlphanumeric().withMessage("El nombre de usuario no debe estar vacio")
         .isLength({ min: 6, max: 30 }).withMessage('El nombre de usuario debe tener entre 6 y 30 caracteres')
@@ -18,14 +18,14 @@ const validatUserReact = [
         }),
 
     check("user_password")
-        .exists()
+        // .exists()
         .notEmpty().withMessage("La contraseña no debe estar vacia")
         .isAlphanumeric().withMessage("La contraseña no debe estar vacia")
         .isStrongPassword({ minLength: 9, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0 }).withMessage('La contraseña debe tener almenos 1 mayuscula, 1 minuscula, 1 numero y 9 caracteres'),
 
 
     check("validarPass")
-        .exists().withMessage("Debe confirmar la contraseña")
+        // .exists().withMessage("Debe confirmar la contraseña")
         .notEmpty().withMessage("Debe confirmar la contraseña")
         .custom((value, { req }) => {
             if (value !== req.body.user_password) {
@@ -35,19 +35,20 @@ const validatUserReact = [
         }),
 
     check("user_email")
-        .exists()
+        // .exists()
         .notEmpty().withMessage("El email no puede estar vacio")
-        .isEmail().withMessage("Se debe proporcionar un email valido")
-        .custom(async (value,) => {
+        // .isEmail().withMessage("Se debe proporcionar un email valido")
+        .custom(async (value) => {
             const existeEmail = await findUserByEmail(value)
             if (existeEmail) {
                 throw new Error('El email ya está registrado');
             }
             return true;
-        }),
+        })
+        ,
 
     check("validarEmail")
-        .exists().withMessage("Debe confirmar su email")
+        // .exists().withMessage("Debe confirmar su email")
         .notEmpty().withMessage("Debe confirmar su email")
         .custom((value, { req }) => {
             if (value !== req.body.user_email) {
@@ -57,9 +58,10 @@ const validatUserReact = [
         }),
 
     check("id_rol")
-        .exists()
+        // .exists()
         .notEmpty().withMessage("Debe seleccionar su rol")
-        .isNumeric().withMessage("Debe seleccionar su rol"),
+        // .isNumeric().withMessage("Debe seleccionar su rol")
+        ,
 
     (req, res, next) => {
         validateSchema(req, res, next)

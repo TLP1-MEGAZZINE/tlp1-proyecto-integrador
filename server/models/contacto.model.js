@@ -9,18 +9,14 @@ const Contacto = sequelize.define('Contacto', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "user",
-        //     key: "id_user"
-        // },
     },
     num_tel: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     domicilio: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
 }, {
     timestamps: false,
@@ -35,7 +31,7 @@ Contacto.sync({ force: true }).then(() => {
     console.log('Tabla de contactos creada')
 })
 
-async function createContacto(id_user, userData) {
+async function createContacto2(id_user, userData) {
 
     try {
 
@@ -53,5 +49,22 @@ async function createContacto(id_user, userData) {
     }
 }
 
+async function createContacto(id_user) {
 
-module.exports = { createContacto, Contacto }
+    try {
+
+        return await Contacto.create(
+            {
+                id_user: id_user,
+                num_tel: null,
+                domicilio: null,
+            }
+        );
+
+    } catch (error) {
+        console.log("Error al crear registro de contacto", error)
+        throw error
+    }
+}
+
+module.exports = { createContacto, Contacto, createContacto2 }

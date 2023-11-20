@@ -16,45 +16,51 @@ const UserInfo = sequelize.define('user_info', {
     },
     id_user: {
         type: DataTypes.INTEGER,
+        allowNull: true
     },
     nombre: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     apellido: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     dni: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
     },
     cuil: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
     },
     fecha_nacimiento: {
         type: DataTypes.DATEONLY,
-        allowNull: false
+        allowNull: true
     },
     id_genero: {
         type: DataTypes.INTEGER,
+        allowNull: true
     },
     id_pais: {
         type: DataTypes.INTEGER,
+        allowNull: true
     },
     id_provincia: {
         type: DataTypes.INTEGER,
+        allowNull: true
     },
     otro_pais: {
         type: DataTypes.STRING,
         allowNull: true,
     },
     id_depar: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: true
     },
     id_local: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: true
     },
 }, {
     timestamps: false,
@@ -68,7 +74,7 @@ UserInfo.sync({ force: false }).then(() => {
 })
 
 //FUNCION PARA CREAR REGISTRO EN USERINFO
-async function createInfoUser(id_user, userData) {
+async function createInfoUser2(id_user, userData) {
 
     try {
         const user_info = await UserInfo.create({
@@ -146,6 +152,30 @@ async function findUserInfo(data) {
 }
 
 
+async function createInfoUser(id_user) {
 
+    try {
+        const user_info = await UserInfo.create({
+            id_user: id_user,
+            nombre: null,
+            apellido: null,
+            dni: null,
+            cuil: null,
+            fecha_nacimiento: null,
+            id_genero: null,
+            id_pais: null,
+            otro_pais: null,
+            id_provincia: null,
+            id_depar: null,
+            id_local: null,
+        },
+        );
+        return user_info
 
-module.exports = { createInfoUser, UserInfo, findByRubro, findUserInfo }
+    } catch (error) {
+        console.log("Error al crear registro de user_info", error);
+        throw error
+    }
+}
+
+module.exports = { createInfoUser2, UserInfo, findByRubro, findUserInfo, createInfoUser }

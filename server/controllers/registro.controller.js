@@ -4,7 +4,11 @@ const bcrypt = require('bcrypt');
 const { generarJWT } = require('../helpers/generarToken');
 const { findUserByEmailOrUsername, } = require("../models/users.model");
 const { createUser } = require("../models/users.model");
-
+const { createInfoUser } = require("../models/userInfo.model");
+const { createContacto } = require("../models/contacto.model");
+const { createEmpleador } = require("../models/empleador.model");
+const { createParticular } = require("../models/particular.model");
+const { createPostulante } = require("../models/postulantes.model");
 
 //CREAR EL OBJETO QUE CONTENDRA LOS METODOS POST
 const registerLogin = {}
@@ -37,8 +41,60 @@ registerLogin.crearUser = async (req, res) => {
         const user = await createUser(userData);
 
         if (user) {
-            console.log(user);
-            return res.status(200).json({ message: "Registro creado-controller" })
+            const info = await createInfoUser(user.id_user);
+            const contacto = await createContacto(user.id_user);
+
+            if (info && contacto) {
+                console.log("llegue al segundo if");
+                console.log(user.id_rol);
+
+                if (user.id_rol == 1) {
+                    const postulante = await createPostulante(user.id_user);
+                    return res.status(200).json({ message: "Registro creado-controller" })
+                }
+
+                if (user.id_rol == 2) {
+                    const empleador = await createEmpleador(user.id_user);
+                    return res.status(200).json({ message: "Registro creado-controller" })
+                }
+
+                if (user.id_rol == 3) {
+                    const particular = await createParticular(user.id_user);
+                    return res.status(200).json({ message: "Registro creado-controller" })
+                }
+
+              /*   switch (user.id_rol) {
+                    case 1:
+                        //POSTULANTE
+                        const postulante = await createPostulante(user.id_user);
+                        if (postulante) {
+                            return res.status(200).json({ message: "Registro creado-controller" })
+                        } else {
+                            return res.status(500).json({ message: "Error del servidor" })
+                        }
+                    case 2:
+                        //EMPLEADOR
+                        const empleador = await createEmpleador(user.id_user);
+                        if (empleador) {
+                            return res.status(200).json({ message: "Registro creado-controller" })
+                        } else {
+                            return res.status(500).json({ message: "Error del servidor" })
+                        }
+
+                    case 3:
+                        console.log("llegue al tercer case");
+                        //PARTICULAR
+                        const particular = await createParticular(user.id_user);
+                        if (particular) {
+                            return res.status(200).json({ message: "Registro creado-controller" })
+                        } else {
+                            return res.status(500).json({ message: "Error del servidor" })
+                        }
+                    default:
+                        // Código para el caso por defecto (si id_rol no coincide con ninguno de los casos anteriores)
+                        return res.status(500).json({ message: "Error del servidor: id_rol no reconocido" });
+                } */
+            }
         }
 
     } catch (error) {

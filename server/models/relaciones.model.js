@@ -1,8 +1,8 @@
 const Rol = require("./roles.model");
 const { Rubro } = require("./rubro.model");
-const {Provincia} = require("./provincias.models");
+const { Provincia } = require("./provincias.models");
 const { Paises } = require("./paises.model");
-const {Genero} = require("./genero.model");
+const { Genero } = require("./genero.model");
 const EstadoLaboral = require("./estado_laboral.model");
 const NivelEducacion = require("./nivelEduacion.model");
 const { Departamento } = require("./departamento.model");
@@ -16,16 +16,14 @@ const { Postulante } = require("./postulantes.model");
 const { Post } = require("./posteos.model")
 const { Image } = require("./imagenes.model")
 
-
-// //UNO A UNO
-
-UserInfo.hasOne(User, { foreignKey: 'id_user' });
+//UNO A UNO COMENTAR SI NO SE CREAN LAS RELACIONES AL PRINCIPIO
+User.hasOne(UserInfo, { foreignKey: 'id_user' });
 UserInfo.belongsTo(User, { foreignKey: 'id_user' });
 
-User.hasOne(Particular, {foreignKey: 'id_user'})
+User.hasOne(Particular, { foreignKey: 'id_user' })
 Particular.belongsTo(User, { foreignKey: 'id_user' });
 
-User.hasOne(Contacto, {foreignKey: 'id_user'})
+User.hasOne(Contacto, { foreignKey: 'id_user' })
 Contacto.belongsTo(User, { foreignKey: 'id_user' });
 
 User.hasOne(Empleador, { foreignKey: 'id_user' });

@@ -19,7 +19,6 @@ function Inicio() {
         const filterPost = posts.filter(
             post => post.id_rubro === parseInt(event.target.value)
         );
-        setFilteredPosts(filterPost);
     };
 
     return (

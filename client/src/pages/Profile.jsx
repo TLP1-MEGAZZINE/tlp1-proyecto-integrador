@@ -4,9 +4,13 @@ import "../Style.css";
 import { fetchFunction } from "../api/apiFetch";
 import Header from "../components/Header";
 import Footer from "../components/Footer"
+import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
+  const navigate = useNavigate()
+
   const id_user = localStorage.getItem("id_user");
+  const user_name = localStorage.getItem("user_name");
 
   const data = {
     id_user
@@ -16,9 +20,7 @@ export const Profile = () => {
   useEffect(() => {
     const obtenerDatos = async () => {
       try {
-        // Llamada a la función que devuelve una promesa
         const resultado = await fetchFunction("findUserInfo", "POST", data);
-
         // Actualizar el estado con los datos obtenidos
         setDatos(resultado);
       } catch (error) {
@@ -28,6 +30,11 @@ export const Profile = () => {
 
     obtenerDatos();
   }, []);
+
+
+  const handleEditarClick = () => {
+    navigate("/auth/register-info")
+  }
 
   return (
     <>
@@ -39,6 +46,10 @@ export const Profile = () => {
 
             <div className="col-md-4 col-sm-12">
               <div className="card">
+                <div>
+                  <i className="bi bi-pencil btn btn-primary" onClick={handleEditarClick}> Editar foto de perfil</i>
+                </div>
+
                 <img
                   src={userIcon}
                   className="card-img-top img-fluid"
@@ -46,9 +57,10 @@ export const Profile = () => {
                   height="100px"
                   alt="Perfil de usuario"
                 />
+
                 <div className="card-body text-center">
                   <h5 className="card-title">Nombre de usuario:
-                    <br />{datos?.User.user_name}</h5>
+                    <br />{user_name}</h5>
 
                   <h6 className="card-text">Correo: {datos?.User.user_email}</h6>
 
@@ -87,23 +99,23 @@ export const Profile = () => {
                         {datos?.cuil}</li>
 
                       <li className="list-group-item">Pais: <br />
-                        {datos?.paise.nombre_pais}</li>
+                        {datos?.paise?.nombre_pais}</li>
 
                       <li className="list-group-item">Genero: <br />
-                        {datos?.genero.genero}</li>
+                        {datos?.genero?.genero}</li>
 
                       <li className="list-group-item">Departamento: <br />
-                        {datos?.departamento.nombre_depar}</li>
+                        {datos?.departamento?.nombre_depar}</li>
 
                       <li className="list-group-item">Localidad: <br />
-                        {datos?.localidad.nombre_local}</li>
+                        {datos?.localidad?.nombre_local}</li>
 
                       <li className="list-group-item"></li>
                     </ul>
                   </div>
                 </div>
                 <div className="card-body">
-                  <h5 className="card-title text-light">Experiencia Laboral</h5>
+                  <h5 className="card-title text-light">Información de contacto</h5>
                   <div className="table-responsive">
                     <ul className="list-group table">
                       <li className="list-group-item">Descripcion: <br /></li>

@@ -1,14 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer"
 import Header from "../components/Header"
-import { Selects } from "../components/Selects";
+import { useErrors } from "../hooks/useErrors";
 import { useForm } from "../hooks/useForms";
 import { fetchFunction } from "../api/apiFetch";
+import { useState } from "react";
 
 
 export const Register = () => {
 
   const navigate = useNavigate()
+
+  const [errors, setErros] = useState("")
 
   const { form, handleInputChange } = useForm({})
 
@@ -31,17 +34,22 @@ export const Register = () => {
         timer: 2000
       })
 
+      setErros("")
+
       setTimeout(() => {
         navigate("/login")
       }, 2000)
     } else {
       Swal.fire({
         title: "No se a podido registrar el usuario.",
-        text: resp.errors,
+        text: resp.errors.array,
         icon: "error",
         showConfirmButton: true,
         confirmButtonText: "Aceptar"
-      })    }
+      })
+      console.log(resp.errors.object.user_password);
+      setErros(resp.errors.object)
+    }
   }
 
   return (
@@ -66,30 +74,30 @@ export const Register = () => {
                   <div className="col-md-12">
                     <label className="form-label">Nombre de usuario</label>
                     <input type="text" className="form-control" placeholder="nombre de usuario"
-                      id="user_name" name="user_name"
+                      id="user_name" name="user_name" required
                       onChange={handleInputChange} value={form[name]}
                     />
-                    <span className="text-danger fw-bold" id="errorUserName"></span>
+                    <span className="text-danger fw-bold" >{errors?.user_name?.msg}</span>
                   </div>
 
                   <div className="col-md-6">
                     <label className="form-label">Ingrese su email</label>
                     <input type="email" className="form-control" placeholder="name@example.com"
-                      id="user_email" name="user_email"
+                      id="user_email" name="user_email" required
                       value={form[name]} onChange={handleInputChange}
                     />
-                    <span className="text-danger fw-bold py-3" id="errorEmail"></span>
+                    <span className="text-danger fw-bold py-3" >{errors?.user_email?.msg}</span>
                   </div>
 
                   <div className="col-md-6">
                     <label className="form-label text">Repetir email</label>
                     <div className="input-group">
-                      <input type="email" className="form-control" id="validarEmail" name="validarEmail"
-                        placeholder="name@example.com"
+                      <input type="email" className="form-control" name="validarEmail"
+                        placeholder="name@example.com" required
                         onChange={handleInputChange} value={form[name]}
                       />
                     </div>
-                    <span className="text-danger fw-bold" id="errorEmail2"></span>
+                    <span className="text-danger fw-bold" >{errors?.validarEmail?.msg}</span>
                   </div>
 
                   <div className="d-flex">
@@ -98,7 +106,7 @@ export const Register = () => {
                         className="form-label text-center">Contraseña</label>
                       <div className="input-group">
                         <input type="password" className="form-control" id="user_password"
-                          name="user_password" placeholder="**********"
+                          name="user_password" placeholder="**********" required
                           onChange={handleInputChange} value={form[name]}
                         />
 
@@ -106,7 +114,7 @@ export const Register = () => {
                         ><i
                           className="bi bi-eye"></i></button>
                       </div>
-                      <span className="text-danger fw-bold" id="errorPass"></span>
+                      <span className="text-danger fw-bold" >{errors?.user_password?.msg}</span>
                     </div>
 
                     <div className="col-md-6 px-1">
@@ -114,7 +122,7 @@ export const Register = () => {
 
                       <div className="input-group">
                         <input type="password" className="form-control" id="validarPass"
-                          name="validarPass" placeholder="**********"
+                          name="validarPass" placeholder="**********" required
                           onChange={handleInputChange} value={form[name]}
                         />
 
@@ -122,14 +130,14 @@ export const Register = () => {
                         ><i
                           className="bi bi-eye"></i></button>
                       </div>
-                      <span className="text-danger fw-bold" id="errorPass2"></span>
+                      <span className="text-danger fw-bold">{errors?.validarPass?.msg}</span>
                     </div>
                   </div>
 
                   <div className="col-md-12">
                     <label className="form-label">Seleccione su rol</label>
                     <select name="id_rol" className="form-select"
-                      value={form[name]}
+                      value={form[name]} required
                       onChange={handleInputChange}
                     >
                       <option selected disabled>Roles</option>
@@ -137,6 +145,8 @@ export const Register = () => {
                       <option value="2">Empleador</option>
                       <option value="3">Particular</option>
                     </select>
+
+                    <span className="text-danger fw-bold" >{errors?.id_rol?.msg}</span>
                   </div>
 
                   <div className="text-center d-flex justify-content-around">

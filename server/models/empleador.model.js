@@ -11,10 +11,6 @@ const Empleador = sequelize.define('empleador', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "User",
-        //     key: "id_user"
-        // },
     },
     num_tel_empresa: {
         type: DataTypes.STRING,
@@ -30,10 +26,6 @@ const Empleador = sequelize.define('empleador', {
     },
     id_rubro: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "rubro",
-        //     key: "id_rubro"
-        // }
     },
     otro_rubro: {
         type: DataTypes.STRING,
@@ -50,7 +42,7 @@ Empleador.sync({ force: false }).then(() => {
 })
 
 
-async function createEmpleador(id_user, userData) {
+async function createEmpleador2(id_user, userData) {
 
     try {
         return await Empleador.create(
@@ -79,5 +71,25 @@ async function findRubroByIdEmpleador(userId) {
         throw error;
     }
 }
+
+async function createEmpleador(id_user) {
+
+    try {
+        return await Empleador.create(
+            {
+                id_user: id_user,
+                num_tel_empresa: null,
+                domicilio_empresa: null,
+                nombre_empresa: null,
+                id_rubro: null,
+                otro_rubro: null
+            },
+        );
+
+    } catch (error) {
+        console.log("Error al crear registro de empleador", error)
+        throw error
+    }
+};
 
 module.exports = { Empleador, createEmpleador, findRubroByIdEmpleador }

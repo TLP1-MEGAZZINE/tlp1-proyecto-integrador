@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import googleLogo from "../assets/logoGoogle.jpg"
@@ -16,11 +16,11 @@ function Login() {
   const { login, authState } = useContext(AuthContext)
 
   const navigate = useNavigate()
-
-  if(authState.logged){
-    navigate("/auth/home")
-    return;
-  }
+useEffect(() => {
+  if (authState.logged) {
+    return navigate("/auth/home")
+   }
+},[])
 
   const { form, handleInputChange } = useForm({
     user_name: "",
@@ -41,10 +41,10 @@ function Login() {
     if (resp.token) {
       login(resp)
 
-      localStorage.setItem("token", JSON.stringify(resp.token));
-      localStorage.setItem("user_name", JSON.stringify(resp.user_name));
-      localStorage.setItem("id_user", JSON.stringify(resp.id_user));
-      localStorage.setItem("id_rol", JSON.stringify(resp.id_rol));
+      localStorage.setItem("token", resp.token);
+      localStorage.setItem("user_name", resp.user_name);
+      localStorage.setItem("id_user", resp.id_user);
+      localStorage.setItem("id_rol", resp.id_rol);
 
       Swal.fire({
         title: "Correcto, iniciando sesion.",

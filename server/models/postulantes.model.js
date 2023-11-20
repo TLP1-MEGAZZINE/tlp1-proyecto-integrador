@@ -13,31 +13,15 @@ const Postulante = sequelize.define('postulante', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "User",
-        //     key: "id_user"
-        // },
     },
     id_estado_laboral: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "estado_laboral",
-        //     key: "id_estado_laboral"
-        // }
     },
     id_nivel_educacion: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "nivel_educacion",
-        //     key: "id_nivel_educacion"
-        // }
     },
     id_rubro: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "rubro",
-        //     key: "id_rubro"
-        // }
     },
     otro_rubro: {
         type: DataTypes.STRING,
@@ -53,7 +37,7 @@ Postulante.sync({ force: false }).then(() => {
     console.log('Tabla de postulantes creada')
 })
 
-async function createPostulante(id_user, userData) {
+async function createPostulante2(id_user) {
 
     try {
 
@@ -79,6 +63,26 @@ async function findRubroByIdPostulante(userId) {
     } catch (error) {
         console.log("Error al encontrar el registro de postulantes ", error)
         throw error;
+    }
+}
+
+async function createPostulante(id_user, userData) {
+
+    try {
+
+        return await Postulante.create(
+            {
+                id_user: id_user,
+                id_estado_laboral: null,
+                id_nivel_educacion: null,
+                id_rubro: null,
+                otro_rubro: null
+            },
+        );
+
+    } catch (error) {
+        console.log("Error al crear el registro de postulantes ", error)
+        throw error
     }
 }
 

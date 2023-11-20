@@ -15,16 +15,17 @@ export const AppRoutes = () => {
     const { login, logout, authState } = useContext(AuthContext)
 
     useEffect(() => {
-        const token = JSON.parse(localStorage.getItem('token'));
-        const user_name = JSON.parse(localStorage.getItem('user_name'));
-        const id_user = JSON.parse(localStorage.getItem('id_user'));
-        const id_rol = JSON.parse(localStorage.getItem('id_rol'));
+        
+        const token = localStorage.getItem('token');
+        const user_name = localStorage.getItem('user_name');
+        const id_user = localStorage.getItem('id_user');
+        const id_rol = localStorage.getItem('id_rol');
 
-        const user ={
-         token,
-         user_name,
-         id_user,
-         id_rol   
+        const user = {
+            token,
+            user_name,
+            id_user,
+            id_rol
         }
 
         if (user.token && user.user_name && user.id_user) {

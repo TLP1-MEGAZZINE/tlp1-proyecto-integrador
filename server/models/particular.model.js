@@ -27,6 +27,20 @@ Particular.sync({ force: false }).then(() => {
     console.log('Tabla de particulares creada')
 })
 
+async function createParticular2(id_user) {
+
+    try {
+        return await Particular.create(
+            {
+                id_user: id_user
+            },
+        );
+    } catch (error) {
+        console.log("Error al crear el registro de particulares ", error)
+        throw error
+    }
+}
+
 async function createParticular(id_user) {
 
     try {
