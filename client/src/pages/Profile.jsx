@@ -1,17 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import userIcon from "../assets/userIcon.png"
 import "../Style.css";
 import { fetchFunction } from "../api/apiFetch";
 import Header from "../components/Header";
 import Footer from "../components/Footer"
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
+import { useForm } from "../hooks/useForms";
 
 export const Profile = () => {
 
   const { logout } = useContext(AuthContext);
+
   const navigate = useNavigate()
+
+  const handleEditarClick = () => {
+    navigate("/auth/register-info")
+  }
+
+  const handleUpdateClick = () => {
+    navigate("/auth/update-user")
+  }
 
   const id_user = localStorage.getItem("id_user");
   const user_name = localStorage.getItem("user_name");
@@ -21,23 +30,24 @@ export const Profile = () => {
     id_user,
     id_rol
   }
+
+  const { form, handleInputChange } = useForm({
+    id_user: data.id_user,
+    id_rol: data.id_rol
+  })
+
+  //OBTENER INFO DEL USUARIO
   const [datos, setDatos] = useState(null);
 
-  const [tipoRol, setTipoRol] = useState(null);
-
   useEffect(() => {
-    const obtenerDatos = async () => {
-      try {
-        const resultado = await fetchFunction("findUserInfo", "POST", data);
-        // Actualizar el estado con los datos obtenidos
-        setDatos(resultado);
-      } catch (error) {
-        console.error("Hubo un error:", error);
-      }
-    };
+    fetchFunction("findUserInfo", "POST", data)
+      .then((data) => {
+        setDatos(data)
+      })
+  }, [])
 
-    obtenerDatos();
-  }, []);
+  //OBTENER INFO SEGUN ROL
+  const [tipoRol, setTipoRol] = useState(null);
 
   if (id_rol == 1) {
     useEffect(() => {
@@ -53,7 +63,9 @@ export const Profile = () => {
 
       obtenerDatos();
     }, []);
+
   } else if (id_rol == 2) {
+
     useEffect(() => {
       const obtenerDatos = async () => {
         try {
@@ -68,13 +80,70 @@ export const Profile = () => {
     }, []);
   }
 
+  //OBTENER INFO DE CONTACTO
+  const [contacto, setContacto] = useState(null);
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      try {
+        const resultado = await fetchFunction("findContact", "POST", data);
+        // Actualizar el estado con los datos obtenidos
+        setContacto(resultado);
+      } catch (error) {
+        console.log("Hubo un error:", error);
+      }
+    };
+    obtenerDatos();
+  }, []);
+
+
+  //SUBIR FOTO DE PERFIL
+  const [pfp, setPfp] = useState({
+    id_user: data.id_user,
+  })
+
+  const handlePfpInput = (e) => {
+
+    console.log(e.target.files[0]);
+
+    setPfp(pfp => ({ ...pfp, filename: e.target.files[0] }));
+
+  };
+
+  console.log(pfp);
+
+  const handlePfpSubmit = async (e) => {
+    e.preventDefault()
+
+    const response = await fetchFunction("pfp", "POST", pfp)
+
+    
+    if (response.message) {
+      Swal.fire({
+        title: response.message,
+        text: "Espere un momento...",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1000
+      })
+    } else {
+      Swal.fire({
+        title: response.error,
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1000
+      })
+    }
+  }
+
+  //ELIMINAR PERFIL
   const handleDelete = () => {
     const response = fetchFunction("destroyUser", "DELETE", data)
 
     if (response) {
       Swal.fire({
         title: "Usuario Eliminado Correctamente",
-        text: "Espero un momento...",
+        text: "Espere un momento...",
         icon: "success",
         showConfirmButton: false,
         timer: 2000
@@ -88,17 +157,30 @@ export const Profile = () => {
         logout()
         navigate("/index")
       }, 2000);
-
-
     }
   }
 
-  const handleEditarClick = () => {
-    navigate("/auth/register-info")
-  }
+  //ACTUALIZAR CONTACTO
+  const handleContact = async (e) => {
+    e.preventDefault()
 
-  const handleUpdateClick = () => {
-    navigate("/auth/update-user")
+    const response = await fetchFunction("updateUserContact", "PUT", form)
+    if (response.message) {
+      Swal.fire({
+        title: response.message,
+        text: "Espere un momento...",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1000
+      })
+    } else {
+      Swal.fire({
+        title: response.error,
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1000
+      })
+    }
   }
 
   return (
@@ -106,14 +188,47 @@ export const Profile = () => {
       <Header />
 
       <div className="colorFondo">
-        <div className="container">
+        <div className="container-fluid">
           <div className="row py-4">
 
             <div className="col-md-4 col-sm-12">
               <div className="card">
                 <div>
-                  <i className="bi bi-pencil btn btn-primary"> Editar foto de perfil</i>
+                  <i className="bi bi-images btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#editarPfp"> Editar foto de perfil</i>
                 </div>
+
+                {/* MODAL */}
+                <div className="modal fade" id="editarPfp" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div className="modal-dialog">
+                    <form encType="multipart/form-data" onSubmit={handlePfpSubmit}>
+                      <div className="modal-content">
+
+
+                        <div className="modal-header">
+                          <h1 className="modal-title fs-5" id="staticBackdropLabel">Elija su foto de perfil</h1>
+                          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div className="modal-body">
+
+                          <label className="form-label">Imagen</label>
+                          <input type="file" className="form-control" name="filename"
+                            onChange={handlePfpInput}
+                          />
+
+                        </div>
+                        <div className="modal-footer">
+                          <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                          <button type="submit" className="btn btn-primary" >Confirmar</button>
+                        </div>
+
+
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
 
                 <img
                   src={userIcon}
@@ -134,13 +249,13 @@ export const Profile = () => {
                   {id_rol == 1 && (
                     <>
                       <h5 className="card-title">Estado Laboral: <br />
-                        {tipoRol?.estado_laboral.desc_estado_laboral}</h5>
+                        {tipoRol?.estado_laboral?.desc_estado_laboral}</h5>
 
                       <h5 className="card-title">Nivel de Educación: <br />
-                        {tipoRol?.nivel_educacion.desc_nivel_educacion}</h5>
+                        {tipoRol?.nivel_educacion?.desc_nivel_educacion}</h5>
 
                       <h5 className="card-title">Rubro en el que te desempeñas: <br />
-                        {tipoRol?.id_rubro == 11 ? tipoRol.otro_rubro : tipoRol?.rubro.desc_rubro}</h5>
+                        {tipoRol?.id_rubro == 11 ? tipoRol?.otro_rubro : tipoRol?.rubro?.desc_rubro}</h5>
 
                     </>
                   )
@@ -165,20 +280,40 @@ export const Profile = () => {
                   )
                   }
 
-
-                  <button href="#" className="btn btn-primary" onClick={handleUpdateClick}>Editar perfil</button>
+                  <i href="#" className="bi bi-pencil btn btn-primary" onClick={handleUpdateClick}>  Editar perfil</i>
 
                   <h6>Calificación con estrellas:</h6>
 
                   <div className="rating">
-                    <input type="radio" id="star5" name="rating" value="5" />
-                    <input type="radio" id="star4" name="rating" value="4" />
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <input type="radio" id="star2" name="rating" value="2" />
-                    <input type="radio" id="star1" name="rating" value="1" />
+                    <i className="bi bi-star-fill" type="radio" name="rating" value="5" />
+                    <i className="bi bi-star-fill" type="radio" name="rating" value="4" />
+                    <i className="bi bi-star-fill" type="radio" name="rating" value="3" />
+                    <i className="bi bi-star-fill" type="radio" name="rating" value="2" />
+                    <i className="bi bi-star" type="radio" name="rating" value="1" />
                   </div>
 
-                  <button href="#" className="btn btn-danger" onClick={handleDelete}>Eliminar perfil</button>
+                  {/*Button trigger modal */}
+                  <i type="button" className="btn btn-danger bi bi-file-excel" data-bs-toggle="modal" data-bs-target="#staticBackdrop">  Eliminar Cuenta
+                  </i>
+
+                  {  /* Modal */}
+                  <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h1 className="modal-title fs-5" id="staticBackdropLabel">¿Estas seguro que deseas eliminar tu cuenta?</h1>
+                          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                          ¡Si eliminas tu cuenta no podras recuperarla!
+                        </div>
+                        <div className="modal-footer">
+                          <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                          <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={handleDelete}>Confirmar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                 </div>
               </div>
@@ -202,6 +337,9 @@ export const Profile = () => {
 
                       <li className="list-group-item">Genero: <br />
                         {datos?.genero?.genero}</li>
+
+                      <li className="list-group-item">Fecha Nacimiento: <br />
+                        {datos?.fecha_nacimiento}</li>
 
                       <li className="list-group-item">Pais: <br />
                         {datos?.paise?.nombre_pais != "Otros" ? datos?.paise?.nombre_pais : datos?.otro_pais}</li>
@@ -227,15 +365,49 @@ export const Profile = () => {
 
                     <ul className="list-group table">
 
-                      <li className="list-group-item">Número de telefono: <br /></li>
+                      <li className="list-group-item">Número de telefono: <br />
+                        {contacto?.num_tel}</li>
 
-                      <li className="list-group-item">Domicilio: <br /></li>
+                      <li className="list-group-item">Domicilio: <br />
+                        {contacto?.domicilio}</li>
 
                     </ul>
                   </div>
                   <div className="d-flex justify-content-end py-2">
-                    <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleEditarClick}>Editar</i>
+                    <i href="#" data-bs-toggle="modal" data-bs-target="#editarContacto" className="bi bi-pencil btn btn-warning">Editar</i>
                   </div>
+
+                  {/* MODAL */}
+                  <div className="modal fade" id="editarContacto" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <form action="" onSubmit={handleContact}>
+                          <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="staticBackdropLabel">Agregue su información de contacto</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div className="modal-body">
+
+                            <label className="form-label">Domicilio</label>
+                            <input type="text" className="form-control" name="domicilio"
+                              onChange={handleInputChange} value={form[name]}
+                            />
+
+                            <label className="form-label">Número de telefono</label>
+                            <input type="number" className="form-control" name="num_tel"
+                              onChange={handleInputChange} value={form[name]}
+                            />
+                          </div>
+                          <div className="modal-footer">
+                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Confirmar</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+
                 </div>
 
               </div>
@@ -244,7 +416,7 @@ export const Profile = () => {
           </div>
 
         </div>
-      </div>
+      </div >
 
       <Footer />
     </>

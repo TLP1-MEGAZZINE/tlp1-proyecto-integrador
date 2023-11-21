@@ -14,7 +14,6 @@ const registerLogin = {}
 
 registerLogin.crearUser = async (req, res) => {
     const userData = req.body
-    console.log("llegue al registro principal", userData);
 
     try {
         const user = await createUser(userData);
@@ -24,7 +23,6 @@ registerLogin.crearUser = async (req, res) => {
             const contacto = await createContacto(user.id_user);
 
             if (info && contacto) {
-                console.log("llegue al segundo if");
                 console.log(user.id_rol);
 
                 if (user.id_rol == 1) {
@@ -84,7 +82,7 @@ registerLogin.loginUsuario = async (req, res) => {
         }
 
         // Generar el JWT
-        const token = await generarJWT(existeUsuario.id_user);
+        const token = await generarJWT(existeUsuario.id_user, existeUsuario.id_rol, existeUsuario.user_name);
 
         console.log("SESION INICIADA");
         console.log({ token });

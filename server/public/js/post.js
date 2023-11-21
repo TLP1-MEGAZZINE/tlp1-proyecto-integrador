@@ -28,7 +28,7 @@ formPost.addEventListener('submit', async (e) => {
 
     Swal.fire({
       title: "Post creado correctamente.",
-      text: "Espero un momento...",
+      text: "Espere un momento...",
       icon: "success",
       showConfirmButton: false
     });

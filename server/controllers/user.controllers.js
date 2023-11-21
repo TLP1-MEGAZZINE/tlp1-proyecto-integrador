@@ -3,6 +3,7 @@ const { findUserByName, findAllUser, deleteUser, actualizarUsuario, destroyUser,
 const { findUserInfo } = require('../models/userInfo.model')
 const { updatePostulante, findPostulante } = require('../models/postulantes.model')
 const { updateEmpleador, findEmpleador } = require('../models/empleador.model')
+const { findContact } = require('../models/contacto.model.js')
 
 
 //BUSCAR TODOS LOS USUARIOS
@@ -33,6 +34,23 @@ const ctrlFindUserByName = async (req, res) => {
 
     } catch (error) {
         console.log("Internal Server Error");
+        return res.status(500).send("Internal Server Error")
+    }
+}
+
+//BUSCAR CONTACTO DE USUARIO
+const ctrlFindContact = async (req, res) => {
+    try {
+        
+        
+        const data = req.body
+
+        const contact = await findContact(data)
+
+        if (contact) {
+            return res.status(200).json(contact)
+        }
+    } catch (error) {
         return res.status(500).send("Internal Server Error")
     }
 }
@@ -152,5 +170,6 @@ module.exports = {
     ctrlFindUserInfo,
     ctrlFindPostulante,
     ctrlFindEmpleador,
-    ctrlDestroyUser
+    ctrlDestroyUser,
+    ctrlFindContact
 }

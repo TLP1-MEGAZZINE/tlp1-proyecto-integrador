@@ -1,13 +1,23 @@
 import dayjs from "dayjs";
-import { useFetchData } from "../hooks/useFetchGet";
-
+import { fetchFunction } from "../api/apiFetch";
+import { useState, useEffect } from "react";
 
 export const Posteos = ({ selectedRubro }) => {
-    const url = 'http://localhost:5000/findAllPosts'
 
-    const posts = useFetchData(url)
+    const [posts, setPosts] = useState([]);
 
-    console.log(posts);
+    useEffect(() => {
+        const obtenerDatos = async () => {
+            try {
+                const resultado = await fetchFunction("findAllPosts", "GET");
+                // Actualizar el estado con los datos obtenidos
+                setPosts(resultado);
+            } catch (error) {
+                console.log("Hubo un error:", error);
+            }
+        };
+        obtenerDatos();
+    }, []);
 
     return (
         <>

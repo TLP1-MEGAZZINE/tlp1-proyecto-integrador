@@ -48,7 +48,7 @@ export const UpdateInfo = () => {
         if (response.message) {
             Swal.fire({
                 title: response.message,
-                text: "Espero un momento...",
+                text: "Espere un momento...",
                 icon: "success",
                 showConfirmButton: false,
                 timer: 2000

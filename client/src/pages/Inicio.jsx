@@ -25,59 +25,67 @@ function Inicio() {
         <>
             <Header />
 
-            <article className="row">
-                <li className="nav-item dropdown d-flex px-5">
+            <div className="container-fluid">
 
-                    <select onChange={handleSelectChange}
-                        value={selectedRubro} className="form-select" aria-label="Default select example" required>
 
-                        <option value="0" >Filtro Rubros</option>
-                        <option value="1">Salud</option>
-                        <option value="2">Tecnologia/Informatica</option>
-                        <option value="3">Educación</option>
-                        <option value="4">Finanzas</option>
-                        <option value="5">Manufactura</option>
-                        <option value="6">Ventas</option>
-                        <option value="7">Administración</option>
-                        <option value="8">Alimenticio</option>
-                        <option value="9">Construcción</option>
-                        <option value="10">Docente</option>
-                        <option value="11">Otros</option>
-                    </select>
-                </li>
+                <article className="row">
+                    <div className="row">
+                        <div className="col-2">
+                            <select onChange={handleSelectChange}
+                                value={selectedRubro} className="form-select" aria-label="Default select example" required>
 
-                <section className="col-8">
-                    <div className="my-3 p-3 bg-body rounded shadow-sm">
-                        <h6 className="border-bottom pb-2 mb-0">Nuevas Ofertas</h6>
-
-                        {
-                            selectedRubro == 0 ? (
-                                <Posteos selectedRubro={""} />
-                            )
-                                :
-                                <Posteos selectedRubro={selectedRubro} />
-                        }
-
-                        <small className="d-block text-end mt-3">
-                            <a href="novedades">Todas las novedades</a>
-                        </small>
+                                <option value="0" >Filtro Rubros</option>
+                                <option value="1">Salud</option>
+                                <option value="2">Tecnologia/Informatica</option>
+                                <option value="3">Educación</option>
+                                <option value="4">Finanzas</option>
+                                <option value="5">Manufactura</option>
+                                <option value="6">Ventas</option>
+                                <option value="7">Administración</option>
+                                <option value="8">Alimenticio</option>
+                                <option value="9">Construcción</option>
+                                <option value="10">Docente</option>
+                                <option value="11">Otros</option>
+                            </select>
+                        </div>
                     </div>
-                </section>
+                    <div className="row">
 
-                <section className="col-4">
-                    <div className="my-3 p-3 bg-body rounded shadow-sm">
-                        <h6 className="border-bottom pb-2 mb-0">Usuarios Sugeridos</h6>
 
-                        <Users />
-
-                        <small className="d-block text-end mt-3">
-                            <a href="solicitudes">Ver todas las solicitudes</a>
-                        </small>
                     </div>
+                    <section className="col-8">
+                        <div className="my-3 p-3 bg-body rounded shadow-sm">
+                            <h6 className="border-bottom pb-2 mb-0">Nuevas Ofertas</h6>
 
-                </section>
+                            {
+                                selectedRubro == 0 ? (
+                                    <Posteos selectedRubro={""} />
+                                )
+                                    :
+                                    <Posteos selectedRubro={selectedRubro} />
+                            }
 
-            </article>
+                            <small className="d-block text-end mt-3">
+                                <a href="novedades">Todas las novedades</a>
+                            </small>
+                        </div>
+                    </section>
+
+                    <section className="col-4">
+                        <div className="my-3 p-3 bg-body rounded shadow-sm">
+                            <h6 className="border-bottom pb-2 mb-0">Usuarios Sugeridos</h6>
+
+                            <Users />
+
+                            <small className="d-block text-end mt-3">
+                                <a href="solicitudes">Ver todas las solicitudes</a>
+                            </small>
+                        </div>
+
+                    </section>
+
+                </article>
+            </div>
 
             <Footer />
         </>

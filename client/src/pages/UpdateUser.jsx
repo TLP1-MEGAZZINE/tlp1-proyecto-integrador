@@ -51,7 +51,7 @@ export const UpdateUser = () => {
         if (response.message) {
             Swal.fire({
                 title: response.message,
-                text: "Espero un momento...",
+                text: "Espere un momento...",
                 icon: "success",
                 showConfirmButton: false,
                 timer: 2000
@@ -91,7 +91,7 @@ export const UpdateUser = () => {
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Nombre de usuario</label>
                                                 <input type="text" className="form-control" placeholder="nombre de usuario"
-                                                    id="user_name" name="user_name" required
+                                                    id="user_name" name="user_name" 
                                                     onChange={handleInputChange} value={form[name]}
                                                 />
                                                 <span className="text-danger fw-bold" ></span>
@@ -101,7 +101,7 @@ export const UpdateUser = () => {
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Ingrese su email</label>
                                                 <input type="email" className="form-control" placeholder="name@example.com"
-                                                    id="user_email" name="user_email" required
+                                                    id="user_email" name="user_email" 
                                                     value={form[name]} onChange={handleInputChange}
                                                 />
                                                 <span className="text-danger fw-bold py-3" ></span>
@@ -115,7 +115,7 @@ export const UpdateUser = () => {
                                                     className="form-label text-center">Contraseña</label>
                                                 <div className="input-group">
                                                     <input type="password" className="form-control" id="user_password"
-                                                        name="user_password" placeholder="**********" required
+                                                        name="user_password" placeholder="**********" 
                                                         onChange={handleInputChange} value={form[name]}
                                                     />
 
@@ -131,7 +131,7 @@ export const UpdateUser = () => {
 
                                                 <div className="input-group">
                                                     <input type="password" className="form-control" id="validarPass"
-                                                        name="validarPass" placeholder="**********" required
+                                                        name="validarPass" placeholder="**********" 
                                                         onChange={handleInputChange} value={form[name]}
                                                     />
 

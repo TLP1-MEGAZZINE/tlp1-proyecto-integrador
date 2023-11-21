@@ -1,31 +1,26 @@
 //IMPORTACIONES
-
-const { subirArchivo, findpfp } = require('../models/imagenes.model');
-
+const { subirPfp, findpfp } = require('../models/imagenes.model');
 
 //CARGAR IMAGENES
-const ctrlUploadImage = async (req, res) => {
+const ctrlUploadPfp = async (req, res) => {
     try {
         if (req.file) {
+            const data = req.body;
 
-            const id_user = req.cookies.id_user
             const { filename } = req.file;
-            const { description } = req.body;
 
             // Guardar la información de la imagen en la base de datos
-            const newImage = subirArchivo(filename, description, id_user);
+            const newImage = subirPfp(filename, data);
 
             if (!newImage) {
-                res.status(400).json("Bad request")
+                res.status(500).json({ message: 'Error al subir la imagen.' });
             } else {
                 res.status(201).json(`Imagen subida con éxito. Nombre del archivo: ${filename}`);
             }
-        } else {
-            res.send('No se pudo cargar la imagen.');
         }
     } catch (error) {
         console.error('Error al subir la imagen:', error);
-        res.status(500).send('Error al subir la imagen.');
+        res.status(500).json({ message: 'Error al subir la imagen.' });
     }
 };
 
@@ -33,7 +28,6 @@ const ctrlFindPfp = async (req, res) => {
     try {
         const data = req.body
 
-        console.log(data);
         const pfp = await findpfp(data);
         if (pfp) {
             return res.status(200).send(pfp.url)
@@ -46,4 +40,4 @@ const ctrlFindPfp = async (req, res) => {
     }
 }
 
-module.exports = { ctrlUploadImage, ctrlFindPfp };
+module.exports = { ctrlUploadPfp, ctrlFindPfp };

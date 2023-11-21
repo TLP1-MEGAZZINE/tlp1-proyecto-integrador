@@ -13,10 +13,6 @@ const Image = sequelize.define('image', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    description: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
     is_pfp: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
@@ -37,31 +33,21 @@ Image.sync({ force: false }).then(async () => {
 });
 
 //SERVICIO
-
-async function subirArchivo(filename, description, id_user) {
+async function subirPfp(filename, data) {
     try {
 
-        const existePfp = await findpfp(id_user)
-
+        const existePfp = await findpfp(data)
 
         if (existePfp) {
             return await existePfp.update({
                 url: `/uploads/${filename}`,
             })
         } else {
-            if (description == null || description == "") {
-                return await Image.create({
-                    url: `/uploads/${filename}`,
-                    is_pfp: 1,
-                    id_user: id_user
-                })
-            } else {
-                return await Image.create({
-                    url: `/uploads/${filename}`,
-                    description: description,
-                    id_user: id_user
-                })
-            }
+            return await Image.create({
+                url: `/uploads/${filename}`,
+                is_pfp: 1,
+                id_user: data.id_user
+            })
         }
     } catch (error) {
         console.log("ERROR AL SUBIR ARCHIVO", error)
@@ -79,8 +65,8 @@ async function findpfp(data) {
 
     console.log("IMAGEN", pfp);
     return pfp
-    
+
 }
 
 
-module.exports = { Image, subirArchivo, findpfp };
+module.exports = { Image, subirPfp, findpfp };

@@ -48,7 +48,7 @@ useEffect(() => {
 
       Swal.fire({
         title: "Correcto, iniciando sesion.",
-        text: "Espero un momento...",
+        text: "Espere un momento...",
         icon: "success",
         showConfirmButton: false,
         timer: 2000

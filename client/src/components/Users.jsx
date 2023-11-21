@@ -1,30 +1,19 @@
 import { useEffect, useState } from "react"
-
-
+import { fetchFunction } from "../api/apiFetch";
 export const Users = () => {
 
     const [users, setUsers] = useState([]);
 
-    const fetchUsers = async () => {
-
-        try {
-            const response = await fetch('http://localhost:5000/findAll', {
-                method: 'GET',
-            });
-
-            if (response.ok) {
-
-                const jsonData = await response.json();
-                setUsers(jsonData); // Almacena los datos en el estado
-            }
-            // Resto del código de manejo de respuesta...
-        } catch (error) {
-            console.error('Error al enviar la solicitud:', error);
-        }
-    };
-
     useEffect(() => {
-        fetchUsers();
+        const obtenerDatos = async () => {
+            try {
+                const resultado = await fetchFunction("findAll", "GET");
+                setUsers(resultado);
+            } catch (error) {
+                console.log("Hubo un error:", error);
+            }
+        };
+        obtenerDatos();
     }, []);
 
     return (
@@ -34,7 +23,7 @@ export const Users = () => {
                     .filter(user => user.rol.rol_name != "particular")
                     .map((user, id_user) => (
 
-                        
+
                         <div key={id_user} className="d-flex text-muted pt-3 ps-2">
                             <svg className="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"

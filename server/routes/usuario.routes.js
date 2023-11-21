@@ -8,7 +8,8 @@ const { ctrlFindUsers,
     ctrlFindUserInfo,
     ctrlFindEmpleador,
     ctrlFindPostulante,
-    ctrlDestroyUser
+    ctrlDestroyUser,
+    ctrlFindContact
 } = require("../controllers/user.controllers")
 
 const { ctrlUpdateUserInfo, ctrlUpdateUserContact } = require("../controllers/updateInfo.controller")
@@ -32,6 +33,8 @@ router.post("/findUserInfo", ctrlFindUserInfo) //agregar ruta protegida
 router.post("/findEmpleador", ctrlFindEmpleador) //agregar ruta protegida
 
 router.post("/findPostulante", ctrlFindPostulante) //agregar ruta protegida
+
+router.post("/findContact", ctrlFindContact)
 
 
 

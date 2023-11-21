@@ -37,7 +37,7 @@ export const Post = () => {
         console.log("exito");
         Swal.fire({
           title: "Post creado correctamente.",
-          text: "Espero un momento...",
+          text: "Espere un momento...",
           icon: "success",
           showConfirmButton: false
         });

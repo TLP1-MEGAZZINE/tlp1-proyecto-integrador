@@ -27,7 +27,7 @@ const Contacto = sequelize.define('Contacto', {
 
 
 // Sincronizar los modelos con la base de datos (esto creará las tablas si no existen)
-Contacto.sync({ force: true }).then(() => {
+Contacto.sync({ force: false }).then(() => {
     console.log('Tabla de contactos creada')
 })
 
@@ -70,4 +70,18 @@ async function updateUserContact(data) {
     }
 }
 
-module.exports = { createContacto, Contacto, updateUserContact }
+async function findContact(data) {
+    try {
+        const contact = await Contacto.findOne({
+            where: {
+                id_user: data.id_user
+            }
+        })
+        return contact
+    } catch (error) {
+        console.log("Error buscar registro de contacto", error);
+        throw error
+    }
+}
+
+module.exports = { createContacto, Contacto, updateUserContact, findContact }

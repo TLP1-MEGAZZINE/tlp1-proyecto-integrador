@@ -27,7 +27,7 @@ export const Register = () => {
     if (resp.message) {
       Swal.fire({
         title: "Usuario registrado correctamente.",
-        text: "Espero un momento...",
+        text: "Espere un momento...",
         icon: "success",
         showConfirmButton: false,
         timer: 2000

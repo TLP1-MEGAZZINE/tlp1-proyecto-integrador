@@ -1,13 +1,19 @@
-import { useFetchData } from "../hooks/useFetchGet";
-import { useForm } from "../hooks/useForms"
 
 export const Selects = ({ label, placeholder, position, itemName, url, name, value, onChange }) => {
 
-  const { form, handleInputChange } = useForm({})
+  const [data, setData] = useState([]);
 
-  const data = useFetchData(url)
-  // console.log(data);
-  // console.log("form", form);
+  useEffect(() => {
+    const obtenerDatos = async () => {
+        try {
+            const resultado = await fetchFunction(url , "GET");
+            setData(resultado);
+        } catch (error) {
+            console.log("Hubo un error:", error);
+        }
+    };
+    obtenerDatos();
+}, []);
 
   return (
     <div className="col-md-6 px-1">

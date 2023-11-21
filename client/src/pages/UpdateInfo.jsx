@@ -48,7 +48,7 @@ export const UpdateInfo = () => {
         if (response.message) {
             Swal.fire({
                 title: response.message,
-                text: "Espero un momento...",
+                text: "Espere un momento...",
                 icon: "success",
                 showConfirmButton: false,
                 timer: 2000
@@ -124,7 +124,7 @@ export const UpdateInfo = () => {
                                         <div className="d-flex justify-content-center">
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Fecha de nacimiento</label>
-                                                <input id="fechaNacimiento" type="date" className="form-control" name="fechaNacimientoe"
+                                                <input type="date" className="form-control" name="fecha_nacimiento"
                                                     onChange={handleInputChange} value={form[name]}
 
                                                 />
