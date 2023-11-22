@@ -7,6 +7,7 @@ import Footer from "../components/Footer"
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import { useForm } from "../hooks/useForms";
+import { fetchFileFunction } from "../api/apiFetchFiles";
 
 export const Profile = () => {
 
@@ -104,21 +105,17 @@ export const Profile = () => {
 
   const handlePfpInput = (e) => {
 
-    console.log(e.target.files[0]);
-
-    setPfp(pfp => ({ ...pfp, filename: e.target.files[0] }));
+    setPfp(pfp => ({ ...pfp, url: e.target.files[0] }));
 
   };
-
-  console.log(pfp);
 
   const handlePfpSubmit = async (e) => {
     e.preventDefault()
 
-    const response = await fetchFunction("pfp", "POST", pfp)
+    const response = await fetchFileFunction("pfp", pfp)
 
-    
-    if (response.message) {
+
+    if (response.ok) {
       Swal.fire({
         title: response.message,
         text: "Espere un momento...",
@@ -187,6 +184,8 @@ export const Profile = () => {
     <>
       <Header />
 
+      <img src="http://localhost:5000/uploads/url-1700658505190-6562371.jpeg" alt="dsafsafsaf" />
+
       <div className="colorFondo">
         <div className="container-fluid">
           <div className="row py-4">
@@ -213,7 +212,7 @@ export const Profile = () => {
                         <div className="modal-body">
 
                           <label className="form-label">Imagen</label>
-                          <input type="file" className="form-control" name="filename"
+                          <input type="file" className="form-control" name="url"
                             onChange={handlePfpInput}
                           />
 

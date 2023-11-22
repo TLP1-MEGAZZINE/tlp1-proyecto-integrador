@@ -17,13 +17,22 @@ require("./models/relaciones.model")
 
 // INICIALIZACION DE EXPRESS
 const app = express();
+
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200, // Algunos navegadores devuelven un código de estado como 204
+  };
+  
+  app.use(cors(corsOptions));
+  
+  app.use(helmet({
+    contentSecurityPolicy: false
+}));
+
+
 const server = createServer(app)
 
 //MIDDLEWARES
-app.use(cors());
-app.use(helmet({
-    contentSecurityPolicy: false
-}));
 
 //PARA LA CONSOLA
 app.use(morgan('dev'));

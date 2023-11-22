@@ -36,6 +36,7 @@ Image.sync({ force: false }).then(async () => {
 async function subirPfp(filename, data) {
     try {
 
+        console.log(data);
         const existePfp = await findpfp(data)
 
         if (existePfp) {
