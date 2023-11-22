@@ -7,6 +7,6 @@ const {validarJWT} = require('../middlewares/autenticarToken');
 //RUTA PARA SUBIR ARCHIVOS(IMAGENES)
 router.post("/pfp", upload.single("url"), ctrlUploadPfp)
 
-router.post("/findPfp", validarJWT, ctrlFindPfp )
+router.post("/findPfp", ctrlFindPfp )
 
 module.exports = router

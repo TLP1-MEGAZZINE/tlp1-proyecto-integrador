@@ -5,27 +5,25 @@ const { findRubroByIdEmpleador } = require("../models/empleador.model")
 //CREAR UN POSTEO EN LA DB
 const ctrlCrearPosteos = async (req, res) => {
     try {
-        const userId = req.cookies.id_user || 1
-        const id_rol = req.cookies.id_rol || 1
-        const postData = req.body
+        const data = req.body
 
-        if(id_rol == 1){
-            const usuario = await findRubroByIdPostulante(userId)
-            postData.id_user = userId;
-            postData.id_rubro = usuario.id_rubro;
-        }else{
-            const usuario = await findRubroByIdEmpleador(userId)
+        // if(id_rol == 1){
+        //     const usuario = await findRubroByIdPostulante(userId)
+        //     data.id_user = userId;
+        //     data.id_rol = usuario.id_rol;
+        // }else{
+        //     const usuario = await findRubroByIdEmpleador(userId)
         
-        postData.id_user = userId;
-        postData.id_rubro = usuario.id_rubro;
-        }
+        // data.id_user = userId;
+        // data.id_rol = usuario.id_rol;
+        // }
 
-        const post = await createPost(postData);
+        const post = await createPost(data);
 
         if (!post) {
             throw new Error("Error al crear el post")
         } else {
-            return res.status(200).json({ message: "Post creado-controller" })
+            return res.status(200).json({ message: "¡Post creado exitosamente!" })
         }
     } catch (error) {
         console.log(error)

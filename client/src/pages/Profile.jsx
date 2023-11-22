@@ -114,8 +114,7 @@ export const Profile = () => {
 
     const response = await fetchFileFunction("pfp", pfp)
 
-
-    if (response.ok) {
+    if (response) {
       Swal.fire({
         title: response.message,
         text: "Espere un momento...",
@@ -132,6 +131,25 @@ export const Profile = () => {
       })
     }
   }
+
+  //BUSCAR FOTO DE PERFIL
+  const [foto, setFoto] = useState("");
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      try {
+        const resultado = await fetchFunction("findPfp", "POST", data);
+        // Actualizar el estado con los datos obtenidos
+
+        setFoto(resultado);
+
+      } catch (error) {
+        console.log("Hubo un error:", error);
+      }
+    };
+    obtenerDatos();
+  }, [handlePfpSubmit]);
+
 
   //ELIMINAR PERFIL
   const handleDelete = () => {
@@ -184,8 +202,6 @@ export const Profile = () => {
     <>
       <Header />
 
-      <img src="http://localhost:5000/uploads/url-1700658505190-6562371.jpeg" alt="dsafsafsaf" />
-
       <div className="colorFondo">
         <div className="container-fluid">
           <div className="row py-4">
@@ -219,7 +235,7 @@ export const Profile = () => {
                         </div>
                         <div className="modal-footer">
                           <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                          <button type="submit" className="btn btn-primary" >Confirmar</button>
+                          <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Confirmar</button>
                         </div>
 
 
@@ -230,11 +246,12 @@ export const Profile = () => {
 
 
                 <img
-                  src={userIcon}
+                  src={ foto ? `${"http://localhost:5000/"}${foto}` : userIcon}
                   className="card-img-top img-fluid"
                   width="50px"
                   height="100px"
                   alt="Perfil de usuario"
+                  crossOrigin="anonymous"
                 />
 
                 <div className="card-body text-center">

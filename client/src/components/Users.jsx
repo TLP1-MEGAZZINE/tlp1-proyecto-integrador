@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import { fetchFunction } from "../api/apiFetch";
+import { useNavigate } from "react-router-dom";
 export const Users = () => {
+
+    const navigate = useNavigate();
 
     const [users, setUsers] = useState([]);
 
@@ -15,6 +18,10 @@ export const Users = () => {
         };
         obtenerDatos();
     }, []);
+
+    const handleProfile = () => {
+        navigate("/profile/" + user.id_user);
+    }
 
     return (
         <>
@@ -37,7 +44,7 @@ export const Users = () => {
 
                                 <div className="pb-3 mb-0 small lh-sm border-bottom w-100">
                                     <div className="d-flex justify-content-between">
-                                        <strong className="text-gray-dark">{user.user_name}</strong>
+                                        <strong className="text-gray-dark" onClick={handleProfile }>{user.user_name}</strong>
                                         <a href="#">Follow</a>
                                     </div>
                                     <span className="d-block">{user.user_email}</span>

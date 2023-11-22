@@ -9,13 +9,14 @@ import { useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import { MainRoutes } from './MainRoutes';
 import { useNavigate } from 'react-router-dom';
+import { OtherProfile } from '../pages/OtherProfile';
 
 export const AppRoutes = () => {
 
     const { login, logout, authState } = useContext(AuthContext)
 
     useEffect(() => {
-        
+
         const token = localStorage.getItem('token');
         const user_name = localStorage.getItem('user_name');
         const id_user = localStorage.getItem('id_user');
@@ -50,6 +51,7 @@ export const AppRoutes = () => {
                 <Route path='/Mas-info' element={<MasInfo />} />
                 <Route path='/Register' element={<Register />} />
                 <Route path='/index' element={<Index />} />
+                <Route path='/Profile' element={<OtherProfile />} />
 
                 {/*RUTAS PRIVADAS*/}
 

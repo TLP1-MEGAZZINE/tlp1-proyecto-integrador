@@ -21,13 +21,20 @@ const app = express();
 const corsOptions = {
     origin: 'http://localhost:3000',
     optionsSuccessStatus: 200, // Algunos navegadores devuelven un código de estado como 204
-  };
-  
-  app.use(cors(corsOptions));
-  
-  app.use(helmet({
-    contentSecurityPolicy: false
+};
+
+app.use(cors(corsOptions));
+
+app.use(helmet({
+    contentSecurityPolicy: false,
+    // crossOriginEmbedderPolicy: false,
+    // crossOriginResourcePolicy: false
 }));
+
+// app.use((req, res, next) => {
+//     res.removeHeader("Cross-Origin-Embedder-Policy");
+//     next();
+// })
 
 
 const server = createServer(app)

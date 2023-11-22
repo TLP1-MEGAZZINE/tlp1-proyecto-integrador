@@ -64,7 +64,7 @@ async function findpfp(data) {
         }
     })
 
-    console.log("IMAGEN", pfp);
+    console.log("IMAGEN", pfp.url);
     return pfp
 
 }

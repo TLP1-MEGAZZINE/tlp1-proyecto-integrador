@@ -15,7 +15,7 @@ const ctrlUploadPfp = async (req, res) => {
             if (!newImage) {
                 res.status(500).json({ message: 'Error al subir la imagen.' });
             } else {
-                res.status(201).json(`Imagen subida con éxito. Nombre del archivo: ${filename}`);
+                res.status(201).json({ message: "Imagen subida con éxito." });
             }
         }
     } catch (error) {
@@ -30,9 +30,9 @@ const ctrlFindPfp = async (req, res) => {
 
         const pfp = await findpfp(data);
         if (pfp) {
-            return res.status(200).send(pfp.url)
+            return res.status(200).json(pfp.url)
         }
-        return res.status(400).send("No se encontro la foto de perfil")
+        return res.status(400).json({ message: "No se encontro la foto de perfil" })
 
     } catch (error) {
         console.log("No se pudo encontrar la pfp", error);

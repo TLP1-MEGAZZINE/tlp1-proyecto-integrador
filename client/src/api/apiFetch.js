@@ -22,7 +22,7 @@ export const fetchFunction = async (route, method, payload) => {
     });
 
     const data = await response.json();
-    return data;
+    return  data;
 
   }
 }

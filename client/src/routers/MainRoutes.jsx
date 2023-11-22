@@ -6,11 +6,13 @@ import Messages from "../pages/Messages"
 import Inicio from "../pages/Inicio"
 import { UpdateInfo } from "../pages/UpdateInfo"
 import { UpdateUser } from "../pages/UpdateUser"
+import { NewPost } from "../pages/NewPost"
 
 export const MainRoutes = () => {
     return (
         <>
             <Routes>
+                <Route path='/new-post' element={<NewPost />} />
                 <Route path='/update-user' element={< UpdateUser />} />
                 <Route path='/register-info' element={<UpdateInfo />} />
                 <Route path='/home' element={<Inicio />} />

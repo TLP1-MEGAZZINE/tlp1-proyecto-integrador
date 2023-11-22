@@ -19,6 +19,8 @@ export const Posteos = ({ selectedRubro }) => {
         obtenerDatos();
     }, []);
 
+console.log(posts);
+
     return (
         <>
             {
@@ -42,7 +44,7 @@ export const Posteos = ({ selectedRubro }) => {
                                     <strong className="d-block text-gray-dark">{post.post_title}</strong>
                                     {post.post_content}
                                     <br />
-                                    <span>Rubro: {post.rubro.desc_rubro}</span><br />
+                                    <span>Rubro: {post?.rubro?.desc_rubro}</span><br />
                                     <span>Fecha: {dayjs(post.updatedAt).format('DD/MM/YYYY hh:mm')}</span><br />
                                     <span>Localidad: {post.id_local}</span>
                                 </p>
