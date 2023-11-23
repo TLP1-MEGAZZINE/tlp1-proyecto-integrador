@@ -1,4 +1,7 @@
 
+import { useEffect, useState } from "react";
+import { fetchFunction } from "../api/apiFetch";
+
 export const Selects = ({ label, placeholder, position, itemName, url, name, value, onChange }) => {
 
   const [data, setData] = useState([]);
@@ -14,6 +17,8 @@ export const Selects = ({ label, placeholder, position, itemName, url, name, val
     };
     obtenerDatos();
 }, []);
+
+console.log("data", data);
 
   return (
     <div className="col-md-6 px-1">

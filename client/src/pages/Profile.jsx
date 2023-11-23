@@ -140,15 +140,14 @@ export const Profile = () => {
       try {
         const resultado = await fetchFunction("findPfp", "POST", data);
         // Actualizar el estado con los datos obtenidos
-
         setFoto(resultado);
-
+        console.log(resultado);
       } catch (error) {
         console.log("Hubo un error:", error);
       }
     };
     obtenerDatos();
-  }, [handlePfpSubmit]);
+  }, []);
 
 
   //ELIMINAR PERFIL
@@ -188,6 +187,8 @@ export const Profile = () => {
         showConfirmButton: false,
         timer: 1000
       })
+setContacto(form)
+
     } else {
       Swal.fire({
         title: response.error,
@@ -246,7 +247,7 @@ export const Profile = () => {
 
 
                 <img
-                  src={ foto ? `${"http://localhost:5000/"}${foto}` : userIcon}
+                  src={`${"http://localhost:5000/"}${foto}`}
                   className="card-img-top img-fluid"
                   width="50px"
                   height="100px"
@@ -271,7 +272,8 @@ export const Profile = () => {
                         {tipoRol?.nivel_educacion?.desc_nivel_educacion}</h5>
 
                       <h5 className="card-title">Rubro en el que te desempeñas: <br />
-                        {tipoRol?.id_rubro == 11 ? tipoRol?.otro_rubro : tipoRol?.rubro?.desc_rubro}</h5>
+                        {tipoRol?.id_rubro == 11 ? tipoRol?.otro_rubro : tipoRol?.rubro?.desc_rubro}
+                      </h5>
 
                     </>
                   )
@@ -290,7 +292,7 @@ export const Profile = () => {
                         {tipoRol?.num_tel_empresa}</h5>
 
                       <h5 className="card-title">Rubro de la empresa: <br />
-                        {tipoRol?.id_rubro == 11 ? tipoRol.otro_rubro : tipoRol?.rubro.desc_rubro}</h5>
+                        {tipoRol?.id_rubro == 11 ? tipoRol.otro_rubro : tipoRol?.rubro?.desc_rubro}</h5>
 
                     </>
                   )

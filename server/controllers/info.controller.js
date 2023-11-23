@@ -14,7 +14,7 @@ const ctrlFindPaises = async (req, res) => {
             return res.status(200).json(paises)
         }
     } catch (error) {
-        res.status(500).json("Internal Server Error...")
+        res.status(500).json({ message: "Internal Server Error..." })
     }
 }
 
@@ -28,7 +28,7 @@ const ctrlFindDepar = async (req, res) => {
             return res.status(200).json(depar)
         }
     } catch (error) {
-        res.status(500).json("Internal Server Error...")
+        res.status(500).json({ message: "Internal Server Error..." })
     }
 }
 
@@ -42,7 +42,7 @@ const ctrlFindRubro = async (req, res) => {
             return res.status(200).json(depar)
         }
     } catch (error) {
-        res.status(500).json("Internal Server Error...")
+        res.status(500).json({ message: "Internal Server Error..." })
     }
 }
 
@@ -56,7 +56,7 @@ const ctrlFindLocal = async (req, res) => {
             return res.status(200).json(local)
         }
     } catch (error) {
-        res.status(500).json("Internal Server Error...")
+        res.status(500).json({ message: "Internal Server Error..." })
     }
 }
 
@@ -70,7 +70,7 @@ const ctrlFindProvinces = async (req, res) => {
             return res.status(200).json(local)
         }
     } catch (error) {
-        res.status(500).json("Internal Server Error...")
+        res.status(500).json({ message: "Internal Server Error..." })
     }
 }
 

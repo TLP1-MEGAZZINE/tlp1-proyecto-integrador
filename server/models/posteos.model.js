@@ -1,6 +1,6 @@
 const { DataTypes, sequelize } = require('../config/db');
-const {Localidad} = require('./localidad.model');
-const {Rubro} = require('./rubro.model');
+const { Localidad } = require('./localidad.model');
+const { Rubro } = require('./rubro.model');
 const { UserInfo } = require('./userInfo.model');
 
 //ACOMODAR LA HORA, RESTANDOLE 3 HORAS
@@ -30,14 +30,13 @@ const Post = sequelize.define('post', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "User",
-        //     key: "id_user"
-        // },
     },
     id_rubro: {
         type: DataTypes.INTEGER
-    }
+    },
+    id_info: {
+        type: DataTypes.INTEGER
+    },
 }, {
     paranoid: false,
     tableName: "post",
@@ -56,13 +55,18 @@ async function createPost(data) {
             where: { id_user: data.id_user },
         })
 
+        let infoId = await UserInfo.findOne({
+            where: { id_user: data.id_user },
+        })
+
         if (usuarioPost.id_rol == 2) {
             return await Post.create({
                 id_user: data.id_user,
                 post_title: data.post_title,
                 post_content: data.post_content,
                 is_emprise_post: true,
-                id_rubro: data.id_rubro
+                id_rubro: data.id_rubro,
+                id_info: infoId.id_info
             });
         }
         // Crea un post en la DB
@@ -71,7 +75,8 @@ async function createPost(data) {
             post_title: data.post_title,
             post_content: data.post_content,
             is_emprise_post: false,
-            id_rubro: data.id_rubro
+            id_rubro: data.id_rubro,
+            id_info: infoId.id_info
         });
 
     } catch (error) {
@@ -99,50 +104,60 @@ const findAllPosts = async () => {
             include: [
                 {
                     model: User,
-                    attributes: ['user_name', 'user_email'],
+                    attributes: ['id_user', 'user_name', 'user_email'],
                 },
                 {
                     model: Rubro,
+                    attributes: ['desc_rubro'],
                 },
+                {
+                    model: UserInfo,
+                    attributes: ['fecha_nacimiento'], include: [
+                        {
+                            model: Localidad,
+                            attributes: ['nombre_local'],
+                        }
+                    ]
+                }
             ],
         });
 
         return posts;
-        
-    //     // Obtener los IDs de usuario de los posts
-    //     const userIds = posts.map(post => post.id_user);
-        
-    //     // Consulta los registros de user_info para los usuarios
-    //     const userInfos = await UserInfo.findAll({
-    //         where: {
-    //             id_user: userIds,
-    //         },
-    //         include:[
-    //             {
-    //                 model:Localidad,
-    //                 attributes:["nombre_local"]
-    //             }
-    //         ]            
-    //     });
-        
-    //     const postsWithUserInfo = posts.map(post => {
-    //         const userInfo = userInfos.find(info => info.id_user === post.id_user);
 
-    //         if (userInfo) {
-    //             return {
-    //                 ...post.get(),
-    //                 id_local: userInfo.localidad.nombre_local, // Reemplaza "field1" con el nombre real del campo
-    //                 id_depar: userInfo.id_depar, // Reemplaza "field2" con el nombre real del campo
-    //                 // Agrega más campos según sea necesario
-    //             };
-    //         } else {
-    //             return post;
-    //         }
-    //     });
-        
-    //     // Ahora postsWithUserInfo contiene la información de usuario agregada a los objetos de posts
-    //     return postsWithUserInfo;
-        
+        //     // Obtener los IDs de usuario de los posts
+        //     const userIds = posts.map(post => post.id_user);
+
+        //     // Consulta los registros de user_info para los usuarios
+        //     const userInfos = await UserInfo.findAll({
+        //         where: {
+        //             id_user: userIds,
+        //         },
+        //         include:[
+        //             {
+        //                 model:Localidad,
+        //                 attributes:["nombre_local"]
+        //             }
+        //         ]            
+        //     });
+
+        //     const postsWithUserInfo = posts.map(post => {
+        //         const userInfo = userInfos.find(info => info.id_user === post.id_user);
+
+        //         if (userInfo) {
+        //             return {
+        //                 ...post.get(),
+        //                 id_local: userInfo.localidad.nombre_local, // Reemplaza "field1" con el nombre real del campo
+        //                 id_depar: userInfo.id_depar, // Reemplaza "field2" con el nombre real del campo
+        //                 // Agrega más campos según sea necesario
+        //             };
+        //         } else {
+        //             return post;
+        //         }
+        //     });
+
+        //     // Ahora postsWithUserInfo contiene la información de usuario agregada a los objetos de posts
+        //     return postsWithUserInfo;
+
     } catch (error) {
         console.log('Error al buscar todos los posts', error);
         throw error;

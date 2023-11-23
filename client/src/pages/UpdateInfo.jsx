@@ -154,7 +154,7 @@ export const UpdateInfo = () => {
                                                 position={"id_pais"}
                                                 itemName={"nombre_pais"}
                                                 name={"id_pais"}
-                                                url={'http://localhost:5000/findPaises'}
+                                                url={'findPaises'}
                                                 value={form[name]}
                                                 onChange={handleInputChange}
                                             />
@@ -167,7 +167,7 @@ export const UpdateInfo = () => {
                                                     placeholder={"Provincias."}
                                                     position={"id_provincia"}
                                                     itemName={"nombre_provincia"}
-                                                    url={'http://localhost:5000/findProvinces'}
+                                                    url={'findProvinces'}
                                                     name={"id_provincia"}
                                                     value={form[name]}
                                                     onChange={handleInputChange}
@@ -194,7 +194,7 @@ export const UpdateInfo = () => {
                                                 position={"id_depar"}
                                                 name={"id_depar"}
                                                 itemName={"nombre_depar"}
-                                                url={'http://localhost:5000/findDepar'}
+                                                url={'findDepar'}
                                                 value={form[name]}
                                                 onChange={handleInputChange}
                                             />
@@ -205,7 +205,7 @@ export const UpdateInfo = () => {
                                                 position={"id_local"}
                                                 name={"id_local"}
                                                 itemName={"nombre_local"}
-                                                url={'http://localhost:5000/findLocal'}
+                                                url={'findLocal'}
                                                 value={form[name]}
                                                 onChange={handleInputChange}
                                             />

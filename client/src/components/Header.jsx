@@ -1,10 +1,17 @@
 import logo from "../assets/logo.png";
 import userIcon from "../assets/userIcon.png"
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { fetchFunction } from "../api/apiFetch";
+import { useState, useEffect } from "react";
 
 function Header() {
+
+    const data = {
+        id_user: localStorage.getItem("id_user"),
+    }
+
     const { authState, logout } = useContext(AuthContext); // Obtén el estado del contexto
     const navigate = useNavigate();
 
@@ -36,6 +43,28 @@ function Header() {
             navigate("/index");
         }, 2000);
     };
+
+
+    //BUSCAR FOTO DE PERFIL
+    const [foto, setFoto] = useState("");
+
+    useEffect(() => {
+        const obtenerDatos = async () => {
+            try {
+                const resultado = await fetchFunction("findPfp", "POST", data);
+                // Actualizar el estado con los datos obtenidos
+                if (resultado) {
+                    setFoto(resultado);
+                } else {
+                    setFoto(userIcon);
+                }
+            } catch (error) {
+                console.log("Hubo un error:", error);
+            }
+        };
+        obtenerDatos();
+    }, []);
+
 
     return (
         <header >
@@ -113,7 +142,7 @@ function Header() {
                             <div className="dropdown p-4">
                                 <a href="#" className="d-flex align-items-center text-decoration-none dropdown-toggle"
                                     id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src={userIcon} alt="pfp" width=" 32" height="32"
+                                    <img src={`${"http://localhost:5000/"}${foto}`} crossOrigin="anonymous" alt="pfp" width=" 32" height="32"
                                         className="rounded-circle me-2" />
                                     <strong className="text-light" id="UsuarioNombre">{user_name}</strong>
                                 </a>

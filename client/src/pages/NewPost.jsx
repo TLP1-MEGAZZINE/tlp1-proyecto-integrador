@@ -33,12 +33,10 @@ export const NewPost = () => {
                 timer: 2000
             })
 
-            const lastLocation = localStorage.getItem("lastPath")
-
             setTimeout(() => {
-                return navigate(lastLocation || "/auth/home")
+                return navigate("/auth/home")
             }, 2000)
-            
+
         } else {
             Swal.fire({
                 title: "Se produjo un error",

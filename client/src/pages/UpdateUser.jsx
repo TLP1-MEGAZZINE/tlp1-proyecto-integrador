@@ -86,7 +86,7 @@ export const UpdateUser = () => {
 
                                         { /*nombre de usuario*/}
 
-                                        <div className='d-flex'>
+                                        <div className='d-flex justify-content-center'>
 
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Nombre de usuario</label>
@@ -109,7 +109,7 @@ export const UpdateUser = () => {
                                         </div>
 
 
-                                        <div className="d-flex">
+                                        <div className="d-flex justify-content-center">
                                             <div className="col-md-6 px-1">
                                                 <label
                                                     className="form-label text-center">Contraseña</label>
@@ -158,7 +158,7 @@ export const UpdateUser = () => {
                                                     </select>
                                                 </div>
 
-                                                <div className='d-flex'>
+                                                <div className='d-flex justify-content-center'>
                                                     <div className="col-md-6">
                                                         <label className="form-label">Nivel educativo alcancazado</label>
                                                         <select className="form-select" aria-label="Default select example"
@@ -179,7 +179,7 @@ export const UpdateUser = () => {
                                                         position={"id_rubro"}
                                                         itemName={"desc_rubro"}
                                                         name={"id_rubro"}
-                                                        url={'http://localhost:5000/findRubro'}
+                                                        url={'findRubro'}
                                                         value={form[name]} onChange={handleInputChange}
                                                     />
                                                 </div>
@@ -191,7 +191,7 @@ export const UpdateUser = () => {
 
                                         {id_rol == 2 && (
                                             <>
-                                                <div className='d-flex'>
+                                                <div className='d-flex justify-content-center'>
                                                     <div className="col-md-6 px-1">
                                                         <label className="form-label">Nombre de la empresa</label>
                                                         <input type="text" className="form-control" placeholder="Nombre de la empresa"
@@ -213,7 +213,7 @@ export const UpdateUser = () => {
                                                 </div>
 
 
-                                                <div className="d-flex">
+                                                <div className="d-flex justify-content-center">
 
                                                     <Selects
                                                         label={"Rubros."}
@@ -221,7 +221,7 @@ export const UpdateUser = () => {
                                                         position={"id_rubro"}
                                                         itemName={"desc_rubro"}
                                                         name={"id_rubro"}
-                                                        url={'http://localhost:5000/findRubro'}
+                                                        url={'findRubro'}
                                                         value={form[name]}
                                                         onChange={handleInputChange}
                                                     />

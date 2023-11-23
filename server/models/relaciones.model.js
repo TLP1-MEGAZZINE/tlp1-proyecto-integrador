@@ -17,20 +17,20 @@ const { Post } = require("./posteos.model")
 const { Image } = require("./imagenes.model")
 
 //UNO A UNO COMENTAR SI NO SE CREAN LAS RELACIONES AL PRINCIPIO
-User.hasOne(UserInfo, { foreignKey: 'id_user', onDelete: 'CASCADE' });
-UserInfo.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE' });
+User.hasOne(UserInfo, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+UserInfo.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
-User.hasOne(Particular, { foreignKey: 'id_user', onDelete: 'CASCADE' })
-Particular.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE' });
+User.hasOne(Particular, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+Particular.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
-User.hasOne(Contacto, { foreignKey: 'id_user', onDelete: 'CASCADE' })
-Contacto.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE' });
+User.hasOne(Contacto, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+Contacto.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
-User.hasOne(Empleador, { foreignKey: 'id_user', onDelete: 'CASCADE' });
-Empleador.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE' });
+User.hasOne(Empleador, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Empleador.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
-User.hasOne(Postulante, { foreignKey: 'id_user', onDelete: 'CASCADE' });
-Postulante.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE' });
+User.hasOne(Postulante, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Postulante.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 // //UNO A MUCHOS
 Rol.hasMany(User, { foreignKey: 'id_rol' });
@@ -68,11 +68,14 @@ Rubro.hasMany(Empleador, { foreignKey: 'id_rubro' });
 Empleador.belongsTo(Rubro, { foreignKey: 'id_rubro' });
 
 // //CONTENIDO
-User.hasMany(Post, { foreignKey: "id_user", onDelete: 'CASCADE' });
-Post.belongsTo(User, { foreignKey: "id_user", onDelete: 'CASCADE' });
+User.hasMany(Post, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Post.belongsTo(User, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
-Rubro.hasMany(Post, { foreignKey: "id_rubro" });
-Post.belongsTo(Rubro, { foreignKey: "id_rubro" });
+UserInfo.hasMany(Post, { foreignKey: "id_info", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Post.belongsTo(UserInfo, { foreignKey: "id_info", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
-Image.belongsTo(User, { foreignKey: "id_user", onDelete: 'CASCADE' });
-User.hasMany(Image, { foreignKey: "id_user", onDelete: 'CASCADE' });
+Rubro.hasMany(Post, { foreignKey: "id_rubro", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Post.belongsTo(Rubro, { foreignKey: "id_rubro", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+
+Image.belongsTo(User, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+User.hasMany(Image, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
