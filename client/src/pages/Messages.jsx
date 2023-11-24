@@ -3,6 +3,7 @@ import { io } from "socket.io-client"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
 import { contactos } from "../data/Contactos"
+import { Users } from "../components/Users"
 
 const socket = io("http://localhost:5000")
 
@@ -51,25 +52,7 @@ function Messages() {
                         <h5 className="text-light">Contactos</h5>
                         <div className="d-flex flex-column">
                             <ul>
-                                {contactos.map((contacto, id) => (
-                                    <div className="d-flex text-muted col-12" key={id}>
-                                        <svg className="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
-                                            xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                                            preserveAspectRatio="xMidYMid slice" focusable="false">
-                                            <title>Placeholder</title>
-                                            <rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff"
-                                                dy=".3em">32x32</text>
-                                        </svg>
-                                        <strong>{contacto.userName}</strong>
-
-                                        <div>
-                                            <strong>{contacto.userEmail}</strong><br />
-                                            <strong>{contacto.userPhone}</strong><br />
-                                            <strong>{contacto.lastMessage}</strong>
-                                        </div>
-
-                                    </div>
-                                ))}
+                                <Users />
                             </ul>
                         </div>
                     </aside>
@@ -125,7 +108,6 @@ function Messages() {
                                     placeholder="Escribe tu mensaje..."
                                 />
                                 <button type="submit" className="btn btn-primary">Enviar</button>
-
                             </div>
 
                         </form>

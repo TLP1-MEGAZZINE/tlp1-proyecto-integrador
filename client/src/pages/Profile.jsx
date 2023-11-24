@@ -268,7 +268,7 @@ export const Profile = () => {
 
                   {id_rol == 1 && (
                     <>
-                      <h5 className="card-title">Estado Laboral: <br />
+                      <h5 className="card-title">Situación Laboral: <br />
                         {tipoRol?.estado_laboral?.desc_estado_laboral}</h5>
 
                       <h5 className="card-title">Nivel de Educación: <br />
@@ -386,11 +386,11 @@ export const Profile = () => {
 
                     <ul className="list-group table">
 
-                      <li className="list-group-item">Número de telefono: <br />
-                        {contacto?.num_tel}</li>
-
                       <li className="list-group-item">Domicilio: <br />
                         {contacto?.domicilio}</li>
+
+                      <li className="list-group-item">Número de telefono: <br />
+                        {contacto?.num_tel}</li>
 
                     </ul>
                   </div>

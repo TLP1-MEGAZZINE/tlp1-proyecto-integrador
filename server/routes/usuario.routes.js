@@ -13,6 +13,10 @@ const { ctrlFindUsers,
 } = require("../controllers/user.controllers")
 
 const { ctrlUpdateUserInfo, ctrlUpdateUserContact } = require("../controllers/updateInfo.controller")
+const {validateInfo} = require("../validators/info.validation")
+const {validatUserReact} = require("../validators/user.validationReact")
+const {validateContact} = require("../validators/contact.validation")
+
 
 const { protegerRuta } = require("../middlewares/protegerRuta");
 const { validarJWT } = require('../middlewares/autenticarToken');

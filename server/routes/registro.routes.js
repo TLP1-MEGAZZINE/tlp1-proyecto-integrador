@@ -3,7 +3,6 @@ const router = express.Router();
 
 //IMPORTAR CONTROLADORES
 const jwt = require('jsonwebtoken')
-const { validatUser } = require("../validators/users.validation")
 const { validatUserReact } = require("../validators/user.validationReact")
 
 //SE IMPORTAN LOS CONTROLADORES PARA REGISTRO Y LOGIN

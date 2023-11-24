@@ -85,3 +85,11 @@ Post.belongsTo(Rubro, { foreignKey: "id_rubro", });
 
 Image.belongsTo(User, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 User.hasMany(Image, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+
+//MUCHOS A MUCHOS
+Postulante.belongsToMany(Empleador, {
+    through: "Seguidor",
+    foreignKey: "id_postulante",
+    otherKey: "id_empleador",
+    as: "Followers"
+})

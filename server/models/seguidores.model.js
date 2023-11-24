@@ -1,6 +1,4 @@
 const { DataTypes, sequelize } = require('../config/db');
-const { User } = require("./users.model.js")
-
 
 const Seguidor = sequelize.define('Seguidor', {
     id_seguidor: {
@@ -8,9 +6,12 @@ const Seguidor = sequelize.define('Seguidor', {
         primaryKey: true,
         autoIncrement: true,
     },
-    id_user: {
+    id_follower: {
         type: DataTypes.INTEGER,
     },
+    id_folled: {
+        type: DataTypes.INTEGER,
+    }
 }, {
     timestamps: false,
     paranoid: false,
@@ -20,7 +21,7 @@ const Seguidor = sequelize.define('Seguidor', {
 
 
 // Sincronizar los modelos con la base de datos (esto creará las tablas si no existen)
-Seguidor.sync({ force: true }).then(() => {
+Seguidor.sync({ force: false }).then(() => {
     console.log('Tabla de seguidores creada')
 })
 

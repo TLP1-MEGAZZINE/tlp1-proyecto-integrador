@@ -30,7 +30,6 @@ export const Users = () => {
                     .filter(user => user.rol.rol_name != "particular")
                     .map((user, id_user) => (
 
-
                         <div key={id_user} className="d-flex text-muted pt-3 ps-2">
                             <svg className="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
