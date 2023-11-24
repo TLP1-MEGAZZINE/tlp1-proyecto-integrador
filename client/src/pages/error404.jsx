@@ -1,24 +1,10 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"
+import { useCount } from "../hooks/useCount";
 
   function Error404() {
-    const navigate = useNavigate();
-    const [countdown, setCountdown] = useState(3);
-  
-    useEffect(() => {
-      const countdownTimer = setTimeout(() => {
-        if (countdown > 0) {
-          setCountdown(countdown - 1);
-        } else {
-          navigate("/index");
-        }
-      }, 1000);
-  
-      return () => {
-        clearTimeout(countdownTimer);
-      };
-    }, [countdown, navigate]);
 
+    const timer = useCount(3, "/mas-info")
+
+    console.log(timer);
 
   return (
     <div className="vh-100 pt-5" style={{
@@ -46,7 +32,7 @@ import { useNavigate } from "react-router-dom"
               Un error a ocurrido, no se encontro la dirección solicitada...</h3>
 
             <ul style={{ color: "#acacac", fontFamily: 'Handjet', listStyleType: "none", paddingleft: "0" }}>
-              <li><h3>*Redireccionando a la página inicial en <span name="countdown">{countdown}</span> segundos...</h3></li>
+              <li><h3>*Redireccionando a la página inicial en <span name="countdown">{timer}</span> segundos...</h3></li>
 
               <li><h3>*Disculpe el inconveniente c:</h3></li>
             </ul>
