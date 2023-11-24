@@ -37,9 +37,9 @@ Postulante.sync({ force: false }).then(() => {
     console.log('Tabla de postulantes creada')
 })
 //BUSCAR POSTULANTE POR RUBRO
-async function findRubroByIdPostulante(userId) {
+async function findRubroByIdPostulante(data) {
     try {
-        return await Postulante.findOne({ where: { id_user: userId } }) ?? null
+        return await Postulante.findOne({ where: { id_user: data } }) ?? null
     } catch (error) {
         console.log("Error al encontrar el registro de postulantes ", error)
         throw error;

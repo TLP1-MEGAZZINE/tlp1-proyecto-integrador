@@ -133,15 +133,18 @@ export const Profile = () => {
   }
 
   //BUSCAR FOTO DE PERFIL
-  const [foto, setFoto] = useState("");
+  const [foto, setFoto] = useState(null);
 
   useEffect(() => {
     const obtenerDatos = async () => {
       try {
         const resultado = await fetchFunction("findPfp", "POST", data);
-        // Actualizar el estado con los datos obtenidos
-        setFoto(resultado);
-        console.log(resultado);
+        if (!resultado.message) {
+          setFoto(resultado);
+        } else {
+          setFoto(userIcon);
+          console.log("FOTO", foto);
+        }
       } catch (error) {
         console.log("Hubo un error:", error);
       }
@@ -187,7 +190,7 @@ export const Profile = () => {
         showConfirmButton: false,
         timer: 1000
       })
-setContacto(form)
+      setContacto(form)
 
     } else {
       Swal.fire({
@@ -247,7 +250,7 @@ setContacto(form)
 
 
                 <img
-                  src={`${"http://localhost:5000/"}${foto}`}
+                  src={foto == userIcon ? foto : `${"http://localhost:5000/"}${foto}`}
                   className="card-img-top img-fluid"
                   width="50px"
                   height="100px"

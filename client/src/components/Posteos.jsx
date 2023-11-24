@@ -56,7 +56,7 @@ console.log(posts);
 
                     selectedRubro > 0 ? (
 
-                        posts.filter(post => post.rubro.id_rubro == selectedRubro)
+                        posts.filter(post => post?.id_rubro == selectedRubro)
                             .map((post, id_post) => (
 
                                 <div key={id_post} className="d-flex text-muted pt-3">

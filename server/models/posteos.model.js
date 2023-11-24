@@ -50,6 +50,7 @@ Post.sync({ force: false }).then(async () => {
 //SERVICIO
 async function createPost(data) {
     try {
+        console.log(data);
 
         let usuarioPost = await User.findOne({
             where: { id_user: data.id_user },
@@ -123,40 +124,6 @@ const findAllPosts = async () => {
         });
 
         return posts;
-
-        //     // Obtener los IDs de usuario de los posts
-        //     const userIds = posts.map(post => post.id_user);
-
-        //     // Consulta los registros de user_info para los usuarios
-        //     const userInfos = await UserInfo.findAll({
-        //         where: {
-        //             id_user: userIds,
-        //         },
-        //         include:[
-        //             {
-        //                 model:Localidad,
-        //                 attributes:["nombre_local"]
-        //             }
-        //         ]            
-        //     });
-
-        //     const postsWithUserInfo = posts.map(post => {
-        //         const userInfo = userInfos.find(info => info.id_user === post.id_user);
-
-        //         if (userInfo) {
-        //             return {
-        //                 ...post.get(),
-        //                 id_local: userInfo.localidad.nombre_local, // Reemplaza "field1" con el nombre real del campo
-        //                 id_depar: userInfo.id_depar, // Reemplaza "field2" con el nombre real del campo
-        //                 // Agrega más campos según sea necesario
-        //             };
-        //         } else {
-        //             return post;
-        //         }
-        //     });
-
-        //     // Ahora postsWithUserInfo contiene la información de usuario agregada a los objetos de posts
-        //     return postsWithUserInfo;
 
     } catch (error) {
         console.log('Error al buscar todos los posts', error);

@@ -7,16 +7,15 @@ const ctrlCrearPosteos = async (req, res) => {
     try {
         const data = req.body
 
-        // if(id_rol == 1){
-        //     const usuario = await findRubroByIdPostulante(userId)
-        //     data.id_user = userId;
-        //     data.id_rol = usuario.id_rol;
-        // }else{
-        //     const usuario = await findRubroByIdEmpleador(userId)
-        
-        // data.id_user = userId;
-        // data.id_rol = usuario.id_rol;
-        // }
+        if (data.id_rol == 1) {
+            const usuario = await findRubroByIdPostulante(data.id_user)
+            const id_rubro = usuario.id_rubro
+            data.id_rubro = id_rubro
+        } else {
+            const usuario = await findRubroByIdEmpleador(data.id_user)
+            const id_rubro = usuario.id_rubro
+            data.id_rubro = id_rubro
+        }
 
         const post = await createPost(data);
 

@@ -2,62 +2,39 @@ import Header from "../components/Header"
 import Footer from "../components/Footer"
 import logo from "../assets/logo.png"
 import { useState, useEffect } from "react"
+import { useForm } from "../hooks/useForms"
+import { fetchFunction } from "../api/apiFetch"
 
 export const Post = () => {
 
-  const [postData, setPostData] = useState({
-    id_user: 1,
-    id_rubro: 10,
+  const { form, handleInputChange } = useForm({
+    id_user: localStorage.getItem("id_user"),
+    id_rubro: localStorage.getItem("id_rubro"),
     post_title: "",
     post_content: "",
   })
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setPostData({
-      ...postData,
-      [name]: value
-    })
-  }
-
-  const fetchPost = async (postData) => {
-    try {
-      const respuesta = await fetch('http://localhost:5000/createPost', {
-
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(postData)
+  const handleSubmit = async () => {
+    const response = await fetchFunction("updateUserContact", "PUT", form)
+    if (!response.ok) {
+      const { message } = await response.json();
+      return Swal.fire('Error, al crear el posteo', message, 'error',);
+    } else {
+      console.log("exito");
+      Swal.fire({
+        title: "Post creado correctamente.",
+        text: "Espere un momento...",
+        icon: "success",
+        showConfirmButton: false
       });
-      if (!respuesta.ok) {
-        const { message } = await respuesta.json();
-        return Swal.fire('Error, al crear el posteo', message, 'error',);
-      } else {
-        console.log("exito");
-        Swal.fire({
-          title: "Post creado correctamente.",
-          text: "Espere un momento...",
-          icon: "success",
-          showConfirmButton: false
-        });
-      }
-    } catch (error) {
-      console.error('Error al enviar la solicitud:', error);
     }
   }
 
-  const handleForm = (e) => {
-    e.preventDefault()
-    console.log(postData);
-
-    fetchPost(postData)
-  }
   return (
     <>
       <Header />
       <main className="colorFondo">
-        <form action="#" name="formPost" onSubmit={handleForm}>
+        <form action="#" name="formPost" onSubmit={handleSubmit}>
           <div className="d-flex justify-content-center align-items-center">
             <div className="bg-light p-3 rounded-5" style={{ border: "1px", solid: "#000" }}>
               {/* Contenido del contenedor */}

@@ -43,9 +43,9 @@ Empleador.sync({ force: false }).then(() => {
 })
 
 //BUSCAR EMPLEADOR POR RUBRO
-async function findRubroByIdEmpleador(userId) {
+async function findRubroByIdEmpleador(data) {
     try {
-        return await Empleador.findOne({ where: { id_user: userId } }) ?? null
+        return await Empleador.findOne({ where: { id_user: data } }) ?? null
     } catch (error) {
         console.log("Error al encontrar el registro de Empleadors ", error)
         throw error;

@@ -46,23 +46,23 @@ function Header() {
 
 
     //BUSCAR FOTO DE PERFIL
-    const [foto, setFoto] = useState("");
+    const [foto, setFoto] = useState(null);
 
     useEffect(() => {
-        const obtenerDatos = async () => {
-            try {
-                const resultado = await fetchFunction("findPfp", "POST", data);
-                // Actualizar el estado con los datos obtenidos
-                if (resultado) {
-                    setFoto(resultado);
-                } else {
-                    setFoto(userIcon);
-                }
-            } catch (error) {
-                console.log("Hubo un error:", error);
-            }
-        };
-        obtenerDatos();
+      const obtenerDatos = async () => {
+        try {
+          const resultado = await fetchFunction("findPfp", "POST", data);
+          if (!resultado.message) {
+            setFoto(resultado);
+          } else {
+            setFoto(userIcon);
+            console.log("FOTO", foto);
+          }
+        } catch (error) {
+          console.log("Hubo un error:", error);
+        }
+      };
+      obtenerDatos();
     }, []);
 
 
@@ -142,7 +142,8 @@ function Header() {
                             <div className="dropdown p-4">
                                 <a href="#" className="d-flex align-items-center text-decoration-none dropdown-toggle"
                                     id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src={`${"http://localhost:5000/"}${foto}`} crossOrigin="anonymous" alt="pfp" width=" 32" height="32"
+                                    <img src={foto == userIcon ? foto : `${"http://localhost:5000/"}${foto}`}
+                                        crossOrigin="anonymous" alt="pfp" width=" 32" height="32"
                                         className="rounded-circle me-2" />
                                     <strong className="text-light" id="UsuarioNombre">{user_name}</strong>
                                 </a>

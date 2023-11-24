@@ -71,11 +71,17 @@ Empleador.belongsTo(Rubro, { foreignKey: 'id_rubro' });
 User.hasMany(Post, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 Post.belongsTo(User, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
+// Postulante.hasMany(Post, { foreignKey: "id_postulante", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+// Post.belongsTo(Postulante, { foreignKey: "id_postulante", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+
+// Empleador.hasMany(Post, { foreignKey: "id_empleador", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+// Post.belongsTo(Empleador, { foreignKey: "id_empleador", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+
 UserInfo.hasMany(Post, { foreignKey: "id_info", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 Post.belongsTo(UserInfo, { foreignKey: "id_info", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
-Rubro.hasMany(Post, { foreignKey: "id_rubro", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
-Post.belongsTo(Rubro, { foreignKey: "id_rubro", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Rubro.hasMany(Post, { foreignKey: "id_rubro", });
+Post.belongsTo(Rubro, { foreignKey: "id_rubro", });
 
 Image.belongsTo(User, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 User.hasMany(Image, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
