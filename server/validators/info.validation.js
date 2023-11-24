@@ -6,14 +6,14 @@ const validateInfo = [
     check("nombre")
         // .exists()
         .notEmpty().withMessage("El nombre no debe estar vacio")
-        .isAlpha().withMessage("El nombre no puede contener números")
+        .matches(/^[a-zA-Z\s\-.,#]+$/).withMessage("El nombre no puede contener números")
         .isLength({ min: 1, max: 30 }).withMessage('El nombre debe tener entre 1 y 30 caracteres')
     ,
 
     check("apellido")
         // .exists()
         .notEmpty().withMessage("El apellido no debe estar vacio")
-        .isAlpha().withMessage("El apellido no debe contener números")
+        .matches(/^[a-zA-Z\s\-.,#]+$/).withMessage("El apellido no debe contener números")
         .isLength({ min: 1, max: 30 }).withMessage('El apellido debe tener entre 1 y 30 caracteres')
     ,
 
@@ -31,11 +31,11 @@ const validateInfo = [
         .isLength({ min: 11, max: 11 }).withMessage('El cuil debe tener 11 caracteres')
     ,
 
-
-    check("fecha_nacimiento")
-        .notEmpty().withMessage("Debe seleccionar su fecha de nacimiento")
-        .isNumeric().withMessage("Debe seleccionar su fecha de nacimiento")
-    ,
+    //DEBE SER CUSTOM
+    // check("fecha_nacimiento")
+    //     .notEmpty().withMessage("Debe seleccionar su fecha de nacimiento")
+    //     .isNumeric().withMessage("Debe seleccionar su fecha de nacimiento")
+    // ,
 
     check("id_genero")
         .exists()
@@ -65,7 +65,7 @@ const validateInfo = [
     check("otro_pais")
         .optional()
         .notEmpty().withMessage("Debe seleccionar su pais de procedencia")
-        .isAlpha().withMessage("Debe seleccionar su pais de procedencia"),
+        .matches(/^[a-zA-Z\s\-.,#]+$/).withMessage("Debe seleccionar su pais de procedencia"),
 
     (req, res, next) => {
         validateSchema(req, res, next)

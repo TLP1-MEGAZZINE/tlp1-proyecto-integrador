@@ -13,9 +13,8 @@ const { ctrlFindUsers,
 } = require("../controllers/user.controllers")
 
 const { ctrlUpdateUserInfo, ctrlUpdateUserContact } = require("../controllers/updateInfo.controller")
-const {validateInfo} = require("../validators/info.validation")
-const {validatUserReact} = require("../validators/user.validationReact")
-const {validateContact} = require("../validators/contact.validation")
+const { validateInfo } = require("../validators/info.validation")
+const { validateContact } = require("../validators/contact.validation")
 
 
 const { protegerRuta } = require("../middlewares/protegerRuta");
@@ -44,8 +43,8 @@ router.post("/findContact", ctrlFindContact)
 
 //ACTUALIZAR INFORMACION
 router.put("/updateUser", ctrlUpdateUser)
-router.put("/updateUserInfo", ctrlUpdateUserInfo)
-router.put("/updateUserContact", ctrlUpdateUserContact)
+router.put("/updateUserInfo", validateInfo, ctrlUpdateUserInfo)
+router.put("/updateUserContact", validateContact, ctrlUpdateUserContact)
 
 
 

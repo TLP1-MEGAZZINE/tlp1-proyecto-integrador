@@ -46,7 +46,6 @@ export const Register = () => {
         showConfirmButton: true,
         confirmButtonText: "Aceptar"
       })
-      console.log(resp.errors.object.user_password);
       setErros(resp.errors.object)
     }
   }

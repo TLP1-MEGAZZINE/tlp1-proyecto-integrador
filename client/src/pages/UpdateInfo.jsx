@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react'
 
 export const UpdateInfo = () => {
 
+    const [errors, setErros] = useState("")
+
     const id_user = localStorage.getItem("id_user")
 
     const data = {
@@ -44,7 +46,9 @@ export const UpdateInfo = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const response = await fetchFunction("updateUserInfo", "PUT", form)
+
         console.log("response", response);
+
         if (response.message) {
             Swal.fire({
                 title: response.message,
@@ -57,6 +61,16 @@ export const UpdateInfo = () => {
             setTimeout(() => {
                 navigate("/auth/my-profile")
             }, 2000)
+        } else {
+            Swal.fire({
+                title: "No se a podido actualizar la información.",
+                text: response.errors.array,
+                icon: "error",
+                showConfirmButton: true,
+                confirmButtonText: "Aceptar"
+            })
+
+            setErros(response.errors.object)
         }
     }
 
@@ -90,7 +104,7 @@ export const UpdateInfo = () => {
                                                 <input id="nombre" type="text" className="form-control" placeholder="John" name="nombre"
                                                     onChange={handleInputChange} value={form[name]}
                                                 />
-                                                <span className="text-danger fw-bold"></span>
+                                                <span className="text-danger fw-bold">{errors?.nombre?.msg}</span>
                                             </div>
 
                                             {/*ingrese su apellido */}
@@ -99,7 +113,7 @@ export const UpdateInfo = () => {
                                                 <input id="apellido" type="text" className="form-control" placeholder="Doe" name="apellido"
                                                     onChange={handleInputChange} value={form[name]}
                                                 />
-                                                <span className="text-danger fw-bold"></span>
+                                                <span className="text-danger fw-bold">{errors?.apellido?.msg}</span>
                                             </div>
                                         </div>
                                         {/*dni*/}
@@ -109,7 +123,7 @@ export const UpdateInfo = () => {
                                                 <input type="number" className="form-control" id="dni" placeholder="00-000-000" name="dni"
                                                     onChange={handleInputChange} value={form[name]}
                                                 />
-                                                <span className="text-danger fw-bold" ></span>
+                                                <span className="text-danger fw-bold" >{errors?.dni?.msg}</span>
                                             </div>
                                             {/*cuil*/}
                                             <div className="col-md-6 px-1">
@@ -117,7 +131,7 @@ export const UpdateInfo = () => {
                                                 <input id="cuil" type="number" className="form-control" placeholder="00-00-000-000-0" name="cuil"
                                                     onChange={handleInputChange} value={form[name]}
                                                 />
-                                                <span className="text-danger fw-bold"></span>
+                                                <span className="text-danger fw-bold">{errors?.cuil?.msg}</span>
                                             </div>
                                         </div>
 
@@ -128,7 +142,7 @@ export const UpdateInfo = () => {
                                                     onChange={handleInputChange} value={form[name]}
 
                                                 />
-                                                <span className="text-danger fw-bold"></span>
+                                                <span className="text-danger fw-bold">{errors?.fecha_nacimiento?.msg}</span>
 
                                             </div>
 
@@ -142,7 +156,7 @@ export const UpdateInfo = () => {
                                                     <option value="2">Femenino</option>
                                                     <option value="3">Sin especificar</option>
                                                 </select>
-                                                <span className="text-danger fw-bold"></span>
+                                                <span className="text-danger fw-bold">{errors?.id_genero?.msg}</span>
                                             </div>
                                         </div>
 
@@ -158,6 +172,7 @@ export const UpdateInfo = () => {
                                                 value={form[name]}
                                                 onChange={handleInputChange}
                                             />
+                                            <span className="text-danger fw-bold">{errors?.id_pais?.msg}</span>
 
 
                                             {form.id_pais == 1 && (
@@ -175,7 +190,7 @@ export const UpdateInfo = () => {
                                             )}
 
                                         </div>
-                                        <span className="text-danger fw-bold"></span>
+                                        <span className="text-danger fw-bold">{errors?.id_provincia?.msg}</span>
 
                                         {form.id_pais == 11 && (
                                             <div className="col-md-12">
@@ -184,7 +199,7 @@ export const UpdateInfo = () => {
                                                     value={form[name]}
                                                     onChange={handleInputChange}
                                                 />
-                                                <span className="text-danger fw-bold"></span>
+                                                <span className="text-danger fw-bold">{errors?.otro_pais?.msg}</span>
                                             </div>)}
 
                                         <div className="d-flex justify-content-center">
@@ -198,6 +213,8 @@ export const UpdateInfo = () => {
                                                 value={form[name]}
                                                 onChange={handleInputChange}
                                             />
+                                            <span className="text-danger fw-bold">{errors?.id_depar?.msg}</span>
+
 
                                             <Selects
                                                 label={"Localidad en la que se encuentre."}
@@ -209,6 +226,8 @@ export const UpdateInfo = () => {
                                                 value={form[name]}
                                                 onChange={handleInputChange}
                                             />
+                                            <span className="text-danger fw-bold">{errors?.id_local?.msg}</span>
+
                                         </div>
                                         <div className="text-center d-flex justify-content-around py-4">
 

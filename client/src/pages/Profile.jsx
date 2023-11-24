@@ -11,6 +11,8 @@ import { fetchFileFunction } from "../api/apiFetchFiles";
 
 export const Profile = () => {
 
+  const [errors, setErros] = useState("")
+
   const { logout } = useContext(AuthContext);
 
   const navigate = useNavigate()
@@ -122,6 +124,9 @@ export const Profile = () => {
         showConfirmButton: false,
         timer: 1000
       })
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000)
     } else {
       Swal.fire({
         title: response.error,
@@ -152,10 +157,10 @@ export const Profile = () => {
     obtenerDatos();
   }, []);
 
-
+  
   //ELIMINAR PERFIL
   const handleDelete = () => {
-    const response = fetchFunction("destroyUser", "DELETE", data)
+      const response = fetchFunction("destroyUser", "DELETE", data)
 
     if (response) {
       Swal.fire({
@@ -182,6 +187,8 @@ export const Profile = () => {
     e.preventDefault()
 
     const response = await fetchFunction("updateUserContact", "PUT", form)
+
+
     if (response.message) {
       Swal.fire({
         title: response.message,
@@ -194,11 +201,13 @@ export const Profile = () => {
 
     } else {
       Swal.fire({
-        title: response.error,
+        title: response.errors.array,
         icon: "error",
-        showConfirmButton: false,
-        timer: 1000
+        showConfirmButton: true,
+        confirmButtonText: "Aceptar"
       })
+
+      setErros(response.errors.object)
     }
   }
 
@@ -413,11 +422,15 @@ export const Profile = () => {
                             <input type="text" className="form-control" name="domicilio"
                               onChange={handleInputChange} value={form[name]}
                             />
+                            <span className="text-danger fw-bold">{errors?.domicilio?.msg}</span>
+
 
                             <label className="form-label">Número de telefono</label>
                             <input type="number" className="form-control" name="num_tel"
                               onChange={handleInputChange} value={form[name]}
                             />
+                            <span className="text-danger fw-bold">{errors?.num_tel?.msg}</span>
+
                           </div>
                           <div className="modal-footer">
                             <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
