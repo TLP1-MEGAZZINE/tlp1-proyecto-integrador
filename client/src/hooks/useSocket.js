@@ -8,7 +8,7 @@ export const useSocket = (serverPath) => {
 
     const conectarSocket = useCallback(() => {
 
-        const token = JSON.parse(localStorage.getItem("token")) || "";
+        const token = localStorage.getItem("token") || "";
 
         const sockeTemp = io.connect(serverPath, {
             transports: ["websocket"],
@@ -21,6 +21,7 @@ export const useSocket = (serverPath) => {
 
         setSocket(sockeTemp)
     }, [serverPath])
+
     const desconectarSocket = useCallback(() => {
         socket?.disconnect();
     }, [socket]);

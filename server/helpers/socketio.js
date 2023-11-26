@@ -8,7 +8,7 @@ async function socketFunction(server) {
     })
 
     io.on("connection", (socket) => {
-        console.log("socket funcionando");
+        console.log("socket funcionando: " + socket.id);
 
         socket.on("message", data => {
             io.emit("message", data)

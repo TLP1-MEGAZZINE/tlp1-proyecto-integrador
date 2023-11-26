@@ -34,7 +34,7 @@ export const Users = () => {
         <>
             {
                 users
-                    .filter(user => user.rol.rol_name != "particular" && user.id_user === id_user)
+                    .filter(user => user.rol.rol_name != "particular" && user.id_user != id_user)
                     .map((user, id_user) => (
 
                         <div key={id_user} className="d-flex text-muted pt-3 ps-2">

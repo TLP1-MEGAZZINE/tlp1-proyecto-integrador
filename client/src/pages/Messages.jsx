@@ -1,43 +1,53 @@
-import { useEffect, useState, useRef } from "react"
-import { io } from "socket.io-client"
+import { useEffect, useState, useContext } from "react"
+import { ChatContext } from "../context/ChatProvider"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
-import { contactos } from "../data/Contactos"
 import { Users } from "../components/Users"
 
-const socket = io("http://localhost:5000")
 
 function Messages() {
 
-    const [messages, setMessages] = useState([])
+    const [users, setUsers] = useState([]);
+    const [messages, setMessages] = useState("")
+    const { chatState } = useContext(ChatContext)
+
+    // useEffect(() => {
+    //     const obtenerDatos = async () => {
+    //         try {
+    //             const resultado = await fetchFunction("findAll", "GET");
+    //             setUsers(resultado);
+    //         } catch (error) {
+    //             console.log("Hubo un error:", error);
+    //         }
+    //     };
+    //     obtenerDatos();
+    // }, []);
 
     const [text, setText] = useState("")
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const sendMessage = (message) => {
+        const newMessage = {
+            text: message,
+            timestamp: new Date().toLocaleTimeString(),
+        };
+        setMessages([...messages, newMessage]);
+        // Aquí puedes enviar el mensaje al servidor o realizar otras acciones necesarias
+        console.log("Mensaje enviado: ", newMessage);
+    };
 
-        socket.emit("message", text)
-        setText("")
-    }
+
+    const handleSendMessage = (e) => {
+        e.preventDefault();
+        if (messages.trim() != "") {
+
+            sendMessage(messages)
+            setMessages("")
+        }
+    };
 
     useEffect(() => {
-        socket.on("message", (data) => {
-            if (data === "") return
-            setMessages(prev => [...prev, data])
-        })
-
-        return () => {
-            socket.off("message")
-        }
-    }, [])
-
-    const messagesListRef = useRef();
-
-    useEffect(() => {
-        if (messagesListRef.current) {
-            messagesListRef.current.scrollTop = messagesListRef.current.scrollHeight;
-        }
-    }, [messages]);
+        // Código para manejar mensajes entrantes...
+    }, []);
 
     return (
         <>
@@ -49,10 +59,15 @@ function Messages() {
                 <section className="d-flex flex-column">
                     {/*CONTACTOS*/}
                     <aside className="bg-primary pe-5 ps-3 flex-grow-1">
-                        <h5 className="text-light">Contactos</h5>
+                        <h5 className="text-light">Usuarios</h5>
                         <div className="d-flex flex-column">
                             <ul>
-                                <Users />
+
+                                {/*                  {chatState.users.map((user) => (
+                                    <li key={user.id_user}>
+                                        <span className={`badge text-bg-${user.online ? 'success' : 'danger'}`}> o &nbsp;</span> &nbsp; {user.user_name}
+                                    </li>
+                                ))} */}
                             </ul>
                         </div>
                     </aside>
@@ -71,14 +86,14 @@ function Messages() {
                                 <rect width="100%" height="100%" fill="#007bff"></rect>
                                 <text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text>
                             </svg>
-                            <h2>Contacto</h2> <br />
+                            <h2>Sala de chat</h2> <br />
                         </div>
                     </section>
 
 
                     {/* MENSAJES */}
-                    <ul className="overflow-auto" style={{ maxHeight: '270px' }} >
-                        {messages.map((message, id) => (
+                    <ul className="overflow-auto" >
+                        {/*  {messages.map((message, id) => (
                             <div key={id} className="d-flex text-muted mt-3 flex-row-reverse">
                                 <svg className="bd-placeholder-img flex-shrink-0 ms-2 rounded" width="32" height="32"
                                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
@@ -94,12 +109,12 @@ function Messages() {
                                     </p>
                                 </div>
                             </div>
-                        ))}
+                        ))} */}
                     </ul>
 
                     {/* ESCRIBIR MENSAJE */}
                     <div className="mt-auto">
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSendMessage}>
 
                             <div className="d-flex mb-2">
 
