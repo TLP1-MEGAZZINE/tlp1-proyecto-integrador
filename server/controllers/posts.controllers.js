@@ -5,7 +5,11 @@ const { findRubroByIdEmpleador } = require("../models/empleador.model")
 //CREAR UN POSTEO EN LA DB
 const ctrlCrearPosteos = async (req, res) => {
     try {
+
         const data = req.body
+        const { filename } = req.file;
+        console.log("DATA");
+        console.log(data.id_user);
 
         if (data.id_rol == 1) {
             const usuario = await findRubroByIdPostulante(data.id_user)
@@ -17,7 +21,7 @@ const ctrlCrearPosteos = async (req, res) => {
             data.id_rubro = id_rubro
         }
 
-        const post = await createPost(data);
+        const post = await createPost(data, filename);
 
         if (!post) {
             throw new Error("Error al crear el post")

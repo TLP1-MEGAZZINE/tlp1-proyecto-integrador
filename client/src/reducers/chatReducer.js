@@ -21,11 +21,11 @@ export const chatReducer = (chatState, action) => {
         case types.NEW_MESSAGE:
             if (chatState.activeChat == action.payload.from || state.chatActivo === action.payload.to) {
                 return {
-                    ...state,
+                    ...chatState,
                     messages: [...chatState.messages, action.payload]
                 }
             } else {
-                return state;
+                return chatState;
             }
 
         //CARGAR MENSAJES

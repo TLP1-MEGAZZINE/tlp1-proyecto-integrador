@@ -2,46 +2,30 @@ import { useEffect, useState, useContext } from "react"
 import { ChatContext } from "../context/ChatProvider"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
-import { Users } from "../components/Users"
 
 
 function Messages() {
 
-    const [users, setUsers] = useState([]);
     const [messages, setMessages] = useState("")
-    const { chatState } = useContext(ChatContext)
+    const { chatState, dispatch } = useContext(ChatContext)
 
-    // useEffect(() => {
-    //     const obtenerDatos = async () => {
-    //         try {
-    //             const resultado = await fetchFunction("findAll", "GET");
-    //             setUsers(resultado);
-    //         } catch (error) {
-    //             console.log("Hubo un error:", error);
-    //         }
-    //     };
-    //     obtenerDatos();
-    // }, []);
-
-    const [text, setText] = useState("")
-
-    const sendMessage = (message) => {
-        const newMessage = {
-            text: message,
-            timestamp: new Date().toLocaleTimeString(),
-        };
-        setMessages([...messages, newMessage]);
-        // Aquí puedes enviar el mensaje al servidor o realizar otras acciones necesarias
-        console.log("Mensaje enviado: ", newMessage);
-    };
-
+console.log(chatState);
 
     const handleSendMessage = (e) => {
         e.preventDefault();
-        if (messages.trim() != "") {
+        if (messages.trim() !== "") {
+            // Aquí deberías enviar el mensaje utilizando tu función de enviar mensajes
+            // y el estado del chat
+            // Ejemplo (puedes necesitar adaptarlo según tu lógica):
+            dispatch({
+                type: 'NEW_MESSAGE',
+                payload: {
 
-            sendMessage(messages)
-            setMessages("")
+                    content: messages,
+                    // Puedes agregar más información según tus necesidades
+                }
+            });
+            setMessages("");
         }
     };
 
@@ -63,11 +47,6 @@ function Messages() {
                         <div className="d-flex flex-column">
                             <ul>
 
-                                {/*                  {chatState.users.map((user) => (
-                                    <li key={user.id_user}>
-                                        <span className={`badge text-bg-${user.online ? 'success' : 'danger'}`}> o &nbsp;</span> &nbsp; {user.user_name}
-                                    </li>
-                                ))} */}
                             </ul>
                         </div>
                     </aside>
@@ -93,23 +72,9 @@ function Messages() {
 
                     {/* MENSAJES */}
                     <ul className="overflow-auto" >
-                        {/*  {messages.map((message, id) => (
-                            <div key={id} className="d-flex text-muted mt-3 flex-row-reverse">
-                                <svg className="bd-placeholder-img flex-shrink-0 ms-2 rounded" width="32" height="32"
-                                    xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                                    preserveAspectRatio="xMidYMid slice" focusable="false">
-                                    <title>Placeholder</title>
-                                    <rect width="100%" height="100%" fill="#007bff"></rect>
-                                    <text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text>
-                                </svg>
-                                <div className="alert alert-primary">
-                                    <p>
-                                        {message} <br />
-                                        <span className="text-muted">10:30pm</span>
-                                    </p>
-                                </div>
-                            </div>
-                        ))} */}
+                        {chatState?.messages?.map((message, index) => (
+                            <li key={index}>{message.content}</li>
+                        ))}
                     </ul>
 
                     {/* ESCRIBIR MENSAJE */}
@@ -118,9 +83,11 @@ function Messages() {
 
                             <div className="d-flex mb-2">
 
-                                <input type="text" value={text} onChange={(e) => setText(e.target.value)}
+                                <input type="text"
                                     className="form-control m-2"
                                     placeholder="Escribe tu mensaje..."
+                                    value={messages}
+                                    onChange={(e) => setMessages(e.target.value)}
                                 />
                                 <button type="submit" className="btn btn-primary">Enviar</button>
                             </div>

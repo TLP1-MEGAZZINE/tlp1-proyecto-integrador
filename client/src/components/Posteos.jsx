@@ -13,10 +13,10 @@ export const Posteos = ({ selectedRubro }) => {
     };
 
     useEffect(() => {
-            const resultado = fetchFunction("findAllPosts", "GET")
-                .then((resultado) => {
-                    setPosts(resultado);
-                })
+        const resultado = fetchFunction("findAllPosts", "GET")
+            .then((resultado) => {
+                setPosts(resultado);
+            })
     }, []);
 
     console.log(posts);
@@ -50,7 +50,8 @@ export const Posteos = ({ selectedRubro }) => {
 
                                     <strong className="d-block text-gray-dark">{post.User.user_email}</strong>
                                     <strong className="d-block text-gray-dark">{post.post_title}</strong>
-                                    {post.post_content}
+                                    {post.post_content} <br />
+                                    <img src={`http://localhost:5000${post.url}`} crossOrigin="anonymous" height="200" width="300" alt="Img" />
                                     <br />
                                     <span>Rubro: {post?.rubro?.desc_rubro}</span><br />
                                     <span>Fecha: {dayjs(post.updatedAt).format('DD/MM/YYYY hh:mm')}</span><br />

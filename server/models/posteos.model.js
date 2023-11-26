@@ -24,6 +24,10 @@ const Post = sequelize.define('post', {
         allowNull: false,
 
     },
+    url: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     is_emprise_post: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
@@ -49,7 +53,7 @@ Post.sync({ force: false }).then(async () => {
 });
 
 //SERVICIO
-async function createPost(data) {
+async function createPost(data, filename) {
     try {
         console.log(data);
 
@@ -68,7 +72,8 @@ async function createPost(data) {
                 post_content: data.post_content,
                 is_emprise_post: true,
                 id_rubro: data.id_rubro,
-                id_info: infoId.id_info
+                id_info: infoId.id_info,
+                url: `/uploads/${filename}`
             });
         }
         // Crea un post en la DB
@@ -78,7 +83,8 @@ async function createPost(data) {
             post_content: data.post_content,
             is_emprise_post: false,
             id_rubro: data.id_rubro,
-            id_info: infoId.id_info
+            id_info: infoId.id_info,
+            url: `/uploads/${filename}`
         });
 
     } catch (error) {

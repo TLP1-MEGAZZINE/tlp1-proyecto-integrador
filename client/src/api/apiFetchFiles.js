@@ -12,6 +12,10 @@ export const fetchFileFunction = async (route, payload) => {
     // Añadir el archivo al formData
     formData.append("url", payload.url);
     formData.append("id_user", payload.id_user);
+    if (payload.post_title || payload.post_content) {
+        formData.append("post_title", payload.post_title);
+        formData.append("post_content", payload.post_content);
+    }
 
     console.log("FORM DATA");
     console.log(formData);

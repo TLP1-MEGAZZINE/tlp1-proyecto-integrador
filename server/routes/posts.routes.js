@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const {ctrlCrearPosteos, ctrlFindAllPosts, ctrlFindPostbyRubro, ctrlDeletePost, ctrlFindPostEmpresa, ctrlFindPostPostulante  } = require("../controllers/posts.controllers")
-
+const { ctrlCrearPosteos, ctrlFindAllPosts, ctrlFindPostbyRubro, ctrlDeletePost, ctrlFindPostEmpresa, ctrlFindPostPostulante } = require("../controllers/posts.controllers")
+const upload = require('../middlewares/multer');
 
 //CREAR POSTEOS
-router.post("/createPost", ctrlCrearPosteos)
+router.post("/createPost", upload.single('url'), ctrlCrearPosteos)
 
 router.get("/findAllPosts", ctrlFindAllPosts)
 
