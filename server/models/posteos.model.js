@@ -20,8 +20,9 @@ const Post = sequelize.define('post', {
         allowNull: false,
     },
     post_content: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(1000),
         allowNull: false,
+
     },
     is_emprise_post: {
         type: DataTypes.BOOLEAN,

@@ -87,6 +87,10 @@ async function findByRubro(data,) {
 
 //BUSCAR TODA LA INFO DE USUARIO
 async function findUserInfo(data) {
+
+    console.log("id_user", data);
+
+
     try {
         return await UserInfo.findOne({
             where: { id_user: data.id_user },
@@ -116,7 +120,7 @@ async function findUserInfo(data) {
                 },
                 {
                     model: User,
-                    attributes: ["user_name", "user_email"]
+                    attributes: ["user_name", "user_email", "id_rol"]
                 },
             ]
         })

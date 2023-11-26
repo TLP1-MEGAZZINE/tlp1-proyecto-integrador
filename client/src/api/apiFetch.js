@@ -21,8 +21,7 @@ export const fetchFunction = async (route, method, payload) => {
       body: JSON.stringify(payload),
     });
 
-    const data = await response.json();
-    return  data;
+    return response.json();
 
   }
 }

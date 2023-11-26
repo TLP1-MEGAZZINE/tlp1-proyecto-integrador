@@ -103,7 +103,7 @@ const ctrlFindEmpleador = async (req, res) => {
     }
 }
 
-//BUSCAR POSTULANTES	
+//BUSCAR UN POSTULANTE
 const ctrlFindPostulante = async (req, res) => {
     try {
         const data = req.body

@@ -51,7 +51,7 @@ export const AppRoutes = () => {
                 <Route path='/Mas-info' element={<MasInfo />} />
                 <Route path='/Register' element={<Register />} />
                 <Route path='/index' element={<Index />} />
-                <Route path='/Profile' element={<OtherProfile />} />
+                <Route path='/Profile/:id_user' element={<OtherProfile />} />
 
                 {/*RUTAS PRIVADAS*/}
 

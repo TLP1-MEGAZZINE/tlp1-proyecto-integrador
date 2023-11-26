@@ -1,4 +1,4 @@
-// useErrors.js
+
 import { useState } from "react";
 
 export const useErrors = () => {

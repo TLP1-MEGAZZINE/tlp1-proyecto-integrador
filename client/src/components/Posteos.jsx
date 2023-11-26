@@ -1,25 +1,25 @@
 import dayjs from "dayjs";
 import { fetchFunction } from "../api/apiFetch";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Posteos = ({ selectedRubro }) => {
+    const navigate = useNavigate();
 
     const [posts, setPosts] = useState([]);
 
+    const handleProfile = (id_user) => {
+        navigate(`/profile/${id_user}`)
+    };
+
     useEffect(() => {
-        const obtenerDatos = async () => {
-            try {
-                const resultado = await fetchFunction("findAllPosts", "GET");
-                // Actualizar el estado con los datos obtenidos
-                setPosts(resultado);
-            } catch (error) {
-                console.log("Hubo un error:", error);
-            }
-        };
-        obtenerDatos();
+            const resultado = fetchFunction("findAllPosts", "GET")
+                .then((resultado) => {
+                    setPosts(resultado);
+                })
     }, []);
 
-console.log(posts);
+    console.log(posts);
 
     return (
         <>
@@ -38,8 +38,16 @@ console.log(posts);
                                     <rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff"
                                         dy=".3em">32x32</text>
                                 </svg>
-                                <p className="pb-3 mb-0 small lh-sm border-bottom">
-                                    <strong className="d-block text-gray-dark">{post.User.user_name}</strong>
+                                <p className="pb-3 mb-0 small lh-sm border-bottom ">
+
+                                    <a href="#" className="text-decoration-none">
+                                        <strong className="d-block"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                handleProfile(post.User.id_user);
+                                            }}
+                                        >{post.User.user_name}</strong></a>
+
                                     <strong className="d-block text-gray-dark">{post.User.user_email}</strong>
                                     <strong className="d-block text-gray-dark">{post.post_title}</strong>
                                     {post.post_content}

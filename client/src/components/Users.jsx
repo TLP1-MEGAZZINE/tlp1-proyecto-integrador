@@ -6,6 +6,11 @@ export const Users = () => {
     const navigate = useNavigate();
 
     const [users, setUsers] = useState([]);
+    const [follow, setFollow] = useState({});
+
+    const followClink = () => {
+        setFollow(!follow);
+    }
 
     useEffect(() => {
         const obtenerDatos = async () => {
@@ -19,9 +24,9 @@ export const Users = () => {
         obtenerDatos();
     }, []);
 
-    const handleProfile = () => {
-        navigate("/profile/" + user.id_user);
-    }
+    const handleProfile = (id_user) => {
+            navigate(`/profile/${id_user}`)
+    };
 
     return (
         <>
@@ -43,8 +48,15 @@ export const Users = () => {
 
                                 <div className="pb-3 mb-0 small lh-sm border-bottom w-100">
                                     <div className="d-flex justify-content-between">
-                                        <strong className="text-gray-dark" onClick={handleProfile }>{user.user_name}</strong>
-                                        <a href="#">Follow</a>
+                                        <a className="text-gray-dark text-decoration-none" 
+                                            onClick={(e) => {
+                                                e.preventDefault(); 
+                                                handleProfile(user.id_user);
+                                            }}>
+                                            <strong>{user.user_name}</strong>
+                                        </a>
+
+                                        <a href="#" onClick={followClink}>{follow == true ? "Siguiendo" : "Seguir"}</a>
                                     </div>
                                     <span className="d-block">{user.user_email}</span>
                                     <strong className="text-gray-dark">{user.rol.rol_name}</strong>

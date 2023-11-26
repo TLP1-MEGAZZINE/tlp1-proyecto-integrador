@@ -132,7 +132,7 @@ async function findAllUser() {
     try {
         return await User.findAll({
             where: { estado: true },
-            attributes: { exclude: ['user_password', 'estado', 'id_rol', 'id_user'] },
+            attributes: { exclude: ['user_password', 'estado', 'id_rol'] },
             include: [{
                 model: Rol, // Modelo relacionado
                 attributes: ['rol_name']
