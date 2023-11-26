@@ -3,6 +3,8 @@ import { fetchFunction } from "../api/apiFetch";
 import { useNavigate } from "react-router-dom";
 export const Users = () => {
 
+    const id_user = localStorage.getItem("id_user");
+
     const navigate = useNavigate();
 
     const [users, setUsers] = useState([]);
@@ -25,14 +27,14 @@ export const Users = () => {
     }, []);
 
     const handleProfile = (id_user) => {
-            navigate(`/profile/${id_user}`)
+        navigate(`/profile/${id_user}`)
     };
 
     return (
         <>
             {
                 users
-                    .filter(user => user.rol.rol_name != "particular")
+                    .filter(user => user.rol.rol_name != "particular" && user.id_user === id_user)
                     .map((user, id_user) => (
 
                         <div key={id_user} className="d-flex text-muted pt-3 ps-2">
@@ -48,9 +50,9 @@ export const Users = () => {
 
                                 <div className="pb-3 mb-0 small lh-sm border-bottom w-100">
                                     <div className="d-flex justify-content-between">
-                                        <a className="text-gray-dark text-decoration-none" 
+                                        <a className="text-gray-dark text-decoration-none"
                                             onClick={(e) => {
-                                                e.preventDefault(); 
+                                                e.preventDefault();
                                                 handleProfile(user.id_user);
                                             }}>
                                             <strong>{user.user_name}</strong>

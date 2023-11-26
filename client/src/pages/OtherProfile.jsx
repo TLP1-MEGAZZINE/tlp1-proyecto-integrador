@@ -11,6 +11,7 @@ export const OtherProfile = () => {
     const [info, setInfo] = useState(null);
     const [contacto, setContacto] = useState(null);
     const [pfp, setPfp] = useState(null);
+    const [rolInfo, setRolInfo] = useState(null);
 
     const { id_user } = useParams()
 
@@ -18,6 +19,7 @@ export const OtherProfile = () => {
         id_user: id_user
     }
 
+    //INFO DE USUARIO
     useEffect(() => {
         const infoUser = fetchFunction("findUserInfo", "POST", data)
             .then((infoUser) => {
@@ -25,13 +27,30 @@ export const OtherProfile = () => {
             })
     }, [])
 
+    //INFO DE ROL
+    useEffect(() => {
+        if (info?.User?.id_rol == 1) {
+            const rolInformation = fetchFunction("findPostulante", "POST", data)
+                .then((rolInformation) => {
+                    setRolInfo(rolInformation);
+                })
+        } else {
+            const rolInformation = fetchFunction("findEmpleador", "POST", data)
+                .then((rolInformation) => {
+                    setRolInfo(rolInformation);
+                })
+        }
+    }, [])
+
+    //INFO DE CONTACTO
     useEffect(() => {
         const contacto = fetchFunction("findContact", "POST", data)
             .then((contacto) => {
                 setContacto(contacto);
             })
-    })
+    }, [])
 
+    //PFP
     useEffect(() => {
         const pfp = fetchFunction("findPfp", "POST", data)
             .then((pfp) => {
@@ -71,35 +90,46 @@ export const OtherProfile = () => {
                                     <h5 className="card-title">Correo: {info?.User?.user_email}<br />
                                     </h5>
 
+                                    <h5 className="card-title">
+                                        Rol: <br />
+                                        {info?.User?.id_rol == 1 ? "Postulante" : "Empleador"}
+                                    </h5>
 
-                                    {info?.id_rol == 1 && (
+                                    {info?.User?.id_rol == 1 && (
                                         <>
-                                            <h5 className="card-title">Estado Laboral: <br />
+                                            <h5 className="card-title">Situación Laboral: <br />
+                                                {rolInfo?.estado_laboral?.desc_estado_laboral}
                                             </h5>
 
                                             <h5 className="card-title">Nivel de Educación: <br />
+                                                {rolInfo?.nivel_educacion?.desc_nivel_educacion}
                                             </h5>
 
                                             <h5 className="card-title">Rubro en el que te desempeñas: <br />
+                                                {rolInfo?.id_rubro == 11 ? rolInfo?.otro_rubro : rolInfo?.rubro?.desc_rubro}
                                             </h5>
 
                                         </>
                                     )
                                     }
 
-                                    {info?.id_rol == 2 && (
+                                    {info?.User?.id_rol == 2 && (
                                         <>
                                             <h5 className="card-title">Nombre de la Empresa: <br />
+                                                {rolInfo?.nombre_empresa}
                                             </h5>
 
                                             <h5 className="card-title">Locacion de la empresa: <br />
+                                                {rolInfo?.domicilio_empresa}
                                             </h5>
 
 
                                             <h5 className="card-title">Numero telefonico de la empresa: <br />
+                                                {rolInfo?.num_tel_empresa}
                                             </h5>
 
                                             <h5 className="card-title">Rubro de la empresa: <br />
+                                                {rolInfo?.id_rubro == 11 ? rolInfo?.otro_rubro : rolInfo?.rubro?.desc_rubro}
                                             </h5>
                                         </>
                                     )

@@ -157,10 +157,10 @@ export const Profile = () => {
     obtenerDatos();
   }, []);
 
-  
+
   //ELIMINAR PERFIL
   const handleDelete = () => {
-      const response = fetchFunction("destroyUser", "DELETE", data)
+    const response = fetchFunction("destroyUser", "DELETE", data)
 
     if (response) {
       Swal.fire({
@@ -273,6 +273,11 @@ export const Profile = () => {
 
                   <h5 className="card-title">Correo: <br />
                     {datos?.User.user_email}</h5>
+
+                  <h5 className="card-title">
+                    Rol: <br />
+                    {id_rol == 1 ? "Postulante" : "Empleador"}
+                  </h5>
 
 
                   {id_rol == 1 && (
