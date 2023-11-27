@@ -10,12 +10,15 @@ import { useForm } from '../hooks/useForms'
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from '../context/AuthProvider'
 import { fetchFunction } from '../api/apiFetch'
+import { useBoleean } from '../hooks/useHiddenPass'
+import { useSweetAlert } from '../hooks/useSweetAlert'
 
 function Login() {
 
   const { login, authState } = useContext(AuthContext)
 
   const navigate = useNavigate()
+
   useEffect(() => {
     if (authState.logged) {
       return navigate("/auth/home")
@@ -23,8 +26,8 @@ function Login() {
   }, [])
 
   const { form, handleInputChange } = useForm({
-    user_name: "",
-    user_password: "",
+    user_name: localStorage.getItem("remember_user_name") || "",
+    user_password: localStorage.getItem("remember_pass") || ""
   })
 
   const handleRegisterClick = () => {
@@ -37,45 +40,42 @@ function Login() {
     const resp = await fetchFunction("login", "POST", form);
 
     console.log(resp);
+    const lastLocation = localStorage.getItem("lastPath")
 
     if (resp.token) {
       login(resp)
-
+      console.log(resp);
       localStorage.setItem("token", resp.token);
       localStorage.setItem("user_name", resp.user_name);
       localStorage.setItem("id_user", resp.id_user);
       localStorage.setItem("id_rol", resp.id_rol);
 
-      Swal.fire({
-        title: "Correcto, iniciando sesion.",
-        text: "Espere un momento...",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 2000
-      })
+      useSweetAlert(resp, "Correcto, iniciando sesion.", "success")
+        .then(() => {
+          navigate(lastLocation || "/auth/home")
+        })
 
-      const lastLocation = localStorage.getItem("lastPath")
-
-      setTimeout(() => {
-        return navigate(lastLocation || "/auth/home")
-      }, 2000)
     } else {
-      Swal.fire({
-        title: "Se produjo un error",
-        text: resp.message,
-        icon: "error",
-        showConfirmButton: true,
-        confirmButtonText: "Aceptar"
-      })
+      useSweetAlert(resp, null, "error")
     }
   }
 
-  //OCULTAR LA CONTRASEÑA
-  const [ocultarPassword, setOcultarPassword] = useState(false);
-
-  const functionOcultarContraseña = () => {
-    setOcultarPassword((passwordVisible) => !passwordVisible)
+  const handleForgotPass = () => {
+    navigate("/forgotpass");
   }
+
+  const { boleean, handleBoleean } = useBoleean()
+
+  const rememberMe = (e) => {
+    if (e.target.checked) {
+      localStorage.setItem("remember_user_name", form.user_name);
+      localStorage.setItem("remember_pass", form.user_password);
+    } else {
+      localStorage.removeItem("remember_user_name");
+      localStorage.removeItem("remember_pass");
+    }
+  };
+
 
   return (
     <>
@@ -108,12 +108,12 @@ function Login() {
 
                 <div className="input-group-text bg-primary"><img src={lock} style={{ height: "1rem" }} /></div>
 
-                <input className="form-control" type={ocultarPassword ? "text" : "password"}
+                <input className="form-control" type={boleean.button1 ? "text" : "password"}
                   placeholder="Contraseña" id="contraseña" name="user_password" value={form[name]}
                   onChange={handleInputChange} />
 
-                <button type="button" className="btn btn-outline-primary" onClick={functionOcultarContraseña}>
-                  <i className={ocultarPassword ? "bi bi-eye-slash" : "bi bi-eye"}></i>
+                <button type="button" className="btn btn-outline-primary" onClick={() => handleBoleean("button1")}>
+                  <i className={boleean.button1 ? "bi bi-eye-slash" : "bi bi-eye"}></i>
                 </button>
               </div>
 
@@ -121,10 +121,41 @@ function Login() {
 
             <div className="d-flex justify-content-between mt-3">
               <div className="d-flex align-items-center">
-                <input className="form-check-input" type="checkbox" />
+                <input className="form-check-input" type="checkbox" onChange={rememberMe} />
                 <span className="ms-2">Recuerdame</span>
               </div>
-              <p className="mb-0 text-decoration-underline text-dark ms-2">¿Olvidó su contraseña?</p>
+              <a href='#' className="text-decoration-none " data-bs-toggle="modal"
+                data-bs-target="#forgotPass"> ¿Olvidó su contraseña?</a>
+
+              {/* MODAL */}
+              <div className="modal fade" id="forgotPass" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                  <form encType="multipart/form-data">
+                    <div className="modal-content">
+
+
+                      <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="staticBackdropLabel">Elija su foto de perfil</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+
+                      <div className="modal-body">
+
+                        <label className="form-label">Imagen</label>
+                        <input type="file" className="form-control" name="url"
+
+                        />
+
+                      </div>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Confirmar</button>
+                      </div>
+
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
 
             <div className="mt-3 text-center">
@@ -147,12 +178,9 @@ function Login() {
               <div className="fw-semibold text-secondary shadow-sm">Continuar con Google</div>
             </div>
 
-
           </div>
 
         </form>
-
-
       </main >
 
       <Footer />

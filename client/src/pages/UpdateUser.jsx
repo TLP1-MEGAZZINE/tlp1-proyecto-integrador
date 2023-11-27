@@ -6,6 +6,7 @@ import { Selects } from "../components/Selects"
 import { useNavigate } from "react-router-dom"
 import { fetchFunction } from '../api/apiFetch'
 import { useEffect, useState } from 'react'
+import { useBoleean } from '../hooks/useHiddenPass'
 
 export const UpdateUser = () => {
 
@@ -24,11 +25,8 @@ export const UpdateUser = () => {
 
     const [info, setInfo] = useState(null);
     const [rolesInfo, setRolesInfo] = useState(null);
-    const [pass, setPass] = useState(false)
 
-    const handlePass = () => {
-        setPass(!pass)
-    }
+    const { boleean, handleBoleean } = useBoleean();
 
     useEffect(() => {
         const resultado = fetchFunction("findUserById", "POST", data)
@@ -125,36 +123,37 @@ export const UpdateUser = () => {
                                             </div>
                                         </div>
 
-
+                                        {/*contraseña */}
                                         <div className="d-flex justify-content-center">
                                             <div className="col-md-6 px-1">
                                                 <label
                                                     className="form-label text-center">Antigua contraseña</label>
                                                 <div className="input-group">
-                                                    <input type={pass ? "text" : "password"} className="form-control" id="user_password"
+                                                    <input type={boleean.button1 ? "text" : "password"} className="form-control" id="user_password"
                                                         name="user_password" placeholder="**********"
                                                         onChange={handleInputChange} value={form[name]}
                                                     />
 
                                                     <button type="button" className="btn btn-outline-primary"
-                                                        onClick={handlePass} value={pass}
-                                                    ><i className={pass ? "bi bi-eye-slash" : "bi bi-eye"}></i></button>
+                                                        onClick={() => handleBoleean("button1")}
+                                                    ><i className={boleean.button1 ? "bi bi-eye-slash" : "bi bi-eye"}></i></button>
                                                 </div>
                                                 <span className="text-danger fw-bold" ></span>
                                             </div>
+                                            {/*confirmar contraseña */}
 
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Nueva contraseña</label>
 
                                                 <div className="input-group">
-                                                    <input type={pass ? "text" : "password"} className="form-control" id="validarPass"
+                                                    <input type={boleean.button2 ? "text" : "password"} className="form-control" id="validarPass"
                                                         name="validarPass" placeholder="**********"
                                                         onChange={handleInputChange} value={form[name]}
                                                     />
 
                                                     <button type="button" className="btn btn-outline-primary"
-                                                        onClick={handlePass} value={pass}
-                                                    ><i className={pass ? "bi bi-eye-slash" : "bi bi-eye"}></i></button>
+                                                        onClick={() => handleBoleean("button2")}
+                                                    ><i className={boleean.button2 ? "bi bi-eye-slash" : "bi bi-eye"}></i></button>
                                                 </div>
                                                 <span className="text-danger fw-bold"></span>
                                             </div>

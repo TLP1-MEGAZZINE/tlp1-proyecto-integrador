@@ -8,8 +8,8 @@ import { PrivateRoutes } from './PrivateRoutes';
 import { useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import { MainRoutes } from './MainRoutes';
-import { useNavigate } from 'react-router-dom';
 import { OtherProfile } from '../pages/OtherProfile';
+import { ForgotPass } from '../pages/ForgotPass';
 
 export const AppRoutes = () => {
 
@@ -46,6 +46,7 @@ export const AppRoutes = () => {
         <BrowserRouter>
             {/*RUTAS PUBLICAS*/}
             <Routes>
+                <Route path='/ForgotPass' element={<ForgotPass />} />
                 <Route path='/Login' element={<Login />} />
                 <Route path='*' element={<Error404 />} />
                 <Route path='/Mas-info' element={<MasInfo />} />

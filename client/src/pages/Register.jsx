@@ -3,8 +3,8 @@ import Footer from "../components/Footer"
 import Header from "../components/Header"
 import { useForm } from "../hooks/useForms";
 import { fetchFunction } from "../api/apiFetch";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { useBoleean } from "../hooks/useHiddenPass";
 
 export const Register = () => {
 
@@ -13,6 +13,12 @@ export const Register = () => {
   const [errors, setErros] = useState("")
 
   const { form, handleInputChange } = useForm({})
+
+  useEffect(() => {
+    if (authState.logged) {
+      return navigate("/auth/home")
+    }
+  }, [])
 
   const handleCancel = () => {
     navigate("/index")
@@ -49,6 +55,8 @@ export const Register = () => {
       setErros(resp.errors.object)
     }
   }
+
+  const { boleean, handleBoleean } = useBoleean()
 
   return (
     <>
@@ -103,14 +111,16 @@ export const Register = () => {
                       <label
                         className="form-label text-center">Contraseña</label>
                       <div className="input-group">
-                        <input type="password" className="form-control" id="user_password"
+                        <input type={boleean.button1 ? "text" : "password"} className="form-control" id="user_password"
                           name="user_password" placeholder="**********" required
                           onChange={handleInputChange} value={form[name]}
                         />
 
                         <button type="button" className="btn btn-outline-primary"
-                        ><i
-                          className="bi bi-eye"></i></button>
+                          onClick={() => handleBoleean("button1")}
+                        ><i className={boleean.button1 ? "bi bi-eye-slash" : "bi bi-eye"} ></i></button>
+
+
                       </div>
                       <span className="text-danger fw-bold" >{errors?.user_password?.msg}</span>
                     </div>
@@ -119,14 +129,14 @@ export const Register = () => {
                       <label className="form-label">Repetir contraseña</label>
 
                       <div className="input-group">
-                        <input type="password" className="form-control" id="validarPass"
+                        <input type={boleean.button2 ? "text" : "password"} className="form-control" id="validarPass"
                           name="validarPass" placeholder="**********" required
                           onChange={handleInputChange} value={form[name]}
                         />
 
                         <button type="button" className="btn btn-outline-primary"
-                        ><i
-                          className="bi bi-eye"></i></button>
+                          onClick={() => handleBoleean("button2")}
+                        ><i className={boleean.button2 ? "bi bi-eye-slash" : "bi bi-eye"}></i></button>
                       </div>
                       <span className="text-danger fw-bold">{errors?.validarPass?.msg}</span>
                     </div>
