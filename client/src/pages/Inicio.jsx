@@ -5,7 +5,6 @@ import { Users } from "../components/Users";
 import { Posteos } from "../components/Posteos";
 import { useNavigate } from "react-router-dom";
 
-
 function Inicio() {
 
     const navigate = useNavigate();
@@ -35,12 +34,12 @@ function Inicio() {
 
 
                 <article className="row">
-                    <div className="row">
+                    <div className="row py-3">
 
                         <div className="col-2">
 
                             <select onChange={handleSelectChange}
-                                value={selectedRubro} className="form-select" aria-label="Default select example" required>
+                                value={selectedRubro} className="form-select" aria-label="Default select example">
                                 <option value="0" >Filtro Rubros</option>
                                 <option value="1">Salud</option>
                                 <option value="2">Tecnologia/Informatica</option>
@@ -54,9 +53,48 @@ function Inicio() {
                                 <option value="10">Docente</option>
                                 <option value="11">Otros</option>
                             </select>
+                        </div>
 
+                        <div className="col-2">
+                            <select onChange={handleSelectChange}
+                                value={selectedRubro} className="form-select" aria-label="Default select example">
+                                <option value="0" >Filtro Rubros</option>
+                                <option value="1">Salud</option>
+                                <option value="2">Tecnologia/Informatica</option>
+                                <option value="3">Educación</option>
+                                <option value="4">Finanzas</option>
+                                <option value="5">Manufactura</option>
+                                <option value="6">Ventas</option>
+                                <option value="7">Administración</option>
+                                <option value="8">Alimenticio</option>
+                                <option value="9">Construcción</option>
+                                <option value="10">Docente</option>
+                                <option value="11">Otros</option>
+                            </select>
+                        </div>
+
+                        <div className="col-2">
+                            <select onChange={handleSelectChange}
+                                value={selectedRubro} className="form-select" aria-label="Default select example">
+                                <option value="0" >Filtro Rubros</option>
+                                <option value="1">Salud</option>
+                                <option value="2">Tecnologia/Informatica</option>
+                                <option value="3">Educación</option>
+                                <option value="4">Finanzas</option>
+                                <option value="5">Manufactura</option>
+                                <option value="6">Ventas</option>
+                                <option value="7">Administración</option>
+                                <option value="8">Alimenticio</option>
+                                <option value="9">Construcción</option>
+                                <option value="10">Docente</option>
+                                <option value="11">Otros</option>
+                            </select>
+                        </div>
+
+                        <div className="col-6 text-end">
                             <button className="btn btn-primary" onClick={handleNewPost}>Nuevo posteo</button>
                         </div>
+
 
                     </div>
                     <div className="row">
@@ -84,7 +122,7 @@ function Inicio() {
                         <div className="my-3 p-3 bg-body rounded shadow-sm">
                             <h6 className="border-bottom pb-2 mb-0">Usuarios Sugeridos</h6>
 
-                            <Users/>
+                            <Users />
 
                             <small className="d-block text-end mt-3">
                                 <a href="solicitudes">Ver todas las solicitudes</a>

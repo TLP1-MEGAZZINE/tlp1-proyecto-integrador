@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { fetchFunction } from "../api/apiFetch";
 import { useNavigate } from "react-router-dom";
+import { useBoleean } from "../hooks/useHiddenPass";
+
 export const Users = () => {
 
     const id_user = localStorage.getItem("id_user");
@@ -8,11 +10,8 @@ export const Users = () => {
     const navigate = useNavigate();
 
     const [users, setUsers] = useState([]);
-    const [follow, setFollow] = useState({});
 
-    const followClink = () => {
-        setFollow(!follow);
-    }
+    const { boleean, handleBoleean } = useBoleean();
 
     useEffect(() => {
         const obtenerDatos = async () => {
@@ -58,7 +57,7 @@ export const Users = () => {
                                             <strong>{user.user_name}</strong>
                                         </a>
 
-                                        <a href="#" onClick={followClink}>{follow == true ? "Siguiendo" : "Seguir"}</a>
+                                        <a href="#" onClick={() => handleBoleean("button")}>{boleean.button ? "Siguiendo" : "Seguir"}</a>
                                     </div>
                                     <span className="d-block">{user.user_email}</span>
                                     <strong className="text-gray-dark">{user.rol.rol_name}</strong>

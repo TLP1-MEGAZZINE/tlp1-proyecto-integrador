@@ -3,8 +3,9 @@ import Footer from "../components/Footer"
 import Header from "../components/Header"
 import { useForm } from "../hooks/useForms";
 import { fetchFunction } from "../api/apiFetch";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useBoleean } from "../hooks/useHiddenPass";
+import { AuthContext } from "../context/AuthProvider";
 
 export const Register = () => {
 
@@ -13,6 +14,8 @@ export const Register = () => {
   const [errors, setErros] = useState("")
 
   const { form, handleInputChange } = useForm({})
+
+  const { authState } = useContext(AuthContext)
 
   useEffect(() => {
     if (authState.logged) {

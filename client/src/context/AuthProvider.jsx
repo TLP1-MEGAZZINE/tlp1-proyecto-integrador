@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     const login = (payload) => {
         dispatch({
             type: types.LOGIN,
-            payload: payload
+            payload
         })
     }
 
