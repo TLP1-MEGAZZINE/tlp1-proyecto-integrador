@@ -1,5 +1,4 @@
-const jwt = require('jsonwebtoken')
-const { findUserByName, findAllUser, deleteUser, actualizarUsuario, destroyUser, } = require("../models/users.model")
+const { findUserByName, findAllUser, deleteUser, actualizarUsuario, destroyUser, findUserById } = require("../models/users.model")
 const { findUserInfo } = require('../models/userInfo.model')
 const { updatePostulante, findPostulante } = require('../models/postulantes.model')
 const { updateEmpleador, findEmpleador } = require('../models/empleador.model')
@@ -19,6 +18,20 @@ const ctrlFindUsers = async (req, res) => {
         res.status(500).json("Internal Server Error...")
     }
 };
+
+const ctrlFindUserById = async (req, res) => {
+    try {
+        const data = req.body
+
+        const user = await findUserById(data)
+        if (user) {
+            return res.status(200).json(user)
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Internal Server Error")
+    }
+}
 
 //BUSCAR USUARIO POR NOMBRE
 const ctrlFindUserByName = async (req, res) => {
@@ -41,8 +54,8 @@ const ctrlFindUserByName = async (req, res) => {
 //BUSCAR CONTACTO DE USUARIO
 const ctrlFindContact = async (req, res) => {
     try {
-        
-        
+
+
         const data = req.body
 
         const contact = await findContact(data)
@@ -171,5 +184,6 @@ module.exports = {
     ctrlFindPostulante,
     ctrlFindEmpleador,
     ctrlDestroyUser,
-    ctrlFindContact
+    ctrlFindContact,
+    ctrlFindUserById
 }

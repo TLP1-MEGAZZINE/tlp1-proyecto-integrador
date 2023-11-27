@@ -16,11 +16,11 @@ function Login() {
   const { login, authState } = useContext(AuthContext)
 
   const navigate = useNavigate()
-useEffect(() => {
-  if (authState.logged) {
-    return navigate("/auth/home")
-   }
-},[])
+  useEffect(() => {
+    if (authState.logged) {
+      return navigate("/auth/home")
+    }
+  }, [])
 
   const { form, handleInputChange } = useForm({
     user_name: "",
@@ -59,7 +59,7 @@ useEffect(() => {
       setTimeout(() => {
         return navigate(lastLocation || "/auth/home")
       }, 2000)
-    }else{
+    } else {
       Swal.fire({
         title: "Se produjo un error",
         text: resp.message,

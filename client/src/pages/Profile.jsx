@@ -34,7 +34,7 @@ export const Profile = () => {
     id_rol
   }
 
-  const { form, handleInputChange } = useForm({
+  const { form, handleInputChange, reset } = useForm({
     id_user: data.id_user,
     id_rol: data.id_rol
   })
@@ -199,6 +199,8 @@ export const Profile = () => {
       })
       setContacto(form)
 
+      reset()
+
     } else {
       Swal.fire({
         title: response.errors.array,
@@ -256,7 +258,6 @@ export const Profile = () => {
                     </form>
                   </div>
                 </div>
-
 
                 <img
                   src={foto == userIcon ? foto : `${"http://localhost:5000/"}${foto}`}
@@ -421,7 +422,7 @@ export const Profile = () => {
                             <h1 className="modal-title fs-5" id="staticBackdropLabel">Agregue su información de contacto</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
-                          <div className="modal-body">
+                          <div className="modal-body d-flex flex-column">
 
                             <label className="form-label">Domicilio</label>
                             <input type="text" className="form-control" name="domicilio"

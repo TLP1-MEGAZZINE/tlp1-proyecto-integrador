@@ -121,14 +121,7 @@ function Header() {
                                                 Novedades
                                             </a>
                                         </li>
-                                        <li>
-                                            <hr className="dropdown-divider" />
-                                        </li>
-                                        <li>
-                                            <a className="dropdown-item" href="#">
-                                                Seguridad
-                                            </a>
-                                        </li>
+
                                     </ul>
                                 </li>
                             </ul>

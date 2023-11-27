@@ -1,5 +1,5 @@
 const { DataTypes, sequelize } = require('../config/db');
-const { encriptar } = require('../helpers/encriptar');
+const { encriptar, comparar } = require('../helpers/encriptar');
 const { Op } = require('sequelize');
 const Rol = require("./roles.model")
 
@@ -118,9 +118,9 @@ async function findUserByEmailOrUsername(form) {
 }
 
 //FIND ONE USER IN DB
-async function findUserById(userId) {
+async function findUserById(data) {
     try {
-        return await User.findByPk(userId) ?? null
+        return await User.findByPk(data.id_user) ?? null
 
     } catch (error) {
         console.log("Error al encontrar usuario")
@@ -158,17 +158,42 @@ async function findUserByRole(value) {
 //ACTUALIZAR USUARIO
 async function actualizarUsuario(data) {
     try {
-        const hashedPass = await encriptar(data.user_password)
-        const updatedUser = await User.update({
-            user_name: data.user_name,
-            user_email: data.user_email,
-            user_password: hashedPass,
-        }, {
+
+        const { user_password } = await User.findByPk(data.id_user)
+        const sameNameEmail = await User.findAll({
             where: {
-                id_user: data.id_user
+                [Op.or]: [
+                    { user_name: data.user_name },
+                    { user_email: data.user_name }
+                ]
             }
         })
-        return updatedUser;
+        let moreThanOne = false
+
+        if (sameNameEmail.length > 1) {
+            moreThanOne = true
+            throw new Error("El nombre usuario o email ya esta ocupado")
+        }
+
+        //COMPARAR LAS CONTRASEÑAS
+        const samePass = await comparar(data.user_password, user_password)
+        if (samePass || moreThanOne) {
+
+            const hashedPass = await encriptar(data.user_password)
+
+            const updatedUser = await User.update({
+                user_name: data.user_name,
+                user_email: data.user_email,
+                user_password: hashedPass,
+            }, {
+                where: {
+                    id_user: data.id_user
+                }
+            })
+            return updatedUser;
+        } else {
+            throw new Error("Las contraseña no coincide o el nombre de usuario/email ya existe")
+        }
     } catch (error) {
         console.log("Error al encontrar usuario", error);
     }
@@ -213,7 +238,7 @@ async function findUserByName(userName) {
     }
 }
 
-//ELIMINAR USUARIO
+//DESTRUIR USUARIO
 async function destroyUser(data) {
     try {
 

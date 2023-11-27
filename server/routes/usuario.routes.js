@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 const { ctrlFindUsers,
     ctrlFindUserByName,
     ctrlDeleteUser,
@@ -9,13 +8,13 @@ const { ctrlFindUsers,
     ctrlFindEmpleador,
     ctrlFindPostulante,
     ctrlDestroyUser,
-    ctrlFindContact
+    ctrlFindContact,
+    ctrlFindUserById
 } = require("../controllers/user.controllers")
 
 const { ctrlUpdateUserInfo, ctrlUpdateUserContact } = require("../controllers/updateInfo.controller")
 const { validateInfo } = require("../validators/info.validation")
 const { validateContact } = require("../validators/contact.validation")
-
 
 const { protegerRuta } = require("../middlewares/protegerRuta");
 const { validarJWT } = require('../middlewares/autenticarToken');
@@ -29,22 +28,20 @@ router.delete("/delete", ctrlDeleteUser)
 
 router.delete("/destroyUser", ctrlDestroyUser)
 
-// router.get("/findUserById", findUserById)
+router.post("/findUserById", ctrlFindUserById)
 
-router.post("/findUserInfo", ctrlFindUserInfo) //agregar ruta protegida
+router.post("/findUserInfo", validarJWT, ctrlFindUserInfo) //agregar ruta protegida
 
-router.post("/findEmpleador", ctrlFindEmpleador) //agregar ruta protegida
+router.post("/findEmpleador", validarJWT, ctrlFindEmpleador) //agregar ruta protegida
 
-router.post("/findPostulante", ctrlFindPostulante) //agregar ruta protegida
+router.post("/findPostulante", validarJWT, ctrlFindPostulante) //agregar ruta protegida
 
-router.post("/findContact", ctrlFindContact)
-
-
+router.post("/findContact", validarJWT, ctrlFindContact)
 
 //ACTUALIZAR INFORMACION
-router.put("/updateUser", ctrlUpdateUser)
-router.put("/updateUserInfo", validateInfo, ctrlUpdateUserInfo)
-router.put("/updateUserContact", validateContact, ctrlUpdateUserContact)
+router.put("/updateUser", validarJWT, ctrlUpdateUser)
+router.put("/updateUserInfo", validarJWT, validateInfo, ctrlUpdateUserInfo)
+router.put("/updateUserContact", validarJWT, validateContact, ctrlUpdateUserContact)
 
 
 

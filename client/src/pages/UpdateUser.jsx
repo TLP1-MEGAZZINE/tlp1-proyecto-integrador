@@ -10,11 +10,10 @@ import { useEffect, useState } from 'react'
 export const UpdateUser = () => {
 
     const id_rol = localStorage.getItem("id_rol")
-
     const id_user = localStorage.getItem("id_user")
 
     const data = {
-        id_user
+        id_user: id_user,
     }
 
     const navigate = useNavigate()
@@ -23,26 +22,44 @@ export const UpdateUser = () => {
         navigate("/auth/my-profile")
     }
 
-    // const [info, setInfo] = useState(null);
+    const [info, setInfo] = useState(null);
+    const [rolesInfo, setRolesInfo] = useState(null);
+    const [pass, setPass] = useState(false)
 
-    // useEffect(() => {
-    //     const obtenerDatos = async () => {
-    //         const resultado = await fetchFunction("updateUser", "POST", data);
-    //         // Actualizar el estado con los datos obtenidos
-    //         console.log("resultado", resultado);
-    //         setInfo(resultado);
-    //     };
+    const handlePass = () => {
+        setPass(!pass)
+    }
 
-    //     obtenerDatos();
-    // }, []);
+    useEffect(() => {
+        const resultado = fetchFunction("findUserById", "POST", data)
+            .then((resultado) => {
+                console.log("resultado", resultado);
+                setInfo(resultado);
+            })
+    }, []);
 
-    // console.log("info", info?.nombre);
+    if (id_rol == 1) {
+        useEffect(() => {
+            const resultado = fetchFunction("findPostulante", "POST", data)
+                .then((resultado) => {
+                    console.log("resultado", resultado);
+                    setRolesInfo(resultado);
+                })
+        }, []);
+    } else if (id_rol == 2) {
+        useEffect(() => {
+            const resultado = fetchFunction("findEmpleador", "POST", data)
+                .then((resultado) => {
+                    console.log("resultado", resultado);
+                    setRolesInfo(resultado);
+                })
+        }, []);
+    }
 
     const { form, handleInputChange } = useForm({
         id_user: id_user,
         id_rol: id_rol
     })
-    console.log("form", form);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -56,7 +73,6 @@ export const UpdateUser = () => {
                 showConfirmButton: false,
                 timer: 2000
             })
-
             setTimeout(() => {
                 navigate("/auth/my-profile")
             }, 2000)
@@ -91,7 +107,7 @@ export const UpdateUser = () => {
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Nombre de usuario</label>
                                                 <input type="text" className="form-control" placeholder="nombre de usuario"
-                                                    id="user_name" name="user_name" 
+                                                    id="user_name" name="user_name"
                                                     onChange={handleInputChange} value={form[name]}
                                                 />
                                                 <span className="text-danger fw-bold" ></span>
@@ -100,8 +116,9 @@ export const UpdateUser = () => {
                                             {/*email*/}
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Ingrese su email</label>
-                                                <input type="email" className="form-control" placeholder="name@example.com"
-                                                    id="user_email" name="user_email" 
+                                                <input type="email" className="form-control"
+                                                    placeholder={info?.user_email ? info?.user_email : "name@example.com"}
+                                                    id="user_email" name="user_email"
                                                     value={form[name]} onChange={handleInputChange}
                                                 />
                                                 <span className="text-danger fw-bold py-3" ></span>
@@ -112,32 +129,32 @@ export const UpdateUser = () => {
                                         <div className="d-flex justify-content-center">
                                             <div className="col-md-6 px-1">
                                                 <label
-                                                    className="form-label text-center">Contraseña</label>
+                                                    className="form-label text-center">Antigua contraseña</label>
                                                 <div className="input-group">
-                                                    <input type="password" className="form-control" id="user_password"
-                                                        name="user_password" placeholder="**********" 
+                                                    <input type={pass ? "text" : "password"} className="form-control" id="user_password"
+                                                        name="user_password" placeholder="**********"
                                                         onChange={handleInputChange} value={form[name]}
                                                     />
 
                                                     <button type="button" className="btn btn-outline-primary"
-                                                    ><i
-                                                        className="bi bi-eye"></i></button>
+                                                        onClick={handlePass} value={pass}
+                                                    ><i className={pass ? "bi bi-eye-slash" : "bi bi-eye"}></i></button>
                                                 </div>
                                                 <span className="text-danger fw-bold" ></span>
                                             </div>
 
                                             <div className="col-md-6 px-1">
-                                                <label className="form-label">Repetir contraseña</label>
+                                                <label className="form-label">Nueva contraseña</label>
 
                                                 <div className="input-group">
-                                                    <input type="password" className="form-control" id="validarPass"
-                                                        name="validarPass" placeholder="**********" 
+                                                    <input type={pass ? "text" : "password"} className="form-control" id="validarPass"
+                                                        name="validarPass" placeholder="**********"
                                                         onChange={handleInputChange} value={form[name]}
                                                     />
 
                                                     <button type="button" className="btn btn-outline-primary"
-                                                    ><i
-                                                        className="bi bi-eye"></i></button>
+                                                        onClick={handlePass} value={pass}
+                                                    ><i className={pass ? "bi bi-eye-slash" : "bi bi-eye"}></i></button>
                                                 </div>
                                                 <span className="text-danger fw-bold"></span>
                                             </div>
@@ -147,12 +164,13 @@ export const UpdateUser = () => {
                                         {id_rol == 1 && (
                                             <>
                                                 <div className="col-md-12 pb-3">
-                                                    <label className="form-label">Nivel educativo alcancazado</label>
+                                                    <label className="form-label">Situacion Laboral</label>
                                                     <select className="form-select" aria-label="Default select example"
                                                         onChange={handleInputChange} value={form[name]}
                                                         name="id_estado_laboral"
                                                     >
-                                                        <option value="" selected disabled>Estado laboral</option>
+                                                        <option value="" selected disabled>{rolesInfo?.estado_laboral.desc_estado_laboral ?
+                                                            rolesInfo?.estado_laboral.desc_estado_laboral : "Estado laboral"}</option>
                                                         <option value="1">Desempleado</option>
                                                         <option value="2">Actualmente trabajando</option>
                                                     </select>
@@ -165,7 +183,8 @@ export const UpdateUser = () => {
                                                             name="id_nivel_educacion"
                                                             onChange={handleInputChange} value={form[name]}
                                                         >
-                                                            <option value="" selected disabled>Nivel educativo</option>
+                                                            <option value="" selected disabled>{rolesInfo?.nivel_educacion.desc_nivel_educacion ?
+                                                                rolesInfo?.nivel_educacion.desc_nivel_educacion : "Nivel educativo"}</option>
                                                             <option value="1">Secundario completo</option>
                                                             <option value="2">Secundario incompleto</option>
                                                             <option value="1">Terciario completo</option>
@@ -175,7 +194,7 @@ export const UpdateUser = () => {
 
                                                     <Selects
                                                         label={"Rubros."}
-                                                        placeholder={"Rubro en el que se desempeña"}
+                                                        placeholder={rolesInfo?.rubro.desc_rubro ? rolesInfo?.rubro.desc_rubro : "Elija el rubro en el que se desempeña"}
                                                         position={"id_rubro"}
                                                         itemName={"desc_rubro"}
                                                         name={"id_rubro"}
@@ -194,7 +213,8 @@ export const UpdateUser = () => {
                                                 <div className='d-flex justify-content-center'>
                                                     <div className="col-md-6 px-1">
                                                         <label className="form-label">Nombre de la empresa</label>
-                                                        <input type="text" className="form-control" placeholder="Nombre de la empresa"
+                                                        <input type="text" className="form-control"
+                                                            placeholder={rolesInfo?.nombre_empresa ? rolesInfo?.nombre_empresa : "Nombre de la empresa"}
                                                             name="nombre_empresa"
                                                             value={form[name]} onChange={handleInputChange}
                                                         />
@@ -203,8 +223,9 @@ export const UpdateUser = () => {
 
                                                     <div className="col-md-6 px-1">
                                                         <label className="form-label">Locación de la empresa</label>
-                                                        <input type="text" className="form-control" 
-                                                            placeholder="Mz24 Cs45, Barrio XYZ" name="domicilio_empresa"
+                                                        <input type="text" className="form-control"
+                                                            placeholder={rolesInfo?.domicilio_empresa ? rolesInfo?.domicilio_empresa : "Mz24 Cs45, Barrio XYZ"}
+                                                            name="domicilio_empresa"
                                                             value={form[name]} onChange={handleInputChange}
                                                         />
                                                         <span className="text-danger fw-bold" id="errorDomEmpresa"></span>
@@ -217,7 +238,7 @@ export const UpdateUser = () => {
 
                                                     <Selects
                                                         label={"Rubros."}
-                                                        placeholder={"Elija el rubro de su empresa"}
+                                                        placeholder={rolesInfo?.rubro.desc_rubro ? rolesInfo?.rubro.desc_rubro : "Elija el rubro de su empresa"}
                                                         position={"id_rubro"}
                                                         itemName={"desc_rubro"}
                                                         name={"id_rubro"}
@@ -231,6 +252,7 @@ export const UpdateUser = () => {
                                                         <div className="input-group">
                                                             <span id="prefijoEmpresa" className="input-group-text">+</span>
                                                             <input type="text" className="form-control" name="num_tel_empresa"
+                                                                placeholder={rolesInfo?.num_tel_empresa ? rolesInfo?.num_tel_empresa : "9999999999"}
                                                                 value={form[name]} onChange={handleInputChange}
                                                             />
                                                         </div>
@@ -246,7 +268,8 @@ export const UpdateUser = () => {
                                             <div className="col-md-12">
                                                 <label className="form-label">Otro rubro</label>
                                                 <input type="text" className="form-control"
-                                                    placeholder="Escriba el nombre del rubro" name="otro_rubro"
+                                                    placeholder={rolesInfo.otro_rubro ? rolesInfo.otro_rubro : "Escriba el nombre del rubro"}
+                                                    name="otro_rubro"
                                                     value={form[name]} onChange={handleInputChange}
                                                 />
                                                 <span className="text-danger fw-bold" id="errorRubro"></span>
@@ -270,7 +293,7 @@ export const UpdateUser = () => {
                     </div>
 
                 </form>
-            </main>
+            </main >
             <Footer />
         </>
     )

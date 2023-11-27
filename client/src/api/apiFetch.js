@@ -6,6 +6,9 @@ export const fetchFunction = async (route, method, payload) => {
   if (method == "GET") {
     const response = await fetch(url, {
       method: method,
+      headers: {
+        "Authorization": localStorage.getItem("token"),
+      }
     });
 
     return response.json();
@@ -16,7 +19,7 @@ export const fetchFunction = async (route, method, payload) => {
       method: method,
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        "Authorization": localStorage.getItem("token"),
       },
       body: JSON.stringify(payload),
     });

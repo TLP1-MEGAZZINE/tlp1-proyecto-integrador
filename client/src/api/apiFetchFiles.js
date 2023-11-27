@@ -22,7 +22,10 @@ export const fetchFileFunction = async (route, payload) => {
 
     const response = await fetch(link, {
         method: "POST",
-        body: formData
+        body: formData,
+        headers: {
+            "Authorization": localStorage.getItem("token"),
+        }
     });
 
     const data = await response.json();

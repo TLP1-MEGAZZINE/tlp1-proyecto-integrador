@@ -4,28 +4,28 @@ const { validateSchema } = require("../middlewares/validateHealper.js")
 const validateInfo = [
     //OBLIGATORIOS
     check("nombre")
-        // .exists()
+        .optional()
         .notEmpty().withMessage("El nombre no debe estar vacio")
         .matches(/^[a-zA-Z\s\-.,#]+$/).withMessage("El nombre no puede contener números")
         .isLength({ min: 1, max: 30 }).withMessage('El nombre debe tener entre 1 y 30 caracteres')
     ,
 
     check("apellido")
-        // .exists()
+        .optional()
         .notEmpty().withMessage("El apellido no debe estar vacio")
         .matches(/^[a-zA-Z\s\-.,#]+$/).withMessage("El apellido no debe contener números")
         .isLength({ min: 1, max: 30 }).withMessage('El apellido debe tener entre 1 y 30 caracteres')
     ,
 
     check("dni")
-        // .exists()
+        .optional()
         .notEmpty().withMessage("El DNI no puede estar vacio")
         .isNumeric().withMessage("El dni debe ser numerico")
         .isLength({ min: 8, max: 8 }).withMessage('El dni debe tener 8 caracteres')
     ,
 
     check("cuil")
-        .exists()
+        .optional()
         .notEmpty().withMessage("El CUIL no puede estar vacio")
         .isNumeric().withMessage("El dni debe ser numerico")
         .isLength({ min: 11, max: 11 }).withMessage('El cuil debe tener 11 caracteres')
@@ -38,13 +38,13 @@ const validateInfo = [
     // ,
 
     check("id_genero")
-        .exists()
+        .optional()
         .notEmpty().withMessage("Debe seleccionar su genero")
         .isNumeric().withMessage("Debe seleccionar su genero")
     ,
 
     check("id_pais")
-        .exists()
+        .optional()
         .notEmpty().withMessage("Debe seleccionar su pais de procedencia")
         .isNumeric().withMessage("Debe seleccionar su pais de procedencia"),
 
@@ -55,10 +55,12 @@ const validateInfo = [
         .isNumeric().withMessage("."),
 
     check("id_local")
+        .optional()
         .notEmpty().withMessage("Debe seleccionar su localidad de procedencia")
         .isNumeric().withMessage("."),
 
     check("id_depar")
+        .optional()
         .notEmpty().withMessage("Debe seleccionar su departamento de procedencia")
         .isNumeric().withMessage("."),
 

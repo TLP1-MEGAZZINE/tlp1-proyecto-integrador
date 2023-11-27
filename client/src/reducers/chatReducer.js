@@ -6,20 +6,20 @@ export const chatReducer = (chatState, action) => {
         //USUARIOS ACTIVOS
         case types.ACTIVE_USERS:
             return {
-                ...state,
+                ...chatState, // <-- Cambiado de ...state a ...chatState
                 usuarios: [...action.payload]
             }
 
         //CHAT ACTIVO
         case types.ACTIVE_CHAT:
             return {
-                ...state,
+                ...chatState,
                 activeChat: [...action.payload]
             }
 
         //NUEVOS MENSAJES
         case types.NEW_MESSAGE:
-            if (chatState.activeChat == action.payload.from || state.chatActivo === action.payload.to) {
+            if (chatState.activeChat == action.payload.from || chatState.activeChat == action.payload.to) {
                 return {
                     ...chatState,
                     messages: [...chatState.messages, action.payload]
@@ -31,7 +31,7 @@ export const chatReducer = (chatState, action) => {
         //CARGAR MENSAJES
         case types.LOAD_MESSAGES:
             return {
-                ...state,
+                ...chatState,
                 messages: action.payload
             }
 

@@ -28,7 +28,6 @@ export const UpdateInfo = () => {
     useEffect(() => {
         const obtenerDatos = async () => {
             const resultado = await fetchFunction("findUserInfo", "POST", data);
-            // Actualizar el estado con los datos obtenidos
             console.log("resultado", resultado);
             setInfo(resultado);
         };
@@ -39,9 +38,8 @@ export const UpdateInfo = () => {
     console.log("info", info?.nombre);
 
     const { form, handleInputChange } = useForm({
-        id_user: id_user
+        id_user: id_user,
     })
-    console.log("form", form);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -101,7 +99,8 @@ export const UpdateInfo = () => {
                                         <div className="d-flex justify-content-center">
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Ingrese su nombre</label>
-                                                <input id="nombre" type="text" className="form-control" placeholder="John" name="nombre"
+                                                <input id="nombre" type="text" className="form-control" placeholder={info?.nombre ? info?.nombre : "John"}
+                                                    name="nombre"
                                                     onChange={handleInputChange} value={form[name]}
                                                 />
                                                 <span className="text-danger fw-bold">{errors?.nombre?.msg}</span>
@@ -110,7 +109,8 @@ export const UpdateInfo = () => {
                                             {/*ingrese su apellido */}
                                             <div className="col-md-6 px-1 ">
                                                 <label className="form-label">Ingrese su apellido</label>
-                                                <input id="apellido" type="text" className="form-control" placeholder="Doe" name="apellido"
+                                                <input id="apellido" type="text" className="form-control" placeholder={info?.apellido ? info?.apellido : "Doe"}
+                                                    name="apellido"
                                                     onChange={handleInputChange} value={form[name]}
                                                 />
                                                 <span className="text-danger fw-bold">{errors?.apellido?.msg}</span>
@@ -120,7 +120,8 @@ export const UpdateInfo = () => {
                                         <div className="d-flex justify-content-center">
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Ingrese su DNI</label>
-                                                <input type="number" className="form-control" id="dni" placeholder="00-000-000" name="dni"
+                                                <input type="number" className="form-control" id="dni"
+                                                    placeholder={info?.dni ? info?.dni : "00-000-000"} name="dni"
                                                     onChange={handleInputChange} value={form[name]}
                                                 />
                                                 <span className="text-danger fw-bold" >{errors?.dni?.msg}</span>
@@ -128,7 +129,8 @@ export const UpdateInfo = () => {
                                             {/*cuil*/}
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Ingrese su CUIL</label>
-                                                <input id="cuil" type="number" className="form-control" placeholder="00-00-000-000-0" name="cuil"
+                                                <input id="cuil" type="number" className="form-control"
+                                                    placeholder={info?.cuil ? info?.cuil : "00-00-000-000-0"} name="cuil"
                                                     onChange={handleInputChange} value={form[name]}
                                                 />
                                                 <span className="text-danger fw-bold">{errors?.cuil?.msg}</span>
@@ -151,7 +153,7 @@ export const UpdateInfo = () => {
                                                 <select type="text" className="form-control" aria-label="Default select example"
                                                     name="id_genero" onChange={handleInputChange} value={form[name]}
                                                 >
-                                                    <option selected disabled>Sexo</option>
+                                                    <option selected disabled>{info?.genero.genero ? info?.genero.genero : "Sexo"}</option>
                                                     <option value="1">Masculino</option>
                                                     <option value="2">Femenino</option>
                                                     <option value="3">Sin especificar</option>
@@ -164,7 +166,7 @@ export const UpdateInfo = () => {
 
                                             <Selects
                                                 label={"Nacionalidad"}
-                                                placeholder={"Paises"}
+                                                placeholder={info?.paise.nombre_pais ? info?.paise.nombre_pais : "Paises"}
                                                 position={"id_pais"}
                                                 itemName={"nombre_pais"}
                                                 name={"id_pais"}
@@ -179,7 +181,7 @@ export const UpdateInfo = () => {
 
                                                 <Selects
                                                     label={"Provincia."}
-                                                    placeholder={"Provincias."}
+                                                    placeholder={info?.provincum.nombre_provincia ? info?.provincum.nombre_provincia : "Provincias."}
                                                     position={"id_provincia"}
                                                     itemName={"nombre_provincia"}
                                                     url={'findProvinces'}
@@ -195,17 +197,19 @@ export const UpdateInfo = () => {
                                         {form.id_pais == 11 && (
                                             <div className="col-md-12">
                                                 <label className="form-label">Ingrese su pais de procedencia</label>
-                                                <input type="text" name="otro_pais" className="form-control" placeholder="Nombre del Pais"
+                                                <input type="text" name="otro_pais" className="form-control"
+                                                    placeholder="Nombre del Pais"
                                                     value={form[name]}
                                                     onChange={handleInputChange}
                                                 />
                                                 <span className="text-danger fw-bold">{errors?.otro_pais?.msg}</span>
                                             </div>)}
 
-                                        <div className="d-flex justify-content-center">
+                                        <div className="d-flex flex-wrap justify-content-center">
+
                                             <Selects
                                                 label={"Departamento en el que se encuentre."}
-                                                placeholder={"Departamentos."}
+                                                placeholder={info?.departamento.nombre_depar ? info?.departamento.nombre_depar : "Departamentos."}
                                                 position={"id_depar"}
                                                 name={"id_depar"}
                                                 itemName={"nombre_depar"}
@@ -213,12 +217,13 @@ export const UpdateInfo = () => {
                                                 value={form[name]}
                                                 onChange={handleInputChange}
                                             />
+
                                             <span className="text-danger fw-bold">{errors?.id_depar?.msg}</span>
 
 
                                             <Selects
                                                 label={"Localidad en la que se encuentre."}
-                                                placeholder={"Localidades."}
+                                                placeholder={info?.localidad.nombre_local ? info?.localidad.nombre_local : "Localidades."}
                                                 position={"id_local"}
                                                 name={"id_local"}
                                                 itemName={"nombre_local"}
@@ -229,6 +234,8 @@ export const UpdateInfo = () => {
                                             <span className="text-danger fw-bold">{errors?.id_local?.msg}</span>
 
                                         </div>
+
+
                                         <div className="text-center d-flex justify-content-around py-4">
 
                                             <button className="btn btn-danger" onClick={handleCancel}>Cancelar <i

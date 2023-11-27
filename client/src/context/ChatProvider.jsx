@@ -6,7 +6,10 @@ export const ChatContext = createContext()
 export const ChatProvider = ({ children }) => {
 
     //MANEJA LOS ESTADOS DEL CHAT
-    const [chatState, dispatch] = useReducer(chatReducer, {})
+    const [chatState, dispatch] = useReducer(chatReducer, {
+        activeChat: null,
+        messages: []
+    })
 
     return (
 

@@ -9,29 +9,29 @@ function Messages() {
     const [messages, setMessages] = useState("")
     const { chatState, dispatch } = useContext(ChatContext)
 
-console.log(chatState);
+    const sendMessage = (message) => {
+        dispatch({
+            type: "NEW_MESSAGE",
+            payload: {
+                from: chatState.activeChat,
+                to: chatState.activeChat,
+                messages: messages
+            }
+        })
+        console.log("Mensaje enviado: ", message);
+    };
 
+    // Esta función maneja el envío de mensajes
     const handleSendMessage = (e) => {
-        e.preventDefault();
-        if (messages.trim() !== "") {
-            // Aquí deberías enviar el mensaje utilizando tu función de enviar mensajes
-            // y el estado del chat
-            // Ejemplo (puedes necesitar adaptarlo según tu lógica):
-            dispatch({
-                type: 'NEW_MESSAGE',
-                payload: {
-
-                    content: messages,
-                    // Puedes agregar más información según tus necesidades
-                }
-            });
-            setMessages("");
+        e.preventDefault()
+        if (messages.trim() !== '') {
+            sendMessage(messages);
+            setMessages('');
         }
     };
 
-    useEffect(() => {
-        // Código para manejar mensajes entrantes...
-    }, []);
+    // useEffect(() => {
+    // }, []);
 
     return (
         <>
@@ -72,9 +72,13 @@ console.log(chatState);
 
                     {/* MENSAJES */}
                     <ul className="overflow-auto" >
-                        {chatState?.messages?.map((message, index) => (
-                            <li key={index}>{message.content}</li>
-                        ))}
+                        <div className="row">
+                            {chatState?.messages?.map((message, index) => (
+                                <li key={index}>
+
+                                    {message}</li>
+                            ))}
+                        </div>
                     </ul>
 
                     {/* ESCRIBIR MENSAJE */}
