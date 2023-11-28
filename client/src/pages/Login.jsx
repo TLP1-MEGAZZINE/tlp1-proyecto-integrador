@@ -23,7 +23,7 @@ function Login() {
     if (authState.logged) {
       return navigate("/auth/home")
     }
-  }, [])
+  }, [authState, navigate])
 
   const { form, handleInputChange } = useForm({
     user_name: localStorage.getItem("remember_user_name") || "",
@@ -52,7 +52,7 @@ function Login() {
 
       useSweetAlert(resp, "Correcto, iniciando sesion.", "success")
         .then(() => {
-          navigate(lastLocation || "/auth/home")
+           return navigate(lastLocation || "/auth/home")
         })
 
     } else {

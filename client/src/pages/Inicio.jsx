@@ -4,21 +4,35 @@ import Header from "../components/Header";
 import { Users } from "../components/Users";
 import { Posteos } from "../components/Posteos";
 import { useNavigate } from "react-router-dom";
+import { Selects } from "../components/Selects";
+import { fetchFunction } from "../api/apiFetch";
 
 function Inicio() {
 
     const navigate = useNavigate();
 
     const [selectedRubro, setSelectedRubro] = useState(0);
+    const [selectedLocal, setSelectedLocal] = useState(0)
+    const [rangoEdad, setRangoEdad] = useState(0)
 
     // Mover la definición de posts a este ámbito
     const [posts, setPosts] = useState([]);
 
-    const handleSelectChange = (event) => {
+    //RUBROS
+    const handleSelectRubroChange = (event) => {
         setSelectedRubro(event.target.value);
 
         const filterPost = posts.filter(
             post => post.id_rubro === parseInt(event.target.value)
+        );
+    };
+
+    //LOCALIDADES
+    const handleSelectLocalChange = (event) => {
+        setSelectedLocal(event.target.value);
+
+        const filterPost = posts.filter(
+            post => post.id_local === parseInt(event.target.value)
         );
     };
 
@@ -31,16 +45,14 @@ function Inicio() {
             <Header />
 
             <div className="container-fluid">
-
-
                 <article className="row">
                     <div className="row py-3">
 
                         <div className="col-2">
 
-                            <select onChange={handleSelectChange}
+                            <select onChange={handleSelectRubroChange}
                                 value={selectedRubro} className="form-select" aria-label="Default select example">
-                                <option value="0" >Filtro Rubros</option>
+                                <option value="0" >Filtrar Rubros</option>
                                 <option value="1">Salud</option>
                                 <option value="2">Tecnologia/Informatica</option>
                                 <option value="3">Educación</option>
@@ -56,9 +68,9 @@ function Inicio() {
                         </div>
 
                         <div className="col-2">
-                            <select onChange={handleSelectChange}
+                            <select onChange={handleSelectRubroChange}
                                 value={selectedRubro} className="form-select" aria-label="Default select example">
-                                <option value="0" >Filtro Rubros</option>
+                                <option value="0" >Filtro Edades</option>
                                 <option value="1">Salud</option>
                                 <option value="2">Tecnologia/Informatica</option>
                                 <option value="3">Educación</option>
@@ -74,21 +86,17 @@ function Inicio() {
                         </div>
 
                         <div className="col-2">
-                            <select onChange={handleSelectChange}
-                                value={selectedRubro} className="form-select" aria-label="Default select example">
-                                <option value="0" >Filtro Rubros</option>
-                                <option value="1">Salud</option>
-                                <option value="2">Tecnologia/Informatica</option>
-                                <option value="3">Educación</option>
-                                <option value="4">Finanzas</option>
-                                <option value="5">Manufactura</option>
-                                <option value="6">Ventas</option>
-                                <option value="7">Administración</option>
-                                <option value="8">Alimenticio</option>
-                                <option value="9">Construcción</option>
-                                <option value="10">Docente</option>
-                                <option value="11">Otros</option>
-                            </select>
+                            <Selects
+                                label={null}
+                                placeholder={"Filtrar localidad"}
+                                position={"id_local"}
+                                itemName={"nombre_local"}
+                                name={"id_local"}
+                                url={'findLocal'}
+                                value={selectedLocal}
+                                onChange={handleSelectLocalChange}
+                                required={true}
+                            />
                         </div>
 
                         <div className="col-6 text-end">

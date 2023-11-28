@@ -199,6 +199,7 @@ export const UpdateUser = () => {
                                                         name={"id_rubro"}
                                                         url={'findRubro'}
                                                         value={form[name]} onChange={handleInputChange}
+                                                        required={false}
                                                     />
                                                 </div>
 
@@ -244,6 +245,7 @@ export const UpdateUser = () => {
                                                         url={'findRubro'}
                                                         value={form[name]}
                                                         onChange={handleInputChange}
+                                                        required={false}
                                                     />
 
                                                     <div className="col-md-6">

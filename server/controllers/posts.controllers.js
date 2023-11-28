@@ -6,8 +6,12 @@ const { findRubroByIdEmpleador } = require("../models/empleador.model")
 const ctrlCrearPosteos = async (req, res) => {
     try {
 
+        if (req.file) {
+            const { filename } = req.file;
+        }
+
         const data = req.body
-        const { filename } = req.file;
+
         console.log("DATA");
         console.log(data.id_user);
 
@@ -15,13 +19,23 @@ const ctrlCrearPosteos = async (req, res) => {
             const usuario = await findRubroByIdPostulante(data.id_user)
             const id_rubro = usuario.id_rubro
             data.id_rubro = id_rubro
-        } else {
+        } else if (data.id_rol == 2) {
             const usuario = await findRubroByIdEmpleador(data.id_user)
+
+            console.log("USUARIO");
+            console.log(usuario);
             const id_rubro = usuario.id_rubro
             data.id_rubro = id_rubro
+        } else if (data.id_rol == 3) {
+            return res.status(403).json({ message: "Tu ROL NO esta autorizado para crear un Posteo!" })
         }
 
-        const post = await createPost(data, filename);
+
+        if (req.file) {
+            const post = await createPost(data, filename);
+        }
+
+        const post = await createPost(data);
 
         if (!post) {
             throw new Error("Error al crear el post")

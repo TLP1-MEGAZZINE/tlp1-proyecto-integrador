@@ -46,9 +46,10 @@ export const AppRoutes = () => {
         <BrowserRouter>
             {/*RUTAS PUBLICAS*/}
             <Routes>
+                <Route path='*' element={<Error404 />} />
+            
                 <Route path='/Forgot-pass' element={<ForgotPass />} />
                 <Route path='/Login' element={<Login />} />
-                <Route path='*' element={<Error404 />} />
                 <Route path='/Mas-info' element={<MasInfo />} />
                 <Route path='/Register' element={<Register />} />
                 <Route path='/index' element={<Index />} />

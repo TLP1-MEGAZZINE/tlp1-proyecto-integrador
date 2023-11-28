@@ -25,7 +25,7 @@ export function ForgotPass() {
         if (authState.token) {
             navigate("/auth/home")
         }
-    }, [])
+    }, [authState, navigate])
 
     const { form, handleInputChange } = useForm({})
 

@@ -21,7 +21,7 @@ export const Register = () => {
     if (authState.logged) {
       return navigate("/auth/home")
     }
-  }, [])
+  }, [authState, navigate])
 
   const handleCancel = () => {
     navigate("/index")

@@ -9,6 +9,7 @@ import { UpdateUser } from "../pages/UpdateUser"
 import { NewPost } from "../pages/NewPost"
 
 export const MainRoutes = () => {
+    
     return (
         <>
             <Routes>

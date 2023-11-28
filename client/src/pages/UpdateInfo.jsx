@@ -173,6 +173,7 @@ export const UpdateInfo = () => {
                                                 url={'findPaises'}
                                                 value={form[name]}
                                                 onChange={handleInputChange}
+                                                required={false}
                                             />
                                             <span className="text-danger fw-bold">{errors?.id_pais?.msg}</span>
 
@@ -188,6 +189,7 @@ export const UpdateInfo = () => {
                                                     name={"id_provincia"}
                                                     value={form[name]}
                                                     onChange={handleInputChange}
+                                                    required={false}
                                                 />
                                             )}
 
@@ -216,6 +218,7 @@ export const UpdateInfo = () => {
                                                 url={'findDepar'}
                                                 value={form[name]}
                                                 onChange={handleInputChange}
+                                                required={false}
                                             />
 
                                             <span className="text-danger fw-bold">{errors?.id_depar?.msg}</span>
@@ -230,6 +233,7 @@ export const UpdateInfo = () => {
                                                 url={'findLocal'}
                                                 value={form[name]}
                                                 onChange={handleInputChange}
+                                                required={false}
                                             />
                                             <span className="text-danger fw-bold">{errors?.id_local?.msg}</span>
 
