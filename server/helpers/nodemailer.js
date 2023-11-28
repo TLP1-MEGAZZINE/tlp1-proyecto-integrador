@@ -21,7 +21,7 @@ async function enviarEmail(email, newPass) {
     from: process.env.USERMAIL,
     to: email,
     subject: "Codigo de verificación para restaurar su contraseña.",
-    html: `<p>Su clave a sido restaurada correctamente, su contraseña para iniciar sesion es: ${newPass}</p>`
+    html: `<p>Su clave a sido restaurada correctamente, su nuevacontraseña para iniciar sesion es: </p>.<h4>${newPass}</h4>.<h4>¡Por favor cambiela al iniciar sesion!</h4>`
   }
 
   try {

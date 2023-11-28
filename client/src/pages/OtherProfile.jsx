@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { fetchFunction } from "../api/apiFetch";
 import { useEffect, useState } from "react";
+import { useBoleean } from "../hooks/useHiddenPass";
 
 export const OtherProfile = () => {
 
@@ -40,7 +41,7 @@ export const OtherProfile = () => {
                     setRolInfo(rolInformation);
                 })
         }
-    }, [])
+    }, [info])
 
     //INFO DE CONTACTO
     useEffect(() => {
@@ -62,6 +63,8 @@ export const OtherProfile = () => {
                 }
             })
     }, []);
+
+    const { boleean, handleBoleean } = useBoleean()
 
     return (
         <>
@@ -137,15 +140,16 @@ export const OtherProfile = () => {
 
                                     <h6>Calificación con estrellas:</h6>
 
-                                    <div className="rating">
-                                        <i className="bi bi-star-fill" type="radio" name="rating" value="5" />
-                                        <i className="bi bi-star-fill" type="radio" name="rating" value="4" />
-                                        <i className="bi bi-star-fill" type="radio" name="rating" value="3" />
-                                        <i className="bi bi-star-fill" type="radio" name="rating" value="2" />
-                                        <i className="bi bi-star" type="radio" name="rating" value="1" />
+                                    <div className="p-2">
+                                        <i className={`bi ${!boleean.star1 ? "bi-star" : "bi-star-fill"}`} value={boleean.star1} onClick={() => handleBoleean("star1")} />
+                                        <i className={`bi ${!boleean.star2 ? "bi-star" : "bi-star-fill"}`} value={boleean.star2} onClick={() => handleBoleean("star2")} />
+                                        <i className={`bi ${!boleean.star3 ? "bi-star" : "bi-star-fill"}`} value={boleean.star3} onClick={() => handleBoleean("star3")} />
+                                        <i className={`bi ${!boleean.star4 ? "bi-star" : "bi-star-fill"}`} value={boleean.star4} onClick={() => handleBoleean("star4")} />
+                                        <i className={`bi ${!boleean.star5 ? "bi-star" : "bi-star-fill"}`} value={boleean.star5} onClick={() => handleBoleean("star5")} />
                                     </div>
 
-                                    <button className="btn btn-primary">Seguir</button>
+                                    <button type="button" onClick={() => handleBoleean("follow")} value={boleean.follow} className={`btn ${!boleean.follow ? "btn-primary" : "btn-success"}`}>
+                                        {!boleean.follow ? "Seguir" : "Siguiendo"}</button>
 
                                 </div>
                             </div>

@@ -58,13 +58,13 @@ const ctrlForgotPassword = async (req, res) => {
             }
 
         } else {
-            res.status(404).json({ message: 'Usted no esta registrado.' });
+            res.status(404).json({ message: 'Usted no esta registrado.', error: error });
         }
 
     } catch (error) {
         console.log(error);
 
-        res.status(500).json({ message: 'Error al recibir datos, verifique su correo' });
+        res.status(500).json({ message: 'Error al recibir datos, verifique su correo', error: error });
     }
 }
 

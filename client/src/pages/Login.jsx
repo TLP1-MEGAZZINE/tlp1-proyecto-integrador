@@ -52,7 +52,7 @@ function Login() {
 
       useSweetAlert(resp, "Correcto, iniciando sesion.", "success")
         .then(() => {
-           return navigate(lastLocation || "/auth/home")
+          return navigate(lastLocation || "/auth/home")
         })
 
     } else {
@@ -60,9 +60,23 @@ function Login() {
     }
   }
 
-  const handleForgotPass = () => {
-    navigate("/forgotpass");
+  //RESTAURAR PASSWORD
+  const handleForgotPass = async (e) => {
+    e.preventDefault();
+
+    const resp = await fetchFunction("forgotPassword", "POST", form);
+
+    useSweetAlert(resp, "Procesando datos...", "")
+
+    if (!resp.error) {
+      useSweetAlert(resp, "¡El correo fue enviado correctamente!", "success");
+    } else {
+      useSweetAlert(resp, null, "error");
+    }
   }
+
+  console.log("FORM");
+  console.log(form);
 
   const { boleean, handleBoleean } = useBoleean()
 
@@ -76,21 +90,21 @@ function Login() {
     }
   };
 
-
   return (
     <>
       <Header />
 
       <main className="colorFondo">
 
-        <form action="#" onSubmit={handleSubmit} className='p-4'>
 
-          <div className="bg-light p-4 rounded-5" >
 
-            <div className="d-flex justify-content-center">
-              <img src={userIcon} style={{ height: "6rem" }} />
-            </div>
+        <div className="bg-light p-4 rounded-5" >
 
+          <div className="d-flex justify-content-center">
+            <img src={userIcon} style={{ height: "6rem" }} />
+          </div>
+
+          <form action="#" onSubmit={handleSubmit} >
             <h1 className="text-center fs-3 fw-bold">Login</h1>
 
             <div className="input-group mt-3">
@@ -124,63 +138,60 @@ function Login() {
                 <input className="form-check-input" type="checkbox" onChange={rememberMe} />
                 <span className="ms-2">Recuerdame</span>
               </div>
-              <a href='#' className="text-decoration-none " data-bs-toggle="modal"
-                data-bs-target="#forgotPass"> ¿Olvidó su contraseña?</a>
 
-              {/* MODAL */}
-              <div className="modal fade" id="forgotPass" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                  <form encType="multipart/form-data">
-                    <div className="modal-content">
-
-
-                      <div className="modal-header">
-                        <h1 className="modal-title fs-5" id="staticBackdropLabel">Elija su foto de perfil</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-
-                      <div className="modal-body">
-
-                        <label className="form-label">Imagen</label>
-                        <input type="file" className="form-control" name="url"
-
-                        />
-
-                      </div>
-                      <div className="modal-footer">
-                        <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Confirmar</button>
-                      </div>
-
-                    </div>
-                  </form>
-                </div>
-              </div>
             </div>
-
             <div className="mt-3 text-center">
               <button type="submit" className="btn btn-primary text-center">Iniciar sesión</button>
             </div>
+          </form>
 
-            <div className="mt-3 text-center">
-              <div>¿No tienes una cuenta?</div>
-              <a href="#" onClick={handleRegisterClick}>Registrarse</a>
-            </div>
-
-            <div>
-              <div className="border-bottom text-center">
-                <span className="bg-light">o</span>
-              </div>
-            </div>
-
-            <div className="btn d-flex align-items-center justify-content-center mt-2">
-              <img src={googleLogo} alt="google-icon" width="30" height="20" />
-              <div className="fw-semibold text-secondary shadow-sm">Continuar con Google</div>
-            </div>
-
+          {/* MODAL */}
+          <div className="d-flex justify-content-center py-2">
+            <i href="#" data-bs-toggle="modal" data-bs-target="#forgotPass" className="btn btn-warning">¿Olvido su contraseña?</i>
           </div>
 
-        </form>
+          <div className="modal fade" id="forgotPass" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <form action="" onSubmit={handleForgotPass}>
+                  <div className="modal-header">
+                    <h1 className="modal-title fs-5" id="staticBackdropLabel">Ingrese el Correo Electrónico con el que esta registrado y espere...</h1>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div className="modal-body d-flex flex-column">
+
+                    <label className="form-label">Su email al que se enviaran los datos para restaurar su contraseña:</label>
+                    <input type="email" className="form-control" name="email"
+                      onChange={handleInputChange} value={form[name]}
+                    />
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" className="btn btn-primary">Confirmar</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-3 text-center">
+            <div>¿No tienes una cuenta?</div>
+            <a href="#" onClick={handleRegisterClick}>Registrarse</a>
+          </div>
+
+          <div>
+            <div className="border-bottom text-center">
+              <span className="bg-light">o</span>
+            </div>
+          </div>
+
+          <div className="btn d-flex align-items-center justify-content-center mt-2">
+            <img src={googleLogo} alt="google-icon" width="30" height="20" />
+            <div className="fw-semibold text-secondary shadow-sm">Continuar con Google</div>
+          </div>
+
+        </div>
+
       </main >
 
       <Footer />

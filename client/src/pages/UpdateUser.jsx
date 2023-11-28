@@ -168,8 +168,8 @@ export const UpdateUser = () => {
                                                         onChange={handleInputChange} value={form[name]}
                                                         name="id_estado_laboral"
                                                     >
-                                                        <option value="" selected disabled>{rolesInfo?.estado_laboral.desc_estado_laboral ?
-                                                            rolesInfo?.estado_laboral.desc_estado_laboral : "Estado laboral"}</option>
+                                                        <option value="" selected disabled>{rolesInfo?.estado_laboral?.desc_estado_laboral ?
+                                                            rolesInfo?.estado_laboral?.desc_estado_laboral : "Estado laboral"}</option>
                                                         <option value="1">Desempleado</option>
                                                         <option value="2">Actualmente trabajando</option>
                                                     </select>
@@ -182,8 +182,8 @@ export const UpdateUser = () => {
                                                             name="id_nivel_educacion"
                                                             onChange={handleInputChange} value={form[name]}
                                                         >
-                                                            <option value="" selected disabled>{rolesInfo?.nivel_educacion.desc_nivel_educacion ?
-                                                                rolesInfo?.nivel_educacion.desc_nivel_educacion : "Nivel educativo"}</option>
+                                                            <option value="" selected disabled>{rolesInfo?.nivel_educacion?.desc_nivel_educacion ?
+                                                                rolesInfo?.nivel_educacion?.desc_nivel_educacion : "Nivel educativo"}</option>
                                                             <option value="1">Secundario completo</option>
                                                             <option value="2">Secundario incompleto</option>
                                                             <option value="1">Terciario completo</option>
@@ -193,7 +193,7 @@ export const UpdateUser = () => {
 
                                                     <Selects
                                                         label={"Rubros."}
-                                                        placeholder={rolesInfo?.rubro.desc_rubro ? rolesInfo?.rubro.desc_rubro : "Elija el rubro en el que se desempeña"}
+                                                        placeholder={rolesInfo?.rubro?.desc_rubro ? rolesInfo?.rubro?.desc_rubro : "Elija el rubro en el que se desempeña"}
                                                         position={"id_rubro"}
                                                         itemName={"desc_rubro"}
                                                         name={"id_rubro"}

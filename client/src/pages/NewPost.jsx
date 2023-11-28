@@ -5,6 +5,7 @@ import Footer from "../components/Footer"
 import logo from "../assets/logo.png";
 import "../Style.css";
 import { fetchFileFunction } from "../api/apiFetchFiles"
+import { useSweetAlert } from "../hooks/useSweetAlert"
 
 export const NewPost = () => {
     const navigate = useNavigate()
@@ -16,7 +17,6 @@ export const NewPost = () => {
         id_user: id_user,
         id_rol: id_rol
     });
-
 
     console.log(file);
 
@@ -34,27 +34,14 @@ export const NewPost = () => {
         const resp = await fetchFileFunction("createPost", file)
         console.log(resp);
 
-        if (resp.message) {
-
-            Swal.fire({
-                title: resp.message,
-                text: "Espere un momento...",
-                icon: "success",
-                showConfirmButton: false,
-                timer: 2000
-            })
+        if (!resp.error) {
+            useSweetAlert(resp, "Post creado correctamente", "success")
                 .then(() => {
                     return navigate("/auth/home")
                 })
 
         } else {
-            Swal.fire({
-                title: "Se produjo un error",
-                text: resp.message,
-                icon: "error",
-                showConfirmButton: true,
-                confirmButtonText: "Aceptar"
-            })
+            useSweetAlert(resp, null, "error")
         }
     }
 

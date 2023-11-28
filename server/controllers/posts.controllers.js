@@ -8,7 +8,7 @@ const ctrlCrearPosteos = async (req, res) => {
         let filename = null
         const data = req.body
         if (req.file) {
-            filename =  req.file.filename;
+            filename = req.file.filename;
         }
 
         if (data.id_rol == 1) {
@@ -27,6 +27,12 @@ const ctrlCrearPosteos = async (req, res) => {
             return res.status(403).json({ message: "Tu ROL  esta autorizado para crear un Posteo!" })
         }
 
+        console.log("FULL DATA");
+        console.log(data);
+
+        if (!data.id_rubro) {
+            return res.status(403).json({ message: "¡Debes tener un rubro antes de crear un posteo!", error: true })
+        }
         const post = await createPost(data, filename);
 
         if (!post) {

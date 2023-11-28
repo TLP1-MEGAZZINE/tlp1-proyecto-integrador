@@ -153,7 +153,7 @@ export const UpdateInfo = () => {
                                                 <select type="text" className="form-control" aria-label="Default select example"
                                                     name="id_genero" onChange={handleInputChange} value={form[name]}
                                                 >
-                                                    <option selected disabled>{info?.genero.genero ? info?.genero.genero : "Sexo"}</option>
+                                                    <option selected disabled>{info?.genero?.genero ? info?.genero?.genero : "Sexo"}</option>
                                                     <option value="1">Masculino</option>
                                                     <option value="2">Femenino</option>
                                                     <option value="3">Sin especificar</option>
@@ -166,7 +166,7 @@ export const UpdateInfo = () => {
 
                                             <Selects
                                                 label={"Nacionalidad"}
-                                                placeholder={info?.paise.nombre_pais ? info?.paise.nombre_pais : "Paises"}
+                                                placeholder={info?.paise?.nombre_pais ? info?.paise?.nombre_pais : "Paises"}
                                                 position={"id_pais"}
                                                 itemName={"nombre_pais"}
                                                 name={"id_pais"}
@@ -211,7 +211,7 @@ export const UpdateInfo = () => {
 
                                             <Selects
                                                 label={"Departamento en el que se encuentre."}
-                                                placeholder={info?.departamento.nombre_depar ? info?.departamento.nombre_depar : "Departamentos."}
+                                                placeholder={info?.departamento?.nombre_depar ? info?.departamento?.nombre_depar : "Departamentos."}
                                                 position={"id_depar"}
                                                 name={"id_depar"}
                                                 itemName={"nombre_depar"}
@@ -226,7 +226,7 @@ export const UpdateInfo = () => {
 
                                             <Selects
                                                 label={"Localidad en la que se encuentre."}
-                                                placeholder={info?.localidad.nombre_local ? info?.localidad.nombre_local : "Localidades."}
+                                                placeholder={info?.localidad?.nombre_local ? info?.localidad?.nombre_local : "Localidades."}
                                                 position={"id_local"}
                                                 name={"id_local"}
                                                 itemName={"nombre_local"}
