@@ -253,10 +253,27 @@ async function destroyUser(data) {
     }
 }
 
+//RESTAURAR CONTRASEÑAS
+async function restorePassword(id_user, newPass) {
+    try {
+        const hashedPass = await encriptar(newPass)
+
+        return await User.update({
+            user_password: hashedPass,
+        }, {
+            where: {
+                id_user: id_user
+            }
+        })
+
+    } catch (error) {
+        console.log("Error al actualizar contraseña", error);
+    }
+}
 
 
 module.exports = {
     User, createUser, findUserByEmail, findUserByUserName, findUserByEmailOrUsername,
     findAllUser, findUserByRole, deleteUser,
-    actualizarUsuario, findUserByName, findUserById, destroyUser
+    actualizarUsuario, findUserByName, findUserById, destroyUser, restorePassword
 }

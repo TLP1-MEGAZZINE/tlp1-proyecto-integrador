@@ -127,7 +127,7 @@ function Header() {
                             </ul>
 
                             <form className="d-flex">
-                                <input className="form-control me-2" type="search" placeholder="¿Que deseas buscar?"
+                                <input className="form-control me-2" type="search" placeholder="¿A quien deseas buscar?"
                                     aria-label="Search" />
                                 <button className="btn btn-outline-light" type="submit">Buscar</button>
                             </form>

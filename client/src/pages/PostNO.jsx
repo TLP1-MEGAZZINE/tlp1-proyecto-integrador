@@ -9,17 +9,21 @@ export const Post = () => {
 
   const { form, handleInputChange } = useForm({
     id_user: localStorage.getItem("id_user"),
-    id_rubro: localStorage.getItem("id_rubro"),
+    id_rol: localStorage.getItem("id_rol"),
     post_title: "",
     post_content: "",
   })
 
   const handleSubmit = async () => {
     const response = await fetchFunction("updateUserContact", "PUT", form)
+    
     if (!response.ok) {
+
       const { message } = await response.json();
       return Swal.fire('Error, al crear el posteo', message, 'error',);
+
     } else {
+
       console.log("exito");
       Swal.fire({
         title: "Post creado correctamente.",
@@ -27,6 +31,7 @@ export const Post = () => {
         icon: "success",
         showConfirmButton: false
       });
+
     }
   }
 
@@ -41,7 +46,7 @@ export const Post = () => {
               <div className="d-flex justify-content-center">
                 <img src={logo} alt="login-icon" style={{ height: "5rem" }} />
               </div>
-              <div className="text-center fs-3 fw-bold">Crear un nuevo post</div>
+              <div className="text-center fs-3 fw-bold">Crear un nuevo postasdasdasd</div>
 
               <div className="input-group mt-1">
                 <h3>Titulo:</h3>

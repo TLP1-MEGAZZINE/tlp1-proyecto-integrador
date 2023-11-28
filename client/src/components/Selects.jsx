@@ -36,7 +36,7 @@ export const Selects = ({ label, placeholder, position, itemName, url, name, val
         {required == false ? (
           <option selected disabled>{placeholder}</option>
         ) :
-          <option>{placeholder}</option>
+          <option value="0">{placeholder}</option>
         }
 
         {

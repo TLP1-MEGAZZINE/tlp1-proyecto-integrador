@@ -5,14 +5,13 @@ import { Users } from "../components/Users";
 import { Posteos } from "../components/Posteos";
 import { useNavigate } from "react-router-dom";
 import { Selects } from "../components/Selects";
-import { fetchFunction } from "../api/apiFetch";
 
 function Inicio() {
 
     const navigate = useNavigate();
 
     const [selectedRubro, setSelectedRubro] = useState(0);
-    const [selectedLocal, setSelectedLocal] = useState(0)
+    const [selectedLocal, setSelectedLocal] = useState(0);
     const [rangoEdad, setRangoEdad] = useState(0)
 
     // Mover la definición de posts a este ámbito
@@ -20,7 +19,7 @@ function Inicio() {
 
     //RUBROS
     const handleSelectRubroChange = (event) => {
-        setSelectedRubro(event.target.value);
+        setSelectedRubro(parseInt(event.target.value));
 
         const filterPost = posts.filter(
             post => post.id_rubro === parseInt(event.target.value)
@@ -32,10 +31,17 @@ function Inicio() {
         setSelectedLocal(event.target.value);
 
         const filterPost = posts.filter(
-            post => post.id_local === parseInt(event.target.value)
+            post => post?.user_info?.localidad?.id_local === parseInt(event.target.value)
         );
     };
+    //EDADES
+    const handleEdadesChange = (event) => {
+        setRangoEdad(event.target.value);
 
+        const filterPost = posts.filter(
+            post => post?.user_info?.fecha_nacimiento === parseInt(event.target.value)
+        );
+    };
     const handleNewPost = () => {
         navigate("/auth/new-post")
     }
@@ -50,38 +56,28 @@ function Inicio() {
 
                         <div className="col-2">
 
-                            <select onChange={handleSelectRubroChange}
-                                value={selectedRubro} className="form-select" aria-label="Default select example">
-                                <option value="0" >Filtrar Rubros</option>
-                                <option value="1">Salud</option>
-                                <option value="2">Tecnologia/Informatica</option>
-                                <option value="3">Educación</option>
-                                <option value="4">Finanzas</option>
-                                <option value="5">Manufactura</option>
-                                <option value="6">Ventas</option>
-                                <option value="7">Administración</option>
-                                <option value="8">Alimenticio</option>
-                                <option value="9">Construcción</option>
-                                <option value="10">Docente</option>
-                                <option value="11">Otros</option>
-                            </select>
+                            <Selects
+                                label={null}
+                                placeholder={"Filtrar Rubros"}
+                                position={"id_rubro"}
+                                itemName={"desc_rubro"}
+                                name={"id_rubro"}
+                                url={'findRubro'}
+                                value={selectedRubro}
+                                onChange={handleSelectRubroChange}
+                                required={true}
+                            />
                         </div>
 
                         <div className="col-2">
-                            <select onChange={handleSelectRubroChange}
-                                value={selectedRubro} className="form-select" aria-label="Default select example">
+                            <select onChange={handleEdadesChange}
+                                value={rangoEdad} className="form-select" aria-label="Default select example">
                                 <option value="0" >Filtro Edades</option>
-                                <option value="1">Salud</option>
-                                <option value="2">Tecnologia/Informatica</option>
-                                <option value="3">Educación</option>
-                                <option value="4">Finanzas</option>
-                                <option value="5">Manufactura</option>
-                                <option value="6">Ventas</option>
-                                <option value="7">Administración</option>
-                                <option value="8">Alimenticio</option>
-                                <option value="9">Construcción</option>
-                                <option value="10">Docente</option>
-                                <option value="11">Otros</option>
+                                <option value="1">17-25</option>
+                                <option value="2">25-35</option>
+                                <option value="3">35-45</option>
+                                <option value="4">+45</option>
+
                             </select>
                         </div>
 
@@ -114,10 +110,18 @@ function Inicio() {
 
                             {
                                 selectedRubro == 0 ? (
-                                    <Posteos selectedRubro={""} />
+                                    <Posteos selectedRubro={0} />
                                 )
                                     :
                                     <Posteos selectedRubro={selectedRubro} />
+                            }
+
+                            {
+                                selectedLocal == 0 ? (
+                                    <Posteos selectedLocal={0} />
+                                )
+                                    :
+                                    <Posteos selectedLocal={selectedLocal} />
                             }
 
                             <small className="d-block text-end mt-3">

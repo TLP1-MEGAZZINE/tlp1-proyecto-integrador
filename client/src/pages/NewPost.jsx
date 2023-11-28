@@ -28,8 +28,6 @@ export const NewPost = () => {
         setFile(file => ({ ...file, [e.target.name]: e.target.value }));
     }
 
-
-
     const handleSubmit = async (e) => {
         e.preventDefault()
 

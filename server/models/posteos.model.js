@@ -123,7 +123,7 @@ const findAllPosts = async () => {
                     attributes: ['fecha_nacimiento'], include: [
                         {
                             model: Localidad,
-                            attributes: ['nombre_local'],
+                            attributes: ['id_local', 'nombre_local'],
                         }
                     ]
                 }
