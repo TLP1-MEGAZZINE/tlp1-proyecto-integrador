@@ -73,7 +73,16 @@ export const OtherProfile = () => {
             })
     }, [])
 
-    console.log("POSTEOS", posts);
+    //DESCRIPCION
+    const [desc, setDesc] = useState(null);
+
+    useEffect(() => {
+        const obtenerDatos = async () => {
+            const resultado = await fetchFunction("findDesc", "POST", data);
+            setDesc(resultado);
+        };
+        obtenerDatos();
+    }, []);
 
     const { boleean, handleBoleean } = useBoleean()
 
@@ -274,19 +283,19 @@ export const OtherProfile = () => {
                                     <div className="table-responsive">
                                         <ul className="list-group table">
 
-                                            <li className="list-group-item">Descripción personal:  <br />{info?.cuil}
+                                            <li className="list-group-item">Descripción personal:  <br />{desc?.descripcion}
                                             </li>
 
-                                            <li className="list-group-item">Mis estudios: <br />{info?.nombre} {info?.apellido}
+                                            <li className="list-group-item">Mis estudios: <br /> {desc?.estudios}
                                             </li>
 
-                                            <li className="list-group-item">Mis habilidades:  <br />{info?.dni}
+                                            <li className="list-group-item">Mis habilidades:  <br />{desc?.habilidades}
                                             </li>
 
-                                            <li className="list-group-item">Mis intereses:  <br />{info?.dni}
+                                            <li className="list-group-item">Mis intereses:  <br />{desc?.intereses}
                                             </li>
 
-                                            <li className="list-group-item">Experiencias Profesionales: <br /> {info?.genero?.genero}
+                                            <li className="list-group-item">Experiencias Profesionales: <br /> {desc?.experiencia}
                                             </li>
 
                                             <li className="list-group-item"></li>
@@ -302,7 +311,9 @@ export const OtherProfile = () => {
 
                                         <ul className="list-group table">
 
-                                            <li className="list-group-item">Archivos:<br /></li>
+                                            <li className="list-group-item">Archivos:<br />
+                                                {desc?.archivos}
+                                            </li>
 
                                         </ul>
                                     </div>

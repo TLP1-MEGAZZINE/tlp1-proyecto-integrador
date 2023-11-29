@@ -62,7 +62,6 @@ export const Profile = () => {
       const obtenerDatos = async () => {
         try {
           const resultado = await fetchFunction("findPostulante", "POST", data);
-          // Actualizar el estado con los datos obtenidos
           setTipoRol(resultado);
         } catch (error) {
           console.error("Hubo un error:", error);
@@ -78,7 +77,6 @@ export const Profile = () => {
       const obtenerDatos = async () => {
         try {
           const resultado = await fetchFunction("findEmpleador", "POST", data);
-          // Actualizar el estado con los datos obtenidos
           setTipoRol(resultado);
         } catch (error) {
           console.error("Hubo un error:", error);
@@ -563,9 +561,9 @@ export const Profile = () => {
 
                 </div>
 
-              <div className="d-flex justify-content-end py-2">
-                <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleDescClick}>Editar</i>
-              </div>
+                <div className="d-flex justify-content-end py-2">
+                  <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleDescClick}>Editar</i>
+                </div>
               </div>
             </div>
           </div>
