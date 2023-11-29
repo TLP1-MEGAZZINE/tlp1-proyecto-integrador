@@ -36,15 +36,18 @@ const ctrlFindUserById = async (req, res) => {
 //BUSCAR USUARIO POR NOMBRE
 const ctrlFindUserByName = async (req, res) => {
     try {
-        const userName = req.body.userName
+        const data = req.body
 
-        const users = await findUserByName(userName)
+        console.log(data);
 
-        if (users) {
-            return users
+        const user = await findUserByName(data)
+
+        if (user) {
+            return res.status(200).json(user.id_user)
+        } else {
+
+            return res.status(400).json({ message: "No se encontro el usuario" })
         }
-        return res.status(400).send("No se encontro el usuario")
-
     } catch (error) {
         console.log("Internal Server Error");
         return res.status(500).send("Internal Server Error")

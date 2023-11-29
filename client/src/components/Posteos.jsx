@@ -16,23 +16,41 @@ export const Posteos = ({ selectedRubro, selectedLocal }) => {
         id_local: selectedLocal,
     }
 
-useEffect(() => {
-    const fetchData = async () => {
-        let resultado;
-        if (selectedRubro != undefined) {
-            resultado = await fetchFunction("findPostbyRubro", "POST", data);
-        } else {
-            resultado = await fetchFunction("findAllPosts", "GET");
-        }
-        setPosts(resultado);
+    useEffect(() => {
+        const resultado = fetchFunction("findAllPosts", "GET")
+            .then((resultado) => {
+                setPosts(resultado);
+            });
+    }, []);
+
+
+    const postMatchesFilters = () => {
+
+        console.log("selectedRubro", selectedRubro);
+        console.log("selectedLocal", selectedLocal);
+
+        return posts.filter((post) => {
+            const rubroMatch = selectedRubro == 0 || post?.id_rubro == selectedRubro;
+            const localidadMatch = selectedRubro == 0 || post?.user_info?.localidad?.id_local == selectedLocal;
+
+            if (selectedRubro == 0 && selectedLocal == 0) {
+                return true;
+            }
+            if (selectedLocal != 0 && selectedRubro == 0) {
+                return localidadMatch;
+            }
+            if (selectedRubro != 0 && selectedLocal == 0) {
+                return rubroMatch;
+            }
+            return rubroMatch || localidadMatch;
+        });
     };
 
-    fetchData();
-}, [selectedRubro]);
-    
+    const filteredPosts = postMatchesFilters();
+
     return (
         <>
-            {posts.map((post, id_post) => (
+            {filteredPosts.map((post, id_post) => (
                 <div key={id_post} className="text-muted pt-3 mx-5">
                     <div className="d-flex">
                         <svg className="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"

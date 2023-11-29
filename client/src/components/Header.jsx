@@ -1,12 +1,17 @@
 import logo from "../assets/logo.png";
 import userIcon from "../assets/userIcon.png"
+import search from "../assets/search.svg";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { fetchFunction } from "../api/apiFetch";
 import { useState, useEffect } from "react";
+import { useForm } from "../hooks/useForms"
+import { useSweetAlert } from "../hooks/useSweetAlert"
 
 function Header() {
+
+    const { form, reset, handleInputChange } = useForm({})
 
     const data = {
         id_user: localStorage.getItem("id_user"),
@@ -15,7 +20,7 @@ function Header() {
     const { authState, logout } = useContext(AuthContext); // Obtén el estado del contexto
     const navigate = useNavigate();
 
-    const user_name = localStorage.getItem("user_name");
+    const username = localStorage.getItem("user_name");
 
     const handleMessageClick = () => {
         navigate("/auth/messages");
@@ -44,27 +49,39 @@ function Header() {
         }, 2000);
     };
 
-
     //BUSCAR FOTO DE PERFIL
     const [foto, setFoto] = useState(null);
 
     useEffect(() => {
-      const obtenerDatos = async () => {
-        try {
-          const resultado = await fetchFunction("findPfp", "POST", data);
-          if (!resultado.message) {
-            setFoto(resultado);
-          } else {
-            setFoto(userIcon);
-            console.log("FOTO", foto);
-          }
-        } catch (error) {
-          console.log("Hubo un error:", error);
-        }
-      };
-      obtenerDatos();
+        const obtenerDatos = async () => {
+            try {
+                const resultado = await fetchFunction("findPfp", "POST", data);
+                if (!resultado.message) {
+                    setFoto(resultado);
+                } else {
+                    setFoto(userIcon);
+                    console.log("FOTO", foto);
+                }
+            } catch (error) {
+                console.log("Hubo un error:", error);
+            }
+        };
+        obtenerDatos();
     }, []);
 
+    const handleName = async (e) => {
+        e.preventDefault();
+        const resp = await fetchFunction("findByName", "POST", form);
+        console.log("RESP");
+        console.log(resp);
+
+        if (!resp.message) {
+            navigate(`/profile/${resp}`)
+            window.location.reload();
+        } else {
+            useSweetAlert(resp, null, "error")
+        }
+    }
 
     return (
         <header >
@@ -126,10 +143,11 @@ function Header() {
                                 </li>
                             </ul>
 
-                            <form className="d-flex">
-                                <input className="form-control me-2" type="search" placeholder="¿A quien deseas buscar?"
-                                    aria-label="Search" />
-                                <button className="btn btn-outline-light" type="submit">Buscar</button>
+                            <form className="d-flex" action="#" onSubmit={handleName}>
+                                <input className="form-control me-2" type="search" placeholder="¿A quien deseas buscar?" name="user_name"
+                                    aria-label="text" value={form[name]} onChange={handleInputChange} />
+                                <button className="btn btn-outline-light d-flex" type="submit">
+                                    <img src={search} className="mx-1" />Buscar</button>
                             </form>
 
                             <div className="dropdown p-4">
@@ -138,7 +156,7 @@ function Header() {
                                     <img src={foto == userIcon ? foto : `${"http://localhost:5000/"}${foto}`}
                                         crossOrigin="anonymous" alt="pfp" width=" 32" height="32"
                                         className="rounded-circle me-2" />
-                                    <strong className="text-light" id="UsuarioNombre">{user_name}</strong>
+                                    <strong className="text-light" id="UsuarioNombre">{username}</strong>
                                 </a>
 
                                 <ul className="dropdown-menu dropdown-menu-dark text-small shadow"

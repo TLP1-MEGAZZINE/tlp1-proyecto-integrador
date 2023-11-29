@@ -219,14 +219,14 @@ async function deleteUser(user_id) {
 }
 
 //BUSCAR POR NOMBRE APROX
-async function findUserByName(userName) {
+async function findUserByName(data) {
 
     try {
 
-        const nameAprox = await User.findAll({
+        const nameAprox = await User.findOne({
             where: {
                 user_name: {
-                    [Op.like]: `%${userName}%`
+                    [Op.like]: `%${data.user_name}%`
                 },
             },
         });

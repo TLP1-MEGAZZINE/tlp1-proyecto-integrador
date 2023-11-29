@@ -25,7 +25,7 @@ function Login() {
     }
   }, [authState, navigate])
 
-  const { form, handleInputChange } = useForm({
+  const { form, handleInputChange, reset } = useForm({
     user_name: localStorage.getItem("remember_user_name") || "",
     user_password: localStorage.getItem("remember_pass") || ""
   })
@@ -49,7 +49,7 @@ function Login() {
       localStorage.setItem("user_name", resp.user_name);
       localStorage.setItem("id_user", resp.id_user);
       localStorage.setItem("id_rol", resp.id_rol);
-
+      reset()
       useSweetAlert(resp, "Correcto, iniciando sesion.", "success")
         .then(() => {
           return navigate(lastLocation || "/auth/home")
@@ -69,14 +69,12 @@ function Login() {
     useSweetAlert(resp, "Procesando datos...", "")
 
     if (!resp.error) {
+      reset()
       useSweetAlert(resp, "¡El correo fue enviado correctamente!", "success");
     } else {
       useSweetAlert(resp, null, "error");
     }
   }
-
-  console.log("FORM");
-  console.log(form);
 
   const { boleean, handleBoleean } = useBoleean()
 
@@ -96,8 +94,6 @@ function Login() {
 
       <main className="colorFondo">
 
-
-
         <div className="bg-light p-4 rounded-5" >
 
           <div className="d-flex justify-content-center">
@@ -114,7 +110,6 @@ function Login() {
                 onChange={handleInputChange} // Manejador de cambio
               />
             </div>
-
 
             <div className="input-group mt-2">
 
