@@ -1,4 +1,4 @@
-const { createPost, findAllPosts, findPostbyRubro, deletePost, findPostEmpresa, findPostPostulante } = require("../models/posteos.model")
+const { createPost, findAllPosts, findPostbyRubro, deletePost, findPostEmpresa, findPostPostulante, findUserPost } = require("../models/posteos.model")
 const { findRubroByIdPostulante } = require("../models/postulantes.model")
 const { findRubroByIdEmpleador } = require("../models/empleador.model")
 
@@ -119,6 +119,21 @@ const ctrlFindPostPostulante = async (req, res) => {
         res.status(500).json("Internal Server Error...")
     }
 }
+const ctrlfindUserPost = async (req, res) => {
+    try {
+        const data = req.body
+
+        const userPost = await findUserPost(data)
+
+        if (!userPost) {
+            throw new Error("Error al buscar los posts por usuario")
+        }
+        return res.status(200).json(userPost)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json("Internal Server Error...")
+    }
+}
 
 module.exports = {
     ctrlCrearPosteos,
@@ -126,5 +141,6 @@ module.exports = {
     ctrlFindPostbyRubro,
     ctrlDeletePost,
     ctrlFindPostEmpresa,
-    ctrlFindPostPostulante
+    ctrlFindPostPostulante,
+    ctrlfindUserPost
 }

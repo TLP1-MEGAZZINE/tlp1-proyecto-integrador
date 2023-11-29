@@ -3,7 +3,7 @@ const { findUserInfo } = require('../models/userInfo.model')
 const { updatePostulante, findPostulante } = require('../models/postulantes.model')
 const { updateEmpleador, findEmpleador } = require('../models/empleador.model')
 const { findContact } = require('../models/contacto.model.js')
-
+const { createDesc, updateDesc, findDesc } = require('../models/descripcion.model.js')
 
 //BUSCAR TODOS LOS USUARIOS
 const ctrlFindUsers = async (req, res) => {
@@ -174,6 +174,49 @@ const ctrlDestroyUser = async (req, res) => {
     }
 };
 
+//CREAR DESCRIPCION
+const ctrlCreateDesc = async (req, res) => {
+    try {
+        const data = req.body;
+        // Espera a que se complete la operación asíncrona
+        const desc = await createDesc(data);
+        if (desc) {
+            return res.status(200).json({ message: "Descripcion creada correctamente" });
+        }
+    } catch (error) {
+        return res.status(500).send("Internal Server Error");
+    }
+};
+
+//CREAR DESCRIPCION
+const ctrlUpdateDesc = async (req, res) => {
+    try {
+        const data = req.body;
+        // Espera a que se complete la operación asíncrona
+        const desc = await updateDesc(data);
+        if (desc) {
+            return res.status(200).json({ message: "Descripcion actualizada correctamente" });
+        }
+    } catch (error) {
+        return res.status(500).send("Internal Server Error");
+    }
+};
+
+//BUSCAR DESCRIPCION
+const ctrlFindDesc = async (req, res) => {
+    try {
+        const data = req.body;
+
+        const desc = await findDesc(data);
+        if (desc) {
+            return res.status(200).json(desc);
+        } else {
+            return res.status(404).json({ message: "No existe descripcion de usuario" });
+        }
+    } catch (error) {
+        return res.status(500).json("Internal Server Error");
+    }
+};
 
 module.exports = {
     ctrlFindUserByName,
@@ -185,5 +228,8 @@ module.exports = {
     ctrlFindEmpleador,
     ctrlDestroyUser,
     ctrlFindContact,
-    ctrlFindUserById
+    ctrlFindUserById,
+    ctrlCreateDesc,
+    ctrlUpdateDesc,
+    ctrlFindDesc
 }

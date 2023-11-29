@@ -11,39 +11,28 @@ export const Posteos = ({ selectedRubro, selectedLocal }) => {
         navigate(`/profile/${id_user}`);
     };
 
-    useEffect(() => {
-        const resultado = fetchFunction("findAllPosts", "GET")
-            .then((resultado) => {
-                setPosts(resultado);
-            });
-    }, []);
+    const data = {
+        id_rubro: selectedRubro,
+        id_local: selectedLocal,
+    }
 
-    const postMatchesFilters = () => {
-
-        console.log("selectedRubro", selectedRubro);
-        console.log("selectedLocal", selectedLocal);
-
-        return posts.filter((post) => {
-            const rubroMatch = post?.id_rubro == selectedRubro;
-            const localidadMatch = post?.user_info?.localidad?.id_local == selectedLocal;
-
-            // Nueva condición
-            if (selectedRubro == 0 && selectedLocal != 0) {
-                return localidadMatch;
-            } else if (selectedRubro != 0 && selectedLocal == 0) {
-                return rubroMatch;
-            }
-
-            return rubroMatch || localidadMatch;
-        });
+useEffect(() => {
+    const fetchData = async () => {
+        let resultado;
+        if (selectedRubro != undefined) {
+            resultado = await fetchFunction("findPostbyRubro", "POST", data);
+        } else {
+            resultado = await fetchFunction("findAllPosts", "GET");
+        }
+        setPosts(resultado);
     };
 
-    const filteredPosts = postMatchesFilters();
-
-
+    fetchData();
+}, [selectedRubro]);
+    
     return (
         <>
-            {filteredPosts.map((post, id_post) => (
+            {posts.map((post, id_post) => (
                 <div key={id_post} className="text-muted pt-3 mx-5">
                     <div className="d-flex">
                         <svg className="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
@@ -69,7 +58,7 @@ export const Posteos = ({ selectedRubro, selectedLocal }) => {
                                 post.url == "/uploads/null" ? (
                                     ""
                                 ) : (
-                                    <img src={`http://localhost:5000${post.url}`} crossOrigin="anonymous" height="200" width="300" alt="Img" />
+                                    <img className="img-fluid img-thumbnail" src={`http://localhost:5000${post.url}`} crossOrigin="anonymous" height="200" width="300" alt="Img" />
                                 )
                             }
                             <br />

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { ctrlCrearPosteos, ctrlFindAllPosts, ctrlFindPostbyRubro, ctrlDeletePost, ctrlFindPostEmpresa, ctrlFindPostPostulante } = require("../controllers/posts.controllers")
+const { ctrlCrearPosteos, ctrlFindAllPosts, ctrlFindPostbyRubro, ctrlDeletePost, ctrlFindPostEmpresa,
+    ctrlFindPostPostulante, ctrlfindUserPost } = require("../controllers/posts.controllers")
 const upload = require('../middlewares/multer');
 
 //CREAR POSTEOS
@@ -16,6 +17,6 @@ router.get("/findPostEmpresa", ctrlFindPostEmpresa)
 
 router.get("/findPostPostulante", ctrlFindPostPostulante)
 
-//vista
+router.post("/findUserPost", ctrlfindUserPost)
 
 module.exports = router;

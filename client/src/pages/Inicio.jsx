@@ -125,7 +125,7 @@ function Inicio() {
                             }
 
                             <small className="d-block text-end mt-3">
-                                <a href="novedades">Todas las novedades</a>
+                                <a href="#">Todas las novedades</a>
                             </small>
                         </div>
                     </section>
@@ -137,7 +137,7 @@ function Inicio() {
                             <Users />
 
                             <small className="d-block text-end mt-3">
-                                <a href="solicitudes">Ver todas las solicitudes</a>
+                                <a href="#">Ver todas los usuarios</a>
                             </small>
                         </div>
 

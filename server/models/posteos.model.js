@@ -209,5 +209,38 @@ const findPostPostulante = async () => {
     }
 }
 
-module.exports = { Post, createPost, findAllPosts, findPostbyRubro, deletePost, findPostEmpresa, findPostPostulante };
+//BUSCAR POST DE UN USUARIO
+const findUserPost = async (data) => {
+    try {
+        return await Post.findAll({
+            where: {
+                id_user: data.id_user
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: ['id_user', 'user_name', 'user_email'],
+                },
+                {
+                    model: Rubro,
+                    attributes: ['desc_rubro'],
+                },
+                {
+                    model: UserInfo,
+                    attributes: ['fecha_nacimiento'], include: [
+                        {
+                            model: Localidad,
+                            attributes: ['id_local', 'nombre_local'],
+                        }
+                    ]
+                }
+            ],
+        })
+    } catch (error) {
+        console.log('Error al buscar los posts del usuario', error);
+        throw error
+    }
+}
+
+module.exports = { Post, findUserPost, createPost, findAllPosts, findPostbyRubro, deletePost, findPostEmpresa, findPostPostulante };
 

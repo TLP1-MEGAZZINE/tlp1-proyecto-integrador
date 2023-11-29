@@ -10,6 +10,9 @@ const { ctrlFindUsers,
     ctrlDestroyUser,
     ctrlFindContact,
     ctrlFindUserById,
+    ctrlCreateDesc,
+    ctrlUpdateDesc,
+    ctrlFindDesc,
 } = require("../controllers/user.controllers")
 
 const { ctrlUpdateUserInfo, ctrlUpdateUserContact, ctrlForgotPassword } = require("../controllers/updateInfo.controller")
@@ -38,11 +41,16 @@ router.post("/findPostulante", validarJWT, ctrlFindPostulante) //agregar ruta pr
 
 router.post("/findContact", validarJWT, ctrlFindContact)
 
+router.post("/createDesc",  ctrlCreateDesc)
+
+router.post("/findDesc", ctrlFindDesc)
+
 //ACTUALIZAR INFORMACION
 router.put("/updateUser", validarJWT, ctrlUpdateUser)
 router.put("/updateUserInfo", validarJWT, validateInfo, ctrlUpdateUserInfo)
 router.put("/updateUserContact", validarJWT, validateContact, ctrlUpdateUserContact)
 router.post("/forgotPassword", ctrlForgotPassword)
+router.put("/updateDesc", ctrlUpdateDesc)
 
 
 

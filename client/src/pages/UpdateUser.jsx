@@ -62,7 +62,7 @@ export const UpdateUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const response = await fetchFunction("updateUser", "PUT", form)
-        console.log("response", response);
+        localStorage.setItem("user_name", form.user_name)
         if (response.message) {
             Swal.fire({
                 title: response.message,

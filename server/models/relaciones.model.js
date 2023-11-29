@@ -15,6 +15,7 @@ const { Particular } = require("./particular.model");
 const { Postulante } = require("./postulantes.model");
 const { Post } = require("./posteos.model")
 const { Image } = require("./imagenes.model")
+const { Descripcion } = require("./descripcion.model")
 
 //UNO A UNO COMENTAR SI NO SE CREAN LAS RELACIONES AL PRINCIPIO
 User.hasOne(UserInfo, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
@@ -32,6 +33,8 @@ Empleador.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate
 User.hasOne(Postulante, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 Postulante.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
+User.hasOne(Descripcion, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Descripcion.belongsTo(User, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 // //UNO A MUCHOS
 Rol.hasMany(User, { foreignKey: 'id_rol' });
 User.belongsTo(Rol, { foreignKey: 'id_rol' });

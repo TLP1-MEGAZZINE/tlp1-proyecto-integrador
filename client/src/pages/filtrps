@@ -201,3 +201,33 @@ export const Posteos = ({ selectedRubro, selectedLocal }) => {
         </>
     )
 }
+
+
+    // useEffect(() => {
+    //     const resultado = fetchFunction("findPostbyRubro", "POST", data)
+    //         .then((resultado) => {
+    //             setPosts(resultado);
+    //         });
+    // }, [selectedRubro]);
+
+
+    // const postMatchesFilters = () => {
+
+    //     console.log("selectedRubro", selectedRubro);
+    //     console.log("selectedLocal", selectedLocal);
+
+    //     return posts.filter((post) => {
+    //         const rubroMatch = selectedRubro == 0 || post?.id_rubro == selectedRubro;
+    //         const localidadMatch = selectedRubro == 0 || post?.user_info?.localidad?.id_local == selectedLocal;
+
+    //         if (selectedRubro == 0 && selectedLocal == 0) {
+    //             return true;
+    //         } else if (selectedLocal != 0 && selectedRubro == 0) {
+    //             return localidadMatch;
+
+    //         } else if (selectedRubro != 0 && selectedLocal == 0) {
+    //             return rubroMatch;
+    //         }
+    //         return rubroMatch || localidadMatch;
+    //     });
+    // };

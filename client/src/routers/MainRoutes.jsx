@@ -7,9 +7,10 @@ import Inicio from "../pages/Inicio"
 import { UpdateInfo } from "../pages/UpdateInfo"
 import { UpdateUser } from "../pages/UpdateUser"
 import { NewPost } from "../pages/NewPost"
+import { UpdateDescription } from "../pages/UpdateDescription"
 
 export const MainRoutes = () => {
-    
+
     return (
         <>
             <Routes>
@@ -19,7 +20,7 @@ export const MainRoutes = () => {
                 <Route path='/home' element={<Inicio />} />
                 <Route path='/files' element={<Files />} />
                 <Route path='/my-profile' element={<Profile />} />
-                {/* <Route path='/post' element={<Post />} /> */}
+                <Route path='/update-description' element={<UpdateDescription />} />
                 <Route path='/messages' element={<Messages />} />
             </Routes>
         </>
