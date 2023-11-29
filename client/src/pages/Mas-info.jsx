@@ -1,7 +1,6 @@
-import React from 'react'
-import Footer from '../components/Footer'
-import Header from '../components/Header'
-import Slide from '../components/Slide';
+import Footer from '../components/Footer.component'
+import Header from '../components/Header.component'
+import Slide from '../components/Slide.component';
 import {slideData1, slideData2, slideData3} from '../data/InfoContent';
 
 

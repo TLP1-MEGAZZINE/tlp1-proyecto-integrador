@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import userIcon from "../assets/userIcon.png"
 import "../Style.css";
 import { fetchFunction } from "../api/apiFetch";
-import Header from "../components/Header";
-import Footer from "../components/Footer"
+import Header from "../components/Header.component";
+import Footer from "../components/Footer.component"
 import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {

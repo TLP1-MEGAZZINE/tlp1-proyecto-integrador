@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from '../components/Header.component'
+import Footer from '../components/Footer.component'
 import googleLogo from "../assets/logoGoogle.jpg"
 import lock from "../assets/lock-solid.png"
 import user from "../assets/user-solid.png"

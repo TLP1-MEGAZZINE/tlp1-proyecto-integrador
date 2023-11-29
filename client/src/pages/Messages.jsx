@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react"
 import { io } from "socket.io-client"
-import Header from "../components/Header"
-import Footer from "../components/Footer"
+import Header from "../components/Header.component"
+import Footer from "../components/Footer.component"
 import dayjs from "dayjs"
 
 const user_name = localStorage.getItem("user_name")

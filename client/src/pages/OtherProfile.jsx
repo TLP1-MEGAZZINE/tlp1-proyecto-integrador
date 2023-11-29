@@ -1,11 +1,11 @@
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../components/Header.component";
+import Footer from "../components/Footer.component";
 import userIcon from "../assets/userIcon.png"
-import dayjs from "dayjs";
 import { useParams } from "react-router-dom";
 import { fetchFunction } from "../api/apiFetch";
 import { useEffect, useState } from "react";
 import { useBoleean } from "../hooks/useHiddenPass";
+import { PosteosUser } from "../components/PosteosUser.component";
 
 export const OtherProfile = () => {
 
@@ -13,7 +13,6 @@ export const OtherProfile = () => {
     const [contacto, setContacto] = useState(null);
     const [pfp, setPfp] = useState(null);
     const [rolInfo, setRolInfo] = useState(null);
-    const [posts, setPosts] = useState([]);
 
     const { id_user } = useParams()
 
@@ -29,6 +28,7 @@ export const OtherProfile = () => {
             })
     }, [])
 
+    console.log(info);
     //INFO DE ROL
     useEffect(() => {
         if (info?.User?.id_rol == 1) {
@@ -64,14 +64,6 @@ export const OtherProfile = () => {
                 }
             })
     }, []);
-
-    //POSTEOS
-    useEffect(() => {
-        const posts = fetchFunction("findUserPost", "POST", data)
-            .then((posts) => {
-                setPosts(posts);
-            })
-    }, [])
 
     //DESCRIPCION
     const [desc, setDesc] = useState(null);
@@ -237,98 +229,69 @@ export const OtherProfile = () => {
                         </div>
 
                         {/* POSTEOS Y DESCRIPCION*/}
-                        <div className="col-md-4 justify-content-center mx-auto">
+                        <div className={`${info?.User.id_rol == 1 ? "col-md-4 justify-content-center mx-auto"
+                            : "col-md-12 justify-content-center mx-auto"}`} >
                             <div className="my-3 p-3 bg-body rounded shadow-sm">
+                                <h5 className="card-title text-dark d-flex justify-content-center">Publicaciones del usuario</h5>
                                 <div className="d-flex justify-content-center flex-wrap">
-                                    <h5 className="card-title text-dark">Publicaciones del usuario</h5>
-                                    {posts.map((post, id_post) => (
-                                        <div key={id_post} className="text-muted pt-3 mx-5">
-                                            <div className="d-flex">
-                                                <svg className="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
-                                                    xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                                                    preserveAspectRatio="xMidYMid slice" focusable="false">
-                                                    <title>Placeholder</title>
-                                                    <rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff"
-                                                        dy=".3em">32x32</text>
-                                                </svg>
-                                                <p className="pb-3 mb-0 small lh-sm border-bottom ">
-                                                    <strong className="d-block">{post.User.user_name}</strong>
 
-                                                    <strong className="d-block text-gray-dark">{post.User.user_email}</strong>
-                                                    <strong className="d-block text-gray-dark">{post.post_title}</strong>
-                                                    {post.post_content} <br />
-                                                    {
-                                                        post.url == "/uploads/null" ? (
-                                                            ""
-                                                        ) : (
-                                                            <img className="img-thumbnail" src={`http://localhost:5000${post.url}`} crossOrigin="anonymous" height="200" width="300" alt="Img" />
-                                                        )
-                                                    }
-                                                    <br />
-                                                    <span>Rubro: {post?.rubro?.desc_rubro}</span><br />
-                                                    <span>Fecha: {dayjs(post.updatedAt).format('DD/MM/YYYY hh:mm')}</span><br />
-                                                    <span>Localidad: {post?.user_info?.localidad?.nombre_local}</span>
-                                                </p>
-                                            </div>
+                                    <PosteosUser data={data} />
+                                </div>
+                            </div>
+                        </div>
+
+                        {info?.User.id_rol == 1 ? (
+                            <div className="col-md-8 col-sm-12 mx-auto py-3">
+                                <div className="card text-center d-flex flex-column justify-content-center colorFondo">
+                                    <div className="card-body">
+                                        <h5 className="card-title text-light">Descripción del usuario</h5>
+                                        <div className="table-responsive">
+                                            <ul className="list-group table">
+
+                                                <li className="list-group-item">Descripción personal:  <br />{desc?.descripcion}
+                                                </li>
+
+                                                <li className="list-group-item">Mis estudios: <br /> {desc?.estudios}
+                                                </li>
+
+                                                <li className="list-group-item">Mis habilidades:  <br />{desc?.habilidades}
+                                                </li>
+
+                                                <li className="list-group-item">Mis intereses:  <br />{desc?.intereses}
+                                                </li>
+
+                                                <li className="list-group-item">Experiencias Profesionales: <br /> {desc?.experiencia}
+                                                </li>
+
+                                                <li className="list-group-item"></li>
+                                            </ul>
                                         </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
 
-                        <div className="col-md-8 col-sm-12 mx-auto py-3">
-                            <div className="card text-center d-flex flex-column justify-content-center colorFondo">
-                                <div className="card-body">
-                                    <h5 className="card-title text-light">Descripción del usuario</h5>
-                                    <div className="table-responsive">
-                                        <ul className="list-group table">
+                                    </div>
+                                    <div className="card-body">
 
-                                            <li className="list-group-item">Descripción personal:  <br />{desc?.descripcion}
-                                            </li>
+                                        <h5 className="card-title text-light">Más Contenido</h5>
 
-                                            <li className="list-group-item">Mis estudios: <br /> {desc?.estudios}
-                                            </li>
+                                        <div className="table-responsive">
 
-                                            <li className="list-group-item">Mis habilidades:  <br />{desc?.habilidades}
-                                            </li>
+                                            <ul className="list-group table">
 
-                                            <li className="list-group-item">Mis intereses:  <br />{desc?.intereses}
-                                            </li>
+                                                <li className="list-group-item">Archivos:<br />
+                                                    {desc?.archivos}
+                                                </li>
 
-                                            <li className="list-group-item">Experiencias Profesionales: <br /> {desc?.experiencia}
-                                            </li>
+                                            </ul>
+                                        </div>
 
-                                            <li className="list-group-item"></li>
-                                        </ul>
                                     </div>
 
                                 </div>
-                                <div className="card-body">
-
-                                    <h5 className="card-title text-light">Más Contenido</h5>
-
-                                    <div className="table-responsive">
-
-                                        <ul className="list-group table">
-
-                                            <li className="list-group-item">Archivos:<br />
-                                                {desc?.archivos}
-                                            </li>
-
-                                        </ul>
-                                    </div>
-
-                                </div>
-
                             </div>
-                        </div>
+                        ) : <div></div>}
                     </div>
                 </div>
 
-            </div>
-
-
-
+            </div >
 
             <Footer />
         </>

@@ -1,8 +1,7 @@
-import React from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from '../components/Header.component'
+import Footer from '../components/Footer.component'
 import { useForm } from '../hooks/useForms'
-import { Selects } from "../components/Selects"
+import { Selects } from "../components/Selects.component"
 import { useNavigate } from "react-router-dom"
 import { fetchFunction } from '../api/apiFetch'
 import { useEffect, useState } from 'react'
@@ -238,7 +237,7 @@ export const UpdateUser = () => {
 
                                                     <Selects
                                                         label={"Rubros."}
-                                                        placeholder={rolesInfo?.rubro.desc_rubro ? rolesInfo?.rubro.desc_rubro : "Elija el rubro de su empresa"}
+                                                        placeholder={rolesInfo?.rubro?.desc_rubro ? rolesInfo?.rubro?.desc_rubro : "Elija el rubro de su empresa"}
                                                         position={"id_rubro"}
                                                         itemName={"desc_rubro"}
                                                         name={"id_rubro"}

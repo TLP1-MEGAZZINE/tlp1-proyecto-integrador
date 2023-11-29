@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import { Users } from "../components/Users";
-import { Posteos } from "../components/Posteos";
+import Footer from "../components/Footer.component";
+import Header from "../components/Header.component";
+import { Users } from "../components/Users.component";
+import { Posteos } from "../components/Posteos.component";
 import { useNavigate } from "react-router-dom";
-import { Selects } from "../components/Selects";
+import { Selects } from "../components/Selects.component";
 
 function Inicio() {
 

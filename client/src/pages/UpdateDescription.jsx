@@ -1,6 +1,5 @@
-import React from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from '../components/Header.component'
+import Footer from '../components/Footer.component'
 import { useForm } from '../hooks/useForms'
 import { useNavigate } from "react-router-dom"
 import { fetchFunction } from '../api/apiFetch'

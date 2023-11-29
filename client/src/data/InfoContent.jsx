@@ -1,4 +1,4 @@
-import Accordion from "../components/Accordion"
+import Accordion from "../components/Accordion.component"
 
 export const accordionData1 = {
     title: "Demuestran mayor entusiasmo y motivación",

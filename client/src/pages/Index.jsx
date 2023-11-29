@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
+import Footer from '../components/Footer.component';
+import Header from '../components/Header.component';
 import "../Style.css";
 
 export const Index = () => {
