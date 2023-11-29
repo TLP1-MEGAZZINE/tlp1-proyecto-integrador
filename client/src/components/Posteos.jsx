@@ -3,6 +3,18 @@ import { fetchFunction } from "../api/apiFetch";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Manufactura from "../assets/Manufactura.png";
+import Educacion2 from "../assets/Educacion2.png";
+import Ventas from "../assets/Ventas.png";
+import otro_rubro from "../assets/otro_rubro.png";
+import Alimenticio from "../assets/Alimenticio.png";
+import tecnologia from "../assets/tecnologia.png";
+import Salud from "../assets/Salud.png";
+import Administracion from "../assets/Administracion.png";
+import Construccion from "../assets/Construccion.png";
+import Reparaciones from "../assets/Reparaciones.png";
+import Finanzas from "../assets/Finanzas.png";
+
 export const Posteos = ({ selectedRubro, selectedLocal }) => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
@@ -53,13 +65,36 @@ export const Posteos = ({ selectedRubro, selectedLocal }) => {
             {filteredPosts.map((post, id_post) => (
                 <div key={id_post} className="text-muted pt-3 mx-5">
                     <div className="d-flex">
-                        <svg className="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
-                            xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                            preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff"
-                                dy=".3em">32x32</text>
-                        </svg>
+                        <div>
+                            {
+                                (() => {
+                                    switch (post.id_rubro) {
+                                        case 1:
+                                            return <img src={Salud} width="100" height="100" className="mx-3" />;
+                                        case 2:
+                                            return <img src={tecnologia} width="100" height="100" className="mx-3" />;
+                                        case 3:
+                                            return <img src={Reparaciones} width="100" height="100" className="mx-3" />;
+                                        case 4:
+                                            return <img src={Finanzas} width="100" height="100" className="mx-3" />;
+                                        case 5:
+                                            return <img src={Manufactura} width="100" height="100" className="mx-3" />;
+                                        case 6:
+                                            return <img src={Ventas} width="100" height="100" className="mx-3" />;
+                                        case 7:
+                                            return <img src={Administracion} width="100" height="100" className="mx-3" />;
+                                        case 8:
+                                            return <img src={Alimenticio} width="100" height="100" className="mx-3" />;
+                                        case 9:
+                                            return <img src={Construcion} width="100" height="100" className="mx-3" />;
+                                        case 10:
+                                            return <img src={Educacion2} width="100" height="100" className="mx-3" />;
+                                        default:
+                                            return <img src={otro_rubro} width="100" height="100" className="mx-3" />;
+                                    }
+                                })()
+                            }
+                        </div>
                         <p className="pb-3 mb-0 small lh-sm border-bottom ">
                             <a href="#" className="text-decoration-none">
                                 <strong className="d-block"
