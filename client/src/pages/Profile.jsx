@@ -9,7 +9,7 @@ import { AuthContext } from "../context/AuthProvider";
 import { useForm } from "../hooks/useForms";
 import { fetchFileFunction } from "../api/apiFetchFiles";
 import { PosteosUser } from "../components/PosteosUser.component";
-import { descUser } from "../components/DescUser.component";
+import { DescUser } from "../components/DescUser.component";
 
 export const Profile = () => {
 
@@ -60,30 +60,18 @@ export const Profile = () => {
 
   if (id_rol == 1) {
     useEffect(() => {
-      const obtenerDatos = async () => {
-        try {
-          const resultado = await fetchFunction("findPostulante", "POST", data);
+      const resultado = fetchFunction("findPostulante", "POST", data)
+        .then((resultado) => {
           setTipoRol(resultado);
-        } catch (error) {
-          console.error("Hubo un error:", error);
-        }
-      };
-
-      obtenerDatos();
+        })
     }, []);
 
   } else if (id_rol == 2) {
-
     useEffect(() => {
-      const obtenerDatos = async () => {
-        try {
-          const resultado = await fetchFunction("findEmpleador", "POST", data);
-          setTipoRol(resultado);
-        } catch (error) {
-          console.error("Hubo un error:", error);
-        }
-      };
-      obtenerDatos();
+      const resultado = fetchFunction("findEmpleador", "POST", data)
+        .then((resultado) => {
+          setTipoRol(resultado)
+        })
     }, []);
   }
 
@@ -102,17 +90,6 @@ export const Profile = () => {
     };
     obtenerDatos();
   }, []);
-
-  //OBTENER DESCRIPCION
-  // const [desc, setDesc] = useState(null);
-
-  // useEffect(() => {
-  //   const obtenerDatos = async () => {
-  //     const resultado = await fetchFunction("findDesc", "POST", data);
-  //     setDesc(resultado);
-  //   };
-  //   obtenerDatos();
-  // }, []);
 
   //SUBIR FOTO DE PERFIL
   const [pfp, setPfp] = useState({
@@ -376,6 +353,7 @@ export const Profile = () => {
               </div>
             </div>
 
+            {/*INFO DE USUARIO */}
             <div className="col-md-8 col-sm-12">
               <div className="card text-center d-flex flex-column justify-content-center colorFondo">
                 <div className="card-body">
@@ -415,7 +393,7 @@ export const Profile = () => {
                   </div>
                 </div>
                 <div className="card-body">
-
+                  {/*INFO DE CONTACTO */}
                   <h5 className="card-title text-light">Información de contacto</h5>
 
                   <div className="table-responsive">
@@ -486,9 +464,17 @@ export const Profile = () => {
                 </div>
               </div>
             </div>
+
             {id_rol == 1 ? (
-              <descUser data={data} />
-            ) : ""}
+              <>
+                <DescUser data={data} />
+                <div className="d-flex justify-content-end py-2">
+                  <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleDescClick}>Editar</i>
+                </div>
+              </>
+            ) :
+              <div></div>}
+
           </div>
 
         </div>

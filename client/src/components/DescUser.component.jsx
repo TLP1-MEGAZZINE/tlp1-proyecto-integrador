@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchFunction } from "../api/apiFetch";
 
-export const descUser = (data) => {
+export const DescUser = (data) => {
 
     const [desc, setDesc] = useState(null);
 
@@ -58,10 +58,6 @@ export const descUser = (data) => {
                         </ul>
                     </div>
 
-                </div>
-
-                <div className="d-flex justify-content-end py-2">
-                    <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleDescClick}>Editar</i>
                 </div>
             </div>
         </div>)
