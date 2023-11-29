@@ -28,7 +28,7 @@ Rubro.sync({ force: false }).then(async () => {
       await Rubro.bulkCreate([
         { desc_rubro: 'Salud' },
         { desc_rubro: 'Tecnologia' },
-        { desc_rubro: 'Educación' },
+        { desc_rubro: 'Reparaciones' },
         { desc_rubro: 'Finanzas' },
         { desc_rubro: 'Manufactura' },
         { desc_rubro: 'Ventas' },
@@ -45,4 +45,12 @@ Rubro.sync({ force: false }).then(async () => {
   }
 });
 
-module.exports = Rubro; 
+async function findRubro() {
+  try {
+      return await Rubro.findAll()
+  } catch (error) {
+      console.log("Error al buscar rubros", error);
+  }
+}
+
+module.exports = {Rubro, findRubro}; 

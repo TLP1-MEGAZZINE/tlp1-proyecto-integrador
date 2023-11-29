@@ -1,11 +1,10 @@
 const { DataTypes, sequelize } = require('../config/db');
-const { encriptar } = require('../helpers/encriptar');
-const { Op, where } = require('sequelize');
+const { encriptar, comparar } = require('../helpers/encriptar');
+const { Op } = require('sequelize');
 const Rol = require("./roles.model")
-const { UserInfo } = require("./userInfo.model");
 
 //CREAR MODELO DE USER
-const User = sequelize.define('user', {
+const User = sequelize.define('User', {
     id_user: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -33,10 +32,6 @@ const User = sequelize.define('user', {
     },
     id_rol: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "rol",
-        //     key: "id_rol"
-        // },
     },
     estado: {
         type: DataTypes.BOOLEAN,
@@ -46,8 +41,8 @@ const User = sequelize.define('user', {
 }, {
     timestamps: false,
     paranoid: false,
-    tableName: "user",
-    modelName: "user"
+    tableName: "User",
+    modelName: "User"
 });
 
 User.sync({ force: false }).then(() => {
@@ -111,21 +106,21 @@ async function findUserByUserName(value) {
 }
 
 //BUSCAR POR EMAIL O USERNAME
-async function findUserByEmailOrUsername(userCredentials) {
+async function findUserByEmailOrUsername(form) {
     return await User.findOne({
         where: {
             [Op.or]: [
-                { user_name: userCredentials.user_name },
-                { user_email: userCredentials.user_email }
+                { user_name: form.user_name },
+                { user_email: form.user_name }
             ]
         }
     });
 }
 
 //FIND ONE USER IN DB
-async function findUserById(userId) {
+async function findUserById(data) {
     try {
-        return await User.findByPk(userId) ?? null
+        return await User.findByPk(data.id_user) ?? null
 
     } catch (error) {
         console.log("Error al encontrar usuario")
@@ -137,7 +132,7 @@ async function findAllUser() {
     try {
         return await User.findAll({
             where: { estado: true },
-            attributes: { exclude: ['user_password', 'estado', 'id_rol', 'id_user'] },
+            attributes: { exclude: ['user_password', 'estado', 'id_rol'] },
             include: [{
                 model: Rol, // Modelo relacionado
                 attributes: ['rol_name']
@@ -161,25 +156,50 @@ async function findUserByRole(value) {
 }
 
 //ACTUALIZAR USUARIO
-async function actualizarUsuario(newData) {
+async function actualizarUsuario(data) {
     try {
-        const user = await findUserById(newData.userId)
 
-        if (user) {
-            const hashedPass = await encriptar(newData.user_password)
-         await user.update({
-                user_name: newData.user_name,
-                user_email: newData.user_email,
+        const { user_password } = await User.findByPk(data.id_user)
+        const sameNameEmail = await User.findAll({
+            where: {
+                [Op.or]: [
+                    { user_name: data.user_name },
+                    { user_email: data.user_name }
+                ]
+            }
+        })
+        let moreThanOne = false
+
+        if (sameNameEmail.length > 1) {
+            moreThanOne = true
+            throw new Error("El nombre usuario o email ya esta ocupado")
+        }
+
+        //COMPARAR LAS CONTRASEÑAS
+        const samePass = await comparar(data.user_password, user_password)
+        if (samePass || moreThanOne) {
+
+            const hashedPass = await encriptar(data.user_password)
+
+            const updatedUser = await User.update({
+                user_name: data.user_name,
+                user_email: data.user_email,
                 user_password: hashedPass,
+            }, {
+                where: {
+                    id_user: data.id_user
+                }
             })
-            user.save()
+            return updatedUser;
+        } else {
+            throw new Error("Las contraseña no coincide o el nombre de usuario/email ya existe")
         }
     } catch (error) {
         console.log("Error al encontrar usuario", error);
     }
 }
 
-//ELIMINAR USUARIO
+//ELIMINAR USUARIO LOGICAMENTE
 async function deleteUser(user_id) {
     try {
         const deletedUser = await User.findByPk(user_id);
@@ -189,7 +209,7 @@ async function deleteUser(user_id) {
             return; // Salir de la función si el usuario no existe
         }
 
-       return await deletedUser.update({
+        return await deletedUser.update({
             estado: 0 // Cambia 'where' por 'estado' para marcar el usuario como eliminado
         });
 
@@ -199,14 +219,14 @@ async function deleteUser(user_id) {
 }
 
 //BUSCAR POR NOMBRE APROX
-async function findUserByName(userName) {
+async function findUserByName(data) {
 
     try {
 
-        const nameAprox = await User.findAll({
+        const nameAprox = await User.findOne({
             where: {
                 user_name: {
-                    [Op.like]: `%${userName}%`
+                    [Op.like]: `%${data.user_name}%`
                 },
             },
         });
@@ -218,8 +238,42 @@ async function findUserByName(userName) {
     }
 }
 
+//DESTRUIR USUARIO
+async function destroyUser(data) {
+    try {
+
+        return await User.destroy({
+            where: {
+                id_user: data.id_user
+            }
+        })
+
+    } catch (error) {
+        console.error("Error al eliminar el usuario", error);
+    }
+}
+
+//RESTAURAR CONTRASEÑAS
+async function restorePassword(id_user, newPass) {
+    try {
+        const hashedPass = await encriptar(newPass)
+
+        return await User.update({
+            user_password: hashedPass,
+        }, {
+            where: {
+                id_user: id_user
+            }
+        })
+
+    } catch (error) {
+        console.log("Error al actualizar contraseña", error);
+    }
+}
+
+
 module.exports = {
     User, createUser, findUserByEmail, findUserByUserName, findUserByEmailOrUsername,
     findAllUser, findUserByRole, deleteUser,
-    actualizarUsuario, findUserByName
+    actualizarUsuario, findUserByName, findUserById, destroyUser, restorePassword
 }

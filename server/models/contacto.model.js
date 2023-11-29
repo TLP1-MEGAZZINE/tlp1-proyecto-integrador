@@ -9,18 +9,14 @@ const Contacto = sequelize.define('Contacto', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "user",
-        //     key: "id_user"
-        // },
     },
     num_tel: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     domicilio: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
 }, {
     timestamps: false,
@@ -31,19 +27,19 @@ const Contacto = sequelize.define('Contacto', {
 
 
 // Sincronizar los modelos con la base de datos (esto creará las tablas si no existen)
-Contacto.sync({ force: true }).then(() => {
+Contacto.sync({ force: false }).then(() => {
     console.log('Tabla de contactos creada')
 })
 
-async function createContacto(id_user, userData) {
+async function createContacto(id_user) {
 
     try {
 
         return await Contacto.create(
             {
                 id_user: id_user,
-                num_tel: userData.num_tel,
-                domicilio: userData.domicilio,
+                num_tel: null,
+                domicilio: null,
             }
         );
 
@@ -53,5 +49,39 @@ async function createContacto(id_user, userData) {
     }
 }
 
+async function updateUserContact(data) {
 
-module.exports = { createContacto, Contacto }
+    try {
+        const user_contact = await Contacto.update(
+            {
+                num_tel: data.num_tel,
+                domicilio: data.domicilio,
+            },
+            {
+                where: {
+                    id_user: data.id_user
+                }
+            }
+        );
+        return user_contact;
+    } catch (error) {
+        console.log("Error al actualizar registro de contacto", error);
+        throw error
+    }
+}
+
+async function findContact(data) {
+    try {
+        const contact = await Contacto.findOne({
+            where: {
+                id_user: data.id_user
+            }
+        })
+        return contact
+    } catch (error) {
+        console.log("Error buscar registro de contacto", error);
+        throw error
+    }
+}
+
+module.exports = { createContacto, Contacto, updateUserContact, findContact }

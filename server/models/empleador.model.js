@@ -1,6 +1,6 @@
 const { DataTypes, sequelize } = require('../config/db');
 
-const Rubro = require("./rubro.model");
+const {Rubro} = require("./rubro.model");
 
 //CREAR MODELO DE USERS
 const Empleador = sequelize.define('empleador', {
@@ -11,10 +11,6 @@ const Empleador = sequelize.define('empleador', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "User",
-        //     key: "id_user"
-        // },
     },
     num_tel_empresa: {
         type: DataTypes.STRING,
@@ -26,14 +22,11 @@ const Empleador = sequelize.define('empleador', {
     },
     nombre_empresa: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     id_rubro: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "rubro",
-        //     key: "id_rubro"
-        // }
+        allowNull: true
     },
     otro_rubro: {
         type: DataTypes.STRING,
@@ -49,21 +42,29 @@ Empleador.sync({ force: false }).then(() => {
     console.log('Tabla de empleador creada')
 })
 
-
-async function createEmpleador(id_user, userData) {
+//BUSCAR EMPLEADOR POR RUBRO
+async function findRubroByIdEmpleador(data) {
+    try {
+        return await Empleador.findOne({ where: { id_user: data } }) ?? null
+    } catch (error) {
+        console.log("Error al encontrar el registro de Empleadors ", error)
+        throw error;
+    }
+}
+//CREAR EMPLEADOR
+async function createEmpleador(id_user) {
 
     try {
         return await Empleador.create(
             {
                 id_user: id_user,
-                num_tel_empresa: userData.num_tel_empresa,
-                domicilio_empresa: userData.domicilio_empresa,
-                nombre_empresa: userData.nombre_empresa,
-                id_rubro: userData.id_rubro,
-                otro_rubro: userData.otro_rubro
+                num_tel_empresa: null,
+                domicilio_empresa: null,
+                nombre_empresa: null,
+                id_rubro: null,
+                otro_rubro: null
             },
         );
-
 
     } catch (error) {
         console.log("Error al crear registro de empleador", error)
@@ -71,4 +72,46 @@ async function createEmpleador(id_user, userData) {
     }
 };
 
-module.exports = { Empleador, createEmpleador }
+//ACTUALIZAR EMPLEADOR
+async function updateEmpleador(data) {
+
+    try {
+        return await Empleador.update(
+            {
+                num_tel_empresa: data.num_tel_empresa,
+                domicilio_empresa: data.domicilio_empresa,
+                nombre_empresa: data.nombre_empresa,
+                id_rubro: data.id_rubro,
+                otro_rubro: data.otro_rubro
+            }, {
+            where: {
+                id_user: data.id_user
+            }
+        }
+        );
+
+    } catch (error) {
+        console.log("Error al crear registro de empleador", error)
+        throw error
+    }
+};
+
+//BUSCAR EMPLEADOR POR ID
+async function findEmpleador(data) {
+    try {
+        return await Empleador.findOne({
+            where: { id_user: data.id_user },
+            include: [
+                {
+                    model: Rubro,
+                    attributes: ['desc_rubro'],
+                }
+            ]
+        }) ?? null
+    } catch (error) {
+        console.log("Error al encontrar el registro de Empleadors ", error)
+        throw error;
+    }
+}
+
+module.exports = { Empleador, createEmpleador, findRubroByIdEmpleador, updateEmpleador, findEmpleador }

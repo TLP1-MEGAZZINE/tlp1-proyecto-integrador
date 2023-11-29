@@ -1,27 +1,48 @@
 //IMPORTACIONES
-const crearRegistroCompleto = require("../helpers/registro.helper.js")
 const bcrypt = require('bcrypt');
-// const { generarJWT } = require('../helpers/generarToken');
+const { generarJWT } = require('../helpers/generarToken');
 const { findUserByEmailOrUsername, } = require("../models/users.model");
-
+const { createUser } = require("../models/users.model");
+const { createInfoUser } = require("../models/userInfo.model");
+const { createContacto } = require("../models/contacto.model");
+const { createEmpleador } = require("../models/empleador.model");
+const { createParticular } = require("../models/particular.model");
+const { createPostulante } = require("../models/postulantes.model");
 
 //CREAR EL OBJETO QUE CONTENDRA LOS METODOS POST
 const registerLogin = {}
 
-// METODO PARA CREAR UN USUARIO Y ENCRIPTAR SU PASSWORD
-registerLogin.crearUsuario = async (req, res) => {
-
+registerLogin.crearUser = async (req, res) => {
     const userData = req.body
 
     try {
+        const user = await createUser(userData);
 
-        const registroCompleto = await crearRegistroCompleto(userData);
+        if (user) {
+            const info = await createInfoUser(user.id_user);
+            const contacto = await createContacto(user.id_user);
 
-        if (!registroCompleto) {
-            throw new Error("Error al crear el registro de usuario")
-        } else {
-            return res.status(200).json({ message: "Registro creado-controller" })
+            if (info && contacto) {
+                console.log(user.id_rol);
+
+                if (user.id_rol == 1) {
+                    const postulante = await createPostulante(user.id_user);
+                    return res.status(200).json({ message: "Registro creado-controller" })
+                }
+
+                if (user.id_rol == 2) {
+                    const empleador = await createEmpleador(user.id_user);
+                    return res.status(200).json({ message: "Registro creado-controller" })
+                }
+
+                if (user.id_rol == 3) {
+                    const particular = await createParticular(user.id_user);
+                    return res.status(200).json({ message: "Registro creado-controller" })
+                }
+
+            }
         }
+
     } catch (error) {
         console.log("Error del servidor", error)
     }
@@ -61,20 +82,26 @@ registerLogin.loginUsuario = async (req, res) => {
         }
 
         // Generar el JWT
-        // const token = await generarJWT(existeUsuario.id_user)
-
-        req.session.user = {
-            id_user: existeUsuario.id_user,
-            rol: existeUsuario.id_rol
-        };
-
-        res.json({
-            message: 'Iniciando sesión',
-            // token, // No necesitas un token JWT en este enfoque
-        })
+        const token = await generarJWT(existeUsuario.id_user, existeUsuario.id_rol, existeUsuario.user_name);
 
         console.log("SESION INICIADA");
-        console.log(req.session.user);
+        console.log({ token });
+
+        // const cookieOptions = {
+        //     expires: new Date(Date.now() + 60 * 60 * 1000),
+        //     httpOnly: true,
+        //     sameSite: "strict"
+        // }
+
+        return (
+            //NO SE USA EN REACT
+            // res.cookie('token', token, cookieOptions),
+            // res.cookie('username', existeUsuario.user_name),
+            // res.cookie('id_user', existeUsuario.id_user),
+            // res.cookie("id_rol", existeUsuario.id_rol),
+
+            res.status(200).json({ message: "Datos Correctos,iniciando sesión", id_user: existeUsuario.id_user, user_name: existeUsuario.user_name, id_rol: existeUsuario.id_rol, token })
+        )
 
     } catch (error) {
         console.log(error);

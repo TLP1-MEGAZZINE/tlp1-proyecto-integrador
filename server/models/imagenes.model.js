@@ -13,10 +13,6 @@ const Image = sequelize.define('image', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    description: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
     is_pfp: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
@@ -24,10 +20,6 @@ const Image = sequelize.define('image', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "User",
-        //     key: "id_user"
-        // },
         allowNull: true,
     },
 }, {
@@ -41,28 +33,41 @@ Image.sync({ force: false }).then(async () => {
 });
 
 //SERVICIO
-
-async function subirArchivo(filename, description,idUser) {
+async function subirPfp(filename, data) {
     try {
-        return await Image.create({
-            url: `/uploads/${filename}`,
-            description: description,
-            id_user: idUser
-        }) ?? null
+
+        console.log(data);
+        const existePfp = await findpfp(data)
+
+        if (existePfp) {
+            return await existePfp.update({
+                url: `/uploads/${filename}`,
+            })
+        } else {
+            return await Image.create({
+                url: `/uploads/${filename}`,
+                is_pfp: 1,
+                id_user: data.id_user
+            })
+        }
     } catch (error) {
         console.log("ERROR AL SUBIR ARCHIVO", error)
     }
 };
 
+
 //BUSCAR FOTO DE PERFIL
-async function findpfp(id_user){
-    const pfp = Image.findOne({
+async function findpfp(data) {
+    const pfp = await Image.findOne({
         where: {
-            id_user: id_user,
-            is_pfp: true
+            id_user: data.id_user, is_pfp: 1
         }
-    }) 
+    })
+
+    console.log("IMAGEN", pfp?.url);
+    return pfp
+
 }
 
 
-module.exports = { Image, subirArchivo, findpfp };
+module.exports = { Image, subirPfp, findpfp };

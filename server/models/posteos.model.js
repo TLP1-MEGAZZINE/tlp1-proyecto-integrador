@@ -1,6 +1,11 @@
 const { DataTypes, sequelize } = require('../config/db');
+<<<<<<< HEAD
 const Localidad = require('./localidad.model');
 const Rubro = require('./rubro.model');
+=======
+const { Localidad } = require('./localidad.model');
+const { Rubro } = require('./rubro.model');
+>>>>>>> nuevas-funciones
 const { UserInfo } = require('./userInfo.model');
 
 //ACOMODAR LA HORA, RESTANDOLE 3 HORAS
@@ -20,8 +25,13 @@ const Post = sequelize.define('post', {
         allowNull: false,
     },
     post_content: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(1000),
         allowNull: false,
+
+    },
+    url: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     is_emprise_post: {
         type: DataTypes.BOOLEAN,
@@ -30,14 +40,13 @@ const Post = sequelize.define('post', {
     },
     id_user: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: "User",
-        //     key: "id_user"
-        // },
     },
     id_rubro: {
         type: DataTypes.INTEGER
-    }
+    },
+    id_info: {
+        type: DataTypes.INTEGER
+    },
 }, {
     paranoid: false,
     tableName: "post",
@@ -49,29 +58,38 @@ Post.sync({ force: false }).then(async () => {
 });
 
 //SERVICIO
-async function createPost(postData) {
+async function createPost(data, filename) {
     try {
+        console.log(data);
 
         let usuarioPost = await User.findOne({
-            where: { id_user: postData.id_user },
+            where: { id_user: data.id_user },
+        })
+
+        let infoId = await UserInfo.findOne({
+            where: { id_user: data.id_user },
         })
 
         if (usuarioPost.id_rol == 2) {
             return await Post.create({
-                id_user: postData.id_user,
-                post_title: postData.post_title,
-                post_content: postData.post_content,
+                id_user: data.id_user,
+                post_title: data.post_title,
+                post_content: data.post_content,
                 is_emprise_post: true,
-                id_rubro: postData.id_rubro
+                id_rubro: data.id_rubro,
+                id_info: infoId.id_info,
+                url: `/uploads/${filename}`
             });
         }
         // Crea un post en la DB
         return await Post.create({
-            id_user: postData.id_user,
-            post_title: postData.post_title,
-            post_content: postData.post_content,
+            id_user: data.id_user,
+            post_title: data.post_title,
+            post_content: data.post_content,
             is_emprise_post: false,
-            id_rubro: postData.id_rubro
+            id_rubro: data.id_rubro,
+            id_info: infoId.id_info,
+            url: `/uploads/${filename}`
         });
 
     } catch (error) {
@@ -99,6 +117,7 @@ const findAllPosts = async () => {
             include: [
                 {
                     model: User,
+<<<<<<< HEAD
                     attributes: ['user_name', 'user_email'],
                 },
                 {
@@ -141,6 +160,28 @@ const findAllPosts = async () => {
         // Ahora postsWithUserInfo contiene la información de usuario agregada a los objetos de posts
         return postsWithUserInfo;
         
+=======
+                    attributes: ['id_user', 'user_name', 'user_email'],
+                },
+                {
+                    model: Rubro,
+                    attributes: ['desc_rubro'],
+                },
+                {
+                    model: UserInfo,
+                    attributes: ['fecha_nacimiento'], include: [
+                        {
+                            model: Localidad,
+                            attributes: ['id_local', 'nombre_local'],
+                        }
+                    ]
+                }
+            ],
+        });
+
+        return posts;
+
+>>>>>>> nuevas-funciones
     } catch (error) {
         console.log('Error al buscar todos los posts', error);
         throw error;
@@ -218,4 +259,38 @@ const findPostPostulante = async () => {
     }
 }
 
-module.exports = { Post, createPost, findAllPosts, findPostbyRubro, deletePost, findPostEmpresa, findPostPostulante };
+//BUSCAR POST DE UN USUARIO
+const findUserPost = async (data) => {
+    try {
+        return await Post.findAll({
+            where: {
+                id_user: data.id_user
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: ['id_user', 'user_name', 'user_email'],
+                },
+                {
+                    model: Rubro,
+                    attributes: ['desc_rubro'],
+                },
+                {
+                    model: UserInfo,
+                    attributes: ['fecha_nacimiento'], include: [
+                        {
+                            model: Localidad,
+                            attributes: ['id_local', 'nombre_local'],
+                        }
+                    ]
+                }
+            ],
+        })
+    } catch (error) {
+        console.log('Error al buscar los posts del usuario', error);
+        throw error
+    }
+}
+
+module.exports = { Post, findUserPost, createPost, findAllPosts, findPostbyRubro, deletePost, findPostEmpresa, findPostPostulante };
+

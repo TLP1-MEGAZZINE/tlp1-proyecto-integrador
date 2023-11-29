@@ -49,4 +49,12 @@ Paises.sync({ force: false }).then(async () => {
     }
 });
 
-module.exports = Paises;
+async function findPaises() {
+    try {
+        return await Paises.findAll()
+    } catch (error) {
+        console.log("Error al buscar paises", error);
+    }
+}
+
+module.exports = { Paises, findPaises };

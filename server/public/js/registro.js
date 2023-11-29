@@ -103,7 +103,7 @@ formRegistro.addEventListener('submit', async (e) => {
       Swal.fire({
         icon: "success",
         title: "El usuario ha sido creado correctamente.",
-        text: "Espero un momento...",
+        text: "Espere un momento...",
         showConfirmButton: false
       });
       setTimeout(() => {

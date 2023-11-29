@@ -1,24 +1,57 @@
 const express = require('express');
 const router = express.Router();
+const { ctrlFindUsers,
+    ctrlFindUserByName,
+    ctrlDeleteUser,
+    ctrlUpdateUser,
+    ctrlFindUserInfo,
+    ctrlFindEmpleador,
+    ctrlFindPostulante,
+    ctrlDestroyUser,
+    ctrlFindContact,
+    ctrlFindUserById,
+    ctrlCreateDesc,
+    ctrlUpdateDesc,
+    ctrlFindDesc,
+} = require("../controllers/user.controllers")
 
-const { ctrlFindUsers, ctrlFindUserByName, ctrlDeleteUser, ctrlUpdateUser, 
-    ctrlFindUserBySession, ctrlMiControlador } = require("../controllers/user.controllers")
-const { protegerRuta } = require("../middlewares/protegerRuta")
+const { ctrlUpdateUserInfo, ctrlUpdateUserContact, ctrlForgotPassword } = require("../controllers/updateInfo.controller")
+const { validateInfo } = require("../validators/info.validation")
+const { validateContact } = require("../validators/contact.validation")
 
-//LLAMAR A TODOS LOS USUARIOS
+const { protegerRuta } = require("../middlewares/protegerRuta");
+const { validarJWT } = require('../middlewares/autenticarToken');
+
+//BUSCAR USUARIOS E INFORMACION
 router.get("/findAll", ctrlFindUsers)
 
 router.post("/findByName", ctrlFindUserByName)
 
 router.delete("/delete", ctrlDeleteUser)
 
-// router.get("/findUserById", findUserById)
+router.delete("/destroyUser", ctrlDestroyUser)
+
+router.post("/findUserById", ctrlFindUserById)
+
+router.post("/findUserInfo", validarJWT, ctrlFindUserInfo) //agregar ruta protegida
+
+router.post("/findEmpleador", validarJWT, ctrlFindEmpleador) //agregar ruta protegida
+
+router.post("/findPostulante", validarJWT, ctrlFindPostulante) //agregar ruta protegida
+
+router.post("/findContact", validarJWT, ctrlFindContact)
+
+router.post("/createDesc",  ctrlCreateDesc)
+
+router.post("/findDesc", ctrlFindDesc)
+
+//ACTUALIZAR INFORMACION
+router.put("/updateUser", validarJWT, ctrlUpdateUser)
+router.put("/updateUserInfo", validarJWT, validateInfo, ctrlUpdateUserInfo)
+router.put("/updateUserContact", validarJWT, validateContact, ctrlUpdateUserContact)
+router.post("/forgotPassword", ctrlForgotPassword)
+router.put("/updateDesc", ctrlUpdateDesc)
 
 
-router.put("/update", ctrlUpdateUser)
-
-router.get("/session", ctrlFindUserBySession)
-
-router.get("/miControlador", ctrlMiControlador)
 
 module.exports = router;

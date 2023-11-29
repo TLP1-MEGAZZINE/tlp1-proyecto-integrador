@@ -43,7 +43,7 @@
                         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
                           id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                           <img src="../../img/icon.png" alt="pfp" width=" 32" height="32" class="rounded-circle me-2">
-                          <strong class="text-light">Usuario</strong>
+                          <strong class="text-light"><%= user_name %></strong>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                           <li><a class="dropdown-item" href="#">Ajustes</a></li>
@@ -67,7 +67,6 @@
                         alt="Perfil de usuario">
                       <div class="card-body text-center">
                         <h5 class="card-title">Nombre y Apellido</h5>
-                        <%= rol %>
                           <a href="perfil/editar-perfil-usuario" class="btn btn-primary">Editar perfil del
                             postulante</a>
                           <div class="spacer"></div>
@@ -127,4 +126,7 @@
           </div>
       </section>
     </main>
+
+
+
     <%- include ('../partials/footer') -%>

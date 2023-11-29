@@ -3,27 +3,47 @@ const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const session = require('express-session');
-const multer = require("multer")
 const cookieParser = require("cookie-parser");
 const { createLogs, path } = require("./helpers/createLogs")
 const environments = require("./config/environment")
+const { createServer } = require('node:http');
+const { conectarDB } = require('./config/db');
+const { socketFunction } = require("./helpers/socketio")
 
 //MODELO DE PLANTILLAS
 require('ejs');
 //MODELOS DE LA DB
 require("./models/relaciones.model")
-//CONECTAR A LA DB
-const { conectarDB } = require('./config/db');
-conectarDB();
 
 // INICIALIZACION DE EXPRESS
 const app = express();
 
-//MIDDLEWARES
-app.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200, // Algunos navegadores devuelven un código de estado como 204
+};
+
+app.use(cors(corsOptions));
+
 app.use(helmet({
-    contentSecurityPolicy: false
+    contentSecurityPolicy: false,
+    // crossOriginEmbedderPolicy: false,
+    // crossOriginResourcePolicy: false
 }));
+
+// app.use((req, res, next) => {
+//     res.removeHeader("Cross-Origin-Embedder-Policy");
+//     next();
+// })
+
+
+const server = createServer(app)
+
+//MIDDLEWARES
+
+//PARA LA CONSOLA
+app.use(morgan('dev'));
+//LOGS
 app.use(morgan('combined', {
     stream: {
         write: (message) => {
@@ -32,16 +52,15 @@ app.use(morgan('combined', {
     }
 }));
 app.use(express.json());
-app.use(cookieParser());
-app.use(express.urlencoded({ extended: false }));
-app.use(session({
-    secret: process.env.SECRET_KEY,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        maxAge: 600000, //10 minutos...  36000001hora
+app.use(cookieParser(
+    process.env.SECRET_KEY,
+    {
+        sameSite: 'none',
     }
-}));
+));
+app.use(express.urlencoded({ extended: true }));
+
+socketFunction(server)
 
 //ARCHIVOS ESTATICOS
 app.use(express.static(path.join(__dirname, 'public')));
@@ -57,6 +76,7 @@ app.use(require('./routes/posts.routes'));
 app.use(require('./routes/principal.routes'));
 app.use(require('./routes/image.routes'));
 app.use(require('./routes/usuario.routes'))
+app.use(require('./routes/info.routes'))
 
 //EJS 404 - not found
 app.use((req, res, next) => {
@@ -67,6 +87,8 @@ app.use((req, res, next) => {
 });
 
 //LEVANTAR EL SERVIDOR
-app.listen(environments.PORT, () => {
+server.listen(environments.PORT, () => {
+    //CONECTAR A LA DB
+    conectarDB();
     console.log(`SERVIDOR EJECUTANDOSE EN EL PUERTO: ${environments.PORT}`);
 });
