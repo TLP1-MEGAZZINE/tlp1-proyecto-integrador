@@ -23,7 +23,7 @@ export const Selects = ({ label, placeholder, position, itemName, url, name, val
   return (
     <div className={required == false ? "col-md-6 px-1" : "px-1"}>
       {
-        required == false ?
+        required === false ?
           (
             <label className="form-label">{label}</label>
           ) :
@@ -33,7 +33,7 @@ export const Selects = ({ label, placeholder, position, itemName, url, name, val
         value={value}
         onChange={onChange}
         required>
-        {required == false ? (
+        {required === false ? (
           <option selected disabled>{placeholder}</option>
         ) :
           <option value="0">{placeholder}</option>

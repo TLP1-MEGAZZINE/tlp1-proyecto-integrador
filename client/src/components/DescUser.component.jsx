@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { fetchFunction } from "../api/apiFetch";
 
-export const DescUser = (data) => {
+export const DescUser = ({ data }) => {
 
-    const [desc, setDesc] = useState(null);
+    const [desc, setDesc] = useState();
 
     useEffect(() => {
         const resultado = fetchFunction("findDesc", "POST", data)
             .then((resultado) => {
                 setDesc(resultado)
             })
-    }, []);
+    }, [data]);
 
     return (
         <div className="col-md-8 col-sm-12 mx-auto py-3">
@@ -37,7 +37,7 @@ export const DescUser = (data) => {
                             </li>
 
                             <li className="list-group-item">Experiencias Profesionales: <br />
-                                {desc?.experiencias}
+                                {desc?.experiencia}
                             </li>
 
                             <li className="list-group-item"></li>

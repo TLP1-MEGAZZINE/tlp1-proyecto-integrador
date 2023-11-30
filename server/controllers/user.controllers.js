@@ -140,21 +140,22 @@ const ctrlUpdateUser = async (req, res) => {
     try {
         const data = req.body
 
+        console.log("DATA");
+        console.log(data);
+
         const updatedUser = await actualizarUsuario(data)
 
         if (updatedUser) {
             if (data.id_rol == 1) {
-
                 const postulante = await updatePostulante(data)
-                return res.status(200).send({ message: "Usuario Actualizado" })
+                return res.status(200).json({ message: "Usuario Actualizado" })
 
             } else if (data.id_rol == 2) {
                 const postulante = await updateEmpleador(data)
-
-                return res.status(200).send({ message: "Usuario Actualizado" })
-            } else {
-                return res.status(200).send({ message: "Usuario Actualizado" })
+                return res.status(200).json({ message: "Usuario Actualizado" })
             }
+        } else {
+            return res.status(400).json({ message: "Las credenciales antiguas son incorrectas", error: true })
         }
 
     } catch (error) {
@@ -181,7 +182,9 @@ const ctrlDestroyUser = async (req, res) => {
 const ctrlCreateDesc = async (req, res) => {
     try {
         const data = req.body;
-        // Espera a que se complete la operación asíncrona
+        console.log("DATA");
+        console.log(data);
+
         const desc = await createDesc(data);
         if (desc) {
             return res.status(200).json({ message: "Descripcion creada correctamente" });
@@ -194,7 +197,11 @@ const ctrlCreateDesc = async (req, res) => {
 //CREAR DESCRIPCION
 const ctrlUpdateDesc = async (req, res) => {
     try {
+        let filename = null
         const data = req.body;
+        console.log("DATA");
+        console.log(data);
+
         // Espera a que se complete la operación asíncrona
         const desc = await updateDesc(data);
         if (desc) {
@@ -211,6 +218,9 @@ const ctrlFindDesc = async (req, res) => {
         const data = req.body;
 
         const desc = await findDesc(data);
+
+        console.log("DESC");
+        console.log(desc);
         if (desc) {
             return res.status(200).json(desc);
         } else {

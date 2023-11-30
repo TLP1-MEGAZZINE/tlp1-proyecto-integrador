@@ -25,8 +25,15 @@ const storage = multer.diskStorage({
 
 // Configuración de la función de filtrado de archivos (solo imágenes)
 const fileFilter = (req, file, cb) => {
-    // Verifica el tipo de archivo permitido (ejemplo: solo imágenes)
-    if (file.mimetype.startsWith('image/')) {
+    // Verifica el tipo de archivo permitido (ejemplo: imágenes, PDF, Word, PowerPoint, Excel)
+    const allowedFileTypes = [
+        'image/',
+        'application/pdf',
+        'application/msword',
+        'application/vnd.ms-powerpoint',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ];
+    if (allowedFileTypes.some(fileType => file.mimetype.startsWith(fileType))) {
         cb(null, true);
     } else {
         cb(new Error('Tipo de archivo no válido'));

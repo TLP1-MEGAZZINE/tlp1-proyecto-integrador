@@ -52,7 +52,6 @@ const ctrlForgotPassword = async (req, res) => {
                 const response = await enviarEmail(email, newPass);
 
                 if (response) {
-
                     res.status(200).json({ message: 'El codigo fue enviado, puede demorar un momento. Por favor espere...' });
                 }
             }

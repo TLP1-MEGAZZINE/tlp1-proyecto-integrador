@@ -109,15 +109,15 @@ function Inicio() {
                             <h6 className="border-bottom pb-2 mb-0">Nuevas Ofertas</h6>
 
                             {
-                                selectedRubro == 0 ? (
+                                selectedRubro == 0 || selectedRubro == undefined ? (
                                     <Posteos selectedRubro={0} />
                                 )
                                     :
-                                    <Posteos selectedRubro={selectedRubro} />
+                                    <Posteos selectedRubro={selectedRubro } />
                             }
 
                             {
-                                selectedLocal == 0 ? (
+                                selectedLocal == 0 || selectedLocal == undefined ? (
                                     <Posteos selectedLocal={0} />
                                 )
                                     :

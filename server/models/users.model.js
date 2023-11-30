@@ -179,7 +179,7 @@ async function actualizarUsuario(data) {
         const samePass = await comparar(data.user_password, user_password)
         if (samePass || moreThanOne) {
 
-            const hashedPass = await encriptar(data.user_password)
+            const hashedPass = await encriptar(data.validarPass)
 
             const updatedUser = await User.update({
                 user_name: data.user_name,

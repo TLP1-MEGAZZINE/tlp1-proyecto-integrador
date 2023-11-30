@@ -11,6 +11,8 @@ import { useSweetAlert } from "../hooks/useSweetAlert"
 
 function Header() {
 
+    const changeYourPass = localStorage.getItem("changeYourPass");
+
     const { form, reset, handleInputChange } = useForm({})
 
     const data = {
@@ -126,25 +128,27 @@ function Header() {
                                         role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                     >
                                         Notificaciones
+                                        <i className={changeYourPass == "true" ? "bi bi-bell-fill text-warning" : "bi bi-bell-fill"}></i>
                                     </a>
+
                                     <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
                                         <li>
                                             <a className="dropdown-item" href="solicitudes">
                                                 Solicitudes
                                             </a>
                                         </li>
-                                        <li>
-                                            <a className="dropdown-item" href="#">
-                                                Novedades
-                                            </a>
-                                        </li>
+                                        {changeYourPass == "true" ? (<li>
+                                            <p className="dropdown-item text-danger" href="#">
+                                                Su contraseña a sido restaurada, por favor cambiela por su seguridad.
+                                            </p>
+                                        </li>) : ""}
 
                                     </ul>
                                 </li>
                             </ul>
 
                             <form className="d-flex" action="#" onSubmit={handleName}>
-                                <input className="form-control me-2" type="search" placeholder="¿A quien deseas buscar?" name="user_name"
+                                <input className="form-control me-2" type="search" placeholder="¿A quien vas a buscar?" name="user_name"
                                     aria-label="text" value={form[name]} onChange={handleInputChange} />
                                 <button className="btn btn-outline-light d-flex" type="submit">
                                     <img src={search} className="mx-1" />Buscar</button>

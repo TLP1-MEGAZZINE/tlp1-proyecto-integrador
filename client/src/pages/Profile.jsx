@@ -10,6 +10,7 @@ import { useForm } from "../hooks/useForms";
 import { fetchFileFunction } from "../api/apiFetchFiles";
 import { PosteosUser } from "../components/PosteosUser.component";
 import { DescUser } from "../components/DescUser.component";
+import { useSweetAlert } from "../hooks/useSweetAlert";
 
 export const Profile = () => {
 
@@ -36,7 +37,7 @@ export const Profile = () => {
   const id_rol = localStorage.getItem("id_rol");
 
   const data = {
-    id_user,
+    id_user: id_user,
     id_rol
   }
 
@@ -49,9 +50,9 @@ export const Profile = () => {
   const [datos, setDatos] = useState(null);
 
   useEffect(() => {
-    fetchFunction("findUserInfo", "POST", data)
-      .then((data) => {
-        setDatos(data)
+   const resultado = fetchFunction("findUserInfo", "POST", data)
+      .then((resultado) => {
+        setDatos(resultado)
       })
   }, [])
 
@@ -79,16 +80,10 @@ export const Profile = () => {
   const [contacto, setContacto] = useState(null);
 
   useEffect(() => {
-    const obtenerDatos = async () => {
-      try {
-        const resultado = await fetchFunction("findContact", "POST", data);
-        // Actualizar el estado con los datos obtenidos
+    const resultado = fetchFunction("findContact", "POST", data)
+      .then((resultado) => {
         setContacto(resultado);
-      } catch (error) {
-        console.log("Hubo un error:", error);
-      }
-    };
-    obtenerDatos();
+      })
   }, []);
 
   //SUBIR FOTO DE PERFIL
@@ -97,9 +92,7 @@ export const Profile = () => {
   })
 
   const handlePfpInput = (e) => {
-
     setPfp(pfp => ({ ...pfp, url: e.target.files[0] }));
-
   };
 
   const handlePfpSubmit = async (e) => {
@@ -108,23 +101,12 @@ export const Profile = () => {
     const response = await fetchFileFunction("pfp", pfp)
 
     if (response) {
-      Swal.fire({
-        title: response.message,
-        text: "Espere un momento...",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1000
-      })
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000)
+      useSweetAlert(response, "Se subio la imagen con exito", "success")
+        .then(() => {
+          window.location.reload()
+        })
     } else {
-      Swal.fire({
-        title: response.error,
-        icon: "error",
-        showConfirmButton: false,
-        timer: 1000
-      })
+      useSweetAlert(response, null, "error")
     }
   }
 
@@ -147,20 +129,12 @@ export const Profile = () => {
     obtenerDatos();
   }, []);
 
-
   //ELIMINAR PERFIL
   const handleDelete = () => {
     const response = fetchFunction("destroyUser", "DELETE", data)
 
     if (response) {
-      Swal.fire({
-        title: "Usuario Eliminado Correctamente",
-        text: "Espere un momento...",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 2000
-      })
-
+      useSweetAlert(response, "Usuario Eliminado Correctamente", "success")
       setTimeout(() => {
         localStorage.removeItem("token");
         localStorage.removeItem("user_name");
@@ -178,27 +152,12 @@ export const Profile = () => {
 
     const response = await fetchFunction("updateUserContact", "PUT", form)
 
-
     if (response.message) {
-      Swal.fire({
-        title: response.message,
-        text: "Espere un momento...",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1000
-      })
+      useSweetAlert(response, "Contacto Actualizado", "success")
       setContacto(form)
-
       reset()
-
     } else {
-      Swal.fire({
-        title: response.errors.array,
-        icon: "error",
-        showConfirmButton: true,
-        confirmButtonText: "Aceptar"
-      })
-
+      useSweetAlert(response.errors.array, null, "error")
       setErros(response.errors.object)
     }
   }
@@ -211,6 +170,7 @@ export const Profile = () => {
         setPosts(posts);
       })
   }, [])
+
   return (
     <>
       <Header />
@@ -268,10 +228,10 @@ export const Profile = () => {
 
                 <div className="card-body text-center">
                   <h5 className="card-title">Nombre de usuario:
-                    <br />{datos?.User.user_name}</h5>
+                    <br />{datos?.User?.user_name}</h5>
 
                   <h5 className="card-title">Correo: <br />
-                    {datos?.User.user_email}</h5>
+                    {datos?.User?.user_email}</h5>
 
                   <h5 className="card-title">
                     Rol: <br />
@@ -468,13 +428,12 @@ export const Profile = () => {
             {id_rol == 1 ? (
               <>
                 <DescUser data={data} />
-                <div className="d-flex justify-content-end py-2">
+                <div className="d-flex justify-content-end align-items-start">
                   <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleDescClick}>Editar</i>
                 </div>
               </>
             ) :
               <div></div>}
-
           </div>
 
         </div>

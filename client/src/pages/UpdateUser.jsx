@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { fetchFunction } from '../api/apiFetch'
 import { useEffect, useState } from 'react'
 import { useBoleean } from '../hooks/useHiddenPass'
+import { useSweetAlert } from '../hooks/useSweetAlert'
 
 export const UpdateUser = () => {
 
@@ -61,18 +62,20 @@ export const UpdateUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const response = await fetchFunction("updateUser", "PUT", form)
+
         localStorage.setItem("user_name", form.user_name)
-        if (response.message) {
-            Swal.fire({
-                title: response.message,
-                text: "Espere un momento...",
-                icon: "success",
-                showConfirmButton: false,
-                timer: 2000
-            })
-            setTimeout(() => {
-                navigate("/auth/my-profile")
-            }, 2000)
+
+        if (form.validarPass) {
+            localStorage.removeItem("changeYourPass")
+        }
+
+        if (!response.error) {
+            useSweetAlert(response, null, "success")
+                .then(() => {
+                    navigate("/auth/my-profile")
+                })
+        } else {
+            useSweetAlert(response, null, "error")
         }
     }
 

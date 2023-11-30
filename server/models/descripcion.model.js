@@ -74,6 +74,7 @@ async function updateDesc(data) {
 
 //BUSCAR DESC
 async function findDesc(data) {
+
     try {
         const descripcion = await Descripcion.findOne({
             where: {

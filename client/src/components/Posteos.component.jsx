@@ -15,18 +15,15 @@ import Construccion from "../assets/Construccion.png";
 import Reparaciones from "../assets/Reparaciones.png";
 import Finanzas from "../assets/Finanzas.png";
 
-export const Posteos = ({ selectedRubro, selectedLocal }) => {
+export const Posteos = ({ selectedLocal, selectedRubro }) => {
+
     const navigate = useNavigate();
+
     const [posts, setPosts] = useState([]);
 
     const handleProfile = (id_user) => {
         navigate(`/profile/${id_user}`);
     };
-
-    const data = {
-        id_rubro: selectedRubro,
-        id_local: selectedLocal,
-    }
 
     useEffect(() => {
         const resultado = fetchFunction("findAllPosts", "GET")
@@ -35,26 +32,31 @@ export const Posteos = ({ selectedRubro, selectedLocal }) => {
             });
     }, []);
 
+    console.log("posts", posts);
 
     const postMatchesFilters = () => {
-
-        console.log("selectedRubro", selectedRubro);
-        console.log("selectedLocal", selectedLocal);
-
         return posts.filter((post) => {
-            const rubroMatch = selectedRubro == 0 || post?.id_rubro == selectedRubro;
-            const localidadMatch = selectedRubro == 0 || post?.user_info?.localidad?.id_local == selectedLocal;
 
-            if (selectedRubro == 0 && selectedLocal == 0) {
+            const rubroMatch = selectedRubro == undefined || post?.id_rubro == selectedRubro;
+            const localidadMatch = selectedLocal == 0 || post?.user_info?.localidad?.id_local == selectedLocal;
+
+            // Si ambos son 0, mostrar todos los posteos
+            if (selectedRubro == undefined && selectedLocal == 0) {
                 return true;
             }
-            if (selectedLocal != 0 && selectedRubro == 0) {
+
+            // Si solo el rubro es 0, filtrar por localidad
+            if (selectedRubro == undefined) {
                 return localidadMatch;
             }
-            if (selectedRubro != 0 && selectedLocal == 0) {
+
+            // Si solo la localidad es 0, filtrar por rubro
+            if (selectedLocal == undefined) {
                 return rubroMatch;
             }
-            return rubroMatch || localidadMatch;
+
+            // Si ambos son diferentes de 0, filtrar por ambos
+            return rubroMatch && localidadMatch; 
         });
     };
 

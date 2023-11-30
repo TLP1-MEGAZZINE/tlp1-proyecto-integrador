@@ -48,13 +48,6 @@ export const UpdateDescription = () => {
         } else {
             useSweetAlert(response.errors.array, null, "error")
 
-            /*            Swal.fire({
-                           title: "No se a podido actualizar la información.",
-                           text: response.errors.array,
-                           icon: "error",
-                           showConfirmButton: true,
-                           confirmButtonText: "Aceptar"
-                       }) */
 
             setErros(response.errors.object)
         }

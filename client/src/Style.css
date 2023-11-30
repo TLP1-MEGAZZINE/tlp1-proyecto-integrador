@@ -5,6 +5,14 @@ body {
   box-sizing: border-box;
 }
 
+.chatFondo{
+  background-image: url(./assets/fondoChat.jpg);
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: right;
+  background-attachment: fixed;
+}
+
 .landing {
   background-image: url(./assets/landing.png);
   background-repeat: no-repeat;
@@ -31,15 +39,15 @@ footer {
   background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(19, 153, 216, 0.7550478809687937) 55%, rgba(2, 0, 36, 1) 100%);
 }
 
-.unite{
+.unite {
   color: aqua;
 }
 
-a:hover{
+a:hover {
   color: aqua;
 }
 
-#root{
+#root {
   display: grid;
   grid-template-rows: auto 1fr auto;
   height: 100vh;
