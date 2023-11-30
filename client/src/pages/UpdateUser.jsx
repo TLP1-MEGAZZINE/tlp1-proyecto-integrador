@@ -70,8 +70,8 @@ export const UpdateUser = () => {
         }
 
         if (!response.error) {
-            useSweetAlert(response, null, "success")
-                .then(() => {
+           const alert = useSweetAlert(response, "Datos actualizados", "success")
+                .then((alert) => {
                     navigate("/auth/my-profile")
                 })
         } else {

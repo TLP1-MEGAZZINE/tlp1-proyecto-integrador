@@ -159,40 +159,84 @@ async function findUserByRole(value) {
 async function actualizarUsuario(data) {
     try {
 
-        const { user_password } = await User.findByPk(data.id_user)
-        const sameNameEmail = await User.findAll({
-            where: {
-                [Op.or]: [
-                    { user_name: data.user_name },
-                    { user_email: data.user_name }
-                ]
-            }
-        })
-        let moreThanOne = false
+        //SI HAY NUEVA CONTRASEÑA
+        if (data.validarPass) {
 
-        if (sameNameEmail.length > 1) {
-            moreThanOne = true
-            throw new Error("El nombre usuario o email ya esta ocupado")
-        }
-
-        //COMPARAR LAS CONTRASEÑAS
-        const samePass = await comparar(data.user_password, user_password)
-        if (samePass || moreThanOne) {
-
-            const hashedPass = await encriptar(data.validarPass)
-
-            const updatedUser = await User.update({
-                user_name: data.user_name,
-                user_email: data.user_email,
-                user_password: hashedPass,
-            }, {
+            const { user_password } = await User.findByPk(data.id_user)
+            const sameNameEmail = await User.findAll({
                 where: {
-                    id_user: data.id_user
+                    [Op.or]: [
+                        { user_name: data.user_name },
+                        { user_email: data.user_email }
+                    ]
                 }
             })
-            return updatedUser;
+
+            let moreThanOne = false
+
+            if (sameNameEmail.length > 1) {
+                moreThanOne = true
+                throw new Error("El nombre usuario o email ya esta ocupado")
+            }
+
+            //COMPARAR LAS CONTRASEÑAS
+            const samePass = await comparar(data.user_password, user_password)
+
+            if (samePass && moreThanOne == false) {
+
+                const hashedPass = await encriptar(data.validarPass)
+
+                const updatedUser = await User.update({
+                    user_name: data.user_name,
+                    user_email: data.user_email,
+                    user_password: hashedPass,
+                }, {
+                    where: {
+                        id_user: data.id_user
+                    }
+                })
+                return updatedUser;
+            } else {
+                throw new Error("Las contraseña no coincide o el nombre de usuario/email ya existe")
+            }
         } else {
-            throw new Error("Las contraseña no coincide o el nombre de usuario/email ya existe")
+            //SI NO HAY NUEVA CONTRASEÑAf 
+
+            const { user_password } = await User.findByPk(data.id_user)
+            const sameNameEmail = await User.findAll({
+
+                where: {
+                    [Op.or]: [
+                        { user_name: data.user_name },
+                        { user_email: data.user_email }
+                    ]
+                }
+            })
+
+            let moreThanOne = false
+
+            if (sameNameEmail.length > 1) {
+                moreThanOne = true
+                throw new Error("El nombre usuario o email ya esta ocupado")
+            }
+
+            //COMPARAR LAS CONTRASEÑAS
+            const samePass = await comparar(data.user_password, user_password)
+
+            if (samePass && moreThanOne == false) {
+
+                const updatedUser = await User.update({
+                    user_name: data.user_name,
+                    user_email: data.user_email,
+                }, {
+                    where: {
+                        id_user: data.id_user
+                    }
+                })
+                return updatedUser;
+            } else {
+                throw new Error("Las contraseña no coincide o el nombre de usuario/email ya existe")
+            }
         }
     } catch (error) {
         console.log("Error al encontrar usuario", error);

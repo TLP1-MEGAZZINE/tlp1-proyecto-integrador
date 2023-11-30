@@ -15,13 +15,15 @@ import { useSweetAlert } from '../hooks/useSweetAlert'
 
 function Login() {
 
+  const lastPath = localStorage.getItem("lastPath")
+
   const { login, authState } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
   useEffect(() => {
     if (authState.logged) {
-      return navigate("/auth/home")
+      return navigate(lastPath || "/auth/home")
     }
   }, [authState, navigate])
 

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { fetchFunction } from '../api/apiFetch'
 import { useEffect, useState } from 'react'
 import { useSweetAlert } from "../hooks/useSweetAlert"
+import { fetchFileFunction } from '../api/apiFetchFiles'
 
 export const UpdateDescription = () => {
 
@@ -33,10 +34,10 @@ export const UpdateDescription = () => {
         obtenerDatos();
     }, []);
 
-    //ACTUALIZAR DESCRIPCION
+    // ACTUALIZAR DESCRIPCION
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const response = await fetchFunction("createDesc", "POST", form)
+        const response = await fetchFunction("updateDesc", "PUT", form)
 
         console.log("response", response);
 
@@ -59,7 +60,7 @@ export const UpdateDescription = () => {
 
             <main className="p-4 d-flex justify-content-center align-items-center colorFondo">
 
-                <form action="#" name="formulario" onSubmit={handleSubmit}>
+                <form action='#' onSubmit={handleSubmit}>
 
                     <div id="carouselExampleDark" className="carousel carousel-dark slide">
 
@@ -79,8 +80,8 @@ export const UpdateDescription = () => {
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Ingrese su descripción personal</label>
                                                 <input type="text" className="form-control" placeholder={info?.descripcion || "Me descripcribo como..."}
-                                                    name="descripcion"
-                                                    onChange={handleInputChange} value={form[name]}
+                                                    name="descripcion" value={form[name]}
+                                                    onChange={handleInputChange}
                                                 />
                                                 <span className="text-danger fw-bold">{errors?.descripcion?.msg}</span>
                                             </div>
@@ -89,8 +90,8 @@ export const UpdateDescription = () => {
                                             <div className="col-md-6 px-1 ">
                                                 <label className="form-label">Ingrese sus estudios</label>
                                                 <input type="text" className="form-control" placeholder={info?.estudios || "Mi estudios son..."}
-                                                    name="estudios"
-                                                    onChange={handleInputChange} value={form[name]}
+                                                    name="estudios"  value={form[name]}
+                                                    onChange={handleInputChange}
                                                 />
                                                 <span className="text-danger fw-bold">{errors?.estudios?.msg}</span>
                                             </div>
@@ -99,18 +100,18 @@ export const UpdateDescription = () => {
                                         <div className="d-flex justify-content-center">
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Ingrese sus habilidades</label>
-                                                <input type="number" className="form-control"
+                                                <input type="text" className="form-control"
                                                     placeholder={info?.habilidades || "Mis habilidades son..."} name="habilidades"
-                                                    onChange={handleInputChange} value={form[name]}
+                                                    onChange={handleInputChange}  value={form[name]}
                                                 />
                                                 <span className="text-danger fw-bold" >{errors?.habilidades?.msg}</span>
                                             </div>
                                             {/*Intereses*/}
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Ingrese sus intereses</label>
-                                                <input id="cuil" type="number" className="form-control"
+                                                <input type="text" className="form-control"
                                                     placeholder={info?.intereses || "Mis intereses son..."} name="intereses"
-                                                    onChange={handleInputChange} value={form[name]}
+                                                    onChange={handleInputChange}  value={form[name]}
                                                 />
                                                 <span className="text-danger fw-bold">{errors?.intereses?.msg}</span>
                                             </div>
@@ -120,20 +121,12 @@ export const UpdateDescription = () => {
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Ingrese sus expreriencias previas</label>
                                                 <input type="text" className="form-control" name="experiencia"
-                                                    onChange={handleInputChange} value={form[name]}
+                                                    onChange={handleInputChange}  value={form[name]}
                                                     placeholder={info?.experiencia || 'Mis experiencias previas son...'}
 
                                                 />
                                                 <span className="text-danger fw-bold">{errors?.experiencia?.msg}</span>
 
-                                            </div>
-                                            {/*Archivos*/}
-                                            <div className="col-md-6 px-1">
-                                                <label className="form-label">Archivos</label>
-                                                <input type="file" className="form-control" aria-label="Default select example"
-                                                    name="archivos" onChange={handleInputChange} value={form[name]}
-                                                >
-                                                </input>
                                             </div>
                                         </div>
 
@@ -155,7 +148,9 @@ export const UpdateDescription = () => {
                     </div>
 
                 </form>
+                
             </main>
+
             <Footer />
         </>
     )

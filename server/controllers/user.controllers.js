@@ -138,10 +138,8 @@ const ctrlFindPostulante = async (req, res) => {
 //ACTUALIZAR USUARIOS
 const ctrlUpdateUser = async (req, res) => {
     try {
+        
         const data = req.body
-
-        console.log("DATA");
-        console.log(data);
 
         const updatedUser = await actualizarUsuario(data)
 
@@ -181,11 +179,16 @@ const ctrlDestroyUser = async (req, res) => {
 //CREAR DESCRIPCION
 const ctrlCreateDesc = async (req, res) => {
     try {
-        const data = req.body;
-        console.log("DATA");
-        console.log(data);
+        let filename = null
+        const data = req.body
+        
+        if (req.file) {
+            filename = req.file.filename;
+        }
+        console.log("DATA REQ:BODY")
+        console.log(data)
 
-        const desc = await createDesc(data);
+        const desc = await createDesc(data)
         if (desc) {
             return res.status(200).json({ message: "Descripcion creada correctamente" });
         }
@@ -197,15 +200,13 @@ const ctrlCreateDesc = async (req, res) => {
 //CREAR DESCRIPCION
 const ctrlUpdateDesc = async (req, res) => {
     try {
-        let filename = null
         const data = req.body;
-        console.log("DATA");
-        console.log(data);
 
-        // Espera a que se complete la operación asíncrona
         const desc = await updateDesc(data);
         if (desc) {
             return res.status(200).json({ message: "Descripcion actualizada correctamente" });
+        }else{
+            res.status(500).json({ message: "Error al actualizar la descripción" });
         }
     } catch (error) {
         return res.status(500).send("Internal Server Error");
@@ -219,8 +220,6 @@ const ctrlFindDesc = async (req, res) => {
 
         const desc = await findDesc(data);
 
-        console.log("DESC");
-        console.log(desc);
         if (desc) {
             return res.status(200).json(desc);
         } else {

@@ -116,7 +116,7 @@ export const Posteos = ({ selectedLocal, selectedRubro }) => {
                             post.url == "/uploads/null" ? (
                                 ""
                             ) : (
-                                <img className="border rounded border-2 border-primary" src={`http://localhost:5000${post.url}`} crossOrigin="anonymous" height="200" width="300" alt="Img" />
+                                <img className="img-fluid border rounded border-2 border-primary" src={`http://localhost:5000${post.url}`} crossOrigin="anonymous" height="200" width="300" alt="Img" />
                             )
                         }
                         <br />

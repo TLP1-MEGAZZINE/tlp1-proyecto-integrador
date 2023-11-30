@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchFunction } from "../api/apiFetch";
 
-export const DescUser = ({ data }) => {
+export const DescUser = ({ data, children }) => {
 
     const [desc, setDesc] = useState();
 
@@ -43,21 +43,7 @@ export const DescUser = ({ data }) => {
                             <li className="list-group-item"></li>
                         </ul>
                     </div>
-
-                </div>
-                <div className="card-body">
-
-                    <h5 className="card-title text-light">Más Contenido</h5>
-
-                    <div className="table-responsive">
-
-                        <ul className="list-group table">
-
-                            <li className="list-group-item">Archivos:<br /></li>
-                            {desc?.archivos}
-                        </ul>
-                    </div>
-
+{children}
                 </div>
             </div>
         </div>)

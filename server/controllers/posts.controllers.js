@@ -7,6 +7,8 @@ const ctrlCrearPosteos = async (req, res) => {
     try {
         let filename = null
         const data = req.body
+        console.log("DATA POSTEO");
+        console.log(data);
         if (req.file) {
             filename = req.file.filename;
         }
@@ -78,9 +80,9 @@ const ctrlFindPostbyRubro = async (req, res) => {
 
 const ctrlDeletePost = async (req, res) => {
     try {
-        const id_post = req.body.id_post
+        const data = req.body
 
-        const deletedPost = await deletePost(id_post);
+        const deletedPost = await deletePost(data);
 
         if (deletedPost) {
             return res.status(200).json({ message: "Post eliminado" })

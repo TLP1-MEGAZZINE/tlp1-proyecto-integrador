@@ -94,10 +94,10 @@ async function createPost(data, filename) {
 };
 
 //ELIMINAR POST
-const deletePost = async (id_post) => {
+const deletePost = async (data) => {
     try {
         return await Post.destroy({
-            where: { id_post: id_post }
+            where: { id_post: data.id_post }
         });
     } catch (error) {
         console.log('Error al eliminar el post', error);

@@ -18,8 +18,6 @@ export const NewPost = () => {
         id_rol: id_rol
     });
 
-    console.log(file);
-
     const handleFileInput = (e) => {
         setFile(file => ({ ...file, url: e.target.files[0] }));
     }

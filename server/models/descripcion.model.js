@@ -31,10 +31,6 @@ const Descripcion = sequelize.define('Descripcion', {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    archivos: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
 }, {
     timestamps: false,
     paranoid: false,
@@ -57,7 +53,6 @@ async function updateDesc(data) {
             habilidades: data.habilidades,
             intereses: data.intereses,
             experiencia: data.experiencia,
-            archivos: data.archivos,
         }, {
             where: {
                 id_user: data.id_user
@@ -90,24 +85,15 @@ async function findDesc(data) {
 //CREAR DESC
 async function createDesc(data) {
     try {
-        const existeDesc = await findDesc(data)
-        console.log("existeDesc", existeDesc);
-        if (!existeDesc) {
-            console.log("CREANDO DESCRIPCION");
-            const descripcion = await Descripcion.create({
-                id_user: data.id_user,
-                descripcion: data.descripcion,
-                estudios: data.estudios,
-                habilidades: data.habilidades,
-                intereses: data.intereses,
-                experiencia: data.experiencia,
-                archivos: data.archivos,
-            })
-            return descripcion
-        } else {
-            const update = await updateDesc(data)
-            return update
-        }
+        const descripcion = await Descripcion.create({
+            id_user: data,
+            descripcion: null,
+            estudios: null,
+            habilidades: null,
+            intereses: null,
+            experiencia: null,
+        })
+        return descripcion
     } catch (error) {
         console.log("ERROR AL CREAR DESCRIPCION", error);
     }

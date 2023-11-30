@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
-const session = require('express-session');
 const cookieParser = require("cookie-parser");
 const { createLogs, path } = require("./helpers/createLogs")
 const environments = require("./config/environment")
@@ -27,20 +26,11 @@ app.use(cors(corsOptions));
 
 app.use(helmet({
     contentSecurityPolicy: false,
-    // crossOriginEmbedderPolicy: false,
-    // crossOriginResourcePolicy: false
 }));
-
-// app.use((req, res, next) => {
-//     res.removeHeader("Cross-Origin-Embedder-Policy");
-//     next();
-// })
-
 
 const server = createServer(app)
 
 //MIDDLEWARES
-
 //PARA LA CONSOLA
 app.use(morgan('dev'));
 //LOGS

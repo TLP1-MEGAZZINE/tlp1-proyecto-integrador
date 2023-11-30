@@ -50,7 +50,7 @@ export const Profile = () => {
   const [datos, setDatos] = useState(null);
 
   useEffect(() => {
-   const resultado = fetchFunction("findUserInfo", "POST", data)
+    const resultado = fetchFunction("findUserInfo", "POST", data)
       .then((resultado) => {
         setDatos(resultado)
       })
@@ -177,7 +177,7 @@ export const Profile = () => {
 
       <div className="colorFondo">
         <div className="container-fluid">
-          <div className="row py-4">
+          <div className="row pt-4">
 
             <div className="col-md-4 col-sm-12">
               <div className="card">
@@ -287,7 +287,8 @@ export const Profile = () => {
                   </div>
 
                   {/*Button trigger modal */}
-                  <i type="button" className="btn btn-danger bi bi-file-excel" data-bs-toggle="modal" data-bs-target="#staticBackdrop">  Eliminar Cuenta
+                  <i type="button" className="btn btn-danger bi bi-file-excel"
+                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">  Eliminar Cuenta
                   </i>
 
                   {  /* Modal */}
@@ -419,7 +420,10 @@ export const Profile = () => {
                 <div className="d-flex justify-content-center flex-wrap">
                   <h5 className="card-title text-dark">Mis públicaciones</h5>
 
-                  <PosteosUser data={data} />
+                  <PosteosUser
+                    data={data}
+                    deleteBtn={true}
+                  />
 
                 </div>
               </div>
@@ -427,10 +431,12 @@ export const Profile = () => {
 
             {id_rol == 1 ? (
               <>
-                <DescUser data={data} />
-                <div className="d-flex justify-content-end align-items-start">
-                  <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleDescClick}>Editar</i>
-                </div>
+                <DescUser
+                  data={data}
+                  children={<div className="d-flex justify-content-end align-items-start pt-2">
+                    <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleDescClick}>Editar</i>
+                  </div>}
+                />
               </>
             ) :
               <div></div>}

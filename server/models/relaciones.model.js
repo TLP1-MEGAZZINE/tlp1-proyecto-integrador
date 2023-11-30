@@ -16,6 +16,7 @@ const { Postulante } = require("./postulantes.model");
 const { Post } = require("./posteos.model")
 const { Image } = require("./imagenes.model")
 const { Descripcion } = require("./descripcion.model")
+const { File } = require("./files.model")
 
 //UNO A UNO COMENTAR SI NO SE CREAN LAS RELACIONES AL PRINCIPIO
 User.hasOne(UserInfo, { foreignKey: 'id_user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
@@ -74,8 +75,8 @@ Empleador.belongsTo(Rubro, { foreignKey: 'id_rubro' });
 User.hasMany(Post, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 Post.belongsTo(User, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
-// Postulante.hasMany(Post, { foreignKey: "id_postulante", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
-// Post.belongsTo(Postulante, { foreignKey: "id_postulante", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+User.hasMany(File, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+File.belongsTo(User, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 // Empleador.hasMany(Post, { foreignKey: "id_empleador", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 // Post.belongsTo(Empleador, { foreignKey: "id_empleador", onDelete: 'CASCADE', onUpdate: 'CASCADE' });

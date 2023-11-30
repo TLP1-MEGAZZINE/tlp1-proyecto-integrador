@@ -8,6 +8,7 @@ const { createContacto } = require("../models/contacto.model");
 const { createEmpleador } = require("../models/empleador.model");
 const { createParticular } = require("../models/particular.model");
 const { createPostulante } = require("../models/postulantes.model");
+const {createDesc} = require("../models/descripcion.model")
 
 //CREAR EL OBJETO QUE CONTENDRA LOS METODOS POST
 const registerLogin = {}
@@ -27,6 +28,7 @@ registerLogin.crearUser = async (req, res) => {
 
                 if (user.id_rol == 1) {
                     const postulante = await createPostulante(user.id_user);
+                    const descripcion = await createDesc(user.id_user);
                     return res.status(200).json({ message: "Registro creado-controller" })
                 }
 
