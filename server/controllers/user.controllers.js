@@ -38,12 +38,10 @@ const ctrlFindUserByName = async (req, res) => {
     try {
         const data = req.body
 
-        console.log(data);
-
         const user = await findUserByName(data)
 
         if (user) {
-            return res.status(200).json(user.id_user)
+            return res.status(200).json(user)
         } else {
 
             return res.status(400).json({ message: "No se encontro el usuario" })

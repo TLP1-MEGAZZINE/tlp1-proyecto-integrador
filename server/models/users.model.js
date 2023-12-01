@@ -266,16 +266,18 @@ async function deleteUser(user_id) {
 async function findUserByName(data) {
 
     try {
-
-        const nameAprox = await User.findOne({
-            where: {
-                user_name: {
-                    [Op.like]: `%${data.user_name}%`
+        if (data.user_name != "") {
+            const nameAprox = await User.findAll({
+                where: {
+                    user_name: {
+                        [Op.like]: `%${data.user_name}%`
+                    },
                 },
-            },
-        });
-
-        return nameAprox;
+            })
+            return nameAprox;
+        } else {
+            return ""
+        }
     } catch (error) {
         console.log("Error al encontrar usuario ", error);
         throw new Error

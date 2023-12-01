@@ -1,4 +1,5 @@
 import { useState } from "react";
+import '../Style.css'
 import Footer from "../components/Footer.component";
 import Header from "../components/Header.component";
 import { Users } from "../components/Users.component";
@@ -45,62 +46,79 @@ function Inicio() {
     const handleNewPost = () => {
         navigate("/auth/new-post")
     }
+    const handleFilter = (e) => {
+        e.preventDefault()
+    }
 
     return (
         <>
             <Header />
 
-            <div className="container-fluid">
+            <div className="container-fluid colorFondo">
                 <article className="row">
-                    <div className="row py-3">
+                    <section>
+                        <div className="row py-3 colorPrincipal border border-2">
+                            <form action="#" onSubmit={handleFilter} className="d-flex col-8">
+                                <div className="col-3">
 
-                        <div className="col-2">
+                                    <Selects
+                                        label={null}
+                                        placeholder={"Filtrar Rubros"}
+                                        position={"id_rubro"}
+                                        itemName={"desc_rubro"}
+                                        name={"id_rubro"}
+                                        url={'findRubro'}
+                                        value={selectedRubro}
+                                        onChange={handleSelectRubroChange}
+                                        required={true}
+                                    />
+                                </div>
 
-                            <Selects
-                                label={null}
-                                placeholder={"Filtrar Rubros"}
-                                position={"id_rubro"}
-                                itemName={"desc_rubro"}
-                                name={"id_rubro"}
-                                url={'findRubro'}
-                                value={selectedRubro}
-                                onChange={handleSelectRubroChange}
-                                required={true}
-                            />
+                                <div className="col-3">
+                                    <select onChange={handleEdadesChange}
+                                        value={rangoEdad} className="form-select" aria-label="Default select example">
+                                        <option value="0" >Filtro Edades</option>
+                                        <option value="1">17-25</option>
+                                        <option value="2">25-35</option>
+                                        <option value="3">35-45</option>
+                                        <option value="4">+45</option>
+
+                                    </select>
+                                </div>
+
+                                <div className="col-3">
+                                    <Selects
+                                        label={null}
+                                        placeholder={"Filtrar localidad"}
+                                        position={"id_local"}
+                                        itemName={"nombre_local"}
+                                        name={"id_local"}
+                                        url={'findLocal'}
+                                        value={selectedLocal}
+                                        onChange={handleSelectLocalChange}
+                                        required={true}
+                                    />
+                                </div>
+
+                                <div className="col-1 text-end mx-auto" >
+                                    <button className="btn btn-primary" type="submit">Filtrar</button>
+                                </div>
+
+                                {
+                                    <div className="col-2 text-end">
+                                        <button className="btn btn-danger" onClick={handleFilter}>Quitar Filtrar</button>
+                                    </div>
+                                }
+                            </form>
+
+                            <div className="col-4 text-end">
+                                <button className="btn btn-primary" onClick={handleNewPost}>Nuevo posteo</button>
+                            </div>
+
+
                         </div>
+                    </section>
 
-                        <div className="col-2">
-                            <select onChange={handleEdadesChange}
-                                value={rangoEdad} className="form-select" aria-label="Default select example">
-                                <option value="0" >Filtro Edades</option>
-                                <option value="1">17-25</option>
-                                <option value="2">25-35</option>
-                                <option value="3">35-45</option>
-                                <option value="4">+45</option>
-
-                            </select>
-                        </div>
-
-                        <div className="col-2">
-                            <Selects
-                                label={null}
-                                placeholder={"Filtrar localidad"}
-                                position={"id_local"}
-                                itemName={"nombre_local"}
-                                name={"id_local"}
-                                url={'findLocal'}
-                                value={selectedLocal}
-                                onChange={handleSelectLocalChange}
-                                required={true}
-                            />
-                        </div>
-
-                        <div className="col-6 text-end">
-                            <button className="btn btn-primary" onClick={handleNewPost}>Nuevo posteo</button>
-                        </div>
-
-
-                    </div>
                     <div className="row">
 
                     </div>
@@ -113,7 +131,7 @@ function Inicio() {
                                     <Posteos selectedRubro={0} />
                                 )
                                     :
-                                    <Posteos selectedRubro={selectedRubro } />
+                                    <Posteos selectedRubro={selectedRubro} />
                             }
 
                             {

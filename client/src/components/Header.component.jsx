@@ -71,19 +71,23 @@ function Header() {
         obtenerDatos();
     }, []);
 
+
+    //BUSCAR USUARIO POR NOMBRE
+    const [listUsers, setListUsers] = useState([]);
     const handleName = async (e) => {
         e.preventDefault();
         const resp = await fetchFunction("findByName", "POST", form);
-        console.log("RESP");
-        console.log(resp);
-
-        if (!resp.message) {
-            navigate(`/profile/${resp}`)
-            window.location.reload();
-        } else {
-            useSweetAlert(resp, null, "error")
-        }
+        setListUsers(resp);
     }
+
+    //NAVEGAR A LOS PERFILES
+    const [selectedUserId, setSelectedUserId] = useState(null); // Nuevo estado para almacenar el ID del usuario seleccionado
+    const handleSearch = (e) => {
+        const selectedId = e.target.value;
+        setSelectedUserId(selectedId);
+        navigate(`/profile/${selectedId}`);
+        window.location.reload()
+    };
 
     return (
         <header >
@@ -147,12 +151,23 @@ function Header() {
                                 </li>
                             </ul>
 
-                            <form className="d-flex" action="#" onSubmit={handleName}>
-                                <input className="form-control me-2" type="search" placeholder="¿A quien vas a buscar?" name="user_name"
-                                    aria-label="text" value={form[name]} onChange={handleInputChange} />
-                                <button className="btn btn-outline-light d-flex" type="submit">
-                                    <img src={search} className="mx-1" />Buscar</button>
-                            </form>
+                            <div>
+                                <form className="d-flex" action="#" onSubmit={handleName}>
+                                    <input className="form-control me-2" type="search" placeholder="¿A quien vas a buscar?" name="user_name"
+                                        aria-label="text" value={form[name]} onChange={handleInputChange} />
+                                    <button className="btn btn-outline-light d-flex" type="submit">
+                                        <img src={search} className="mx-1" />Buscar</button>
+                                </form>
+                                {listUsers.length > 0 && (
+                                    <select className="form-select mt-2" onChange={handleSearch}>
+                                        <option disabled selected>Resultados</option>
+                                        {listUsers.map((user, id_user) => (
+                                            <option value={user.id_user} key={id_user}
+                                            >{user.user_name}</option>
+                                        ))}
+                                    </select>
+                                )}
+                            </div>
 
                             <div className="dropdown p-4">
                                 <a href="#" className="d-flex align-items-center text-decoration-none dropdown-toggle"
@@ -179,7 +194,7 @@ function Header() {
                     )}
                 </div>
             </nav>
-        </header>
+        </header >
     );
 }
 
