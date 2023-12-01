@@ -81,7 +81,7 @@ function Header() {
     }
 
     //NAVEGAR A LOS PERFILES
-    const [selectedUserId, setSelectedUserId] = useState(null); // Nuevo estado para almacenar el ID del usuario seleccionado
+    const [selectedUserId, setSelectedUserId] = useState(null);
     const handleSearch = (e) => {
         const selectedId = e.target.value;
         setSelectedUserId(selectedId);
@@ -125,6 +125,7 @@ function Header() {
                                 <li className="nav-item">
                                     <a className="nav-link text-light" aria-current="page" href="#" onClick={handleMessageClick}>
                                         Mensajes
+                                        <i className="bi bi-envelope-fill mx-2"></i>
                                     </a>
                                 </li>
                                 <li className="nav-item dropdown">
@@ -132,7 +133,7 @@ function Header() {
                                         role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                     >
                                         Notificaciones
-                                        <i className={changeYourPass == "true" ? "bi bi-bell-fill text-warning" : "bi bi-bell-fill"}></i>
+                                        <i className={changeYourPass == "true" ? "bi bi-bell-fill text-warning mx-2" : "bi bi-bell-fill mx-2"}></i>
                                     </a>
 
                                     <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
@@ -155,7 +156,7 @@ function Header() {
                                 <form className="d-flex" action="#" onSubmit={handleName}>
                                     <input className="form-control me-2" type="search" placeholder="¿A quien vas a buscar?" name="user_name"
                                         aria-label="text" value={form[name]} onChange={handleInputChange} />
-                                    <button className="btn btn-outline-light d-flex" type="submit">
+                                    <button className="btn btn-outline-light d-flex border border-2" type="submit">
                                         <img src={search} className="mx-1" />Buscar</button>
                                 </form>
                                 {listUsers.length > 0 && (

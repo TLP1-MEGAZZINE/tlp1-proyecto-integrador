@@ -24,8 +24,8 @@ export const Index = () => {
 
     // Limpiar el intervalo cuando el componente se desmonta
     return () => clearInterval(intervalId);
-    
-  }, []); 
+
+  }, []);
 
   return (
     <>
@@ -42,8 +42,8 @@ export const Index = () => {
             </h1>
             <p className="rounded-2 float-left w-50 text-center py-5 custom-bg">
               Job Unite es una plataforma enfocada en:<br />
-              <span className='text-primary'>
-              {text}
+              <span className='text-primary animation'>
+                {text}
               </span>
             </p>
 

@@ -97,6 +97,7 @@ export const UpdateUser = () => {
                                     style={{ width: "40rem", border: "1px", solid: "#000" }}>
 
                                     <h3 className="text-center fw-bold">Información de la Cuenta</h3>
+                                    <p className='text-warning fw-bold text-decoration-underline'>¡Debe colocar su correo y contraseña para confirmar los cambios!</p>
 
                                     <div>
 

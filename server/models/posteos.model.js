@@ -2,12 +2,13 @@ const { DataTypes, sequelize } = require('../config/db');
 const { Localidad } = require('./localidad.model');
 const { Rubro } = require('./rubro.model');
 const { UserInfo } = require('./userInfo.model');
+const { Op } = require('sequelize');
+const dayjs = require('dayjs');
 
 //ACOMODAR LA HORA, RESTANDOLE 3 HORAS
 sequelize.options.timezone = '-03:00';
 
 const { User } = require('./users.model');
-
 
 const Post = sequelize.define('post', {
     id_post: {
@@ -139,22 +140,124 @@ const findAllPosts = async () => {
 };
 
 
-//BUSCAR POSTS SEGUN RUBRO
-const findPostbyRubro = async (id_rubro) => {
+//BUSCAR POSTS FILTRADOS
+const findFilteredPost = async (data) => {
+    //FILTROS CONJUNTOS, NO FUNCIONA BIEN
+    /*  where: {
+         [Op.or]: [
+             { id_rubro: data.id_rubro },
+             { '$User_Info.fecha_nacimiento$': data.fecha_nacimiento },
+             { '$User_Info.Localidad.id_local$': data.id_local }
+         ]
+     }, */
     try {
-        return await Post.findAll({
-            where: { id_rubro: id_rubro },
-            include: [
-                {
-                    model: User,
-                    attributes: ['user_name', 'user_email']
+        if (data.id_rubro > 0 && data.id_local == 0 && data.fecha_nacimiento == null) {
+            return await Post.findAll({
+                where: {
+                    id_rubro: data.id_rubro
                 },
-                {
-                    model: Rubro,
-                    attributes: ['desc_rubro']
-                }
-            ]
-        });
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id_user', 'user_name', 'user_email'],
+                    },
+                    {
+                        model: Rubro,
+                        attributes: ['desc_rubro'],
+                    },
+                    {
+                        model: UserInfo,
+                        attributes: ['fecha_nacimiento'],
+                        include: [
+                            {
+                                model: Localidad,
+                                attributes: ['id_local', 'nombre_local'],
+                            }
+                        ]
+                    }
+                ],
+            });
+        } else if (data.id_rubro == 0 && data.id_local > 0 && data.fecha_nacimiento == null) {
+            return await Post.findAll({
+                where: {
+                    '$User_Info.Localidad.id_local$': data.id_local
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id_user', 'user_name', 'user_email'],
+                    },
+                    {
+                        model: Rubro,
+                        attributes: ['desc_rubro'],
+                    },
+                    {
+                        model: UserInfo,
+                        attributes: ['fecha_nacimiento'],
+                        include: [
+                            {
+                                model: Localidad,
+                                attributes: ['id_local', 'nombre_local'],
+                            }
+                        ]
+                    }
+                ],
+            });
+        } else if (data.id_rubro == 0 && data.id_local == 0 && data.fecha_nacimiento !== null) {
+            let startDate;
+            let endDate;
+
+            switch (data.fecha_nacimiento) {
+                case '1': // 17-25
+                    startDate = dayjs().subtract(25, 'year');
+                    endDate = dayjs().subtract(17, 'year');
+                    break;
+                case '2': // 25-35
+                    startDate = dayjs().subtract(35, 'year');
+                    endDate = dayjs().subtract(25, 'year');
+                    break;
+                case '3': // 35-45
+                    startDate = dayjs().subtract(45, 'year');
+                    endDate = dayjs().subtract(35, 'year');
+                    break;
+                case '4': // +45
+                    startDate = dayjs().subtract(90, 'year'); // Establece un límite superior adecuado
+                    endDate = dayjs().subtract(45, 'year');
+                    break;
+                default:
+                    // Manejar otros casos o establecer valores predeterminados
+                    break;
+            }
+
+            // Filtrar usuarios por fecha de nacimiento
+            return await Post.findAll({
+                where: {
+                    '$User_Info.fecha_nacimiento$': {
+                        [Op.between]: [startDate.format(), endDate.format()],
+                    },
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id_user', 'user_name', 'user_email'],
+                    },
+                    {
+                        model: Rubro,
+                        attributes: ['desc_rubro'],
+                    },
+                    {
+                        model: UserInfo,
+                        attributes: ['fecha_nacimiento'],
+                        include: [
+                            {
+                                model: Localidad,
+                                attributes: ['id_local', 'nombre_local'],
+                            }
+                        ]
+                    }
+                ],
+            });
+        }
     } catch (error) {
         console.log('Error al buscar los posts por rubro', error);
         throw error;
@@ -242,5 +345,5 @@ const findUserPost = async (data) => {
     }
 }
 
-module.exports = { Post, findUserPost, createPost, findAllPosts, findPostbyRubro, deletePost, findPostEmpresa, findPostPostulante };
+module.exports = { Post, findUserPost, createPost, findAllPosts, findFilteredPost, deletePost, findPostEmpresa, findPostPostulante };
 

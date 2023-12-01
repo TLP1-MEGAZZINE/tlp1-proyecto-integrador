@@ -15,19 +15,56 @@ import Construccion from "../assets/Construccion.png";
 import Reparaciones from "../assets/Reparaciones.png";
 import Finanzas from "../assets/Finanzas.png";
 
-export const Posteos = ({ posts, children }) => {
+export const Posteos = ({ selectedLocal, selectedRubro }) => {
 
     const navigate = useNavigate();
+
+    const [posts, setPosts] = useState([]);
 
     const handleProfile = (id_user) => {
         navigate(`/profile/${id_user}`);
     };
 
+    useEffect(() => {
+        const resultado = fetchFunction("findAllPosts", "GET")
+            .then((resultado) => {
+                setPosts(resultado);
+            });
+    }, []);
+
+    console.log("posts", posts);
+
+    const postMatchesFilters = () => {
+        return posts.filter((post) => {
+
+            const rubroMatch = selectedRubro == undefined || post?.id_rubro == selectedRubro;
+            const localidadMatch = selectedLocal == 0 || post?.user_info?.localidad?.id_local == selectedLocal;
+
+            // Si ambos son 0, mostrar todos los posteos
+            if (selectedRubro == undefined && selectedLocal == 0) {
+                return true;
+            }
+
+            // Si solo el rubro es 0, filtrar por localidad
+            if (selectedRubro == undefined) {
+                return localidadMatch;
+            }
+
+            // Si solo la localidad es 0, filtrar por rubro
+            if (selectedLocal == undefined) {
+                return rubroMatch;
+            }
+
+            // Si ambos son diferentes de 0, filtrar por ambos
+            return rubroMatch && localidadMatch; 
+        });
+    };
+
+    const filteredPosts = postMatchesFilters();
+
     return (
         <>
-            {children}
-            
-            {posts.map((post, id_post) => (
+            {filteredPosts.map((post, id_post) => (
                 <div key={id_post} className="text-muted pt-3 mx-5">
                     <p className="pb-3 mb-0 small lh-sm border-bottom ">
                         <div className="d-flex">
@@ -85,7 +122,7 @@ export const Posteos = ({ posts, children }) => {
                         <br />
 
                         <span>Rubro: {post?.rubro?.desc_rubro}</span><br />
-                        <span>Fecha de publicación: {dayjs(post.updatedAt).format('DD/MM/YYYY hh:mm')}</span><br />
+                        <span>Fecha: {dayjs(post.updatedAt).format('DD/MM/YYYY hh:mm')}</span><br />
                         <span>Localidad: {post?.user_info?.localidad?.nombre_local}</span>
                     </p>
                 </div>

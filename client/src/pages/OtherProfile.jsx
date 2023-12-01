@@ -230,7 +230,7 @@ export const OtherProfile = () => {
                         </div>
 
                         {/* POSTEOS Y DESCRIPCION*/}
-                        <div className={`${info?.User.id_rol == 1 ? "col-md-4 justify-content-center mx-auto"
+                        <div className={`${info?.User?.id_rol == 1 ? "col-md-4 justify-content-center mx-auto"
                             : "col-md-12 justify-content-center mx-auto"}`} >
                             <div className="my-3 p-3 bg-body rounded shadow-sm">
                                 <h5 className="card-title text-dark d-flex justify-content-center">Publicaciones del usuario</h5>
@@ -241,7 +241,7 @@ export const OtherProfile = () => {
                             </div>
                         </div>
 
-                        {info?.User.id_rol == 1 ? (
+                        {info?.User?.id_rol == 1 ? (
                             <DescUser data={data} />
                         ) : <div></div>}
                     </div>

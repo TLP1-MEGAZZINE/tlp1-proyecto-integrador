@@ -1,4 +1,4 @@
-const { createPost, findAllPosts, findPostbyRubro, deletePost, findPostEmpresa, findPostPostulante, findUserPost } = require("../models/posteos.model")
+const { createPost, findAllPosts, findFilteredPost, deletePost, findPostEmpresa, findPostPostulante, findUserPost } = require("../models/posteos.model")
 const { findRubroByIdPostulante } = require("../models/postulantes.model")
 const { findRubroByIdEmpleador } = require("../models/empleador.model")
 
@@ -62,14 +62,14 @@ const ctrlFindAllPosts = async (req, res) => {
     }
 }
 
-const ctrlFindPostbyRubro = async (req, res) => {
+const ctrlFindFilteredPost = async (req, res) => {
     try {
-        const id_rubro = req.body.id_rubro
+        const data = req.body
 
-        const posts = await findPostbyRubro(id_rubro);
+        const posts = await findFilteredPost(data);
 
         if (!posts) {
-            throw new Error("Error al buscar los posts por rubro")
+            return res.status(404).json({ message: "No se encontraron resultados" })
         }
         return res.status(200).json(posts)
     } catch (error) {
@@ -140,7 +140,7 @@ const ctrlfindUserPost = async (req, res) => {
 module.exports = {
     ctrlCrearPosteos,
     ctrlFindAllPosts,
-    ctrlFindPostbyRubro,
+    ctrlFindFilteredPost,
     ctrlDeletePost,
     ctrlFindPostEmpresa,
     ctrlFindPostPostulante,
