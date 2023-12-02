@@ -15,12 +15,6 @@ console.log(link);
     // Añadir el archivo al formData
     formData.append("id_user", payload.id_user);
 
-    formData.append("archivos", payload.archivos);
-    formData.append("experiencia", payload.experiencia);
-    formData.append("intereses", payload.intereses);
-    formData.append("estudios", payload.estudios);
-    formData.append("hibilidades", payload.hibilidades);
-    formData.append("descripcion", payload.descripcion);
 
     formData.append("url", payload.url);
     formData.append("id_rol", payload.id_rol);

@@ -11,12 +11,12 @@ const File = sequelize.define('File', {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
-    file: {
+    url: {
         type: DataTypes.STRING,
         allowNull: false,
     },
 }, {
-    timestamps: false,
+    timestamps: true,
     paranoid: false,
     tableName: "File",
     modelName: "File",
@@ -49,7 +49,7 @@ async function createFile(data, filename) {
     try {
         const file = await File.create({
             id_user: data.id_user,
-            file: data.file,
+            url: `/uploads/${filename}`,
         })
         return file
     } catch (error) {

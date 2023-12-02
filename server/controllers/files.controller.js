@@ -1,5 +1,5 @@
 //IMPORTACIONES
-const { subirPfp, findpfp } = require('../models/imagenes.model');
+const { subirPfp, findpfp, subirImg, findAllImgs } = require('../models/imagenes.model');
 const { createFile, findFiles, deleteFile } = require("../models/files.model")
 
 //CARGAR IMAGENES
@@ -42,20 +42,53 @@ const ctrlFindPfp = async (req, res) => {
     }
 }
 
+//BUSCAR TODAS LAS IMAGENES NO PFP
+const ctrlfindAllImgs = async (req, res) => {
+    try {
+        const data = req.body
+
+        const pfp = await findAllImgs(data);
+        if (pfp) {
+            return res.status(200).json(pfp)
+        }
+        return res.status(400).json({ message: "No se encontraron imagenes" })
+
+    } catch (error) {
+        return res.status(500).send("Internal Server Error")
+    }
+}
+
 //SUBIR ARCHIVO
 const ctrlCreateFile = async (req, res) => {
     try {
+
         if (req.file) {
+            const file = { filename, mimetype } = req.file;
             const data = req.body;
+            if (file.filename.endsWith('.pdf') || file.filename.endsWith('.docx')
+                || file.filename.endsWith('.xlsx') || file.filename.endsWith('.pptx')) {
 
-            const { filename } = req.file;
 
-            const archivos = await createFile(data, filename)
+                console.log(file);
 
-            if (archivos) {
-                return res.status(201).json({ message: "Archivo subido con exito." });
+                const archivos = await createFile(data, file.filename);
+
+                if (archivos) {
+                    return res.status(201).json({ message: "Archivo subido con exito." });
+                } else {
+                    res.status(500).json({ message: 'Error al subir el archivo.', error: "Error" });
+                }
+            } else if (file.mimetype.startsWith('image/')) {
+
+                const img = subirImg(file.filename, data);
+
+                if (!img) {
+                    res.status(500).json({ message: 'Error al subir la imagen.' });
+                } else {
+                    res.status(201).json({ message: "Imagen subida con éxito." });
+                }
             } else {
-                res.status(500).json({ message: 'Error al subir el archivo.' });
+                res.status(500).json({ message: 'Error formato del archivo no es aceptado.', error: "Error" });
             }
         }
     } catch (error) {
@@ -83,11 +116,10 @@ const ctrlFindAllFiles = async (req, res) => {
     }
 };
 
-
 //ELIMINAR ARCHIVOS
 deleteFile
 
 module.exports = {
-    ctrlUploadPfp, ctrlFindPfp,
+    ctrlUploadPfp, ctrlFindPfp, ctrlfindAllImgs,
     ctrlCreateFile, ctrlFindAllFiles
 };

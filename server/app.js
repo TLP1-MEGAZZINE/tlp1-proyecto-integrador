@@ -64,7 +64,7 @@ app.use(require('./routes/vistas.routes'));
 app.use(require('./routes/registro.routes'));
 app.use(require('./routes/posts.routes'));
 app.use(require('./routes/principal.routes'));
-app.use(require('./routes/image.routes'));
+app.use(require('./routes/files.routes'));
 app.use(require('./routes/usuario.routes'))
 app.use(require('./routes/info.routes'))
 

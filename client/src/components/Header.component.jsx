@@ -93,7 +93,7 @@ function Header() {
         <header >
             <nav className="navbar navbar-expand-lg navbar-light colorPrincipal">
                 <img src={logo} alt="logo" width="30" height="30" />
-                <a className="navbar-brand text-light" href="#" onClick={() => navigate("/index")}>
+                <a className="navbar-brand text-light" href="#" onClick={() => navigate("/auth/home" || "/index")}>
                     Job <span className="unite">Unite</span>
                 </a>
                 <button

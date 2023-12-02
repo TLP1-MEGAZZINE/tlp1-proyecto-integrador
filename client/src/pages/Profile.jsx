@@ -7,10 +7,11 @@ import Footer from "../components/Footer.component"
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import { useForm } from "../hooks/useForms";
-import { fetchFileFunction } from "../api/apiFetchFiles";
 import { PosteosUser } from "../components/PosteosUser.component";
 import { DescUser } from "../components/DescUser.component";
 import { useSweetAlert } from "../hooks/useSweetAlert";
+import { ModalFile } from "../components/ModalFile.component";
+import { Files } from "../components/Files.component";
 
 export const Profile = () => {
 
@@ -86,30 +87,6 @@ export const Profile = () => {
       })
   }, []);
 
-  //SUBIR FOTO DE PERFIL
-  const [pfp, setPfp] = useState({
-    id_user: data.id_user,
-  })
-
-  const handlePfpInput = (e) => {
-    setPfp(pfp => ({ ...pfp, url: e.target.files[0] }));
-  };
-
-  const handlePfpSubmit = async (e) => {
-    e.preventDefault()
-
-    const response = await fetchFileFunction("pfp", pfp)
-
-    if (response) {
-      useSweetAlert(response, "Se subio la imagen con exito", "success")
-        .then(() => {
-          window.location.reload()
-        })
-    } else {
-      useSweetAlert(response, null, "error")
-    }
-  }
-
   //BUSCAR FOTO DE PERFIL
   const [foto, setFoto] = useState(null);
   useEffect(() => {
@@ -179,43 +156,17 @@ export const Profile = () => {
         <div className="container-fluid">
           <div className="row pt-4">
 
-            <div className="col-md-4 col-sm-12">
+            <div className="col-md-5 col-sm-12">
               <div className="card">
-                <div>
-                  <i className="bi bi-images btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#editarPfp"> Editar foto de perfil</i>
-                </div>
 
-                {/* MODAL */}
-                <div className="modal fade" id="editarPfp" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                  <div className="modal-dialog">
-                    <form encType="multipart/form-data" onSubmit={handlePfpSubmit}>
-                      <div className="modal-content">
-
-
-                        <div className="modal-header">
-                          <h1 className="modal-title fs-5" id="staticBackdropLabel">Elija su foto de perfil</h1>
-                          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-
-                        <div className="modal-body">
-
-                          <label className="form-label">Imagen</label>
-                          <input type="file" className="form-control" name="url"
-                            onChange={handlePfpInput}
-                          />
-
-                        </div>
-                        <div className="modal-footer">
-                          <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                          <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Confirmar</button>
-                        </div>
-
-
-                      </div>
-                    </form>
-                  </div>
-                </div>
+                <ModalFile
+                  titulo={"Editar foto de perfil"}
+                  label={"Elija su imagen"}
+                  botonTxt={"Subir imagen"}
+                  route={"pfp"}
+                  icon={"bi bi-images"}
+                  id={1}
+                />
 
                 <img
                   src={foto == userIcon ? foto : `${"http://localhost:5000/"}${foto}`}
@@ -312,10 +263,33 @@ export const Profile = () => {
 
                 </div>
               </div>
+              <div className="py-1"></div>
+              {
+                <div className="card">
+
+                  <ModalFile
+                    titulo={"Subir archivos"}
+                    label={"Solo se permiten subir archivos de tipo .pdf .docx .xlsx .pptx e imagenes"}
+                    botonTxt={"Subir archivo"}
+                    route={"createFile"}
+                    icon={"bi bi-cloud-arrow-up-fill"}
+                    id={2}
+                  />
+
+                  <div className="card-body text-center">
+                    <h5 className="card-title">Archvios subidos</h5>
+
+                    <Files
+                      data={data}
+                    />
+
+                  </div>
+                </div>
+              }
             </div>
 
             {/*INFO DE USUARIO */}
-            <div className="col-md-8 col-sm-12">
+            <div className="col-md-7 col-sm-12">
               <div className="card text-center d-flex flex-column justify-content-center colorFondo">
                 <div className="card-body">
                   <h5 className="card-title text-light">Información del usuario</h5>
@@ -407,6 +381,18 @@ export const Profile = () => {
                     </div>
                   </div>
 
+                  {id_rol == 1 ? (
+                    <>
+                      <DescUser
+                        data={data}
+                        children={<div className="d-flex justify-content-end align-items-start pt-2">
+                          <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleDescClick}>Editar</i>
+                        </div>}
+                      />
+                    </>
+                  ) :
+                    <div></div>}
+
                 </div>
 
               </div>
@@ -415,10 +401,10 @@ export const Profile = () => {
           </div>
           <div className="row">
             {/* POSTEOS Y DESCRIPCION*/}
-            <div className="col-md-4 justify-content-center mx-auto">
+            <div className="col-md-12 justify-content-center mx-auto">
               <div className="my-3 p-3 bg-body rounded shadow-sm">
+                <h5 className="card-title text-dark text-center">Mis públicaciones</h5>
                 <div className="d-flex justify-content-center flex-wrap">
-                  <h5 className="card-title text-dark">Mis públicaciones</h5>
 
                   <PosteosUser
                     data={data}
@@ -429,19 +415,7 @@ export const Profile = () => {
               </div>
             </div>
 
-            {id_rol == 1 ? (
-              <>
-                <DescUser
-                  data={data}
-                  children={<div className="d-flex justify-content-end align-items-start pt-2">
-                    <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleDescClick}>Editar</i>
-                  </div>}
-                />
-              </>
-            ) :
-              <div></div>}
           </div>
-
         </div>
       </div >
 

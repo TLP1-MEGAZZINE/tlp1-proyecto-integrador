@@ -110,6 +110,7 @@ const deletePost = async (data) => {
 const findAllPosts = async () => {
     try {
         const posts = await Post.findAll({
+            limit: 20,
             include: [
                 {
                     model: User,
