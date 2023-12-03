@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useBoleean } from "../hooks/useHiddenPass";
 import { PosteosUser } from "../components/PosteosUser.component";
 import { DescUser } from "../components/DescUser.component";
+import { Files } from "../components/Files.component";
 
 export const OtherProfile = () => {
 
@@ -87,7 +88,7 @@ export const OtherProfile = () => {
                 <div className="container-fluid">
                     <div className="row py-4">
 
-                        <div className="col-md-4 col-sm-12">
+                        <div className="col-md-5 col-sm-12">
                             <div className="card">
 
                                 <img
@@ -166,89 +167,41 @@ export const OtherProfile = () => {
 
                                 </div>
                             </div>
-                        </div>
+                            <div className="py-1"></div>
+                            <div className="card">
 
-                        <div className="col-md-8 col-sm-12">
-                            <div className="card text-center d-flex flex-column justify-content-center colorFondo">
-                                <div className="card-body">
-                                    <h5 className="card-title text-light">Información del usuario</h5>
-                                    <div className="table-responsive">
-                                        <ul className="list-group table">
+                                <div className="card-body text-center">
+                                    <h5 className="card-title">Archvios subidos</h5>
 
-                                            <li className="list-group-item">Nombre y apellido: <br />{info?.nombre} {info?.apellido}
-                                            </li>
-
-                                            <li className="list-group-item">DNI:  <br />{info?.dni}
-                                            </li>
-
-                                            <li className="list-group-item">CUIL:  <br />{info?.cuil}
-                                            </li>
-
-                                            <li className="list-group-item">Genero: <br /> {info?.genero?.genero}
-                                            </li>
-
-                                            <li className="list-group-item">Fecha Nacimiento: <br /> {info?.fecha_nacimiento}
-                                            </li>
-
-                                            <li className="list-group-item">Pais:  <br />{info?.paise?.nombre_pais}
-                                            </li>
-
-                                            <li className="list-group-item">Departamento:  <br />{info?.departamento?.nombre_depar}
-                                            </li>
-
-                                            <li className="list-group-item">Localidad: <br /> {info?.localidad?.nombre_local}
-                                            </li>
-
-                                            <li className="list-group-item"></li>
-                                        </ul>
-                                    </div>
+                                    <Files
+                                        data={data}
+                                        botones={false}
+                                    />
 
                                 </div>
-
-                                <div className="card-body">
-
-                                    <h5 className="card-title text-light">Información de contacto</h5>
-
-                                    <div className="table-responsive">
-
-                                        <ul className="list-group table">
-
-                                            <li className="list-group-item">Número de telefono:<br />
-                                                {contacto?.num_tel}
-                                            </li>
-
-                                            <li className="list-group-item">Domicilio: <br />
-                                                {contacto?.domicilio}
-                                            </li>
-
-                                        </ul>
-                                    </div>
-
-                                    {info?.User?.id_rol == 1 ? (
-                                        <DescUser data={data} />
-                                    ) : <div></div>}
-
-                                </div>
-
                             </div>
                         </div>
+                        {info?.User?.id_rol == 1 ? (
+                        <DescUser data={data}
+                            btns={false}
+                        />
+                    ) : <div></div>}
+                    </div>
 
-                        {/* POSTEOS Y DESCRIPCION*/}
-                        <div className={
-                            // `${info?.User?.id_rol == 1 ? "col-md-4 justify-content-center mx-auto": 
-                            "col-md-12 justify-content-center mx-auto"} >
-                            <div className="my-3 p-3 bg-body rounded shadow-sm">
-                                <h5 className="card-title text-dark d-flex justify-content-center">Publicaciones del usuario</h5>
-                                <div className="d-flex justify-content-center flex-wrap">
+                    {/* POSTEOS Y DESCRIPCION*/}
+                    <div className={"col-md-12 justify-content-center mx-auto"} >
+                        <div className="my-3 p-3 bg-body rounded shadow-sm">
+                            <h5 className="card-title text-dark d-flex justify-content-center">Publicaciones del usuario</h5>
+                            <div className="d-flex justify-content-center flex-wrap">
 
-                                    <PosteosUser data={data} />
-                                </div>
+                                <PosteosUser data={data} />
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-            </div >
+
 
             <Footer />
         </>

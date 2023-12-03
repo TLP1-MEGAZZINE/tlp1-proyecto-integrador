@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSweetAlert } from "../hooks/useSweetAlert";
 import { useForm } from "../hooks/useForms";
 
-export const DescUser = ({ data, children }) => {
+export const DescUser = ({ data, children, btns }) => {
 
 
     const [errors, setErros] = useState("")
@@ -12,7 +12,7 @@ export const DescUser = ({ data, children }) => {
     const { form, handleInputChange, reset } = useForm({
         id_user: data.id_user,
         id_rol: data.id_rol
-      })
+    })
 
     const navigate = useNavigate()
 
@@ -102,9 +102,12 @@ export const DescUser = ({ data, children }) => {
                                 <li className="list-group-item"></li>
                             </ul>
                         </div>
-                        <div className="d-flex justify-content-end py-2">
-                            <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleEditarClick}>Editar</i>
-                        </div>
+
+                        {btns == true &&
+                            (<div className="d-flex justify-content-end py-2">
+                                <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleEditarClick}>Editar</i>
+                            </div>)}
+
                     </div>
 
                     <div className="card-body">
@@ -123,9 +126,12 @@ export const DescUser = ({ data, children }) => {
 
                             </ul>
                         </div>
-                        <div className="d-flex justify-content-end py-2">
+
+
+                        {btns == true && 
+                        (<div className="d-flex justify-content-end py-2">
                             <i href="#" data-bs-toggle="modal" data-bs-target="#editarContacto" className="bi bi-pencil btn btn-warning">Editar</i>
-                        </div>
+                        </div>)}
 
                         {/* MODAL */}
                         <div className="modal fade" id="editarContacto" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

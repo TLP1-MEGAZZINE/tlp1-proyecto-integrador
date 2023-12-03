@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchFunction } from '../api/apiFetch';
 
-export const Files = ({ data }) => {
+export const Files = ({ data, botones }) => {
 
 
     //OBTENER ARCHIVOS
@@ -38,9 +38,9 @@ export const Files = ({ data }) => {
                                             {file.url.substring(9)} ,
                                         </a>
                                     </td>
-                                    <td>
+                                    {botones == true && (<td>
                                         <button className='btn btn-danger'>eliminar archivo</button>
-                                    </td>
+                                    </td>)}
                                 </>
                             )
                         ))}
@@ -55,9 +55,9 @@ export const Files = ({ data }) => {
                                             {file.url.substring(9)} ,
                                         </a>
                                     </td>
-                                    <td>
+                                    {botones == true && (<td>
                                         <button className='btn btn-danger'>eliminar archivo</button>
-                                    </td>
+                                    </td>)}
                                 </>
                             )
                         ))}
@@ -72,9 +72,9 @@ export const Files = ({ data }) => {
                                             {file.url.substring(9)} ,
                                         </a>
                                     </td>
-                                    <td>
+                                    {botones == true && (<td>
                                         <button className='btn btn-danger'>eliminar archivo</button>
-                                    </td>
+                                    </td>)}
                                 </>
                             )
                         ))}
@@ -89,9 +89,9 @@ export const Files = ({ data }) => {
                                             {file.url.substring(9)} ,
                                         </a>
                                     </td>
-                                    <td>
+                                    {botones == true && (<td>
                                         <button className='btn btn-danger'>eliminar archivo</button>
-                                    </td>
+                                    </td>)}
                                 </>
                             )
                         ))}
@@ -105,9 +105,9 @@ export const Files = ({ data }) => {
                                         {img.url.substring(9)} ,
                                     </a>
                                 </td>
-                                <td>
+                                {botones == true && (<td>
                                     <button className='btn btn-danger'>eliminar archivo</button>
-                                </td>
+                                </td>)}
                             </>
                         ))}
                     </tr>

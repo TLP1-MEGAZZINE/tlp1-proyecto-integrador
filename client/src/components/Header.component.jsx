@@ -157,7 +157,7 @@ function Header() {
                                     <input className="form-control me-2" type="search" placeholder="¿A quien vas a buscar?" name="user_name"
                                         aria-label="text" value={form[name]} onChange={handleInputChange} />
                                     <button className="btn btn-outline-light d-flex border border-2" type="submit">
-                                        <img src={search} className="mx-1" />Buscar</button>
+                                    <i class="bi bi-search"></i>Buscar</button>
                                 </form>
                                 {listUsers.length > 0 && (
                                     <select className="form-select mt-2" onChange={handleSearch}>

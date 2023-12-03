@@ -218,7 +218,6 @@ export const Profile = () => {
                 </div>
               </div>
               <div className="py-1"></div>
-              {
                 <div className="card">
 
                   <ModalFile
@@ -239,11 +238,11 @@ export const Profile = () => {
 
                   </div>
                 </div>
-              }
             </div>
 
             <DescUser
               data={data}
+              btns={true}
               children={<div className="d-flex justify-content-end align-items-start pt-2">
                 <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleDescClick}>Editar</i>
               </div>}
