@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchFunction } from '../api/apiFetch';
 
-export const Files = ({data}) => {
+export const Files = ({ data }) => {
 
 
     //OBTENER ARCHIVOS
@@ -27,36 +27,93 @@ export const Files = ({data}) => {
     return (
         <div className="table-responsive">
             <table className="table">
-
-                <div className="row text-start">
-                    <tbody>
-                        <tr>
-
-                            <th><i class="bi bi-file-earmark-pdf-fill">PDF:</i></th>
-                            <tr>{/* Contenido para PDF */}</tr>
-                        </tr>
-                        <tr>
-                            <th><i class="bi bi-filetype-docx">DOCX:</i></th>
-                            <tr>{/* Contenido para DOCX */}</tr>
-                        </tr>
-                        <tr>
-                            <th><i class="bi bi-filetype-xlsx">XLSX:</i></th>
-                            <tr>{/* Contenido para XLSX */}</tr>
-                        </tr>
-                        <tr>
-                            <th><i class="bi bi-filetype-pptx">PPTX:</i></th>
-                            <tr>{/* Contenido para PPTX */}</tr>
-                        </tr>
-                        <tr>
-                            <th><i class="bi bi-images">IMG:</i></th>
-                            {imgs.map((img, id_image) => (
-                                <p key={id_image}>{img.url}</p>
-                            ))
-                            }
-                        </tr>
-                    </tbody>
-                </div>
-
+                <tbody>
+                    <tr className='d-flex'>
+                        <th><i className="bi bi-file-earmark-pdf-fill">PDF:</i></th>
+                        {files.map((file, id_file) => (
+                            file.url.endsWith(".pdf") && (
+                                <>
+                                    <td key={id_file}>
+                                        <a href={`http://localhost:5000${file.url}`} target="_blank">
+                                            {file.url.substring(9)} ,
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button className='btn btn-danger'>eliminar archivo</button>
+                                    </td>
+                                </>
+                            )
+                        ))}
+                    </tr>
+                    <tr className='d-flex'>
+                        <th><i className="bi bi-filetype-docx">DOCX:</i></th>
+                        {files.map((file, id_file) => (
+                            file.url.endsWith(".docx") && (
+                                <>
+                                    <td key={id_file}>
+                                        <a href={`http://localhost:5000${file.url}`} target="_blank">
+                                            {file.url.substring(9)} ,
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button className='btn btn-danger'>eliminar archivo</button>
+                                    </td>
+                                </>
+                            )
+                        ))}
+                    </tr>
+                    <tr className='d-flex'>
+                        <th><i className="bi bi-filetype-xlsx">XLSX:</i></th>
+                        {files.map((file, id_file) => (
+                            file.url.endsWith(".xlsx") && (
+                                <>
+                                    <td key={id_file}>
+                                        <a href={`http://localhost:5000${file.url}`} target="_blank">
+                                            {file.url.substring(9)} ,
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button className='btn btn-danger'>eliminar archivo</button>
+                                    </td>
+                                </>
+                            )
+                        ))}
+                    </tr>
+                    <tr className='d-flex'>
+                        <th><i className="bi bi-filetype-pptx">PPTX:</i></th>
+                        {files.map((file, id_file) => (
+                            file.url.endsWith(".pptx") && (
+                                <>
+                                    <td key={id_file}>
+                                        <a href={`http://localhost:5000${file.url}`} target="_blank">
+                                            {file.url.substring(9)} ,
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button className='btn btn-danger'>eliminar archivo</button>
+                                    </td>
+                                </>
+                            )
+                        ))}
+                    </tr>
+                    <tr className='d-flex'>
+                        <th><i className="bi bi-images">IMG:</i></th>
+                        {imgs.map((img, id_image) => (
+                            <>
+                                <td key={id_image}>
+                                    <a href={`http://localhost:5000${img.url}`} target="_blank">
+                                        {img.url.substring(9)} ,
+                                    </a>
+                                </td>
+                                <td>
+                                    <button className='btn btn-danger'>eliminar archivo</button>
+                                </td>
+                            </>
+                        ))}
+                    </tr>
+                </tbody>
             </table>
-        </div>)
+        </div>
+
+    )
 }

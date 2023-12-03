@@ -15,15 +15,10 @@ import { Files } from "../components/Files.component";
 
 export const Profile = () => {
 
-  const [errors, setErros] = useState("")
-
   const { logout } = useContext(AuthContext);
 
   const navigate = useNavigate()
 
-  const handleEditarClick = () => {
-    navigate("/auth/register-info")
-  }
 
   const handleUpdateClick = () => {
     navigate("/auth/update-user")
@@ -39,13 +34,8 @@ export const Profile = () => {
 
   const data = {
     id_user: id_user,
-    id_rol
+    id_rol: id_rol
   }
-
-  const { form, handleInputChange, reset } = useForm({
-    id_user: data.id_user,
-    id_rol: data.id_rol
-  })
 
   //OBTENER INFO DEL USUARIO
   const [datos, setDatos] = useState(null);
@@ -76,16 +66,6 @@ export const Profile = () => {
         })
     }, []);
   }
-
-  //OBTENER INFO DE CONTACTO
-  const [contacto, setContacto] = useState(null);
-
-  useEffect(() => {
-    const resultado = fetchFunction("findContact", "POST", data)
-      .then((resultado) => {
-        setContacto(resultado);
-      })
-  }, []);
 
   //BUSCAR FOTO DE PERFIL
   const [foto, setFoto] = useState(null);
@@ -123,35 +103,9 @@ export const Profile = () => {
     }
   }
 
-  //ACTUALIZAR CONTACTO
-  const handleContact = async (e) => {
-    e.preventDefault()
-
-    const response = await fetchFunction("updateUserContact", "PUT", form)
-
-    if (response.message) {
-      useSweetAlert(response, "Contacto Actualizado", "success")
-      setContacto(form)
-      reset()
-    } else {
-      useSweetAlert(response.errors.array, null, "error")
-      setErros(response.errors.object)
-    }
-  }
-
-  const [posts, setPosts] = useState([]);
-  //POSTEOS
-  useEffect(() => {
-    const posts = fetchFunction("findUserPost", "POST", data)
-      .then((posts) => {
-        setPosts(posts);
-      })
-  }, [])
-
   return (
     <>
       <Header />
-
       <div className="colorFondo">
         <div className="container-fluid">
           <div className="row pt-4">
@@ -162,7 +116,7 @@ export const Profile = () => {
                 <ModalFile
                   titulo={"Editar foto de perfil"}
                   label={"Elija su imagen"}
-                  botonTxt={"Subir imagen"}
+                  botonTxt={"Subir foto de perfil"}
                   route={"pfp"}
                   icon={"bi bi-images"}
                   id={1}
@@ -288,136 +242,33 @@ export const Profile = () => {
               }
             </div>
 
-            {/*INFO DE USUARIO */}
-            <div className="col-md-7 col-sm-12">
-              <div className="card text-center d-flex flex-column justify-content-center colorFondo">
-                <div className="card-body">
-                  <h5 className="card-title text-light">Información del usuario</h5>
-                  <div className="table-responsive">
-                    <ul className="list-group table">
-
-                      <li className="list-group-item">Nombre y apellido: <br />
-                        {datos?.nombre} {datos?.apellido} </li>
-
-                      <li className="list-group-item">DNI: <br />
-                        {datos?.dni}</li>
-
-                      <li className="list-group-item">CUIL: <br />
-                        {datos?.cuil}</li>
-
-                      <li className="list-group-item">Genero: <br />
-                        {datos?.genero?.genero}</li>
-
-                      <li className="list-group-item">Fecha Nacimiento: <br />
-                        {datos?.fecha_nacimiento}</li>
-
-                      <li className="list-group-item">Pais: <br />
-                        {datos?.paise?.nombre_pais != "Otros" ? datos?.paise?.nombre_pais : datos?.otro_pais}</li>
-
-                      <li className="list-group-item">Departamento: <br />
-                        {datos?.departamento?.nombre_depar}</li>
-
-                      <li className="list-group-item">Localidad: <br />
-                        {datos?.localidad?.nombre_local}</li>
-
-                      <li className="list-group-item"></li>
-                    </ul>
-                  </div>
-                  <div className="d-flex justify-content-end py-2">
-                    <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleEditarClick}>Editar</i>
-                  </div>
-                </div>
-                <div className="card-body">
-                  {/*INFO DE CONTACTO */}
-                  <h5 className="card-title text-light">Información de contacto</h5>
-
-                  <div className="table-responsive">
-
-                    <ul className="list-group table">
-
-                      <li className="list-group-item">Domicilio: <br />
-                        {contacto?.domicilio}</li>
-
-                      <li className="list-group-item">Número de telefono: <br />
-                        {contacto?.num_tel}</li>
-
-                    </ul>
-                  </div>
-                  <div className="d-flex justify-content-end py-2">
-                    <i href="#" data-bs-toggle="modal" data-bs-target="#editarContacto" className="bi bi-pencil btn btn-warning">Editar</i>
-                  </div>
-
-                  {/* MODAL */}
-                  <div className="modal fade" id="editarContacto" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                      <div className="modal-content">
-                        <form action="" onSubmit={handleContact}>
-                          <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="staticBackdropLabel">Agregue su información de contacto</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div className="modal-body d-flex flex-column">
-
-                            <label className="form-label">Domicilio</label>
-                            <input type="text" className="form-control" name="domicilio"
-                              onChange={handleInputChange} value={form[name]}
-                            />
-                            <span className="text-danger fw-bold">{errors?.domicilio?.msg}</span>
-
-
-                            <label className="form-label">Número de telefono</label>
-                            <input type="number" className="form-control" name="num_tel"
-                              onChange={handleInputChange} value={form[name]}
-                            />
-                            <span className="text-danger fw-bold">{errors?.num_tel?.msg}</span>
-
-                          </div>
-                          <div className="modal-footer">
-                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Confirmar</button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-
-                  {id_rol == 1 ? (
-                    <>
-                      <DescUser
-                        data={data}
-                        children={<div className="d-flex justify-content-end align-items-start pt-2">
-                          <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleDescClick}>Editar</i>
-                        </div>}
-                      />
-                    </>
-                  ) :
-                    <div></div>}
-
-                </div>
-
-              </div>
-            </div>
-
+            <DescUser
+              data={data}
+              children={<div className="d-flex justify-content-end align-items-start pt-2">
+                <i href="#" className="bi bi-pencil btn btn-warning" onClick={handleDescClick}>Editar</i>
+              </div>}
+            />
           </div>
-          <div className="row">
-            {/* POSTEOS Y DESCRIPCION*/}
-            <div className="col-md-12 justify-content-center mx-auto">
-              <div className="my-3 p-3 bg-body rounded shadow-sm">
-                <h5 className="card-title text-dark text-center">Mis públicaciones</h5>
-                <div className="d-flex justify-content-center flex-wrap">
 
-                  <PosteosUser
-                    data={data}
-                    deleteBtn={true}
-                  />
-
-                </div>
-              </div>
-            </div>
-
-          </div>
         </div>
-      </div >
+        <div className="row mx-auto">
+          {/* POSTEOS Y DESCRIPCION*/}
+          <div className="col-md-12 justify-content-center mx-auto">
+            <div className="my-3 p-3 bg-body rounded shadow-sm">
+              <h5 className="card-title text-dark text-center">Mis públicaciones</h5>
+              <div className="d-flex justify-content-center flex-wrap">
+
+                <PosteosUser
+                  data={data}
+                  deleteBtn={true}
+                />
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
 
       <Footer />
     </>

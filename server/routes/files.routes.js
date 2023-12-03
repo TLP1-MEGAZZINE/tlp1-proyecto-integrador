@@ -14,7 +14,7 @@ router.post("/findAllImgs", ctrlfindAllImgs)
 //RUTA PARA ARCHIVOS
 router.post("/createFile", upload.single("url"), ctrlCreateFile)
 
-router.get("/findAllFiles", ctrlFindAllFiles)
+router.post("/findAllFiles", ctrlFindAllFiles)
 
 
 
