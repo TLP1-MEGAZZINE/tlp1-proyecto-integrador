@@ -78,6 +78,7 @@ function Header() {
         e.preventDefault();
         const resp = await fetchFunction("findByName", "POST", form);
         setListUsers(resp);
+        reset()
     }
 
     //NAVEGAR A LOS PERFILES
@@ -157,7 +158,7 @@ function Header() {
                                     <input className="form-control me-2" type="search" placeholder="¿A quien vas a buscar?" name="user_name"
                                         aria-label="text" value={form[name]} onChange={handleInputChange} />
                                     <button className="btn btn-outline-light d-flex border border-2" type="submit">
-                                    <i class="bi bi-search"></i>Buscar</button>
+                                    <i className="bi bi-search mx-1"></i>Buscar</button>
                                 </form>
                                 {listUsers.length > 0 && (
                                     <select className="form-select mt-2" onChange={handleSearch}>

@@ -57,7 +57,9 @@ export const Users = () => {
                                             <strong>{user.user_name}</strong>
                                         </a>
 
-                                        <a href="#" onClick={() => handleBoleean(`button`)}>{boleean.button ? "Siguiendo" : "Seguir"}</a>
+                                        <a href="#" onClick={() => handleBoleean(`button${user.id_user}`)}>
+                                            {boleean[`button${user.id_user}`] ? "Siguiendo" : "Seguir"}
+                                        </a>
                                     </div>
                                     <span className="d-block">{user.user_email}</span>
                                     <strong className="text-gray-dark">{user.rol.rol_name}</strong>

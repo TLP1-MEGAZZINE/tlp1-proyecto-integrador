@@ -1,5 +1,6 @@
 import Accordion from "../components/Accordion.component"
 
+//PORQUE CONTRATAR EMPLEADOS SIN EXPERIENCIA
 export const accordionData1 = {
     title: "Demuestran mayor entusiasmo y motivación",
     orden: "One",
@@ -45,11 +46,12 @@ export const accordionData5 = {
     ],
 }
 
+//PREGUNTAS DE EMPLEADOS
 export const accordionData1Slide3 = {
     title: "¿Qué debo llevar a la entrevista?",
     orden: "One",
     itemList: [
-        "Los candidatos pueden sentirse inseguros sobre qué documentos o materiales deben llevar consigo, como copias adicionales de su currículum, referencias laborales, certificados académicos, etc.",
+        "Prepararse adecuadamente para una entrevista es crucial para causar una buena impresión. Por ellos, es recomendable que lleves cosas como copias de tu currículum, documentos de identificación, información de contacto, referencias laborales, certificados académicos, portafolio(muestras de tu trabajo), etc.",
     ],
 }
 
@@ -57,7 +59,12 @@ export const accordionData2Slide3 = {
     title: "¿Cómo debo vestirme?",
     orden: "Two",
     itemList: [
-        "La elección de la vestimenta adecuada puede generar dudas. Los candidatos pueden preguntarse si deben vestirse de manera formal o más casual, dependiendo del tipo de empresa y el entorno laboral.",
+        "La elección de la vestimenta adecuada para generar una buena impresión es importante.",
+        "Para entornos más formales (finanzas o empresariales), opta por un traje o conjunto de negocios. Los hombres pueden usar un traje oscuro con corbata, y las mujeres pueden usar un traje o un vestido de negocios.",
+        "Para entornos más informales (tecnología, startups), puedes optar por un atuendo de negocios casuales. Esto podría ser pantalones de vestir y una camisa para hombres, o un vestido o blusa y pantalones para mujeres.",
+        "Limita los accesorios para evitar distracciones. Usa joyería discreta y evita llevar demasiados accesorios llamativos.",
+        "Presta atención a la higiene personal. Asegúrate de que tu ropa esté limpia y planchada. Mantén el cabello y las uñas bien cuidados.",
+        "Opta por colores neutros y sólidos. Evita patrones llamativos o colores brillantes que puedan distraer.",
     ],
 }
 
@@ -65,66 +72,97 @@ export const accordionData3Slide3 = {
     title: "¿Qué puedo esperar durante la entrevista?",
     orden: "Tree",
     itemList: [
-        "Los candidatos suelen querer saber cómo será la dinámica de la entrevista. Preguntas como cuántas personas estarán presentes, qué tipo de preguntas se harán y cuánto tiempo durará la entrevista son comunes.",
+        "Durante una entrevista de trabajo, puedes esperar una serie de preguntas y situaciones diseñadas para evaluar tus habilidades, experiencia, personalidad y idoneidad para el puesto. Algunas preguntas podrian estar relacionadas a las siguientes tematicas:",
+        "Preguntas sobre tu currículum",
+        "Presentación de tus habilidades prácticas",
+        "Preguntas de comportamiento",
+        "¿Cuáles son tus habilidades",
+        "¿Cuáles son tus metas y motivaciones?",
+        "Ponerte en un escenario hipotético y hacerte preguntas sobre el mismo",
     ],
 }
 
 export const accordionData4Slide3 = {
-    title: "¿Qué preguntas me harán?",
+    title: "¿Qué preguntas puedo hacer?",
     orden: "Four",
     itemList: [
-        "Los candidatos suelen preocuparse por las preguntas específicas que se les harán durante la entrevista. Pueden buscar consejos sobre cómo preparar respuestas para preguntas difíciles o sobre su experiencia laboral.",
+        "Hacer preguntas durante una entrevista no solo demuestra tu interés en la posición, sino que también te proporciona información valiosa. Algunas preguntas que podrias hacer son:",
+        "¿Cuáles son las responsabilidades de este puesto?",
+        " ¿Cuáles son las expectativas en cuanto a horas de trabajo y disponibilidad?",
+        "¿Cuál es la cultura y valores de la empresa?",
+        "¿Cómo es el equipo con el que trabajaré?",
+        "¿Cómo es el proceso de entrenamiento para este puesto?",
+        "¿Hay oportunidades de capacitación?",
+        "¿Cuál es la estructura de la empresa?",
+        "¿Qué beneficios ofrece la empresa?",
+        "¿Cuándo podré empezar?",
+        "¿Ofrecen programas de bienestar o beneficios para los empleados?",
+        "¿Cuál es la visión a corto y largo plazo de la empresa y cómo se alinea este puesto con esa visión?",
     ],
 }
 
-export const accordionData5Slide3 = {
-    title: "¿Cómo debo hablar de mis debilidades?",
+//PREGUNTAS DE EMPLEADORES
+
+export const accordionData1Slide4 = {
+    title: "Experiencia y habilidades",
+    orden: "One",
+    itemList: [
+        "¿Cuál es tu experiencia laboral relevante para este puesto?",
+        "¿Cuáles son tus habilidades clave para este trabajo?",
+        "¿Puedes proporcionar ejemplos específicos de proyectos en los que hayas trabajado anteriormente?",
+    ],
+}
+export const accordionData2Slide4 = {
+    title: "Gestión del tiempo",
+    orden: "Two",
+    itemList: [
+        "¿Cómo priorizas y gestionas tu tiempo para cumplir con plazos?",
+        "¿Cómo manejas situaciones de trabajo bajo presión?",
+    ],
+}
+export const accordionData3Slide4 = {
+    title: "Adaptabilidad y resolución de problemas",
+    orden: "Three",
+    itemList: [
+        "¿Cómo te adaptas a los cambios en el entorno laboral?",
+        "Cuentame sobre algún desafio por el cual hayas pasado antes y como lo afrontaste"
+    ],
+}
+export const accordionData4Slide4 = {
+    title: "Trabajo en equipo y colaboración",
+    orden: "Four",
+    itemList: [
+        "¿Cómo te integras en un equipo de trabajo?",
+        "¿Tienes experiencias en el trabajo en equipo?",
+    ],
+}
+export const accordionData5Slide4 = {
+    title: "Motivación y metas",
     orden: "Five",
     itemList: [
-        "La pregunta sobre las debilidades es una pregunta trampa común. Los candidatos pueden preguntarse cómo abordar este tema sin perjudicar sus posibilidades.",
+        "¿Qué te motiva a trabajar en querer trabajar con nosotros?",
+        "¿Dónde te ves profesionalmente en cinco años?",
     ],
 }
 
-export const accordionData6Slide3 = {
-    title: "¿Cuál es la estructura de la empresa?",
+export const accordionData6Slide4 = {
+    title: "Autogestión y organización",
     orden: "Six",
     itemList: [
-        "Los candidatos pueden querer saber más sobre la estructura organizativa de la empresa, incluyendo los equipos, los departamentos y las oportunidades de crecimiento.",
+        "¿Cómo te organizas para cumplir con tus plazos y entregables?",
+        "¿Cómo estableces y sigues tus propias metas de trabajo?",
     ],
 }
 
-export const accordionData7Slide3 = {
-    title: "¿Qué beneficios ofrece la empresa?",
+export const accordionData7Slide4 = {
+    title: "Habilidades técnicas y actualización",
     orden: "Seven",
     itemList: [
-        "Preguntas sobre beneficios como el seguro de salud, vacaciones, bonificaciones y otros incentivos son comunes, ya que los candidatos quieren tener una idea clara de lo que la empresa ofrece.",
+        "¿Cómo te mantienes actualizado/a en tus habilidades y conocimientos?",
+        "¿Has realizado alguna capacitación o curso recientemente?",
     ],
 }
-
-export const accordionData8Slide3 = {
-    title: "¿Cuáles son los próximos pasos del proceso de selección?",
-    orden: "Eight",
-    itemList: [
-        "Los candidatos suelen estar interesados en saber cuál es el siguiente paso después de la entrevista, cuándo pueden esperar una respuesta y si habrá más rondas de entrevistas.",
-    ],
-}
-
-export const accordionData9Slide3 = {
-    title: "¿Qué hace que un candidato sea exitoso en esta posición?",
-    orden: "Nine",
-    itemList: [
-        "Los candidatos pueden querer entender mejor cuáles son las cualidades y habilidades que la empresa valora en un empleado para tener éxito en el puesto.",
-    ],
-}
-
-export const accordionData10Slide3 = {
-    title: "¿Cuándo podré empezar?",
-    orden: "Ten",
-    itemList: [
-        "Los candidatos que están ansiosos por comenzar un nuevo trabajo pueden preguntar cuándo se espera que el candidato seleccionado comience a trabajar.",
-    ],
-}
-
+// SLIDES PARA RENDERIZAR
 export const slideData1 = {
     title: "¿Por qué deberias contratar empleados con poca o nula experiencia?",
     subtitle: "",
@@ -201,37 +239,80 @@ export const slideData3 = {
             orden={accordionData4Slide3.orden}
             itemList={accordionData4Slide3.itemList}
         />,
-
-        <Accordion
-            title={accordionData5Slide3.title}
-            orden={accordionData5Slide3.orden}
-            itemList={accordionData5Slide3.itemList}
-        />,
-
-        <Accordion
-            title={accordionData6Slide3.title}
-            orden={accordionData6Slide3.orden}
-            itemList={accordionData6Slide3.itemList}
-        />,
-        <Accordion
-            title={accordionData7Slide3.title}
-            orden={accordionData7Slide3.orden}
-            itemList={accordionData7Slide3.itemList}
-        />,
-        <Accordion
-            title={accordionData8Slide3.title}
-            orden={accordionData8Slide3.orden}
-            itemList={accordionData8Slide3.itemList}
-        />,
-        <Accordion
-            title={accordionData9Slide3.title}
-            orden={accordionData9Slide3.orden}
-            itemList={accordionData9Slide3.itemList}
-        />,
-        <Accordion
-            title={accordionData10Slide3.title}
-            orden={accordionData10Slide3.orden}
-            itemList={accordionData10Slide3.itemList}
-        />,
     ]
 }
+
+export const slideData4 = {
+    title: "¿Preguntas frecuntes de los empleadores?",
+    subtitle: "Algunos de los intereses que más frecuentemente pueden surgir por parte de los empleadores a la hora de buscar personal son:",
+    listItems: [
+        <Accordion
+            title={accordionData1Slide4.title}
+            orden={accordionData1Slide4.orden}
+            itemList={accordionData1Slide4.itemList}
+        />,
+
+        <Accordion
+            title={accordionData2Slide4.title}
+            orden={accordionData2Slide4.orden}
+            itemList={accordionData2Slide4.itemList}
+        />,
+
+        <Accordion
+            title={accordionData3Slide4.title}
+            orden={accordionData3Slide4.orden}
+            itemList={accordionData3Slide4.itemList}
+        />,
+
+        <Accordion
+            title={accordionData4Slide4.title}
+            orden={accordionData4Slide4.orden}
+            itemList={accordionData4Slide4.itemList}
+        />,
+
+        <Accordion
+            title={accordionData5Slide4.title}
+            orden={accordionData5Slide4.orden}
+            itemList={accordionData5Slide4.itemList}
+        />
+        ,
+
+        <Accordion
+        title={accordionData6Slide4.title}
+        orden={accordionData6Slide4.orden}
+        itemList={accordionData6Slide4.itemList}
+    />
+    ,
+
+    <Accordion
+    title={accordionData7Slide4.title}
+    orden={accordionData7Slide4.orden}
+    itemList={accordionData7Slide4.itemList}
+/>
+,
+    ]
+}
+
+export const slideData5 = {
+    title: '¿Cómo funciona nuesta plataforma?',
+    subtitle: 'Las posibilidades que ofrecemos a nuestros usuarios son las siguientes:',
+    listItems: [
+        <Accordion
+            title={accordionData1.title}
+            orden={accordionData1.orden}
+            itemList={accordionData1.itemList}
+        />,
+
+        <Accordion
+            title={accordionData2.title}
+            orden={accordionData2.orden}
+            itemList={accordionData2.itemList}
+        />,
+
+        <Accordion
+            title={accordionData3.title}
+            orden={accordionData3.orden}
+            itemList={accordionData3.itemList}
+        />,
+    ],
+};

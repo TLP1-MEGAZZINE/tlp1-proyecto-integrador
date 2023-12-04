@@ -234,6 +234,7 @@ export const Profile = () => {
 
                     <Files
                       data={data}
+                      botones={true}
                     />
 
                   </div>
