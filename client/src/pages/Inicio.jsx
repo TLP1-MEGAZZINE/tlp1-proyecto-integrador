@@ -17,6 +17,7 @@ function Inicio() {
         id_rubro: 0,
         id_local: 0,
         fecha_nacimiento: null,
+        is_emprise_post: 0
     })
 
     const handleNewPost = () => {
@@ -58,7 +59,7 @@ function Inicio() {
                     <section>
                         <div className="row py-3 colorPrincipal border border-2">
                             <form action="#" onSubmit={handleRubroFilter} className="d-flex col-8">
-                                <div className="col-3">
+                                <div className="col-2">
 
                                     <Selects
                                         label={null}
@@ -73,7 +74,7 @@ function Inicio() {
                                     />
                                 </div>
 
-                                <div className="col-3">
+                                <div className="col-2">
                                     <select onChange={handleInputChange}
                                         value={form[name]} name="fecha_nacimiento" className="form-select" aria-label="Default select example">
                                         <option value="0" >Filtro Edades</option>
@@ -85,7 +86,7 @@ function Inicio() {
                                     </select>
                                 </div>
 
-                                <div className="col-3">
+                                <div className="col-2">
                                     <Selects
                                         label={null}
                                         placeholder={"Filtrar localidad"}
@@ -99,27 +100,39 @@ function Inicio() {
                                     />
                                 </div>
 
-                                <div className="d-flex justify-content-between">
-                                    <div className="mx-1">
-                                        <button className="btn btn-primary" 
-                                        disabled={form.id_rubro == 0 && form.id_local == 0 && form.fecha_nacimiento == null ? true : false} type="submit">Filtrar</button>
+                                <div className="col-2">
+                                    <select onChange={handleInputChange}
+                                        value={form[name]} name="is_emprise_post" className="form-select" aria-label="Default select example">
+                                        <option value="0" >Filtro Roles</option>
+                                        <option value="1">Postulantes</option>
+                                        <option value="2">Empleadores</option>
+                                    </select>
                                 </div>
 
-                                {
+                                <div className="d-flex justify-content-between">
                                     <div className="mx-1">
-                                        <button className="btn btn-danger" onClick={handleQuitFilter}>Quitar Filtrar</button>
+                                        <button className="btn btn-primary"
+                                            disabled={form.id_rubro == 0 && form.id_local == 0 && form.is_enterprise_post == 0 && form.fecha_nacimiento == null ? true : false}
+                                            type="submit">Filtrar</button>
                                     </div>
-                                }
+
+                                    {
+                                        <div className="mx-1">
+                                            <button className="btn btn-danger" onClick={handleQuitFilter}
+                                                disabled={form.id_rubro == 0 && form.is_enterprise_post == 0 && form.id_local == 0 && form.fecha_nacimiento == null ? true : false}
+                                            >Quitar Filtrar</button>
+                                        </div>
+                                    }
+                                </div>
+                            </form>
+
+                            <div className="col-4 text-end">
+                                <button className="btn btn-primary" onClick={handleNewPost}>Nuevo posteo</button>
+                            </div>
+
+
                         </div>
-                    </form>
-
-                    <div className="col-4 text-end">
-                        <button className="btn btn-primary" onClick={handleNewPost}>Nuevo posteo</button>
-                    </div>
-
-
-            </div>
-        </section >
+                    </section >
 
                     <div className="row">
 
@@ -158,7 +171,7 @@ function Inicio() {
                 </article >
             </div >
 
-        <Footer />
+            <Footer />
         </>
     )
 }

@@ -114,7 +114,7 @@ const findAllPosts = async () => {
             include: [
                 {
                     model: User,
-                    attributes: ['id_user', 'user_name', 'user_email'],
+                    attributes: ['id_user', 'user_name', 'user_email', 'id_rol'],
                 },
                 {
                     model: Rubro,
@@ -151,8 +151,10 @@ const findFilteredPost = async (data) => {
              { '$User_Info.Localidad.id_local$': data.id_local }
          ]
      }, */
+    console.log("FILTROS");
+    console.log(data);
     try {
-        if (data.id_rubro > 0 && data.id_local == 0 && data.fecha_nacimiento == null) {
+        if (data.id_rubro > 0 && data.id_local == 0 && data.fecha_nacimiento == null && data.is_emprise_post == 0) {
             return await Post.findAll({
                 where: {
                     id_rubro: data.id_rubro
@@ -178,7 +180,7 @@ const findFilteredPost = async (data) => {
                     }
                 ],
             });
-        } else if (data.id_rubro == 0 && data.id_local > 0 && data.fecha_nacimiento == null) {
+        } else if (data.id_rubro == 0 && data.id_local > 0 && data.fecha_nacimiento == null && data.is_emprise_post == 0) {
             return await Post.findAll({
                 where: {
                     '$User_Info.Localidad.id_local$': data.id_local
@@ -204,7 +206,7 @@ const findFilteredPost = async (data) => {
                     }
                 ],
             });
-        } else if (data.id_rubro == 0 && data.id_local == 0 && data.fecha_nacimiento !== null) {
+        } else if (data.id_rubro == 0 && data.id_local == 0 && data.fecha_nacimiento !== null && data.is_emprise_post == 0) {
             let startDate;
             let endDate;
 
@@ -236,6 +238,58 @@ const findFilteredPost = async (data) => {
                     '$User_Info.fecha_nacimiento$': {
                         [Op.between]: [startDate.format(), endDate.format()],
                     },
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id_user', 'user_name', 'user_email'],
+                    },
+                    {
+                        model: Rubro,
+                        attributes: ['desc_rubro'],
+                    },
+                    {
+                        model: UserInfo,
+                        attributes: ['fecha_nacimiento'],
+                        include: [
+                            {
+                                model: Localidad,
+                                attributes: ['id_local', 'nombre_local'],
+                            }
+                        ]
+                    }
+                ],
+            });
+        } else if (data.id_rubro == 0 && data.id_local == 0 && data.fecha_nacimiento == null && data.is_emprise_post == 2) {
+            return await Post.findAll({
+                where: {
+                    is_emprise_post: true
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id_user', 'user_name', 'user_email'],
+                    },
+                    {
+                        model: Rubro,
+                        attributes: ['desc_rubro'],
+                    },
+                    {
+                        model: UserInfo,
+                        attributes: ['fecha_nacimiento'],
+                        include: [
+                            {
+                                model: Localidad,
+                                attributes: ['id_local', 'nombre_local'],
+                            }
+                        ]
+                    }
+                ],
+            });
+        } else if (data.id_rubro == 0 && data.id_local == 0 && data.fecha_nacimiento == null && data.is_emprise_post == 1) {
+            return await Post.findAll({
+                where: {
+                    is_emprise_post: false
                 },
                 include: [
                     {

@@ -66,6 +66,8 @@ const ctrlFindFilteredPost = async (req, res) => {
     try {
         const data = req.body
 
+        console.log(data);
+
         const posts = await findFilteredPost(data);
 
         if (!posts) {

@@ -26,7 +26,7 @@ export const Posteos = ({ posts, children }) => {
     return (
         <>
             {children}
-            
+
             {posts.map((post, id_post) => (
                 <div key={id_post} className="text-muted pt-3 mx-5">
                     <p className="pb-3 mb-0 small lh-sm border-bottom ">
@@ -40,6 +40,7 @@ export const Posteos = ({ posts, children }) => {
                                         }}
                                     >{post.User.user_name}</strong>
                                 </a>
+                                <strong className="d-block text-success">{post.is_emprise_post === true ? "Empleador" : "Postulante"}</strong>
                                 <strong className="d-block text-gray-dark">{post.User.user_email}</strong>
                                 <strong className="d-block text-gray-dark">{post.post_title}</strong>
                                 {post.post_content}

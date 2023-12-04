@@ -162,6 +162,110 @@ export const accordionData7Slide4 = {
         "¿Has realizado alguna capacitación o curso recientemente?",
     ],
 }
+//INFO SOBRE LA PAGINA
+export const accordionData1Slide5 = {
+    title: "Registro de usuario",
+    orden: "One",
+    itemList: [
+        "Debes completar un registro de usuario con los siguientes datos, Nombre de usuario, email, contraseña y fecha de nacimiento.",
+        "Luego de eso podras acceder al login, con la posibilidad de recordar tus credenciales al seleccionar dicha opción.",
+        "¿Olvidaste tu contraseña?... ¡No te preocupes! simplemente ingresa tu correo con el que estas registrado y reestableceremos tu contraseña, te enviaremos un correo con la infomación para poder volver a acceder.",
+    ]
+}
+export const accordionData2Slide5 = {
+    title: "¿Como funcionan los roles?",
+    orden: "Two",
+    itemList: [
+        "Postulantes: Son los usuarios que estan buscando trabajo, tendras la opción de darte a conocer brindando infomación sobre ti en tu perfil, asi como acceder a todas las funcionalidades de la plataforma.",
+        "Empleadores: Son aquellos usuarios que buscan dar trabajo y conseguir empleados para sus emprendimientos. Tambien contaras con acceso a la mayoria de las funcionalidades con pequeñas diferencias.",
+        "Particulares: Este rol es el que menos opciones tiene en comparación. Es principalmente para los que tienen curiosidad por la plataforma.",
+    ]
+}
+
+export const accordionData3Slide5 = {
+    title: "Personalizacion del perfil",
+    orden: "Three",
+    itemList: [
+        "Dependiendo de tu rol esto variara un poco, tendras más o menos campos para personalizar tu perfil personal.",
+        "Ningun campo es obligatorio, pero ten en cuenta que cuanto mas completo este tu perfil, más interesante resultara para otros usuarios.",
+        "Podras brindar información sobre, asi como una descripción y contacto. Ademas de una foto de perfil.",
+    ]
+}
+
+export const accordionData4Slide5 = {
+    title: "Subida de archivos",
+    orden: "Four",
+    itemList: [
+        "Tendras la posibilidad de subir archivos que complementen tu perfil, como tu curriculum, tu portafolio, etc.",
+        "Podras subir archivos de distintos tipos, tales como .docx, .pdf, .xlsx, .pptx, e imagenes de distintos formatos.",
+        "También podras eliminarlas en cualquier momento, pero no podras recuperarlas.",
+    ]
+}
+
+export const accordionData5Slide5 = {
+    title: "Creacion de Posteos",
+    orden: "Five",
+    itemList: [
+        "Los posteos son la principal forma de darte a conocer, ya que estos aparecen en la pantalla principal de la plataforma",
+        "Los mismos deben tener un título y un cuerpo. Además de opcionalmente incluir una imagén.",
+        "Los posteos pueden ser eliminados desde tu perfil, donde además veras todos los posteos que hayas hecho.",
+        "No podras crear un posteo hasta que no hayas elegido un rubro y una ubicación.",
+        "Los posteos tienen un icono representativo de su rubro",
+    ]
+}
+
+export const accordionData6Slide5 = {
+    title: "Sala de chat",
+    orden: "Six",
+    itemList: [
+        "Podras entrar a una sala de chat global con todos los usuarios de nuestra plataforma, podras ver quienes estan en la sala y enviar mensajes privados. (proximamente)",
+        "¡Recuerda ser amable con todos los demas!",
+    ]
+}
+
+export const accordionData7Slide5 = {
+    title: "Notificaciones",
+    orden: "Seven",
+    itemList: [
+        "El icono de la campana se volvera amarilla en caso de que tengas alguna notificacion.",
+        "Aquí podras ver cuando alguien haya intentado contactar contigo (proximamente).",
+        "Si tu contraseña a sido reestablecida entonces se te mostrara un mensaje pidiendote que cambien la contraseña por defecto",
+    ]
+}
+
+export const accordionData8Slide5 = {
+    title: "Filtros de busqueda de posteos",
+    orden: "Eight",
+    itemList: [
+        "Los posteos pueden filtrarse segun los rangos de edad de los usuarios, sus ubicaciones, sus rubros y roles.",
+        "Los filtros no pueden combinarse.(de momento)",
+        "Si deseas quitar los filtros entonces simplemente oprime el boton 'Quitar filtros'.",
+    ]
+}
+
+export const accordionData9Slide5 = {
+    title: "Busqueda de usuarios",
+    orden: "Nine",
+    itemList: [
+        "Si conoces el nombre de usuario de otro usuario, puedes buscarlo en la barra de busqueda escribiendo su nombre. Se mostrara una barra de resultados aproximados.",
+        "Si quieres ver sus perfiles simplemente presiona su nombre en los resultados y seras redirigido."
+    ]
+}
+
+export const accordionData10Slide5 = {
+    title: "Otras detalles y funcionalidades",
+    orden: "Ten",
+    itemList: [
+        "Si deseas volver al inicio puedes presionar el logo de la plataforma en la esquina superior izquierda. 'Job Unite' y seras redirigido al inicio.",
+        "Si deseas ver tu perfil, debes presionar tu imagen en la esquina superior derecha. También podras cerrar tu sesión desde ahí.",
+        "Si deseas comunicarte con nuestro equipo de soporte, puedes presionar el correo de soporte en la parte inferior y escribirnos tus inquietudes. ¡Nos comunicaremos contigo lo antes posible!",
+        "El proceso de eliminar tu cuenta es irreversible, si deseas borrar tu cuenta, deberas presionar el boton 'Eliminar cuenta' en tu pefil.",
+        "Puedes seguir a otros usuarios, de ese modo puedes interactuar con ellos de manera privada, además de dejarles una calificación. (proximamente)",
+        "Si precionas sobre el nombre de un usuarios en un posteos o en la barra de sugeridos, seras redirigido a su perfil.",
+        "Las sesiones duran una hora, pasado ese tiempo deberas volver a iniciar sesión.",
+    ]
+}
+
 // SLIDES PARA RENDERIZAR
 export const slideData1 = {
     title: "¿Por qué deberias contratar empleados con poca o nula experiencia?",
@@ -278,18 +382,18 @@ export const slideData4 = {
         ,
 
         <Accordion
-        title={accordionData6Slide4.title}
-        orden={accordionData6Slide4.orden}
-        itemList={accordionData6Slide4.itemList}
-    />
-    ,
+            title={accordionData6Slide4.title}
+            orden={accordionData6Slide4.orden}
+            itemList={accordionData6Slide4.itemList}
+        />
+        ,
 
-    <Accordion
-    title={accordionData7Slide4.title}
-    orden={accordionData7Slide4.orden}
-    itemList={accordionData7Slide4.itemList}
-/>
-,
+        <Accordion
+            title={accordionData7Slide4.title}
+            orden={accordionData7Slide4.orden}
+            itemList={accordionData7Slide4.itemList}
+        />
+        ,
     ]
 }
 
@@ -298,21 +402,63 @@ export const slideData5 = {
     subtitle: 'Las posibilidades que ofrecemos a nuestros usuarios son las siguientes:',
     listItems: [
         <Accordion
-            title={accordionData1.title}
-            orden={accordionData1.orden}
-            itemList={accordionData1.itemList}
+            title={accordionData1Slide5.title}
+            orden={accordionData1Slide5.orden}
+            itemList={accordionData1Slide5.itemList}
         />,
 
         <Accordion
-            title={accordionData2.title}
-            orden={accordionData2.orden}
-            itemList={accordionData2.itemList}
+            title={accordionData2Slide5.title}
+            orden={accordionData2Slide5.orden}
+            itemList={accordionData2Slide5.itemList}
         />,
 
         <Accordion
-            title={accordionData3.title}
-            orden={accordionData3.orden}
-            itemList={accordionData3.itemList}
+            title={accordionData3Slide5.title}
+            orden={accordionData3Slide5.orden}
+            itemList={accordionData3Slide5.itemList}
+        />,
+
+        <Accordion
+            title={accordionData4Slide5.title}
+            orden={accordionData4Slide5.orden}
+            itemList={accordionData4Slide5.itemList}
+        />,
+
+        <Accordion
+            title={accordionData5Slide5.title}
+            orden={accordionData5Slide5.orden}
+            itemList={accordionData5Slide5.itemList}
+        />,
+
+        <Accordion
+            title={accordionData6Slide5.title}
+            orden={accordionData6Slide5.orden}
+            itemList={accordionData6Slide5.itemList}
+        />,
+
+        <Accordion
+            title={accordionData7Slide5.title}
+            orden={accordionData7Slide5.orden}
+            itemList={accordionData7Slide5.itemList}
+        />,
+
+        <Accordion
+            title={accordionData8Slide5.title}
+            orden={accordionData8Slide5.orden}
+            itemList={accordionData5Slide5.itemList}
+        />,
+
+        <Accordion
+            title={accordionData9Slide5.title}
+            orden={accordionData9Slide5.orden}
+            itemList={accordionData9Slide5.itemList}
+        />,
+
+        <Accordion
+            title={accordionData10Slide5.title}
+            orden={accordionData10Slide5.orden}
+            itemList={accordionData10Slide5.itemList}
         />,
     ],
 };
