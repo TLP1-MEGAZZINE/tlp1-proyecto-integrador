@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchFunction } from '../api/apiFetch';
+import { useSweetAlert } from '../hooks/useSweetAlert';
+import { ModalFile } from './ModalFile.component';
 
 export const Files = ({ data, botones }) => {
 
@@ -14,6 +16,7 @@ export const Files = ({ data, botones }) => {
             })
     }, [])
 
+    //OBTENER IMAGENES
     const [imgs, setImg] = useState([]);
 
     useEffect(() => {
@@ -23,7 +26,44 @@ export const Files = ({ data, botones }) => {
             })
     }, [])
 
-    console.log(imgs)
+    //ELIMINAR IMAGENES
+    const handleDeleteImg = (idImg) => {
+        const data = {
+            id_image: idImg
+        }
+        console.log("IDIMg");
+        console.log(data);
+
+        const response = fetchFunction("deleteImg", "DELETE", data)
+
+        if (!response.error) {
+            useSweetAlert(response, "Imagen Eliminada Correctamente", "success")
+                .then(() => {
+                    window.location.reload()
+                })
+        } else {
+            useSweetAlert(response, null, "error")
+        }
+
+    }
+
+    //ELIMINAR ARCHIVOS
+    const handleDeleteFile = (idFile) => {
+        const data = {
+            id_file: idFile
+        }
+        const response = fetchFunction("deleteFile", "DELETE", data)
+
+        if (!response.error) {
+            useSweetAlert(response, "Archivo Eliminado Correctamente", "success")
+                .then(() => {
+                    window.location.reload()
+                })
+        } else if (!response) {
+            useSweetAlert(response, null, "error")
+        }
+    }
+
     return (
         <div className="table-responsive">
             <table className="table">
@@ -39,8 +79,17 @@ export const Files = ({ data, botones }) => {
                                         </a>
                                     </td>
                                     {botones == true && (<td>
-                                        <button className='btn btn-danger'>eliminar archivo</button>
-                                    </td>)}
+                                        <ModalFile
+                                            titulo={"¿Esta seguro de que desea eliminar este archivo?"}
+                                            label={"No podras recuperar los archivos que elimines"}
+                                            botonTxt={"Eliminar archivo"}
+                                            icon={"bi-file-excel"}
+                                            id={3}
+                                            tipo={"delete"}
+                                            children={<button type="button" className="btn btn-danger" data-bs-dismiss="modal"
+                                                onClick={() => handleDeleteFile(file.id_file)} >Confirmar</button>}
+                                        />
+                                    </td >)}
                                 </>
                             )
                         ))}
@@ -56,7 +105,16 @@ export const Files = ({ data, botones }) => {
                                         </a>
                                     </td>
                                     {botones == true && (<td>
-                                        <button className='btn btn-danger'>eliminar archivo</button>
+                                        <ModalFile
+                                            titulo={"¿Esta seguro de que desea eliminar este archivo?"}
+                                            label={"No podras recuperar los archivos que elimines"}
+                                            botonTxt={"Eliminar archivo"}
+                                            icon={"bi-file-excel"}
+                                            id={4}
+                                            tipo={"delete"}
+                                            children={<button type="button" className="btn btn-danger" data-bs-dismiss="modal"
+                                                onClick={() => handleDeleteFile(file.id_file)} >Confirmar</button>}
+                                        />
                                     </td>)}
                                 </>
                             )
@@ -73,7 +131,16 @@ export const Files = ({ data, botones }) => {
                                         </a>
                                     </td>
                                     {botones == true && (<td>
-                                        <button className='btn btn-danger'>eliminar archivo</button>
+                                        <ModalFile
+                                            titulo={"¿Esta seguro de que desea eliminar este archivo?"}
+                                            label={"No podras recuperar los archivos que elimines"}
+                                            botonTxt={"Eliminar archivo"}
+                                            icon={"bi-file-excel"}
+                                            id={5}
+                                            tipo={"delete"}
+                                            children={<button type="button" className="btn btn-danger" data-bs-dismiss="modal"
+                                                onClick={() => handleDeleteFile(file.id_file)} >Confirmar</button>}
+                                        />
                                     </td>)}
                                 </>
                             )
@@ -90,7 +157,16 @@ export const Files = ({ data, botones }) => {
                                         </a>
                                     </td>
                                     {botones == true && (<td>
-                                        <button className='btn btn-danger'>eliminar archivo</button>
+                                        <ModalFile
+                                            titulo={"¿Esta seguro de que desea eliminar este archivo?"}
+                                            label={"No podras recuperar los archivos que elimines"}
+                                            botonTxt={"Eliminar archivo"}
+                                            icon={"bi-file-excel"}
+                                            id={6}
+                                            tipo={"delete"}
+                                            children={<button type="button" className="btn btn-danger" data-bs-dismiss="modal"
+                                                onClick={() => handleDeleteFile(file.id_file)} >Confirmar</button>}
+                                        />
                                     </td>)}
                                 </>
                             )
@@ -106,14 +182,23 @@ export const Files = ({ data, botones }) => {
                                     </a>
                                 </td>
                                 {botones == true && (<td>
-                                    <button className='btn btn-danger'>eliminar archivo</button>
+                                    <ModalFile
+                                        titulo={"¿Esta seguro de que desea eliminar este archivo?"}
+                                        label={"No podras recuperar los archivos que elimines"}
+                                        botonTxt={"Eliminar archivo"}
+                                        icon={"bi-file-excel"}
+                                        id={7}
+                                        tipo={"delete"}
+                                        children={<button type="button" className="btn btn-danger" data-bs-dismiss="modal"
+                                            onClick={() => handleDeleteImg(img.id_image)} >Confirmar</button>}
+                                    />
                                 </td>)}
                             </>
                         ))}
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div >
 
     )
 }

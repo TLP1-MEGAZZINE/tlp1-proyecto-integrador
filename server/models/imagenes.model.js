@@ -95,5 +95,17 @@ async function findAllImgs(data) {
     })
 }
 
+//ELIMINAR IMAGENES
+async function deleteImg(data) {
+    try {
+        return await Image.destroy({
+            where: {
+                id_image: data.id_image
+            }
+        })
+    } catch (error) {
+        console.error("Error al eliminar imagen", error);
+    }
+}
 
-module.exports = { Image, subirPfp, findpfp, subirImg, findAllImgs };
+module.exports = { Image, subirPfp, findpfp, subirImg, findAllImgs, deleteImg };

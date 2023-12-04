@@ -40,7 +40,7 @@ const validateInfo = [
             const edad = dayjs().diff(fechaNacimiento, 'years');
 
             if (edad < 17) {
-                throw new Error('Debe ser mayor de 17 años para registrarse');
+                throw new Error('Lo sentimos pero debes ser mayor de 17 años para registrarte.');
             }
 
             return true;

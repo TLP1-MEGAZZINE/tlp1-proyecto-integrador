@@ -1,5 +1,5 @@
 //IMPORTACIONES
-const { subirPfp, findpfp, subirImg, findAllImgs } = require('../models/imagenes.model');
+const { subirPfp, findpfp, subirImg, findAllImgs, deleteImg } = require('../models/imagenes.model');
 const { createFile, findFiles, deleteFile } = require("../models/files.model")
 
 //CARGAR IMAGENES
@@ -58,6 +58,25 @@ const ctrlfindAllImgs = async (req, res) => {
     }
 }
 
+//ELIMINAR IMAGEN
+const ctrlDeleteImg = async (req, res) => {
+    try {
+        const data = req.body
+
+        const deletedFile = await deleteImg(data)
+
+        if (deletedFile) {
+            res.status(201).json({ message: "Imagen eliminado con exito." });
+        } else {
+            res.status(500).json({ message: 'Error al eliminar el archivo.', error: "Error" });
+        }
+
+    } catch (error) {
+        res.status(500).json({ message: 'Error al eliminar el archivo.' });
+    }
+
+}
+
 //SUBIR ARCHIVO
 const ctrlCreateFile = async (req, res) => {
     try {
@@ -67,7 +86,6 @@ const ctrlCreateFile = async (req, res) => {
             const data = req.body;
             if (file.filename.endsWith('.pdf') || file.filename.endsWith('.docx')
                 || file.filename.endsWith('.xlsx') || file.filename.endsWith('.pptx')) {
-
 
                 console.log(file);
 
@@ -117,9 +135,26 @@ const ctrlFindAllFiles = async (req, res) => {
 };
 
 //ELIMINAR ARCHIVOS
-deleteFile
+const ctrlDeleteFile = async (req, res) => {
+    try {
+        const data = req.body
+
+        const deletedFile = await deleteFile(data)
+
+        if (deletedFile) {
+            res.status(201).json({ message: "Archivo eliminado con exito." });
+        } else {
+            res.status(500).json({ message: 'Error al eliminar el archivo.', error: "Error" });
+        }
+
+    } catch (error) {
+        res.status(500).json({ message: 'Error al eliminar el archivo.' });
+    }
+
+}
+
 
 module.exports = {
-    ctrlUploadPfp, ctrlFindPfp, ctrlfindAllImgs,
-    ctrlCreateFile, ctrlFindAllFiles
+    ctrlUploadPfp, ctrlFindPfp, ctrlfindAllImgs, ctrlDeleteImg,
+    ctrlCreateFile, ctrlFindAllFiles, ctrlDeleteFile
 };

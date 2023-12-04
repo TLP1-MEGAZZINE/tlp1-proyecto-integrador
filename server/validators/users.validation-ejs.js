@@ -2,6 +2,8 @@ const { check } = require("express-validator")
 const { validateSchema } = require("../middlewares/validateHealper.js")
 const { findUserByEmail, findUserByUserName } = require("../models/users.model.js")
 
+//YA NO SE USA
+
 const validatUser = [
     //OBLIGATORIOS
     check("user_name")

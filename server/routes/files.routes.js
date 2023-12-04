@@ -1,20 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('../middlewares/multer');
-const { ctrlUploadPfp, ctrlFindPfp, ctrlCreateFile, ctrlFindAllFiles, ctrlfindAllImgs } = require("../controllers/files.controller")
+const { ctrlUploadPfp, ctrlFindPfp, ctrlDeleteImg, ctrlfindAllImgs,
+    ctrlCreateFile, ctrlFindAllFiles, ctrlDeleteFile } = require("../controllers/files.controller")
+
+
 const { validarJWT } = require('../middlewares/autenticarToken');
 //RUTA PARA IMAGENES
-router.post("/pfp", upload.single("url"), ctrlUploadPfp)
+router.post("/pfp", validarJWT, upload.single("url"), ctrlUploadPfp)
 
-router.post("/findPfp", ctrlFindPfp)
+router.post("/findPfp", validarJWT, ctrlFindPfp)
 
-router.post("/findAllImgs", ctrlfindAllImgs)
+router.post("/findAllImgs", validarJWT, ctrlfindAllImgs)
+
+router.delete("/deleteImg", validarJWT, ctrlDeleteImg)
 
 
 //RUTA PARA ARCHIVOS
-router.post("/createFile", upload.single("url"), ctrlCreateFile)
+router.post("/createFile", validarJWT, upload.single("url"), ctrlCreateFile)
 
-router.post("/findAllFiles", ctrlFindAllFiles)
+router.post("/findAllFiles", validarJWT, ctrlFindAllFiles)
+
+router.delete("/deleteFile", validarJWT, ctrlDeleteFile)
 
 
 

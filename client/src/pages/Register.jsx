@@ -145,7 +145,7 @@ export const Register = () => {
                     </div>
                   </div>
 
-                  <div className="col-md-12">
+                  <div className="col-md-6">
                     <label className="form-label">Seleccione su rol</label>
                     <select name="id_rol" className="form-select"
                       value={form[name]} required
@@ -158,6 +158,17 @@ export const Register = () => {
                     </select>
 
                     <span className="text-danger fw-bold" >{errors?.id_rol?.msg}</span>
+                  </div>
+
+
+                  <div className="col-md-6 px-1">
+                    <label className="form-label">Fecha de nacimiento</label>
+                    <input type="date" className="form-control" name="fecha_nacimiento"
+                      onChange={handleInputChange} value={form[name]}
+
+                    />
+                    <span className="text-danger fw-bold">{errors?.fecha_nacimiento?.msg}</span>
+
                   </div>
 
                   <div className="text-center d-flex justify-content-around">

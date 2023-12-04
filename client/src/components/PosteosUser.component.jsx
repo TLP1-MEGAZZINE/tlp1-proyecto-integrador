@@ -36,9 +36,6 @@ export const PosteosUser = ({ data, deleteBtn }) => {
             id_post: idPost
         }
 
-        console.log("DATAPOST");
-        console.log(data);
-
         const response = fetchFunction("deletePost", "DELETE", data)
 
         if (response) {

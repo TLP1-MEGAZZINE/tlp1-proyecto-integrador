@@ -52,18 +52,18 @@ User.sync({ force: false }).then(() => {
 //SERVICIOS
 
 //CREA USUARIO EN LA DB
-async function createUser(userData) {
+async function createUser(data) {
     try {
         //COMPROBAR SI EXISTEN REGISTROS
         const existeUsername = await User.findOne({
             where: {
-                user_name: userData.user_name
+                user_name: data.user_name
             }
         })
 
         const existeEmail = await User.findOne({
             where: {
-                user_email: userData.user_email
+                user_email: data.user_email
             }
         })
 
@@ -76,13 +76,13 @@ async function createUser(userData) {
         }
 
         //ENCRIPTAR LA PASSWORD
-        const hashedPass = await encriptar(userData.user_password)
+        const hashedPass = await encriptar(data.user_password)
 
         return await User.create({
-            user_name: userData.user_name,
-            user_email: userData.user_email,
+            user_name: data.user_name,
+            user_email: data.user_email,
             user_password: hashedPass,
-            id_rol: userData.id_rol,
+            id_rol: data.id_rol,
         });
 
     } catch (error) {

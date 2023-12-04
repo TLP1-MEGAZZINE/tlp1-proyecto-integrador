@@ -14,8 +14,8 @@ export const fetchFunction = async (route, method, payload) => {
     return response.json();
 
   } else {
-    
-    // METODO POST
+
+    // OTROS METODOS
     const response = await fetch(url, {
       method: method,
       headers: {

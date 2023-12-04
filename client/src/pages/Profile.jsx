@@ -120,6 +120,7 @@ export const Profile = () => {
                   route={"pfp"}
                   icon={"bi bi-images"}
                   id={1}
+                  tipo={"upload"}
                 />
 
                 <img
@@ -227,6 +228,7 @@ export const Profile = () => {
                     route={"createFile"}
                     icon={"bi bi-cloud-arrow-up-fill"}
                     id={2}
+                    tipo={"upload"}
                   />
 
                   <div className="card-body text-center">

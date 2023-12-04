@@ -18,6 +18,10 @@ const Contacto = sequelize.define('Contacto', {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    redes: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    }
 }, {
     timestamps: false,
     paranoid: false,
@@ -40,6 +44,7 @@ async function createContacto(id_user) {
                 id_user: id_user,
                 num_tel: null,
                 domicilio: null,
+                redes: null,
             }
         );
 
@@ -56,6 +61,7 @@ async function updateUserContact(data) {
             {
                 num_tel: data.num_tel,
                 domicilio: data.domicilio,
+                redes: data.redes,
             },
             {
                 where: {

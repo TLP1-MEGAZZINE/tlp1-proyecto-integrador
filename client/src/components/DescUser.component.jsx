@@ -124,14 +124,17 @@ export const DescUser = ({ data, children, btns }) => {
                                 <li className="list-group-item">Número de telefono: <br />
                                     {contacto?.num_tel}</li>
 
+                                <li className="list-group-item">Redes sociales: <br />
+                                    {contacto?.redes}</li>
+
                             </ul>
                         </div>
 
 
-                        {btns == true && 
-                        (<div className="d-flex justify-content-end py-2">
-                            <i href="#" data-bs-toggle="modal" data-bs-target="#editarContacto" className="bi bi-pencil btn btn-warning">Editar</i>
-                        </div>)}
+                        {btns == true &&
+                            (<div className="d-flex justify-content-end py-2">
+                                <i href="#" data-bs-toggle="modal" data-bs-target="#editarContacto" className="bi bi-pencil btn btn-warning">Editar</i>
+                            </div>)}
 
                         {/* MODAL */}
                         <div className="modal fade" id="editarContacto" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -156,6 +159,13 @@ export const DescUser = ({ data, children, btns }) => {
                                                 onChange={handleInputChange} value={form[name]}
                                             />
                                             <span className="text-danger fw-bold">{errors?.num_tel?.msg}</span>
+
+
+                                            <label className="form-label">Redes sociales</label>
+                                            <input type="text" className="form-control" name="redes"
+                                                onChange={handleInputChange} value={form[name]}
+                                            />
+                                            <span className="text-danger fw-bold">{errors?.redes?.msg}</span>
 
                                         </div>
                                         <div className="modal-footer">
