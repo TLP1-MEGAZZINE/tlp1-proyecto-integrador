@@ -4,6 +4,7 @@ import Slide from '../components/Slide.component';
 import { slideData1, slideData2, slideData3, slideData4, slideData5 } from '../data/InfoContent';
 
 
+
 export default function MasInfo() {
 
     return (
@@ -38,6 +39,7 @@ export default function MasInfo() {
                             active={"active"}
                             subtitle={slideData1.subtitle}
                             listItems={slideData1.listItems}
+
                         />
 
                         {/*  SEGUNDO SLIDE */}

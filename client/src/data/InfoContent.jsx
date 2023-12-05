@@ -1,4 +1,9 @@
 import Accordion from "../components/Accordion.component"
+import cvEjemplo1 from '../assets/cvEjemplo1.jpg'
+import cvEjemplo2 from '../assets/cvEjemplo2.jpg'
+import cvEjemplo3 from '../assets/cvEjemplo3.jpeg'
+// import ModeloDeCurriculumVitae from '../assets/modelosDeCurriculumVitae.docx'
+import ModeloDeCurriculumVitae from '../assets/ModeloDeCurriculumVitae.pdf'
 
 //INFO SOBRE LA PAGINA
 export const accordionData1Slide1 = {
@@ -187,8 +192,25 @@ export const accordionData3Slide3 = {
 }
 
 export const accordionData4Slide3 = {
-    title: "¿Qué preguntas puedo hacer?",
+    title: "¿Cómo debo comportarme en una entrevista?",
     orden: "Four",
+    itemList: [
+        "Es normal que existan nervios en esta situación, pero existen ciertos puntos a tener en cuenta para sobrellevar esto, tales como:",
+        "Tener una idea previa de que es lo que vas a decir, habiendo investigado un poco previamente los intereses de la empresa y sabiendo los puntos que quieres tocar",
+        "Anticípate a preguntas difíciles y prepárate para responderlas de manera positiva",
+        "Mantener un lenguaje corporal positivo y seguro, manteniendo el contacto visual y evitando distracciones o gestos nerviosos.",
+        "Escucha atentamente las preguntas del entrevistador y responde de manera clara y específica.",
+        "Evita dar respuestas demasiado largas o cortas, se claro y conciso",
+        "Utiliza un lenguaje apropiado, evita el uso de jergas",
+        "Muestra entusiasmo y motivación al entrevistador",
+        "Haz preguntas al final de la entrevista, demostrando interes en el puesto.",
+        "Termina la entrevista agradeciendo al entrevistador por su tiempo y pregunta sobre los proximos pasos.",
+    ],
+}
+
+export const accordionData5Slide3 = {
+    title: "¿Qué preguntas puedo hacer?",
+    orden: "Five",
     itemList: [
         "Hacer preguntas durante una entrevista no solo demuestra tu interés en la posición, sino que también te proporciona información valiosa. Algunas preguntas que podrias hacer son:",
         "¿Cuáles son las responsabilidades de este puesto?",
@@ -205,11 +227,16 @@ export const accordionData4Slide3 = {
     ],
 }
 
-export const accordionData5Slide3 = {
+export const accordionData6Slide3 = {
     title: "¿Cómo elaboro mi curriculum?",
-    orden: "Five",
+    orden: "Six",
     itemList: [
-        "Muchos nos hacemos esta pregunta en un principio y puede parecer algo muy complicado, pero debes saber que hay ciertos puntos que siempre debes incluir. Tales como:",
+        "Muchos nos hacemos esta pregunta en un principio y puede parecer algo muy complicado, pero debes saber que hay ciertos puntos que comunmente se incluyen. Tales como:",
+        "Información personal: nombre completo, correo, fecha de nacimiento, genero, nacionalidad, estado civil, etc.",
+        "Perfil laboral: experiencia laboral, estudios realizados, habilidades clave, etc.",
+        "Experiencia laboral: estudios realizados, trabajos previos, etc.",
+        "Educación: Detalla tus logros educativos, certificaciones, distinciones, etc.",
+        "Referencias: En caso de ser necesario, incluye recomendaciones que hayas recibido de otras personas.",
     ],
 }
 //PREGUNTAS DE EMPLEADORES
@@ -342,7 +369,6 @@ export const slideData1 = {
     ],
 };
 
-
 export const slideData2 = {
     title: "Preguntas frecuntes de los postulantes",
     subtitle: "Algunas de las preguntas que más frecuentemente pueden surgir por parte de los postulantes a la hora de buscar un primer trabajo son:",
@@ -375,6 +401,28 @@ export const slideData2 = {
             title={accordionData5Slide3.title}
             orden={accordionData5Slide3.orden}
             itemList={accordionData5Slide3.itemList}
+        />,
+
+        <Accordion
+            title={accordionData6Slide3.title}
+            orden={accordionData6Slide3.orden}
+            itemList={accordionData6Slide3.itemList}
+            children={
+                <>
+                    <ul>
+                        <h6>Modelos en PDF</h6>
+                        <li><a href={ModeloDeCurriculumVitae} target='_blank'>Modelo de curriculum vitae en PDF 1.</a></li>
+                        <h6>Modelos en Imagenes</h6>
+                        <li><a href={cvEjemplo1} target='_blank'>Imagen de modelo de curriculum vitae 1.</a></li>
+                        <li><a href={cvEjemplo2} target='_blank'>Imagen de modelo de curriculum vitae 2.</a></li>
+                        <li><a href={cvEjemplo3} target='_blank'>Imagen de modelo de curriculum vitae 3.</a></li>
+                        <h6>Más material que puede resultarte de utilidad para tu curriculum</h6>
+                        <li><a href="https://www.cvmaker.com.ar/" target='_blank'>www.cvmaker.com.ar</a></li>
+                        <li><a href="https://cv-lite.com/es/resume/create" target='_blank'>www.cv-lite.com</a></li>
+                        <li><a href="https://www.canva.com/es_mx/curriculum-vitae/plantillas/" target='_blank'>www.canva.com</a></li>
+                    </ul>
+                </>
+            }
         />,
     ]
 }
