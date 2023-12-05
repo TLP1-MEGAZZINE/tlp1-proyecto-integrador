@@ -34,6 +34,7 @@ async function enviarEmail(email, newPass) {
 
 //CONTACTO DE AYUDA
 async function support(email, text, userName) {
+
   const config = {
     host: 'smtp.gmail.com',
     port: 587,
@@ -50,9 +51,9 @@ async function support(email, text, userName) {
   const transporter = nodemailer.createTransport(config);
 
   const message = {
-    from: email,
+    from: {email},
     to: process.env.USERMAIL,
-    subject: `¡Hola!, soy el usuario ${userName}, y solicito ayuda.`,
+    subject: `¡Hola!, soy el usuario ${userName}, con el email ${email} y solicito ayuda.`,
     html: `<h4>Mi problema es: </h4>
     <p>${text}</p>.`
   }

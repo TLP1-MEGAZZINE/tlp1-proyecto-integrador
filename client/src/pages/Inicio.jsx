@@ -11,6 +11,8 @@ import { useForm } from "../hooks/useForms";
 
 function Inicio() {
 
+    const id_rol = localStorage.getItem("id_rol");
+
     const navigate = useNavigate();
 
     const { form, handleInputChange } = useForm({
@@ -126,9 +128,10 @@ function Inicio() {
                                 </div>
                             </form>
 
-                            <div className="col-4 text-end">
-                                <button className="btn btn-primary" onClick={handleNewPost}>Nuevo posteo</button>
-                            </div>
+                            {id_rol != 3 &&
+                                <div className="col-4 text-end">
+                                    <button className="btn btn-primary" onClick={handleNewPost}>Nuevo posteo</button>
+                                </div>}
 
 
                         </div>

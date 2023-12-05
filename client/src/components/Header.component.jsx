@@ -16,6 +16,7 @@ function Header() {
 
     const data = {
         id_user: localStorage.getItem("id_user"),
+        id_rol: localStorage.getItem("id_rol"),
     }
 
     const { authState, logout } = useContext(AuthContext); // Obtén el estado del contexto
@@ -123,12 +124,13 @@ function Header() {
                     {authState.logged && (
                         <>
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0 pe-2">
-                                <li className="nav-item">
-                                    <a className="nav-link text-light" aria-current="page" href="#" onClick={handleMessageClick}>
-                                        Mensajes
-                                        <i className="bi bi-envelope-fill mx-2"></i>
-                                    </a>
-                                </li>
+                                {
+                                    data.id_rol != 3 && <li className="nav-item">
+                                        <a className="nav-link text-light" aria-current="page" href="#" onClick={handleMessageClick}>
+                                            Mensajes
+                                            <i className="bi bi-envelope-fill mx-2"></i>
+                                        </a>
+                                    </li>}
                                 <li className="nav-item dropdown">
                                     <a className="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown"
                                         role="button" data-bs-toggle="dropdown" aria-expanded="false"

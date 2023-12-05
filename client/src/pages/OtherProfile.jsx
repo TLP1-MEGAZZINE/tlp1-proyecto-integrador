@@ -113,7 +113,9 @@ export const OtherProfile = () => {
 
                                     <h5 className="card-title">
                                         Rol: <br />
-                                        {info?.User?.id_rol == 1 ? "Postulante" : "Empleador"}
+
+                                        {info?.User?.id_rol == 1 ? "Postulante" : info?.User?.id_rol == 2 ? "Empleador" : info?.User?.id_rol == 3 ? "Particular" : "Particular"}
+
                                     </h5>
 
                                     {info?.User?.id_rol == 1 && (
@@ -156,34 +158,42 @@ export const OtherProfile = () => {
                                     )
                                     }
 
-                                    <h6>Calificación con estrellas:</h6>
+                                    {info?.User?.id_rol != 3 &&
+                                        <>
+                                            <h6>Calificación con estrellas:</h6>
 
-                                    <div className="p-2">
-                                        <i className={`bi ${!boleean.star1 ? "bi-star" : "bi-star-fill"}`} value={boleean.star1} onClick={() => handleBoleean("star1")} />
-                                        <i className={`bi ${!boleean.star2 ? "bi-star" : "bi-star-fill"}`} value={boleean.star2} onClick={() => handleBoleean("star2")} />
-                                        <i className={`bi ${!boleean.star3 ? "bi-star" : "bi-star-fill"}`} value={boleean.star3} onClick={() => handleBoleean("star3")} />
-                                        <i className={`bi ${!boleean.star4 ? "bi-star" : "bi-star-fill"}`} value={boleean.star4} onClick={() => handleBoleean("star4")} />
-                                        <i className={`bi ${!boleean.star5 ? "bi-star" : "bi-star-fill"}`} value={boleean.star5} onClick={() => handleBoleean("star5")} />
-                                    </div>
+                                            <div className="p-2">
+                                                <i className={`bi ${!boleean.star1 ? "bi-star" : "bi-star-fill"}`} value={boleean.star1} onClick={() => handleBoleean("star1")} />
+                                                <i className={`bi ${!boleean.star2 ? "bi-star" : "bi-star-fill"}`} value={boleean.star2} onClick={() => handleBoleean("star2")} />
+                                                <i className={`bi ${!boleean.star3 ? "bi-star" : "bi-star-fill"}`} value={boleean.star3} onClick={() => handleBoleean("star3")} />
+                                                <i className={`bi ${!boleean.star4 ? "bi-star" : "bi-star-fill"}`} value={boleean.star4} onClick={() => handleBoleean("star4")} />
+                                                <i className={`bi ${!boleean.star5 ? "bi-star" : "bi-star-fill"}`} value={boleean.star5} onClick={() => handleBoleean("star5")} />
+                                            </div>
 
-                                    <button type="button" onClick={() => handleBoleean("follow")} value={boleean.follow} className={`btn ${!boleean.follow ? "btn-primary" : "btn-success"}`}>
-                                        {!boleean.follow ? "Seguir" : "Siguiendo"}</button>
+                                            <button type="button" onClick={() => handleBoleean("follow")} value={boleean.follow} className={`btn ${!boleean.follow ? "btn-primary" : "btn-success"}`}>
+                                                {!boleean.follow ? "Seguir" : "Siguiendo"}</button>
+                                        </>
+                                    }
 
                                 </div>
                             </div>
                             <div className="py-1"></div>
-                            <div className="card">
 
-                                <div className="card-body text-center">
-                                    <h5 className="card-title">Archvios subidos</h5>
+                            {info?.User?.id_rol != 3 &&
 
-                                    <Files
-                                        data={data}
-                                        botones={false}
-                                    />
+                                <div className="card">
 
-                                </div>
-                            </div>
+                                    <div className="card-body text-center">
+                                        <h5 className="card-title">Archvios subidos</h5>
+
+                                        <Files
+                                            data={data}
+                                            botones={false}
+                                        />
+
+                                    </div>
+                                </div>}
+
                         </div>
 
                         <DescUser data={data}
@@ -193,15 +203,19 @@ export const OtherProfile = () => {
                     </div>
 
                     {/* POSTEOS Y DESCRIPCION*/}
-                    <div className={"col-md-12 justify-content-center mx-auto"} >
-                        <div className="my-3 p-3 bg-body rounded shadow-sm">
-                            <h5 className="card-title text-dark d-flex justify-content-center">Publicaciones del usuario</h5>
-                            <div className="d-flex justify-content-center flex-wrap">
 
-                                <PosteosUser data={data} />
+                    {info?.User?.id_rol != 3 &&
+                        <div className={"col-md-12 justify-content-center mx-auto"} >
+                            <div className="my-3 p-3 bg-body rounded shadow-sm">
+                                <h5 className="card-title text-dark d-flex justify-content-center">Publicaciones del usuario</h5>
+                                <div className="d-flex justify-content-center flex-wrap">
+
+                                    <PosteosUser data={data} />
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </div>}
+
+
                 </div>
             </div>
 

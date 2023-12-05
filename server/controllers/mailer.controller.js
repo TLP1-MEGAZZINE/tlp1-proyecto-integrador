@@ -7,6 +7,8 @@ const ctrlSupportContact = async (req, res) => {
 
         const data = req.body
 
+        console.log(data);
+
         const existeUser = await findUserById(data);
 
         if (existeUser && existeUser.user_email == data.user_email && existeUser.user_name == data.user_name) {

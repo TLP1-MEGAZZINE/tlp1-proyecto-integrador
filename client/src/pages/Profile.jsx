@@ -140,9 +140,7 @@ export const Profile = () => {
 
                   <h5 className="card-title">
                     Rol: <br />
-                    {id_rol == 1 ? "Postulante" : "Empleador"}
-                  </h5>
-
+                    {id_rol == 1 ? "Postulante" : id_rol == 2 ? "Empleador" : id_rol == 3 ? "Particular" : "Particular"}                  </h5>
 
                   {id_rol == 1 && (
                     <>
@@ -179,17 +177,22 @@ export const Profile = () => {
                   )
                   }
 
-                  <i href="#" className="bi bi-pencil btn btn-primary" onClick={handleUpdateClick}>  Editar perfil</i>
+                  <i href="#" className="bi bi-pencil btn btn-primary " onClick={handleUpdateClick}>  Editar perfil</i>
 
-                  <h6>Calificación con estrellas:</h6>
+                  {id_rol != 3 &&
+                    <>
+                      <h6>Calificación con estrellas:</h6>
 
-                  <div className="rating">
-                    <i className="bi bi-star-fill" type="radio" name="rating" value="5" />
-                    <i className="bi bi-star-fill" type="radio" name="rating" value="4" />
-                    <i className="bi bi-star-fill" type="radio" name="rating" value="3" />
-                    <i className="bi bi-star-fill" type="radio" name="rating" value="2" />
-                    <i className="bi bi-star" type="radio" name="rating" value="1" />
-                  </div>
+                      <div className="rating">
+                        <i className="bi bi-star-fill" type="radio" name="rating" value="5" />
+                        <i className="bi bi-star-fill" type="radio" name="rating" value="4" />
+                        <i className="bi bi-star-fill" type="radio" name="rating" value="3" />
+                        <i className="bi bi-star-fill" type="radio" name="rating" value="2" />
+                        <i className="bi bi-star" type="radio" name="rating" value="1" />
+                      </div>
+                    </>
+                  }
+                  <div className="py-1"></div>
 
                   <ModalFile
                     titulo={"¿Esta seguro de que desea eliminar tu cuenta?"}
@@ -205,28 +208,32 @@ export const Profile = () => {
                 </div>
               </div>
               <div className="py-1"></div>
-              <div className="card">
+              {id_rol != 3 &&
+                <div className="card">
 
-                <ModalFile
-                  titulo={"Subir archivos"}
-                  label={"Solo se permiten subir archivos de tipo .pdf .docx .xlsx .pptx e imagenes"}
-                  botonTxt={"Subir archivo"}
-                  route={"createFile"}
-                  icon={"bi bi-cloud-arrow-up-fill"}
-                  id={2}
-                  tipo={"upload"}
-                />
-
-                <div className="card-body text-center">
-                  <h5 className="card-title">Archvios subidos</h5>
-
-                  <Files
-                    data={data}
-                    botones={true}
+                  <ModalFile
+                    titulo={"Subir archivos"}
+                    label={"Solo se permiten subir archivos de tipo .pdf .docx .xlsx .pptx e imagenes"}
+                    botonTxt={"Subir archivo"}
+                    route={"createFile"}
+                    icon={"bi bi-cloud-arrow-up-fill"}
+                    id={2}
+                    tipo={"upload"}
                   />
 
+                  <div className="card-body text-center">
+                    <h5 className="card-title">Archvios subidos</h5>
+
+                    <Files
+                      data={data}
+                      botones={true}
+                    />
+
+                  </div>
+
                 </div>
-              </div>
+              }
+
             </div>
 
             <DescUser
@@ -241,7 +248,8 @@ export const Profile = () => {
         </div>
         <div className="row mx-auto">
           {/* POSTEOS Y DESCRIPCION*/}
-          <div className="col-md-12 justify-content-center mx-auto">
+
+          {id_rol != 3 && <div className="col-md-12 justify-content-center mx-auto">
             <div className="my-3 p-3 bg-body rounded shadow-sm">
               <h5 className="card-title text-dark text-center">Mis públicaciones</h5>
               <div className="d-flex justify-content-center flex-wrap">
@@ -253,7 +261,7 @@ export const Profile = () => {
 
               </div>
             </div>
-          </div>
+          </div>}
 
         </div>
       </div>
