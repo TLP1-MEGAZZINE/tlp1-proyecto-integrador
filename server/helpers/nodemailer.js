@@ -32,6 +32,39 @@ async function enviarEmail(email, newPass) {
   }
 }
 
+//CONTACTO DE AYUDA
+async function support(email, text, userName) {
+  const config = {
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, //cambiar a futuro
+    auth: {
+      user: process.env.USERMAIL,
+      pass: process.env.PASSWORDEMAIL
+    },
+    tls: {
+      rejectUnauthorized: false //cambiar a futuro
+    }
+  };
+
+  const transporter = nodemailer.createTransport(config);
+
+  const message = {
+    from: email,
+    to: process.env.USERMAIL,
+    subject: `¡Hola!, soy el usuario ${userName}, y solicito ayuda.`,
+    html: `<h4>Mi problema es: </h4>
+    <p>${text}</p>.`
+  }
+
+  try {
+    return await transporter.sendMail(message);
+  } catch (error) {
+    console.error("Error al enviar el correo:", error);
+    throw error;
+  }
+}
+
 module.exports = {
-  enviarEmail
+  enviarEmail, support
 };

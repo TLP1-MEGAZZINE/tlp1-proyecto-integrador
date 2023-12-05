@@ -112,14 +112,14 @@ function Inicio() {
                                 <div className="d-flex justify-content-between">
                                     <div className="mx-1">
                                         <button className="btn btn-primary"
-                                            disabled={form.id_rubro == 0 && form.id_local == 0 && form.is_enterprise_post == 0 && form.fecha_nacimiento == null ? true : false}
+                                            disabled={form.id_rubro == 0 && form.id_local == 0 && form.is_emprise_post == 0 && form.fecha_nacimiento == null ? true : false}
                                             type="submit">Filtrar</button>
                                     </div>
 
                                     {
                                         <div className="mx-1">
                                             <button className="btn btn-danger" onClick={handleQuitFilter}
-                                                disabled={form.id_rubro == 0 && form.is_enterprise_post == 0 && form.id_local == 0 && form.fecha_nacimiento == null ? true : false}
+                                                disabled={form.id_rubro == 0 && form.is_emprise_post == 0 && form.id_local == 0 && form.fecha_nacimiento == null ? true : false}
                                             >Quitar Filtrar</button>
                                         </div>
                                     }
@@ -141,7 +141,7 @@ function Inicio() {
                         <div className="my-3 p-3 bg-body rounded shadow-sm">
                             <h6 className="border-bottom pb-2 mb-0">Nuevas Publicaciones</h6>
 
-                            <span className="d-block text-bold text-warning">{posts.length == 0 ? "No hay publicaciones que coincidan con el filtro"
+                            <span className="d-block text-bold text-warning">{posts.length == 0 ? "No hay publicaciones aún" || "No hay publicaciones que coincidan con el filtro"
                                 : ""}</span>
 
                             <Posteos
@@ -150,7 +150,7 @@ function Inicio() {
 
 
                             <small className="d-block text-end mt-3">
-                                <a href="#">Todas las novedades</a>
+                                <a href="#" onClick={window.location.reload}>Todas las novedades</a>
                             </small>
                         </div>
                     </section>

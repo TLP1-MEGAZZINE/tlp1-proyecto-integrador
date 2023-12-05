@@ -66,6 +66,9 @@ export const DescUser = ({ data, children, btns }) => {
         }
     }
 
+    console.log("data");
+    console.log(data);
+
     return (
         <>
             <div className="col-md-7 col-sm-12">
@@ -125,7 +128,8 @@ export const DescUser = ({ data, children, btns }) => {
                                     {contacto?.num_tel}</li>
 
                                 <li className="list-group-item">Redes sociales: <br />
-                                    {contacto?.redes}</li>
+                                    <a href={`${contacto?.redes}`} target="_blank">{contacto?.redes}</a>
+                                </li>
 
                             </ul>
                         </div>
@@ -176,7 +180,6 @@ export const DescUser = ({ data, children, btns }) => {
                                 </div>
                             </div>
                         </div>
-
 
                         {/* DESCRIPCION */}
 

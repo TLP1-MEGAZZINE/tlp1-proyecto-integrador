@@ -34,6 +34,7 @@ const validateInfo = [
 
 
     check("fecha_nacimiento")
+        .optional()
         .notEmpty().withMessage("Debe seleccionar su fecha de nacimiento")
         .custom((value) => {
             const fechaNacimiento = dayjs(value, 'YYYY-MM-DD');

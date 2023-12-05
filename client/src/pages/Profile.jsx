@@ -19,7 +19,6 @@ export const Profile = () => {
 
   const navigate = useNavigate()
 
-
   const handleUpdateClick = () => {
     navigate("/auth/update-user")
   }
@@ -192,55 +191,42 @@ export const Profile = () => {
                     <i className="bi bi-star" type="radio" name="rating" value="1" />
                   </div>
 
-                  {/*Button trigger modal */}
-                  <i type="button" className="btn btn-danger bi bi-file-excel"
-                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">  Eliminar Cuenta
-                  </i>
-
-                  {  /* Modal */}
-                  <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <h1 className="modal-title fs-5" id="staticBackdropLabel">¿Estas seguro que deseas eliminar tu cuenta?</h1>
-                          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                          ¡Si eliminas tu cuenta no podras recuperarla!
-                        </div>
-                        <div className="modal-footer">
-                          <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                          <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={handleDelete}>Confirmar</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <ModalFile
+                    titulo={"¿Esta seguro de que desea eliminar tu cuenta?"}
+                    label={"¡Este proceso es irreversible!"}
+                    botonTxt={"Eliminar cuenta"}
+                    icon={"bi-file-excel"}
+                    id={9}
+                    tipo={"delete"}
+                    children={<button type="button" className="btn btn-danger" data-bs-dismiss="modal"
+                      onClick={handleDelete} >Confirmar</button>}
+                  />
 
                 </div>
               </div>
               <div className="py-1"></div>
-                <div className="card">
+              <div className="card">
 
-                  <ModalFile
-                    titulo={"Subir archivos"}
-                    label={"Solo se permiten subir archivos de tipo .pdf .docx .xlsx .pptx e imagenes"}
-                    botonTxt={"Subir archivo"}
-                    route={"createFile"}
-                    icon={"bi bi-cloud-arrow-up-fill"}
-                    id={2}
-                    tipo={"upload"}
+                <ModalFile
+                  titulo={"Subir archivos"}
+                  label={"Solo se permiten subir archivos de tipo .pdf .docx .xlsx .pptx e imagenes"}
+                  botonTxt={"Subir archivo"}
+                  route={"createFile"}
+                  icon={"bi bi-cloud-arrow-up-fill"}
+                  id={2}
+                  tipo={"upload"}
+                />
+
+                <div className="card-body text-center">
+                  <h5 className="card-title">Archvios subidos</h5>
+
+                  <Files
+                    data={data}
+                    botones={true}
                   />
 
-                  <div className="card-body text-center">
-                    <h5 className="card-title">Archvios subidos</h5>
-
-                    <Files
-                      data={data}
-                      botones={true}
-                    />
-
-                  </div>
                 </div>
+              </div>
             </div>
 
             <DescUser

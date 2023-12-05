@@ -1,17 +1,16 @@
 import logo from "../assets/logo.png";
 import userIcon from "../assets/userIcon.png"
-import search from "../assets/search.svg";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { fetchFunction } from "../api/apiFetch";
 import { useState, useEffect } from "react";
 import { useForm } from "../hooks/useForms"
-import { useSweetAlert } from "../hooks/useSweetAlert"
 
 function Header() {
 
     const changeYourPass = localStorage.getItem("changeYourPass");
+    const id_change = localStorage.getItem("id_change")
 
     const { form, reset, handleInputChange } = useForm({})
 
@@ -20,6 +19,7 @@ function Header() {
     }
 
     const { authState, logout } = useContext(AuthContext); // Obtén el estado del contexto
+
     const navigate = useNavigate();
 
     const username = localStorage.getItem("user_name");
@@ -134,7 +134,7 @@ function Header() {
                                         role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                     >
                                         Notificaciones
-                                        <i className={changeYourPass == "true" ? "bi bi-bell-fill text-warning mx-2" : "bi bi-bell-fill mx-2"}></i>
+                                        <i className={changeYourPass == "true" && id_change == data.id_user ? "bi bi-bell-fill text-warning mx-2" : "bi bi-bell-fill mx-2"}></i>
                                     </a>
 
                                     <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
@@ -143,7 +143,7 @@ function Header() {
                                                 Solicitudes
                                             </a>
                                         </li>
-                                        {changeYourPass == "true" ? (<li>
+                                        {changeYourPass == "true" && id_change == data.id_user ? (<li>
                                             <p className="dropdown-item text-danger" href="#">
                                                 Su contraseña a sido restaurada, por favor cambiela por su seguridad.
                                             </p>
@@ -158,7 +158,7 @@ function Header() {
                                     <input className="form-control me-2" type="search" placeholder="¿A quien vas a buscar?" name="user_name"
                                         aria-label="text" value={form[name]} onChange={handleInputChange} />
                                     <button className="btn btn-outline-light d-flex border border-2" type="submit">
-                                    <i className="bi bi-search mx-1"></i>Buscar</button>
+                                        <i className="bi bi-search mx-1"></i>Buscar</button>
                                 </form>
                                 {listUsers.length > 0 && (
                                     <select className="form-select mt-2" onChange={handleSearch}>

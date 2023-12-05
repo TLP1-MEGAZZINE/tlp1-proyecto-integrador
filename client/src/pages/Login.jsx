@@ -74,6 +74,7 @@ function Login() {
       reset()
       useSweetAlert(resp, "¡El correo fue enviado correctamente!", "success");
       localStorage.setItem("changeYourPass", true);
+      localStorage.setItem("id_change", resp.id_user);
     } else {
       useSweetAlert(resp, null, "error");
     }
@@ -91,10 +92,7 @@ function Login() {
     }
   };
 
-  const [botonHabilitado, setBotonHabilitado] = useState(true);
-  const handleClick = () => {
-    setBotonHabilitado(false);
-  }
+
   return (
     <>
       <Header />
@@ -171,7 +169,7 @@ function Login() {
                   </div>
                   <div className="modal-footer">
                     <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" className={!boleean.await ? "btn btn-primary" : "btn btn-success"} value={boleean.await}
+                    <button type="submit" className={!boleean.await ? "btn btn-primary" : "btn btn-secondary"} value={boleean.await}
                       onClick={() => handleBoleean("await")}>
                       {!boleean.await ? "Confirmar" : "Espere..."}</button>
                   </div>

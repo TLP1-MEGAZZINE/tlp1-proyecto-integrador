@@ -79,7 +79,7 @@ export const UpdateDescription = () => {
                                         <div className="d-flex justify-content-center">
                                             <div className="col-md-6 px-1">
                                                 <label className="form-label">Ingrese su descripción personal</label>
-                                                <input type="text" className="form-control" placeholder={info?.descripcion || "Me descripcribo como..."}
+                                                <input type="text" className="form-control" placeholder={info?.descripcion || "Me describo como..."}
                                                     name="descripcion" value={form[name]}
                                                     onChange={handleInputChange}
                                                 />

@@ -19,7 +19,8 @@ export const OtherProfile = () => {
     const { id_user } = useParams()
 
     const data = {
-        id_user: id_user
+        id_user: id_user,
+        id_rol: info?.User?.id_rol
     }
 
     //INFO DE USUARIO
@@ -79,6 +80,9 @@ export const OtherProfile = () => {
     }, []);
 
     const { boleean, handleBoleean } = useBoleean()
+
+    console.log("INFO");
+    console.log(info?.User?.id_rol);
 
     return (
         <>
@@ -181,11 +185,11 @@ export const OtherProfile = () => {
                                 </div>
                             </div>
                         </div>
-                        {info?.User?.id_rol == 1 ? (
+
                         <DescUser data={data}
                             btns={false}
                         />
-                    ) : <div></div>}
+
                     </div>
 
                     {/* POSTEOS Y DESCRIPCION*/}

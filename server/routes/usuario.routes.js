@@ -15,7 +15,7 @@ const { ctrlFindUsers,
     ctrlUpdateDesc,
     ctrlFindDesc,
 } = require("../controllers/user.controllers")
-
+const { ctrlSupportContact } = require("../controllers/mailer.controller")
 const { ctrlUpdateUserInfo, ctrlUpdateUserContact, ctrlForgotPassword } = require("../controllers/updateInfo.controller")
 const { validateInfo } = require("../validators/info.validation")
 const { validateContact } = require("../validators/contact.validation")
@@ -47,12 +47,15 @@ router.post("/createDesc", upload.single('url'), ctrlCreateDesc)
 router.put("/updateUser", validarJWT, ctrlUpdateUser)
 router.put("/updateUserInfo", validarJWT, validateInfo, ctrlUpdateUserInfo)
 router.put("/updateUserContact", validarJWT, validateContact, ctrlUpdateUserContact)
-router.post("/forgotPassword", ctrlForgotPassword)
 router.put("/updateDesc", validateDescripcion, ctrlUpdateDesc)
 
 //ELIMINAR 
 router.delete("/delete", ctrlDeleteUser)
 
 router.delete("/destroyUser", ctrlDestroyUser)
+
+//MAIL
+router.post("/forgotPassword", ctrlForgotPassword)
+router.post("/support", ctrlSupportContact)
 
 module.exports = router;
