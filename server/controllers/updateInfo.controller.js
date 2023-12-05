@@ -52,13 +52,12 @@ const ctrlForgotPassword = async (req, res) => {
                 const response = await enviarEmail(email, newPass);
 
                 if (response) {
-
-                    res.status(200).json({ message: 'El codigo fue enviado, puede demorar un momento. Por favor espere...' });
+                    res.status(200).json({ message: 'El codigo fue enviado, puede demorar un momento. Por favor espere...', id_user: existeEmail.id_user });
                 }
             }
 
         } else {
-            res.status(404).json({ message: 'Usted no esta registrado.', error: error });
+            res.status(404).json({ message: 'Usted no esta registrado.', error: "error" });
         }
 
     } catch (error) {

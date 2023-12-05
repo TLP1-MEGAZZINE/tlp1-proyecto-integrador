@@ -1,14 +1,13 @@
 import { useEffect, useState, useRef } from "react"
 import { io } from "socket.io-client"
-import Header from "../components/Header"
-import Footer from "../components/Footer"
+import Header from "../components/Header.component"
+import Footer from "../components/Footer.component"
 import dayjs from "dayjs"
+import '../Style.css'
 
 const user_name = localStorage.getItem("user_name")
 
 const socket = io("http://localhost:5000")
-
-
 
 function Messages() {
     const [messages, setMessages] = useState([]);
@@ -18,39 +17,62 @@ function Messages() {
     const nuevaHora = dayjs().format('HH:mm');
 
     useEffect(() => {
-        const intervalId = setInterval(() => {
-            setMessages(prevMessages => [...prevMessages, { user_name, text, nuevaHora }]);
-        }, 60000); // 60000 milisegundos = 1 minuto
+        // Manejar la conexión y los mensajes iniciales
+        const handleInitialMessages = (initialMessages) => {
+            setMessages(initialMessages);
+        };
 
-        return () => clearInterval(intervalId);
-    }, [text]);
+        socket.on("initialMessages", handleInitialMessages);
+
+        return () => {
+            socket.off("initialMessages", handleInitialMessages);
+        };
+    }, []); // Solo ejecuta este efecto una vez al montar el componente
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     socket.emit("message", { user_name, text, nuevaHora });
+    //     setText("");
+    // };
+
+    useEffect(() => {
+        const handleMessage = (data) => {
+            if (data === "") return;
+            setMessages((prev) => [...prev, data]);
+            setConnectedUsers((prevUsers) => new Set([...prevUsers, data.user_name]));
+        };
+
+        socket.on("message", handleMessage);
+
+        return () => {
+            socket.off("message", handleMessage);
+        };
+    }, []); // Solo ejecuta este efecto una vez al montar el componente
+
+    const messagesListRef = useRef();
+
+    const scrollToBottom = () => {
+        if (messagesListRef.current) {
+            messagesListRef.current.scrollTop = messagesListRef.current.scrollHeight;
+        }
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         socket.emit("message", { user_name, text, nuevaHora });
         setText("");
-    }
-
-    useEffect(() => {
-        socket.on("message", (data) => {
-            if (data === "") return;
-            setMessages(prev => [...prev, data]);
-            setConnectedUsers(prevUsers => new Set([...prevUsers, data.user_name]));
-        });
-
-        return () => {
-            socket.off("message");
-        }
-    }, []);
-
-    const messagesListRef = useRef();
+        scrollToBottom(); // Enfocar al último mensaje después de enviar uno nuevo
+    };
 
     useEffect(() => {
         if (messagesListRef.current) {
             messagesListRef.current.scrollTop = messagesListRef.current.scrollHeight;
         }
     }, [messages]);
-
 
     return (
         <>
@@ -59,10 +81,10 @@ function Messages() {
 
             <article className="d-flex flex-row justify-content-center">
 
-                <section className="d-flex flex-column">
+                <section className="d-flex flex-column border border-dark">
                     {/*CONTACTOS*/}
                     <aside className="bg-primary pt-3 pe-5 ps-3 flex-grow-1 justify-content-center">
-                        <h5 className="text-light">Usuarios conectados</h5>
+                        <h5 className="text-light text-center text-de">Usuarios conectados</h5>
                         <div className="d-flex flex-column">
                             <ul>
                                 <div className="list-group d-flex">
@@ -81,14 +103,14 @@ function Messages() {
                 </section>
 
 
-                <section className="d-flex flex-column flex-grow-1 bg-secondary">
+                <section className="d-flex flex-column flex-grow-1 chatFondo border border-dark p-1">
 
                     {/* CONTACTO */}
-                    <section className="bg-light d-flex flex-row">
+                    <section className="bg-light d-flex flex-row border border-dark">
                         <div className="d-flex align-items-center m-2">
                             <div className="d-flex me-3">
+                                <h2 className="mx-2">Chat Room</h2> 
                                 <i class="bi bi-chat" style={{ fontSize: '2rem' }}></i>
-                                <h2>Chat Room</h2>
                             </div>
                         </div>
                     </section>

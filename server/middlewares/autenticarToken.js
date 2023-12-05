@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const {User} = require('../models/users.model.js');
+const { User } = require('../models/users.model.js');
 
 const validarJWT = async (req, res, next) => {
     console.log(req.headers.authorization);
@@ -31,10 +31,15 @@ const validarJWT = async (req, res, next) => {
     } catch (error) {
         console.error(error);
 
-
-  /*       return res.status(401).json({
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({
+                message: 'Sesión caducada',
+            });
+        }
+        
+        return res.status(401).json({
             message: 'Token no válido',
-        }); */
+        });
 
         // res.redirect('/login');
     }

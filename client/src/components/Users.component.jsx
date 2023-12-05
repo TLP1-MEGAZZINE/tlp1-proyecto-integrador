@@ -36,7 +36,7 @@ export const Users = () => {
                     .filter(user => user.rol.rol_name != "particular" && user.id_user != id_user)
                     .map((user, id_user) => (
 
-                        <div key={id_user} className="d-flex text-muted pt-3 ps-2">
+                        <div key={id_user} className="col-12 text-muted pt-3 ps-2 d-flex">
                             <svg className="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
                                 preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -47,7 +47,7 @@ export const Users = () => {
 
                             <div className="pb-3 mb-0 small lh-sm border-bottom w-100">
 
-                                <div className="pb-3 mb-0 small lh-sm border-bottom w-100">
+                                <div className="pb-3 mb-0 small lh-sm border-bottom ">
                                     <div className="d-flex justify-content-between">
                                         <a className="text-gray-dark text-decoration-none"
                                             onClick={(e) => {
@@ -57,7 +57,9 @@ export const Users = () => {
                                             <strong>{user.user_name}</strong>
                                         </a>
 
-                                        <a href="#" onClick={() => handleBoleean("button")}>{boleean.button ? "Siguiendo" : "Seguir"}</a>
+                                        <a href="#" onClick={() => handleBoleean(`button${user.id_user}`)}>
+                                            {boleean[`button${user.id_user}`] ? "Siguiendo" : "Seguir"}
+                                        </a>
                                     </div>
                                     <span className="d-block">{user.user_email}</span>
                                     <strong className="text-gray-dark">{user.rol.rol_name}</strong>

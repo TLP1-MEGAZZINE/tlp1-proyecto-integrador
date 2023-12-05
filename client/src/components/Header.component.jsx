@@ -1,23 +1,26 @@
 import logo from "../assets/logo.png";
 import userIcon from "../assets/userIcon.png"
-import search from "../assets/search.svg";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { fetchFunction } from "../api/apiFetch";
 import { useState, useEffect } from "react";
 import { useForm } from "../hooks/useForms"
-import { useSweetAlert } from "../hooks/useSweetAlert"
 
 function Header() {
+
+    const changeYourPass = localStorage.getItem("changeYourPass");
+    const id_change = localStorage.getItem("id_change")
 
     const { form, reset, handleInputChange } = useForm({})
 
     const data = {
         id_user: localStorage.getItem("id_user"),
+        id_rol: localStorage.getItem("id_rol"),
     }
 
     const { authState, logout } = useContext(AuthContext); // Obtén el estado del contexto
+
     const navigate = useNavigate();
 
     const username = localStorage.getItem("user_name");
@@ -69,25 +72,30 @@ function Header() {
         obtenerDatos();
     }, []);
 
+
+    //BUSCAR USUARIO POR NOMBRE
+    const [listUsers, setListUsers] = useState([]);
     const handleName = async (e) => {
         e.preventDefault();
         const resp = await fetchFunction("findByName", "POST", form);
-        console.log("RESP");
-        console.log(resp);
-
-        if (!resp.message) {
-            navigate(`/profile/${resp}`)
-            window.location.reload();
-        } else {
-            useSweetAlert(resp, null, "error")
-        }
+        setListUsers(resp);
+        reset()
     }
+
+    //NAVEGAR A LOS PERFILES
+    const [selectedUserId, setSelectedUserId] = useState(null);
+    const handleSearch = (e) => {
+        const selectedId = e.target.value;
+        setSelectedUserId(selectedId);
+        navigate(`/profile/${selectedId}`);
+        window.location.reload()
+    };
 
     return (
         <header >
             <nav className="navbar navbar-expand-lg navbar-light colorPrincipal">
                 <img src={logo} alt="logo" width="30" height="30" />
-                <a className="navbar-brand text-light" href="#" onClick={() => navigate("/index")}>
+                <a className="navbar-brand text-light" href="#" onClick={() => navigate("/auth/home" || "/index")}>
                     Job <span className="unite">Unite</span>
                 </a>
                 <button
@@ -116,39 +124,54 @@ function Header() {
                     {authState.logged && (
                         <>
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0 pe-2">
-                                <li className="nav-item">
-                                    <a className="nav-link text-light" aria-current="page" href="#" onClick={handleMessageClick}>
-                                        Mensajes
-                                    </a>
-                                </li>
+                                {
+                                    data.id_rol != 3 && <li className="nav-item">
+                                        <a className="nav-link text-light" aria-current="page" href="#" onClick={handleMessageClick}>
+                                            Mensajes
+                                            <i className="bi bi-envelope-fill mx-2"></i>
+                                        </a>
+                                    </li>}
                                 <li className="nav-item dropdown">
                                     <a className="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown"
                                         role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                     >
                                         Notificaciones
+                                        <i className={changeYourPass == "true" && id_change == data.id_user ? "bi bi-bell-fill text-warning mx-2" : "bi bi-bell-fill mx-2"}></i>
                                     </a>
+
                                     <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
                                         <li>
                                             <a className="dropdown-item" href="solicitudes">
                                                 Solicitudes
                                             </a>
                                         </li>
-                                        <li>
-                                            <a className="dropdown-item" href="#">
-                                                Novedades
-                                            </a>
-                                        </li>
+                                        {changeYourPass == "true" && id_change == data.id_user ? (<li>
+                                            <p className="dropdown-item text-danger" href="#">
+                                                Su contraseña a sido restaurada, por favor cambiela por su seguridad.
+                                            </p>
+                                        </li>) : ""}
 
                                     </ul>
                                 </li>
                             </ul>
 
-                            <form className="d-flex" action="#" onSubmit={handleName}>
-                                <input className="form-control me-2" type="search" placeholder="¿A quien deseas buscar?" name="user_name"
-                                    aria-label="text" value={form[name]} onChange={handleInputChange} />
-                                <button className="btn btn-outline-light d-flex" type="submit">
-                                    <img src={search} className="mx-1" />Buscar</button>
-                            </form>
+                            <div>
+                                <form className="d-flex" action="#" onSubmit={handleName}>
+                                    <input className="form-control me-2" type="search" placeholder="¿A quien vas a buscar?" name="user_name"
+                                        aria-label="text" value={form[name]} onChange={handleInputChange} />
+                                    <button className="btn btn-outline-light d-flex border border-2" type="submit">
+                                        <i className="bi bi-search mx-1"></i>Buscar</button>
+                                </form>
+                                {listUsers.length > 0 && (
+                                    <select className="form-select mt-2" onChange={handleSearch}>
+                                        <option disabled selected>Resultados</option>
+                                        {listUsers.map((user, id_user) => (
+                                            <option value={user.id_user} key={id_user}
+                                            >{user.user_name}</option>
+                                        ))}
+                                    </select>
+                                )}
+                            </div>
 
                             <div className="dropdown p-4">
                                 <a href="#" className="d-flex align-items-center text-decoration-none dropdown-toggle"
@@ -175,7 +198,7 @@ function Header() {
                     )}
                 </div>
             </nav>
-        </header>
+        </header >
     );
 }
 

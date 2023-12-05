@@ -4,17 +4,18 @@ const router = express.Router();
 //IMPORTAR CONTROLADORES
 const jwt = require('jsonwebtoken')
 const { validatUserReact } = require("../validators/user.validationReact")
+const { validateInfo } = require("../validators/info.validation")
 
 //SE IMPORTAN LOS CONTROLADORES PARA REGISTRO Y LOGIN
 const {
-crearUsuario,
-loginUsuario,
-crearUser
+    crearUsuario,
+    loginUsuario,
+    crearUser
 } = require('../controllers/registro.controller');
 const { validarJWT } = require('../middlewares/autenticarToken');
 
 //RUTAS POST
-router.post('/registro', validatUserReact, crearUser);
+router.post('/registro', validatUserReact, validateInfo, crearUser);
 
 router.post('/login', loginUsuario)
 

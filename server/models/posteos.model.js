@@ -7,12 +7,13 @@ const { Localidad } = require('./localidad.model');
 const { Rubro } = require('./rubro.model');
 >>>>>>> nuevas-funciones
 const { UserInfo } = require('./userInfo.model');
+const { Op } = require('sequelize');
+const dayjs = require('dayjs');
 
 //ACOMODAR LA HORA, RESTANDOLE 3 HORAS
 sequelize.options.timezone = '-03:00';
 
 const { User } = require('./users.model');
-
 
 const Post = sequelize.define('post', {
     id_post: {
@@ -99,10 +100,10 @@ async function createPost(data, filename) {
 };
 
 //ELIMINAR POST
-const deletePost = async (id_post) => {
+const deletePost = async (data) => {
     try {
         return await Post.destroy({
-            where: { id_post: id_post }
+            where: { id_post: data.id_post }
         });
     } catch (error) {
         console.log('Error al eliminar el post', error);
@@ -114,54 +115,11 @@ const deletePost = async (id_post) => {
 const findAllPosts = async () => {
     try {
         const posts = await Post.findAll({
+            limit: 20,
             include: [
                 {
                     model: User,
-<<<<<<< HEAD
-                    attributes: ['user_name', 'user_email'],
-                },
-                {
-                    model: Rubro,
-                },
-            ],
-        });
-        
-        // Obtener los IDs de usuario de los posts
-        const userIds = posts.map(post => post.id_user);
-        
-        // Consulta los registros de user_info para los usuarios
-        const userInfos = await UserInfo.findAll({
-            where: {
-                id_user: userIds,
-            },
-            include:[
-                {
-                    model:Localidad,
-                    attributes:["nombre_local"]
-                }
-            ]            
-        });
-        
-        const postsWithUserInfo = posts.map(post => {
-            const userInfo = userInfos.find(info => info.id_user === post.id_user);
-
-            if (userInfo) {
-                return {
-                    ...post.get(),
-                    id_local: userInfo.localidad.nombre_local, // Reemplaza "field1" con el nombre real del campo
-                    id_depar: userInfo.id_depar, // Reemplaza "field2" con el nombre real del campo
-                    // Agrega más campos según sea necesario
-                };
-            } else {
-                return post;
-            }
-        });
-        
-        // Ahora postsWithUserInfo contiene la información de usuario agregada a los objetos de posts
-        return postsWithUserInfo;
-        
-=======
-                    attributes: ['id_user', 'user_name', 'user_email'],
+                    attributes: ['id_user', 'user_name', 'user_email', 'id_rol'],
                 },
                 {
                     model: Rubro,
@@ -189,22 +147,178 @@ const findAllPosts = async () => {
 };
 
 
-//BUSCAR POSTS SEGUN RUBRO
-const findPostbyRubro = async (id_rubro) => {
+//BUSCAR POSTS FILTRADOS
+const findFilteredPost = async (data) => {
+    //FILTROS CONJUNTOS, NO FUNCIONA BIEN
+    /*  where: {
+         [Op.or]: [
+             { id_rubro: data.id_rubro },
+             { '$User_Info.fecha_nacimiento$': data.fecha_nacimiento },
+             { '$User_Info.Localidad.id_local$': data.id_local }
+         ]
+     }, */
+    console.log("FILTROS");
+    console.log(data);
     try {
-        return await Post.findAll({
-            where: { id_rubro: id_rubro },
-            include: [
-                {
-                    model: User,
-                    attributes: ['user_name', 'user_email']
+        if (data.id_rubro > 0 && data.id_local == 0 && data.fecha_nacimiento == null && data.is_emprise_post == 0) {
+            return await Post.findAll({
+                where: {
+                    id_rubro: data.id_rubro
                 },
-                {
-                    model: Rubro,
-                    attributes: ['desc_rubro']
-                }
-            ]
-        });
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id_user', 'user_name', 'user_email'],
+                    },
+                    {
+                        model: Rubro,
+                        attributes: ['desc_rubro'],
+                    },
+                    {
+                        model: UserInfo,
+                        attributes: ['fecha_nacimiento'],
+                        include: [
+                            {
+                                model: Localidad,
+                                attributes: ['id_local', 'nombre_local'],
+                            }
+                        ]
+                    }
+                ],
+            });
+        } else if (data.id_rubro == 0 && data.id_local > 0 && data.fecha_nacimiento == null && data.is_emprise_post == 0) {
+            return await Post.findAll({
+                where: {
+                    '$User_Info.Localidad.id_local$': data.id_local
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id_user', 'user_name', 'user_email'],
+                    },
+                    {
+                        model: Rubro,
+                        attributes: ['desc_rubro'],
+                    },
+                    {
+                        model: UserInfo,
+                        attributes: ['fecha_nacimiento'],
+                        include: [
+                            {
+                                model: Localidad,
+                                attributes: ['id_local', 'nombre_local'],
+                            }
+                        ]
+                    }
+                ],
+            });
+        } else if (data.id_rubro == 0 && data.id_local == 0 && data.fecha_nacimiento !== null && data.is_emprise_post == 0) {
+            let startDate;
+            let endDate;
+
+            switch (data.fecha_nacimiento) {
+                case '1': // 17-25
+                    startDate = dayjs().subtract(25, 'year');
+                    endDate = dayjs().subtract(17, 'year');
+                    break;
+                case '2': // 25-35
+                    startDate = dayjs().subtract(35, 'year');
+                    endDate = dayjs().subtract(25, 'year');
+                    break;
+                case '3': // 35-45
+                    startDate = dayjs().subtract(45, 'year');
+                    endDate = dayjs().subtract(35, 'year');
+                    break;
+                case '4': // +45
+                    startDate = dayjs().subtract(90, 'year'); // Establece un límite superior adecuado
+                    endDate = dayjs().subtract(45, 'year');
+                    break;
+                default:
+                    // Manejar otros casos o establecer valores predeterminados
+                    break;
+            }
+
+            // Filtrar usuarios por fecha de nacimiento
+            return await Post.findAll({
+                where: {
+                    '$User_Info.fecha_nacimiento$': {
+                        [Op.between]: [startDate.format(), endDate.format()],
+                    },
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id_user', 'user_name', 'user_email'],
+                    },
+                    {
+                        model: Rubro,
+                        attributes: ['desc_rubro'],
+                    },
+                    {
+                        model: UserInfo,
+                        attributes: ['fecha_nacimiento'],
+                        include: [
+                            {
+                                model: Localidad,
+                                attributes: ['id_local', 'nombre_local'],
+                            }
+                        ]
+                    }
+                ],
+            });
+        } else if (data.id_rubro == 0 && data.id_local == 0 && data.fecha_nacimiento == null && data.is_emprise_post == 2) {
+            return await Post.findAll({
+                where: {
+                    is_emprise_post: true
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id_user', 'user_name', 'user_email'],
+                    },
+                    {
+                        model: Rubro,
+                        attributes: ['desc_rubro'],
+                    },
+                    {
+                        model: UserInfo,
+                        attributes: ['fecha_nacimiento'],
+                        include: [
+                            {
+                                model: Localidad,
+                                attributes: ['id_local', 'nombre_local'],
+                            }
+                        ]
+                    }
+                ],
+            });
+        } else if (data.id_rubro == 0 && data.id_local == 0 && data.fecha_nacimiento == null && data.is_emprise_post == 1) {
+            return await Post.findAll({
+                where: {
+                    is_emprise_post: false
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id_user', 'user_name', 'user_email'],
+                    },
+                    {
+                        model: Rubro,
+                        attributes: ['desc_rubro'],
+                    },
+                    {
+                        model: UserInfo,
+                        attributes: ['fecha_nacimiento'],
+                        include: [
+                            {
+                                model: Localidad,
+                                attributes: ['id_local', 'nombre_local'],
+                            }
+                        ]
+                    }
+                ],
+            });
+        }
     } catch (error) {
         console.log('Error al buscar los posts por rubro', error);
         throw error;
@@ -292,5 +406,5 @@ const findUserPost = async (data) => {
     }
 }
 
-module.exports = { Post, findUserPost, createPost, findAllPosts, findPostbyRubro, deletePost, findPostEmpresa, findPostPostulante };
+module.exports = { Post, findUserPost, createPost, findAllPosts, findFilteredPost, deletePost, findPostEmpresa, findPostPostulante };
 

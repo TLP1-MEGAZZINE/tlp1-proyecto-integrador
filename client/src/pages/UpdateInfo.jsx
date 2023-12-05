@@ -1,8 +1,7 @@
-import React from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from '../components/Header.component'
+import Footer from '../components/Footer.component'
 import { useForm } from '../hooks/useForms'
-import { Selects } from "../components/Selects"
+import { Selects } from "../components/Selects.component"
 import { useNavigate } from "react-router-dom"
 import { fetchFunction } from '../api/apiFetch'
 import { useEffect, useState } from 'react'
@@ -182,7 +181,7 @@ export const UpdateInfo = () => {
 
                                                 <Selects
                                                     label={"Provincia."}
-                                                    placeholder={info?.provincum.nombre_provincia ? info?.provincum.nombre_provincia : "Provincias."}
+                                                    placeholder={info?.provincum?.nombre_provincia ? info?.provincum?.nombre_provincia : "Provincias."}
                                                     position={"id_provincia"}
                                                     itemName={"nombre_provincia"}
                                                     url={'findProvinces'}

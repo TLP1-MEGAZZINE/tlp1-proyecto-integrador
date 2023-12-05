@@ -8,25 +8,33 @@ const { createContacto } = require("../models/contacto.model");
 const { createEmpleador } = require("../models/empleador.model");
 const { createParticular } = require("../models/particular.model");
 const { createPostulante } = require("../models/postulantes.model");
+const { createDesc } = require("../models/descripcion.model")
+const { updateInfoUser } = require("../models/userInfo.model")
 
 //CREAR EL OBJETO QUE CONTENDRA LOS METODOS POST
 const registerLogin = {}
 
 registerLogin.crearUser = async (req, res) => {
-    const userData = req.body
+    const data = req.body
+
+    console.log(data);
 
     try {
-        const user = await createUser(userData);
+        const user = await createUser(data);
 
         if (user) {
             const info = await createInfoUser(user.id_user);
             const contacto = await createContacto(user.id_user);
 
-            if (info && contacto) {
+            data.id_user = user.id_user
+            const fecha_nacimineto = await updateInfoUser(data)
+
+            if (info && contacto && fecha_nacimineto) {
                 console.log(user.id_rol);
 
                 if (user.id_rol == 1) {
                     const postulante = await createPostulante(user.id_user);
+                    const descripcion = await createDesc(user.id_user);
                     return res.status(200).json({ message: "Registro creado-controller" })
                 }
 

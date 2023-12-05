@@ -3,7 +3,7 @@ import { env } from "../config/config";
 export const fetchFunction = async (route, method, payload) => {
   const url = `${env.SERVER_PATH}/${route}`;
 
-  if (method == "GET") {
+  if (method == "GET" && !payload) {
     const response = await fetch(url, {
       method: method,
       headers: {
@@ -14,7 +14,8 @@ export const fetchFunction = async (route, method, payload) => {
     return response.json();
 
   } else {
-    // METODO POST
+
+    // OTROS METODOS
     const response = await fetch(url, {
       method: method,
       headers: {

@@ -3,6 +3,9 @@ import { env } from "../config/config";
 export const fetchFileFunction = async (route, payload) => {
     const link = `${env.SERVER_PATH}/${route}`;
 
+console.log("LINK");
+console.log(link);
+
     console.log("PAYLOAD");
     console.log(payload);
 
@@ -10,8 +13,10 @@ export const fetchFileFunction = async (route, payload) => {
     const formData = new FormData();
 
     // Añadir el archivo al formData
-    formData.append("url", payload.url);
     formData.append("id_user", payload.id_user);
+
+
+    formData.append("url", payload.url);
     formData.append("id_rol", payload.id_rol);
     if (payload.post_title || payload.post_content) {
         formData.append("post_title", payload.post_title);

@@ -1,5 +1,5 @@
 
-function Accordion({ title, itemList, orden }) {
+function Accordion({ title, itemList, orden, children }) {
 
     return (
         <>        <div className="accordion accordion-flush" id="accordionFlushExample">
@@ -18,6 +18,7 @@ function Accordion({ title, itemList, orden }) {
                             {itemList.map((item, num) => (
                                 <li key={num}>{item}</li>
                             ))}
+                            {children}
                         </ul>
                     </div>
                 </div>

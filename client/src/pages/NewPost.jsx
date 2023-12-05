@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import Header from "../components/Header"
-import Footer from "../components/Footer"
+import Header from "../components/Header.component"
+import Footer from "../components/Footer.component"
 import logo from "../assets/logo.png";
 import "../Style.css";
 import { fetchFileFunction } from "../api/apiFetchFiles"
@@ -17,8 +17,6 @@ export const NewPost = () => {
         id_user: id_user,
         id_rol: id_rol
     });
-
-    console.log(file);
 
     const handleFileInput = (e) => {
         setFile(file => ({ ...file, url: e.target.files[0] }));

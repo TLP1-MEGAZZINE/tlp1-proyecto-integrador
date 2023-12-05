@@ -1,12 +1,12 @@
-import React from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from '../components/Header.component'
+import Footer from '../components/Footer.component'
 import { useForm } from '../hooks/useForms'
-import { Selects } from "../components/Selects"
+import { Selects } from "../components/Selects.component"
 import { useNavigate } from "react-router-dom"
 import { fetchFunction } from '../api/apiFetch'
 import { useEffect, useState } from 'react'
 import { useBoleean } from '../hooks/useHiddenPass'
+import { useSweetAlert } from '../hooks/useSweetAlert'
 
 export const UpdateUser = () => {
 
@@ -62,18 +62,20 @@ export const UpdateUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const response = await fetchFunction("updateUser", "PUT", form)
+
         localStorage.setItem("user_name", form.user_name)
-        if (response.message) {
-            Swal.fire({
-                title: response.message,
-                text: "Espere un momento...",
-                icon: "success",
-                showConfirmButton: false,
-                timer: 2000
-            })
-            setTimeout(() => {
-                navigate("/auth/my-profile")
-            }, 2000)
+
+        if (form.validarPass) {
+            localStorage.removeItem("changeYourPass")
+        }
+
+        if (!response.error) {
+           const alert = useSweetAlert(response, "Datos actualizados", "success")
+                .then((alert) => {
+                    navigate("/auth/my-profile")
+                })
+        } else {
+            useSweetAlert(response, null, "error")
         }
     }
 
@@ -95,6 +97,7 @@ export const UpdateUser = () => {
                                     style={{ width: "40rem", border: "1px", solid: "#000" }}>
 
                                     <h3 className="text-center fw-bold">Información de la Cuenta</h3>
+                                    <p className='text-warning fw-bold text-decoration-underline'>¡Debe colocar su correo y contraseña para confirmar los cambios!</p>
 
                                     <div>
 
@@ -238,7 +241,7 @@ export const UpdateUser = () => {
 
                                                     <Selects
                                                         label={"Rubros."}
-                                                        placeholder={rolesInfo?.rubro.desc_rubro ? rolesInfo?.rubro.desc_rubro : "Elija el rubro de su empresa"}
+                                                        placeholder={rolesInfo?.rubro?.desc_rubro ? rolesInfo?.rubro?.desc_rubro : "Elija el rubro de su empresa"}
                                                         position={"id_rubro"}
                                                         itemName={"desc_rubro"}
                                                         name={"id_rubro"}

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from '../components/Header.component'
+import Footer from '../components/Footer.component'
 import googleLogo from "../assets/logoGoogle.jpg"
 import lock from "../assets/lock-solid.png"
 import user from "../assets/user-solid.png"
@@ -15,13 +15,15 @@ import { useSweetAlert } from '../hooks/useSweetAlert'
 
 function Login() {
 
+  const lastPath = localStorage.getItem("lastPath")
+
   const { login, authState } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
   useEffect(() => {
     if (authState.logged) {
-      return navigate("/auth/home")
+      return navigate(lastPath || "/auth/home")
     }
   }, [authState, navigate])
 
@@ -66,11 +68,13 @@ function Login() {
 
     const resp = await fetchFunction("forgotPassword", "POST", form);
 
-    useSweetAlert(resp, "Procesando datos...", "")
+    console.log(resp);
 
     if (!resp.error) {
       reset()
       useSweetAlert(resp, "¡El correo fue enviado correctamente!", "success");
+      localStorage.setItem("changeYourPass", true);
+      localStorage.setItem("id_change", resp.id_user);
     } else {
       useSweetAlert(resp, null, "error");
     }
@@ -87,6 +91,7 @@ function Login() {
       localStorage.removeItem("remember_pass");
     }
   };
+
 
   return (
     <>
@@ -142,7 +147,9 @@ function Login() {
 
           {/* MODAL */}
           <div className="d-flex justify-content-center py-2">
-            <i href="#" data-bs-toggle="modal" data-bs-target="#forgotPass" className="btn btn-warning">¿Olvido su contraseña?</i>
+            <i href="#" data-bs-toggle="modal" data-bs-target="#forgotPass" className="btn btn-warning"
+              onClick={!handleBoleean}
+            >¿Olvido su contraseña?</i>
           </div>
 
           <div className="modal fade" id="forgotPass" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -162,7 +169,9 @@ function Login() {
                   </div>
                   <div className="modal-footer">
                     <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" className="btn btn-primary">Confirmar</button>
+                    <button type="submit" className={!boleean.await ? "btn btn-primary" : "btn btn-secondary"} value={boleean.await}
+                      onClick={() => handleBoleean("await")}>
+                      {!boleean.await ? "Confirmar" : "Espere..."}</button>
                   </div>
                 </form>
               </div>
@@ -185,7 +194,7 @@ function Login() {
             <div className="fw-semibold text-secondary shadow-sm">Continuar con Google</div>
           </div>
 
-        </div>
+        </div >
 
       </main >
 

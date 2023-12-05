@@ -55,6 +55,23 @@ async function subirPfp(filename, data) {
     }
 };
 
+//SUBIR IMAGEN
+async function subirImg(filename, data) {
+    try {
+
+        console.log(data);
+
+        return await Image.create({
+            url: `/uploads/${filename}`,
+            is_pfp: 0,
+            id_user: data.id_user
+        })
+
+    } catch (error) {
+        console.log("ERROR AL SUBIR ARCHIVO", error)
+    }
+};
+
 
 //BUSCAR FOTO DE PERFIL
 async function findpfp(data) {
@@ -69,5 +86,26 @@ async function findpfp(data) {
 
 }
 
+//BUSCAR TODAS LAS FOTOS
+async function findAllImgs(data) {
+    return await Image.findAll({
+        where: {
+            id_user: data.id_user, is_pfp: 0
+        }
+    })
+}
 
-module.exports = { Image, subirPfp, findpfp };
+//ELIMINAR IMAGENES
+async function deleteImg(data) {
+    try {
+        return await Image.destroy({
+            where: {
+                id_image: data.id_image
+            }
+        })
+    } catch (error) {
+        console.error("Error al eliminar imagen", error);
+    }
+}
+
+module.exports = { Image, subirPfp, findpfp, subirImg, findAllImgs, deleteImg };

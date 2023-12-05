@@ -1,5 +1,6 @@
 const { check } = require("express-validator")
 const { validateSchema } = require("../middlewares/validateHealper.js")
+const dayjs = require('dayjs')
 
 const validateInfo = [
     //OBLIGATORIOS
@@ -31,11 +32,21 @@ const validateInfo = [
         .isLength({ min: 11, max: 11 }).withMessage('El cuil debe tener 11 caracteres')
     ,
 
-    //DEBE SER CUSTOM
-    // check("fecha_nacimiento")
-    //     .notEmpty().withMessage("Debe seleccionar su fecha de nacimiento")
-    //     .isNumeric().withMessage("Debe seleccionar su fecha de nacimiento")
-    // ,
+
+    check("fecha_nacimiento")
+        .optional()
+        .notEmpty().withMessage("Debe seleccionar su fecha de nacimiento")
+        .custom((value) => {
+            const fechaNacimiento = dayjs(value, 'YYYY-MM-DD');
+            const edad = dayjs().diff(fechaNacimiento, 'years');
+
+            if (edad < 17) {
+                throw new Error('Lo sentimos pero debes ser mayor de 17 años para registrarte.');
+            }
+
+            return true;
+        })
+    ,
 
     check("id_genero")
         .optional()
