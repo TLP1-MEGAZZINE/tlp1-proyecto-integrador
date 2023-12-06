@@ -8,7 +8,7 @@ const validatUserReact = [
         // .exists()
         .notEmpty().withMessage("El nombre de usuario no debe estar vacio")
         .isAlphanumeric().withMessage("El nombre de usuario no debe estar vacio")
-        .isLength({ min: 6, max: 30 }).withMessage('El nombre de usuario debe tener entre 6 y 30 caracteres')
+        .isLength({ min: 5, max: 30 }).withMessage('El nombre de usuario debe tener entre 6 y 30 caracteres')
         .custom(async (value,) => {
             const existeUsername = await findUserByUserName(value)
             if (existeUsername) {

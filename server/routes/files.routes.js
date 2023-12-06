@@ -9,9 +9,9 @@ const { validarJWT } = require('../middlewares/autenticarToken');
 //RUTA PARA IMAGENES
 router.post("/pfp", validarJWT, upload.single("url"), ctrlUploadPfp)
 
-router.post("/findPfp", validarJWT, ctrlFindPfp)
+router.post("/findPfp", ctrlFindPfp)
 
-router.post("/findAllImgs", validarJWT, ctrlfindAllImgs)
+router.post("/findAllImgs", ctrlfindAllImgs)
 
 router.delete("/deleteImg", validarJWT, ctrlDeleteImg)
 
@@ -19,7 +19,7 @@ router.delete("/deleteImg", validarJWT, ctrlDeleteImg)
 //RUTA PARA ARCHIVOS
 router.post("/createFile", validarJWT, upload.single("url"), ctrlCreateFile)
 
-router.post("/findAllFiles", validarJWT, ctrlFindAllFiles)
+router.post("/findAllFiles", ctrlFindAllFiles)
 
 router.delete("/deleteFile", validarJWT, ctrlDeleteFile)
 
