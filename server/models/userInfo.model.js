@@ -88,9 +88,6 @@ async function findByRubro(data,) {
 //BUSCAR TODA LA INFO DE USUARIO
 async function findUserInfo(data) {
 
-    console.log("id_user", data);
-
-
     try {
         return await UserInfo.findOne({
             where: { id_user: data.id_user },
@@ -181,10 +178,23 @@ async function updateInfoUser(data) {
             }
         );
         return user_info;
-} catch (error) {
-    console.log("Error al actualizar registro de user_info", error);
-    throw error
-}
+    } catch (error) {
+        console.log("Error al actualizar registro de user_info", error);
+        throw error
+    }
 }
 
-module.exports = { UserInfo, findByRubro, findUserInfo, createInfoUser, updateInfoUser }
+async function findLocal(data) {
+    try {
+        return await UserInfo.findOne({
+            where: { id_user: data.id_user },
+            attributes: {
+                exclude: ['id_info', 'id_genero', 'nombre', 'apellido', 'dni', 'cuil', 'fecha_nacimiento',]
+            }
+        })
+    } catch (error) {
+        console.log("Error al encontrar localidad", error)
+    }
+}
+
+module.exports = { UserInfo, findByRubro, findUserInfo, createInfoUser, updateInfoUser, findLocal }

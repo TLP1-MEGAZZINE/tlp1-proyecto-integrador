@@ -78,10 +78,6 @@ Post.belongsTo(User, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CA
 User.hasMany(File, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 File.belongsTo(User, { foreignKey: "id_user", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
-<<<<<<< HEAD
-Image.belongsTo(User, { foreignKey: "id_user" });
-User.hasMany(Image);
-=======
 // Empleador.hasMany(Post, { foreignKey: "id_empleador", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 // Post.belongsTo(Empleador, { foreignKey: "id_empleador", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
@@ -101,4 +97,3 @@ Postulante.belongsToMany(Empleador, {
     otherKey: "id_empleador",
     as: "Followers"
 })
->>>>>>> nuevas-funciones

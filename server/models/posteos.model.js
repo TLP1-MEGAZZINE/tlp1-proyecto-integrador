@@ -1,11 +1,6 @@
 const { DataTypes, sequelize } = require('../config/db');
-<<<<<<< HEAD
-const Localidad = require('./localidad.model');
-const Rubro = require('./rubro.model');
-=======
 const { Localidad } = require('./localidad.model');
 const { Rubro } = require('./rubro.model');
->>>>>>> nuevas-funciones
 const { UserInfo } = require('./userInfo.model');
 const { Op } = require('sequelize');
 const dayjs = require('dayjs');
@@ -139,7 +134,6 @@ const findAllPosts = async () => {
 
         return posts;
 
->>>>>>> nuevas-funciones
     } catch (error) {
         console.log('Error al buscar todos los posts', error);
         throw error;

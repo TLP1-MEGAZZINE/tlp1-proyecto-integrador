@@ -1,6 +1,7 @@
 const { createPost, findAllPosts, findFilteredPost, deletePost, findPostEmpresa, findPostPostulante, findUserPost } = require("../models/posteos.model")
 const { findRubroByIdPostulante } = require("../models/postulantes.model")
 const { findRubroByIdEmpleador } = require("../models/empleador.model")
+const { findLocal } = require("../models/userInfo.model")
 
 //CREAR UN POSTEO EN LA DB
 const ctrlCrearPosteos = async (req, res) => {
@@ -9,9 +10,12 @@ const ctrlCrearPosteos = async (req, res) => {
         const data = req.body
         console.log("DATA POSTEO");
         console.log(data);
+
         if (req.file) {
             filename = req.file.filename;
         }
+
+        const info = await findLocal(data)
 
         if (data.id_rol == 1) {
             const usuario = await findRubroByIdPostulante(data.id_user)
@@ -31,10 +35,15 @@ const ctrlCrearPosteos = async (req, res) => {
 
         console.log("FULL DATA");
         console.log(data);
+        console.log(info);
 
         if (!data.id_rubro) {
             return res.status(403).json({ message: "¡Debes tener un rubro antes de crear un posteo!", error: true })
         }
+        if (!info.id_local) {
+            return res.status(403).json({ message: "¡Debes tener seleccionar tu localidad antes de crear un posteo!", error: true })
+        }
+
         const post = await createPost(data, filename);
 
         if (!post) {
