@@ -59,7 +59,7 @@ function Inicio() {
             <div className="container-fluid colorFondo">
                 <article className="row">
                     <section>
-                        <div className="row py-3 colorPrincipal border border-2">
+                        <div className="row py-3 colorPrincipal border-bottom border-top border-2">
                             <form action="#" onSubmit={handleRubroFilter} className="d-flex col-8">
                                 <div className="col-2">
 
@@ -137,9 +137,7 @@ function Inicio() {
                         </div>
                     </section >
 
-                    <div className="row">
-
-                    </div>
+            
                     <section className="col-8">
                         <div className="my-3 p-3 bg-body rounded shadow-sm">
                             <h6 className="border-bottom pb-2 mb-0">Nuevas Publicaciones</h6>

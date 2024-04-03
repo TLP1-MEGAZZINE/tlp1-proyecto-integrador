@@ -36,37 +36,33 @@ export const Users = () => {
                     .filter(user => user.rol.rol_name != "particular" && user.id_user != id_user)
                     .map((user, id_user) => (
 
-                        <div key={id_user} className="col-12 text-muted pt-3 ps-2 d-flex">
-                            <svg className="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
-                                xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                                preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <title>Placeholder</title>
-                                <rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff"
-                                    dy=".3em">32x32</text>
-                            </svg>
+                        <div key={id_user} className="d-flex pb-3 mb-0 small m-2 container-fluid border-bottom overflow-x-auto">
 
-                            <div className="pb-3 mb-0 small lh-sm border-bottom w-100">
+                            <img className="rounded-circle" width={40} height={40} src={`https://ui-avatars.com/api/?background=random&name=${user.user_name}`} alt="pfp" />
 
-                                <div className="pb-3 mb-0 small lh-sm border-bottom ">
-                                    <div className="d-flex justify-content-between">
-                                        <a className="text-gray-dark text-decoration-none"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                handleProfile(user.id_user);
-                                            }}>
-                                            <strong>{user.user_name}</strong>
-                                        </a>
+                            <div className="d-flex flex-column px-2 small flex-wrap">
+                                <div className="">
+                                    <a className="text-gray-dark text-decoration-none"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleProfile(user.id_user);
+                                        }}>
+                                        <strong>{user.user_name}</strong>
+                                    </a>
 
-                                        <a href="#" onClick={() => handleBoleean(`button${user.id_user}`)}>
-                                            {boleean[`button${user.id_user}`] ? "Siguiendo" : "Seguir"}
-                                        </a>
-                                    </div>
-                                    <span className="d-block">{user.user_email}</span>
-                                    <strong className="text-gray-dark">{user.rol.rol_name}</strong>
-
+                                    <a href="#"
+                                        className="px-2" onClick={() => handleBoleean(`button${user.id_user}`)}>
+                                        {boleean[`button${user.id_user}`] ? "Siguiendo" : "Seguir"}
+                                    </a>
                                 </div>
+
+                                <span className="d-block">{user.user_email || user.user_email.slice(0, user.user_email.length / 2) + "..."}</span>
+
+                                <strong className="text-gray-dark">{user.rol.rol_name}</strong>
                             </div>
+
                         </div>
+
                     ))
             }
         </>

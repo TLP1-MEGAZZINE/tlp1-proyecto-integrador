@@ -30,7 +30,7 @@ export const Posteos = ({ posts, children }) => {
             {posts.map((post, id_post) => (
                 <div key={id_post} className="text-muted pt-3 mx-5">
                     <p className="pb-3 mb-0 small lh-sm border-bottom ">
-                        <div className="d-flex">
+                        <div className="d-flex flex-wrap">
                             <div>
                                 <a href="#" className="text-decoration-none">
                                     <strong className="d-block"
@@ -45,36 +45,36 @@ export const Posteos = ({ posts, children }) => {
                                 <strong className="d-block text-gray-dark">{post.post_title}</strong>
                                 {post.post_content}
                             </div>
-                            <div>
-                                {
-                                    (() => {
-                                        switch (post.id_rubro) {
-                                            case 1:
-                                                return <img src={Salud} width="50" height="50" className="mx-3" />;
-                                            case 2:
-                                                return <img src={tecnologia} width="50" height="50" className="mx-3" />;
-                                            case 3:
-                                                return <img src={Reparaciones} width="50" height="50" className="mx-3" />;
-                                            case 4:
-                                                return <img src={Finanzas} width="50" height="50" className="mx-3" />;
-                                            case 5:
-                                                return <img src={Manufactura} width="50" height="50" className="mx-3" />;
-                                            case 6:
-                                                return <img src={Ventas} width="50" height="50" className="mx-3" />;
-                                            case 7:
-                                                return <img src={Administracion} width="50" height="50" className="mx-3" />;
-                                            case 8:
-                                                return <img src={Alimenticio} width="50" height="50" className="mx-3" />;
-                                            case 9:
-                                                return <img src={Construccion} width="50" height="50" className="mx-3" />;
-                                            case 10:
-                                                return <img src={Educacion2} width="50" height="50" className="mx-3" />;
-                                            default:
-                                                return <img src={otro_rubro} width="50" height="50" className="mx-3" />;
-                                        }
-                                    })()
-                                }
-                            </div>
+
+                            {
+                                (() => {
+                                    switch (post.id_rubro) {
+                                        case 1:
+                                            return <img src={Salud} width="50" height="50" className="mx-3" />;
+                                        case 2:
+                                            return <img src={tecnologia} width="50" height="50" className="mx-3" />;
+                                        case 3:
+                                            return <img src={Reparaciones} width="50" height="50" className="mx-3" />;
+                                        case 4:
+                                            return <img src={Finanzas} width="50" height="50" className="mx-3" />;
+                                        case 5:
+                                            return <img src={Manufactura} width="50" height="50" className="mx-3" />;
+                                        case 6:
+                                            return <img src={Ventas} width="50" height="50" className="mx-3" />;
+                                        case 7:
+                                            return <img src={Administracion} width="50" height="50" className="mx-3" />;
+                                        case 8:
+                                            return <img src={Alimenticio} width="50" height="50" className="mx-3" />;
+                                        case 9:
+                                            return <img src={Construccion} width="50" height="50" className="mx-3" />;
+                                        case 10:
+                                            return <img src={Educacion2} width="50" height="50" className="mx-3" />;
+                                        default:
+                                            return <img src={otro_rubro} width="50" height="50" className="mx-3" />;
+                                    }
+                                })()
+                            }
+
                         </div>
                         {
                             post.url == "/uploads/null" ? (
