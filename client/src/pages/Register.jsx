@@ -1,64 +1,76 @@
-import { useNavigate } from "react-router-dom";
-import Footer from "../components/Footer.component"
-import Header from "../components/Header.component"
-import { useForm } from "../hooks/useForms";
-import { fetchFunction } from "../api/apiFetch";
-import { useState, useEffect, useContext } from "react";
-import { useBoleean } from "../hooks/useHiddenPass";
-import { AuthContext } from "../context/AuthProvider";
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import Footer from '../components/Footer.component';
+import Header from '../components/Header.component';
+import { useForm } from '../hooks/useForms';
+import { fetchFunction } from '../api/apiFetch';
+import { useBoleean } from '../hooks/useHiddenPass';
+import { AuthContext } from '../context/AuthProvider';
 
 export const Register = () => {
+  const navigate = useNavigate();
+  const { authState } = useContext(AuthContext);
 
-  const navigate = useNavigate()
+  const [errors, setErrors] = useState({});
+  const { form, handleInputChange } = useForm({});
 
-  const [errors, setErros] = useState("")
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://www.google.com/recaptcha/api.js';
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
 
-  const { form, handleInputChange } = useForm({})
-
-  const { authState } = useContext(AuthContext)
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   useEffect(() => {
     if (authState.logged) {
-      return navigate("/auth/home")
+      navigate('/auth/home');
     }
-  }, [authState, navigate])
+  }, [authState, navigate]);
 
   const handleCancel = () => {
-    navigate("/index")
-  }
+    navigate('/index');
+  };
 
   const handleRegister = async (e) => {
-    e.preventDefault()
-    const resp = await fetchFunction("registro", "POST", form);
+    e.preventDefault();
 
-    console.log(resp);
+    try {
+      const resp = await fetchFunction('registro', 'POST', form);
 
-    if (resp.message) {
-      Swal.fire({
-        title: "Usuario registrado correctamente.",
-        text: "Espere un momento...",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 2000
-      })
+      if (resp.message) {
+        Swal.fire({
+          title: 'Usuario registrado correctamente.',
+          text: 'Espere un momento...',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 2000
+        });
 
-      setErros("")
-
-      setTimeout(() => {
-        navigate("/login")
-      }, 2000)
-    } else {
-      Swal.fire({
-        title: "No se a podido registrar el usuario.",
-        text: resp.errors.array,
-        icon: "error",
-        showConfirmButton: true,
-        confirmButtonText: "Aceptar"
-      })
-      setErros(resp.errors.object)
+        setErrors({}); // Reiniciar errores
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
+      } else {
+        Swal.fire({
+          title: 'No se ha podido registrar el usuario.',
+          text: resp.errors.array.join(', '), // Mostrar errores como cadena
+          icon: 'error',
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar'
+        });
+        setErrors(resp.errors.object);
+      }
+    } catch (error) {
+      console.error('Error al registrar:', error);
+      // Manejar error de manera adecuada, por ejemplo, mostrar un mensaje de error genérico.
     }
-  }
-
+  };
   const { boleean, handleBoleean } = useBoleean()
 
   return (
@@ -175,7 +187,12 @@ export const Register = () => {
 
                     <button className="btn btn-danger" onClick={handleCancel}>Cancelar <i
                       className="fas fa-file-alt"></i></button>
+                    <div class="mb-3">
+                      <div class="g-recaptcha" data-sitekey="6LfiZLEpAAAAAEfEkcu0mPW--BH4S9pIOgxkXK68">
 
+                      </div>
+
+                    </div>
                     <button className="btn btn-primary" type="submit">Registrarse <i
                       className="fas fa-file-alt"></i></button>
 
