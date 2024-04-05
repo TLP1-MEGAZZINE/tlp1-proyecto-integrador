@@ -28,10 +28,10 @@ export const Posteos = ({ posts, children }) => {
             {children}
 
             {posts.map((post, id_post) => (
-                <div key={id_post} className="text-muted pt-3 mx-5">
+                <div key={id_post} className="text-muted pt-3 ">
                     <p className="pb-3 mb-0 small lh-sm border-bottom ">
-                        <div className="d-flex flex-wrap">
-                            <div>
+                        <div className="d-flex flex-wrap p-2">
+                            <div className="d-flex flex-column">
                                 <a href="#" className="text-decoration-none">
                                     <strong className="d-block"
                                         onClick={(e) => {
@@ -41,7 +41,7 @@ export const Posteos = ({ posts, children }) => {
                                     >{post.User.user_name}</strong>
                                 </a>
                                 <strong className="d-block text-success">{post.is_emprise_post === true ? "Empleador" : "Postulante"}</strong>
-                                <strong className="d-block text-gray-dark">{post.User.user_email}</strong>
+                                <strong className="d-block text-gray-dark small">{post.User.user_email}</strong>
                                 <strong className="d-block text-gray-dark">{post.post_title}</strong>
                                 {post.post_content}
                             </div>
